@@ -6,7 +6,6 @@ import Tenant from "./pages/Tenant";
 import Administrator from "./pages/Administrator";
 import Reporting from "./pages/Reporting";
 import Audit from "./pages/Audit";
-import Integration from "./pages/Integration";
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
           <Route path="administrator" element={<Administrator />} />
           <Route path="reporting" element={<Reporting />} />
           <Route path="audit" element={<Audit />} />
-          <Route path="integrations" element={<Integration />} />
         </Route>
         <Route path="login" element={<LoginPage />} />
       </Routes>
