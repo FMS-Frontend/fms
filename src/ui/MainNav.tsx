@@ -55,7 +55,7 @@ function MainNav() {
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink to="/logout">
+            <StyledNavLink to="/">
               <HiOutlineArrowLeftStartOnRectangle />
               <span>Logout</span>
             </StyledNavLink>
