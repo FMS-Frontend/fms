@@ -1,8 +1,10 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { IconType } from "react-icons";
-import { HiOutlineArrowLeftStartOnRectangle, HiOutlineCog } from "react-icons/hi2";
+import {
+  HiOutlineArrowLeftStartOnRectangle,
+  HiOutlineCog,
+} from "react-icons/hi2";
 
 export type NavItem = {
   path: string;

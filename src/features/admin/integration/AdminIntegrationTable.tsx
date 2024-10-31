@@ -1,10 +1,16 @@
-import { FC } from "react";
-import Table from "../../../ui/Table";
-import TenantRow from "./UserRow";
+// import BookingRow from "./BookingRow";
+// import Table from "../../ui/Table";
+// import Menus from "../../ui/Menus";
+// import Empty from "../../ui/Empty";
+// import { useBookings } from "./useBookings";
+// import Spinner from "../../ui/Spinner";
+// import Pagination from "../../ui/Pagination";
 
-const UserTable: FC = () => {
+import Table from "../../../ui/Table";
+
+function AdminIntegrationTable() {
   // const { bookings, isLoading, count } = useBookings();
-  const users: [] = [];
+  const bookings: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -12,22 +18,22 @@ const UserTable: FC = () => {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr_0.5fr]">
+      <Table columns="grid-cols-[1fr_1fr_0.5fr_1fr_1fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Name
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Role
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Email
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Phone Number
+            Last Act
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Status
+          </div>
+          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+            Success Rate
+          </div>
+          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+            Uptime
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Actions
@@ -35,8 +41,10 @@ const UserTable: FC = () => {
         </Table.Header>
 
         <Table.Body
-          data={users}
-          render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
+          data={bookings}
+          render={(booking) => (
+            <BookingRow key={booking.id} booking={booking} />
+          )}
         />
 
         {/* <Table.Footer>
@@ -45,6 +53,6 @@ const UserTable: FC = () => {
       </Table>
     </div>
   );
-};
+}
 
-export default UserTable;
+export default AdminIntegrationTable;

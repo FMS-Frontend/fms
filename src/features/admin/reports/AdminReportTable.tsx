@@ -1,10 +1,10 @@
 import { FC } from "react";
 import Table from "../../../ui/Table";
-import TenantRow from "./UserRow";
+import ReportRow from "./AdminReportRow";
 
-const UserTable: FC = () => {
+const AdminReportTable: FC = () => {
   // const { bookings, isLoading, count } = useBookings();
-  const users: [] = [];
+  const report: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -12,31 +12,28 @@ const UserTable: FC = () => {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr_0.5fr]">
+      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_2fr_1fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Name
+            Date
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Role
+            Login Time
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Email
+            Users
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Phone Number
+            Comments
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Status
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Actions
-          </div>
         </Table.Header>
 
         <Table.Body
-          data={users}
-          render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
+          data={report}
+          render={(tenant, i) => <ReportRow report={report} key={i} />}
         />
 
         {/* <Table.Footer>
@@ -47,4 +44,4 @@ const UserTable: FC = () => {
   );
 };
 
-export default UserTable;
+export default AdminReportTable;
