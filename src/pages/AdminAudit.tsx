@@ -2,11 +2,11 @@ import { FC } from "react";
 import OutlineButton from "../ui/OutlineButton";
 import SearchInput from "../ui/SearchInput";
 import DateComp from "../features/super-user/audit/DateComp";
-import AuditTable from "../features/super-user/audit/AuditTable";
+import AdminAuditTable from "../features/admin/audit/AuditTable";
 
-const Audit: FC = () => {
+const AdminAudit: FC = () => {
   return (
-    <div className="p-16 flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Audit Log</h1>
 
       <div className="flex justify-between">
@@ -20,9 +20,9 @@ const Audit: FC = () => {
         </div>
       </div>
 
-      <AuditTable />
+      <AdminAuditTable />
     </div>
   );
 };
 
-export default Audit;
+export default AdminAudit;

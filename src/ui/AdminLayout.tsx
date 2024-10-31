@@ -1,11 +1,11 @@
-// ManagerLayout.tsx
+// AppLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { managerNavData } from "../db";
+import { adminNavData } from "../db";
 
-const ManagerLayout: FC = () => {
+const AdminLayout: FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -22,18 +22,18 @@ const ManagerLayout: FC = () => {
         ></div>
       )}
       <Sidebar
-        navData={managerNavData}
+        navData={adminNavData}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
       />
       <Header toggleSidebar={toggleSidebar} />
 
-      <div className="col-span-1 lg:col-start-2 lg:py-10 overflow-scroll hide-scrollbar">
+      <div className="col-span-1 lg:col-start-2 lg:py-10 overflow-scroll hide-scrollbar px-10">
         <Outlet />
       </div>
     </div>
   );
 };
 
-export default ManagerLayout;
+export default AdminLayout;
