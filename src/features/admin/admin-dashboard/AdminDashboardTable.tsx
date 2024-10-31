@@ -1,10 +1,16 @@
-import { FC } from "react";
-import Table from "../../ui/Table";
-import AuditRow from "./AuditRow";
+// import BookingRow from "./BookingRow";
+// import Table from "../../ui/Table";
+// import Menus from "../../ui/Menus";
+// import Empty from "../../ui/Empty";
+// import { useBookings } from "./useBookings";
+// import Spinner from "../../ui/Spinner";
+// import Pagination from "../../ui/Pagination";
 
-const AuditTable: FC = () => {
+import Table from "../../../ui/Table";
+
+function AdminDashboardTable() {
   // const { bookings, isLoading, count } = useBookings();
-  const audit: [] = [];
+  const bookings: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -12,13 +18,13 @@ const AuditTable: FC = () => {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1.5fr_1fr_1.5fr_1.5fr_1fr_0.5fr]">
+      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Administrators
+            Tenant
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Tenants
+            Admin Assigned
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Email
@@ -29,14 +35,13 @@ const AuditTable: FC = () => {
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Status
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Action
-          </div>
         </Table.Header>
 
         <Table.Body
-          data={audit}
-          render={(audit, i) => <AuditRow audit={audit} key={i} />}
+          data={bookings}
+          render={(booking) => (
+            <BookingRow key={booking.id} booking={booking} />
+          )}
         />
 
         {/* <Table.Footer>
@@ -45,6 +50,6 @@ const AuditTable: FC = () => {
       </Table>
     </div>
   );
-};
+}
 
-export default AuditTable;
+export default AdminDashboardTable;

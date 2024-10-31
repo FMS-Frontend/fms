@@ -5,49 +5,89 @@ import {
   HiOutlineClipboardDocumentCheck,
   HiOutlineCog,
   HiOutlineDocumentText,
+  HiOutlineUsers,
 } from "react-icons/hi2";
 import { MdOutlineDashboard } from "react-icons/md";
-import { PiBuildings, PiIntersectDuotone } from "react-icons/pi";
+import { PiBuildings, PiIntersectFill } from "react-icons/pi";
 import { RiShieldUserLine } from "react-icons/ri";
 
 import styled from "styled-components";
+import { checkUserRole } from "../utils/helpers";
 
 function MainNav() {
+  const role = "admin";
+  const userRole = checkUserRole(role);
+
   return (
     <nav>
       <NavList>
-        <li>
-          <StyledNavLink to="/dashboard">
-            <MdOutlineDashboard />
-            <span>Dashboard</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/tenant">
-            <PiBuildings />
-            <span>Tenant</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/administrator">
-            <RiShieldUserLine />
-            <span>Administrator</span>
-          </StyledNavLink>
-        </li>
+        {userRole === "superuser" && (
+          <li>
+            <StyledNavLink to="/dashboard">
+              <MdOutlineDashboard />
+              <span>Dashboard</span>
+            </StyledNavLink>
+          </li>
+        )}
+        {userRole === "admin" && (
+          <li>
+            <StyledNavLink to="/admin-dashboard">
+              <MdOutlineDashboard />
+              <span>Dashboard</span>
+            </StyledNavLink>
+          </li>
+        )}
+
+        {userRole === "superuser" && (
+          <li>
+            <StyledNavLink to="/tenant">
+              <PiBuildings />
+              <span>Tenant</span>
+            </StyledNavLink>
+          </li>
+        )}
+
+        {userRole === "admin" && (
+          <li>
+            <StyledNavLink to="/users">
+              <HiOutlineUsers />
+              <span>Users</span>
+            </StyledNavLink>
+          </li>
+        )}
+
+        {userRole === "superuser" && (
+          <li>
+            <StyledNavLink to="/administrator">
+              <RiShieldUserLine />
+              <span>Administrator</span>
+            </StyledNavLink>
+          </li>
+        )}
+
         <li>
           <StyledNavLink to="/reporting">
             <HiOutlineDocumentText />
-            <span>Reporting & Analytics</span>
+            <span>Reports & Analytics</span>
           </StyledNavLink>
         </li>
+
         <li>
           <StyledNavLink to="/audit">
             <HiOutlineClipboardDocumentCheck />
             <span>Audit & Compliance</span>
           </StyledNavLink>
         </li>
+        {userRole === "admin" && (
+          <li>
+            <StyledNavLink to="/integration">
+              <PiIntersectFill />
+              <span>Integration</span>
+            </StyledNavLink>
+          </li>
+        )}
 
-        <div className="mt-96">
+        <div className="mt-60">
           <li>
             <StyledNavLink to="/settings">
               <HiOutlineCog />
@@ -81,6 +121,7 @@ const StyledNavLink = styled(NavLink)`
     align-items: center;
     gap: 1.2rem;
     border-radius: 10px;
+    margin-bottom: 0.8rem;
 
     color: var(--color-grey-50);
     font-size: 1.4rem;
@@ -113,3 +154,10 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-brand-50);
   }
 `;
+
+// {navlist.map((nav) => (
+//   <StyledNavLink key={nav.text} to={nav.link}>
+//     {nav.icon}
+//     <span>{nav.text}</span>
+//   </StyledNavLink>
+// ))}

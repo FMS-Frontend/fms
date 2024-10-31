@@ -8,7 +8,7 @@ const AppLayout: FC = () => {
     <div className="grid grid-cols-[30rem_1fr] grid-rows-[auto_1fr] h-screen">
       <Sidebar />
       <Header />
-      <div className="px-16 py-10 overflow-scroll">
+      <div className="px-16 bg-gray-50 py-10 overflow-scroll">
         <Outlet />
       </div>
     </div>

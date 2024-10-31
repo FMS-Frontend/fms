@@ -3,8 +3,8 @@ import { FC } from "react";
 // import PrimaryButton from "../ui/PrimaryButton";
 import OutlineButton from "../ui/OutlineButton";
 import SearchInput from "../ui/SearchInput";
-import TenantTable from "../features/tenants/TenantTable";
-import AddTenant from "../features/tenants/AddTenant";
+import TenantTable from "../features/super-user/tenants/TenantTable";
+import AddTenant from "../features/super-user/tenants/AddTenant";
 
 const Tenant: FC = () => {
   return (
