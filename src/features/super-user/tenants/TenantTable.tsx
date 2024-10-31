@@ -14,22 +14,22 @@ const TenantTable: FC = () => {
     <div className="mt-8">
       <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr_0.5fr]">
         <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Tenant
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Admin Assigned
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Email
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Phone Number
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Status
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Actions
           </div>
         </Table.Header>

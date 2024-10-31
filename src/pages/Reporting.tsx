@@ -6,7 +6,7 @@ import ReportTable from "../features/super-user/reporting/ReportTable";
 
 const Reporting: FC = () => {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="p-8 lg:p-16 flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Reports</h1>
 
       <div className="flex justify-between">

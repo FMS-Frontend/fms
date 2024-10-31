@@ -5,7 +5,7 @@ import ApexLineChart from "../features/super-user/dashboard/ApexLineChart";
 
 const Dashboard: FC = () => {
   return (
-    <div className="flex flex-col gap-8 ">
+    <div className="p-8 lg:p-16 flex flex-col gap-8 ">
       <h1 className="font-bold text-4xl">Dashboard</h1>
       <DashboardStats />
       <ApexLineChart />

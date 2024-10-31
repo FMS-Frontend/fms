@@ -14,19 +14,19 @@ const ReportTable: FC = () => {
     <div className="mt-8">
       <Table columns="grid-cols-[1fr_1.5fr_1.5fr_2fr_1fr]">
         <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Date
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Login Time
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Tenants
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Comments
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Status
           </div>
         </Table.Header>

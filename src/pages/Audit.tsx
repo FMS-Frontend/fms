@@ -8,7 +8,7 @@ import AuditTable from "../features/super-user/audit/AuditTable";
 
 const Audit: FC = () => {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="p-16 flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Audit Log</h1>
 
       <div className="flex justify-between">
