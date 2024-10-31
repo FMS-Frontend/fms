@@ -53,6 +53,24 @@ const data = [
   },
 ];
 
+/**
+ * ApexLineChart component renders an area chart displaying user data over time.
+ * The chart uses monthly categories on the X-axis and displays the number of users on the Y-axis.
+ *
+ * @component
+ * @returns {JSX.Element} An area chart showing the trend of user data by month.
+ *
+ * Chart configuration:
+ * - `series`: Data series for "Users," mapped from `data` for the Y-axis.
+ * - `xaxis`: Configured with `categoriesData` representing months, formatted as "MMM yyyy."
+ * - `yaxis`: Displays the number of users.
+ * - `tooltip`: Provides date formatting for tooltips in "MMM yyyy" format.
+ *
+ * @example
+ * // Usage
+ * <ApexLineChart />
+ */
+
 const ApexLineChart: React.FC = () => {
   // Map data for the Y-axis (users) and X-axis (months)
   const seriesData = data.map((d) => d.users);

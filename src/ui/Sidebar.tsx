@@ -2,6 +2,18 @@ import { FC } from "react";
 import MainNav from "./MainNav";
 import { checkUserRole } from "../utils/helpers";
 
+/**
+ * Sidebar component displays a navigation sidebar with a role-specific header.
+ *
+ * @component
+ * @returns {JSX.Element} A styled sidebar displaying the user's role (either "SuperUser"
+ * or "Admin") and the main navigation menu.
+ *
+ * @example
+ * // Usage
+ * <Sidebar />
+ */
+
 const Sidebar: FC = () => {
   const role = "admin";
   const userRole = checkUserRole(role);

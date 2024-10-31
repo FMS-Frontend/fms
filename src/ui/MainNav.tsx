@@ -14,6 +14,23 @@ import { RiShieldUserLine } from "react-icons/ri";
 import styled from "styled-components";
 import { checkUserRole } from "../utils/helpers";
 
+/**
+ * MainNav component renders a navigation menu with links based on the user's role.
+ *
+ * @component
+ * @returns {JSX.Element} A navigation element containing role-specific links and general links
+ * for dashboard, reporting, settings, and logout.
+ *
+ * The menu displays:
+ * - For "superuser": Links to "Dashboard," "Tenant," and "Administrator."
+ * - For "admin": Links to "Admin Dashboard," "Users," and "Integration."
+ * - General links for "Reports & Analytics," "Audit & Compliance," "Settings," and "Logout" are available for all roles.
+ *
+ * @example
+ * // Renders the MainNav component
+ * <MainNav />
+ */
+
 function MainNav() {
   const role = "admin";
   const userRole = checkUserRole(role);

@@ -1,20 +1,10 @@
 import { FC } from "react";
 
-// interface ChildProps {
-//   onClick: MouseEventHandler;
-// }
-
 const CreateUser: FC = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-semibold">Create New User</h2>
-        {/* <button
-          onClick={onClick}
-          className="text-gray-400 hover:text-gray-800 text-4xl px-2 py-1 "
-        >
-          &times;
-        </button> */}
       </div>
 
       <form className="flex flex-col gap-3">

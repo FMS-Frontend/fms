@@ -17,6 +17,16 @@ interface ProtectedProps {
   children: ReactNode;
 }
 
+/**
+ * ProtectedRoute component restricts access based on user role.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.role - The required role to access the route.
+ * @param {React.ReactNode} props.children - The component's children to render if access is granted.
+ * @returns {JSX.Element} The children if the user role matches; otherwise, redirects to the login page.
+ */
+
 const ProtectedRoute: FC<ProtectedProps> = ({ role, children }) => {
   const userRole = checkUserRole(role);
   if (userRole !== role) {
@@ -24,6 +34,16 @@ const ProtectedRoute: FC<ProtectedProps> = ({ role, children }) => {
   }
   return children;
 };
+
+/**
+ * RedirectToDashboard component navigates users to the appropriate dashboard
+ * based on their role.
+ *
+ * @component
+ * @returns {JSX.Element} A <Navigate /> component that redirects the user to the
+ * appropriate dashboard based on their role. Redirects to the login page if
+ * the user role is neither "admin" nor "superuser".
+ */
 
 const RedirectToDashboard = () => {
   const role = "admin";
