@@ -1,20 +1,24 @@
 import { FC } from "react";
 
-// interface ChildProps {
-//   onClick: MouseEventHandler;
-// }
+/**
+ * CreateTenant is a React functional component that renders a form for setting
+ * up a new tenant. The form includes fields for tenant name, address, admin name,
+ * email, and description, along with a submit button.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered form component for creating a new tenant.
+ *
+ * @example
+ * return (
+ *   <CreateTenant />
+ * );
+ */
 
 const CreateTenant: FC = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
-        {/* <button
-          onClick={onClick}
-          className="text-gray-400 hover:text-gray-800 text-4xl px-2 py-1 "
-        >
-          &times;
-        </button> */}
       </div>
 
       <form className="flex flex-col gap-3">

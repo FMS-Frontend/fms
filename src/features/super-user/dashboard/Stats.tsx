@@ -4,13 +4,19 @@ import { BsBoxFill } from "react-icons/bs";
 import { IoPeople, IoCreate } from "react-icons/io5";
 import { RiLineChartLine } from "react-icons/ri";
 
-/* Define the props for the Stat component */
-// interface StatProps {
-//   icon: React.ReactNode;
-//   title: string;
-//   value: string | number;
-//   color: 'red' | 'green' | 'blue' | 'yellow' | 'gray'; // Add other colors as needed
-// }
+/**
+ * Stats is a React functional component that renders a series of statistical
+ * indicators related to tenants, admins, and users. Each statistic includes
+ * a title, value, and an associated icon with color theming.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered statistics component containing multiple Stat components.
+ *
+ * @example
+ * return (
+ *   <Stats />
+ * );
+ */
 
 const Stats: FC = () => {
   return (

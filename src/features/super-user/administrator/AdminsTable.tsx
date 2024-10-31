@@ -2,6 +2,27 @@ import { FC } from "react";
 import Table from "../../../ui/Table";
 // import TenantRow from "./TenantRow";
 
+/**
+ * AdminsTable component displays a table of administrator information,
+ * including their associated tenants, contact information, and status.
+ *
+ * @component
+ * @returns {JSX.Element} A table layout with headers for administrator details
+ * and dynamically rendered rows based on the `admins` data.
+ *
+ * The table includes columns for:
+ * - "Administrators" - the names of the administrators.
+ * - "Tenants" - the tenants associated with each administrator.
+ * - "Email" - the administrator's contact email.
+ * - "Phone Number" - the administrator's phone number.
+ * - "Status" - the current status of the administrator.
+ * - "Actions" - action buttons for managing the administrator.
+ *
+ * @example
+ * // Usage
+ * <AdminsTable />
+ */
+
 const AdminsTable: FC = () => {
   // const { bookings, isLoading, count } = useBookings();
   const admins: [] = [];
