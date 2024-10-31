@@ -1,8 +1,8 @@
 import { FC } from "react";
-import PrimaryButton from "../../ui/PrimaryButton";
+import PrimaryButton from "../../../ui/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-import Modal from "../../ui/Modal";
-import CreateTenant from "./CreateTenant";
+import Modal from "../../../ui/Modal";
+import CreateTenantModal from "./CreateTenantModal";
 
 const AddTenant: FC = () => {
   return (
@@ -14,7 +14,7 @@ const AddTenant: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-tenant">
-        <CreateTenant />
+        <CreateTenantModal />
       </Modal.Window>
     </Modal>
   );

@@ -3,8 +3,8 @@ import { FC } from "react";
 // import PrimaryButton from "../ui/PrimaryButton";
 import OutlineButton from "../ui/OutlineButton";
 import SearchInput from "../ui/SearchInput";
-import DateComp from "../features/audit/DateComp";
-import AuditTable from "../features/audit/AuditTable";
+import DateComp from "../features/super-user/audit/DateComp";
+import AuditTable from "../features/super-user/audit/AuditTable";
 
 const Audit: FC = () => {
   return (

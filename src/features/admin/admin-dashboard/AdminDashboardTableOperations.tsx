@@ -1,9 +1,9 @@
 import { FC } from "react";
-import Filter from "../../ui/Filter";
+import Filter from "../../../ui/Filter";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { HiOutlineExclamationCircle, HiOutlineFlag } from "react-icons/hi2";
 
-const DashboardTableOperations: FC = () => {
+const AdminDashboardTableOperations: FC = () => {
   return (
     <div>
       <Filter
@@ -30,4 +30,4 @@ const DashboardTableOperations: FC = () => {
   );
 };
 
-export default DashboardTableOperations;
+export default AdminDashboardTableOperations;
