@@ -1,11 +1,11 @@
-// AppLayout.tsx
+// ManagerLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { navData1 } from "../db";
+import { managerNavData } from "../db";
 
-const AppLayout: FC = () => {
+const ManagerLayout: FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -19,7 +19,7 @@ const AppLayout: FC = () => {
         <div className="fixed inset-0 z-10 bg-black bg-opacity-50 lg:hidden" onClick={toggleSidebar}></div>
       )}
       <Sidebar
-        navData={navData1}
+        navData={managerNavData}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
@@ -33,6 +33,6 @@ const AppLayout: FC = () => {
   );
 };
 
-export default AppLayout;
+export default ManagerLayout;
 
 
