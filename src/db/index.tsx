@@ -1,29 +1,59 @@
 import {
   HiOutlineClipboardDocumentCheck,
-  HiOutlineCog,
+  HiOutlineUsers,
   HiOutlineDocumentText,
 } from "react-icons/hi2";
 import { MdOutlineDashboard } from "react-icons/md";
 import { PiBuildings } from "react-icons/pi";
 import { RiShieldUserLine } from "react-icons/ri";
 import { BsGraphUpArrow } from "react-icons/bs";
-import { PiFolderSimpleUser } from "react-icons/pi";
+import { PiFolderSimpleUser, PiIntersectFill } from "react-icons/pi";
 
-export const navData1 = [
+export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/tenant", label: "Tenant", icon: PiBuildings },
   { path: "/administrator", label: "Administrator", icon: RiShieldUserLine },
-  { path: "/reporting", label: "Reporting & Analytics", icon: HiOutlineDocumentText },
-  { path: "/audit", label: "Audit & Compliance", icon: HiOutlineClipboardDocumentCheck },
+  {
+    path: "/reporting",
+    label: "Reports & Analytics",
+    icon: HiOutlineDocumentText,
+  },
+  {
+    path: "/audit",
+    label: "Audit & Compliance",
+    icon: HiOutlineClipboardDocumentCheck,
+  },
+];
+export const adminNavData = [
+  { path: "/admin/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
+  { path: "/admin/users", label: "Users", icon: HiOutlineUsers },
+  {
+    path: "/admin/reporting",
+    label: "Reports & Analytics",
+    icon: HiOutlineDocumentText,
+  },
+  {
+    path: "/admin/audit",
+    label: "Audit & Compliance",
+    icon: HiOutlineClipboardDocumentCheck,
+  },
+  {
+    path: "/admin/integration",
+    label: "Integration",
+    icon: PiIntersectFill,
+  },
 ];
 
 export const managerNavData = [
   { path: "/manager/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/manager/alerts", label: "Alerts & Rules", icon: RiShieldUserLine },
-  { path: "/manager/cases", label: "Case Management", icon: PiFolderSimpleUser },
+  {
+    path: "/manager/cases",
+    label: "Case Management",
+    icon: PiFolderSimpleUser,
+  },
   { path: "/manager/analytics", label: "Analytics", icon: BsGraphUpArrow },
 ];
-
 
 // statData
 import { ReactNode } from "react";
@@ -35,7 +65,7 @@ interface StatData {
   value: string | number;
   color: "red" | "green" | "blue" | "yellow";
   isGain: boolean;
-  text: string; 
+  text: string;
 }
 
 export const statsData: StatData[] = [
