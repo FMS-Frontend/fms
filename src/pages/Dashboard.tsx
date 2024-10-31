@@ -1,7 +1,7 @@
 import { FC } from "react";
-import DashboardTable from "../features/dashboard/DashboardTable";
-import DashboardStats from "../features/dashboard/DashboardStats";
-import ApexLineChart from "../features/dashboard/ApexLineChart";
+import DashboardTable from "../features/super-user/dashboard/DashboardTable";
+import DashboardStats from "../features/super-user/dashboard/DashboardStats";
+import ApexLineChart from "../features/super-user/dashboard/ApexLineChart";
 
 const Dashboard: FC = () => {
   return (

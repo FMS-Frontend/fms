@@ -169,6 +169,7 @@ const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  padding-top: 2rem;
 `;
 
 const BottomNavList = styled.ul`
@@ -176,6 +177,7 @@ const BottomNavList = styled.ul`
   flex-direction: column;
   gap: 0.8rem;
   margin-top: auto;
+  padding-bottom: 2rem;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -215,3 +217,10 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-brand-50);
   }
 `;
+
+// {navlist.map((nav) => (
+//   <StyledNavLink key={nav.text} to={nav.link}>
+//     {nav.icon}
+//     <span>{nav.text}</span>
+//   </StyledNavLink>
+// ))}

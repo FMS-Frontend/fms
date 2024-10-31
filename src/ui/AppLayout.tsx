@@ -1,34 +1,32 @@
-// import { FC } from "react";
-// import { Outlet } from "react-router-dom";
-// import Sidebar from "./Sidebar";
-// import Header from "./Header";
-
-// const AppLayout: FC = () => {
-//   return (
-//     <div className="grid grid-cols-[30rem_1fr] grid-rows-[auto_1fr] h-screen">
-//       <Sidebar />
-//       <Header />
-//       <div className="px-16 py-10 overflow-scroll">
-//         <Outlet />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AppLayout;
-
-import { FC } from "react";
+// AppLayout.tsx
+import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { navData1 } from "../db"; 
+import { navData1 } from "../db";
 
 const AppLayout: FC = () => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  // Toggle function for sidebar
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="grid grid-cols-[30rem_1fr] grid-rows-[auto_1fr] h-screen">
-      <Sidebar navData={navData1} /> 
-      <Header />
-      <div className="px-16 py-10 overflow-scroll">
+    <div className="grid grid-cols-1 lg:grid-cols-[30rem_1fr] grid-rows-[auto_1fr] h-screen hide-scrollbar">
+      {isSidebarOpen && (
+        <div className="fixed inset-0 z-10 bg-black bg-opacity-50 lg:hidden" onClick={toggleSidebar}></div>
+      )}
+      <Sidebar
+        navData={navData1}
+        className={`${
+          isSidebarOpen ? "block" : "hidden"
+        } lg:block absolute lg:relative z-20`}
+      />
+      <Header toggleSidebar={toggleSidebar} />
+
+      <div className="col-span-1 lg:col-start-2 lg:py-10 overflow-scroll hide-scrollbar">
         <Outlet />
       </div>
     </div>
@@ -36,3 +34,5 @@ const AppLayout: FC = () => {
 };
 
 export default AppLayout;
+
+

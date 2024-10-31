@@ -1,26 +1,26 @@
 import { FC } from "react";
 import OutlineButton from "../ui/OutlineButton";
 import SearchInput from "../ui/SearchInput";
-import AdminsTable from "../features/super-user/administrator/AdminsTable";
-import AddAdmin from "../features/super-user/administrator/AddAdmin";
+import AddUser from "../features/admin/users/AddUser";
+import UserTable from "../features/admin/users/UserTable";
 
-const Administrator: FC = () => {
+const Users: FC = () => {
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="font-bold text-4xl">Administrators Management</h1>
+      <h1 className="font-bold text-4xl">Users Management</h1>
 
       <div className="flex justify-between">
         <div className="flex gap-10">
-          <AddAdmin />
+          <AddUser />
           <OutlineButton>Export As</OutlineButton>
         </div>
 
         <SearchInput />
       </div>
 
-      <AdminsTable />
+      <UserTable />
     </div>
   );
 };
 
-export default Administrator;
+export default Users;

@@ -1,16 +1,10 @@
-// import BookingRow from "./BookingRow";
-// import Table from "../../ui/Table";
-// import Menus from "../../ui/Menus";
-// import Empty from "../../ui/Empty";
-// import { useBookings } from "./useBookings";
-// import Spinner from "../../ui/Spinner";
-// import Pagination from "../../ui/Pagination";
+import { FC } from "react";
+import Table from "../../../ui/Table";
+import TenantRow from "./TenantRow";
 
-import Table from "../../ui/Table";
-
-function DashboardTable() {
+const TenantTable: FC = () => {
   // const { bookings, isLoading, count } = useBookings();
-  const bookings: [] = [];
+  const tenants: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -18,7 +12,7 @@ function DashboardTable() {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr]">
+      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Tenant
@@ -35,13 +29,14 @@ function DashboardTable() {
           <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Status
           </div>
+          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+            Actions
+          </div>
         </Table.Header>
 
         <Table.Body
-          data={bookings}
-          render={(booking) => (
-            <BookingRow key={booking.id} booking={booking} />
-          )}
+          data={tenants}
+          render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
         />
 
         {/* <Table.Footer>
@@ -50,6 +45,6 @@ function DashboardTable() {
       </Table>
     </div>
   );
-}
+};
 
-export default DashboardTable;
+export default TenantTable;
