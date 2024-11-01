@@ -12,25 +12,22 @@ const AuditTable: FC = () => {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1.5fr_1fr_1.5fr_1.5fr_1fr_0.5fr]">
+      <Table columns="grid-cols-[1fr_1fr_1.5fr_1.5fr_1fr]">
         <Table.Header>
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+            Actions
+          </div>
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+            Login Time
+          </div>
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+            IP Address
+          </div>
           <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Administrators
           </div>
           <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Tenants
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
-            Email
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
-            Phone Number
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
-            Status
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
-            Action
           </div>
         </Table.Header>
 

@@ -9,7 +9,7 @@ interface StatProps {
   color: "red" | "green" | "blue" | "yellow";
 }
 
-const Stat: FC<StatProps> = ({ icon, title, value, color }) => {
+const AdminDashStat: FC<StatProps> = ({ icon, title, value, color }) => {
   console.log(color);
 
   const bgColorClass = {
@@ -27,7 +27,7 @@ const Stat: FC<StatProps> = ({ icon, title, value, color }) => {
   }[color];
 
   return (
-    <div className="bg-white border rounded-3xl p-4 grid  grid-rows-[auto_auto] ">
+    <div className="bg-white border rounded-3xl shadow-md p-4 grid  grid-rows-[auto_auto] ">
       <div className="flex justify-between px-5 py-4">
         <div className="flex flex-col justify-between">
           <div className="text-xl text-gray-600">{title}</div>
@@ -44,7 +44,7 @@ const Stat: FC<StatProps> = ({ icon, title, value, color }) => {
   );
 };
 
-export default Stat;
+export default AdminDashStat;
 
 {
   /* <div

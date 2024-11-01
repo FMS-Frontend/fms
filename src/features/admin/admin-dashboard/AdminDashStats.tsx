@@ -1,8 +1,8 @@
 import { FC } from "react";
-import Stat from "./Stat";
 import { BsBoxFill } from "react-icons/bs";
 import { IoPeople, IoCreate } from "react-icons/io5";
 import { RiLineChartLine } from "react-icons/ri";
+import AdminDashStat from "./AdminDashStat";
 
 /* Define the props for the Stat component */
 // interface StatProps {
@@ -12,28 +12,28 @@ import { RiLineChartLine } from "react-icons/ri";
 //   color: 'red' | 'green' | 'blue' | 'yellow' | 'gray'; // Add other colors as needed
 // }
 
-const Stats: FC = () => {
+const AdminDashStats: FC = () => {
   return (
     <>
-      <Stat
+      <AdminDashStat
         title="Total Tenants Created"
         color="yellow"
         icon={<BsBoxFill />}
         value={145}
       />
-      <Stat
+      <AdminDashStat
         title="Total Admin Created"
         color="blue"
         icon={<IoPeople />}
         value={28}
       />
-      <Stat
+      <AdminDashStat
         title="Total Active Users"
         color="green"
         icon={<RiLineChartLine />}
         value={207}
       />
-      <Stat
+      <AdminDashStat
         title="Average Account Created Per Day"
         color="red"
         icon={<IoCreate />}
@@ -43,4 +43,4 @@ const Stats: FC = () => {
   );
 };
 
-export default Stats;
+export default AdminDashStats;

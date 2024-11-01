@@ -2,7 +2,8 @@ import { FC } from "react";
 import PrimaryButton from "../../../ui/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
 import Modal from "../../../ui/Modal";
-import CreateIntegration from "./CreateIntegrationModal";
+// import CreateIntegration from "./IntegrationForm1";
+import CreateIntegration from "./CreateIntegration";
 
 const AddIntegration: FC = () => {
   return (
