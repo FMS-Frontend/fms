@@ -29,7 +29,7 @@ const ManagerLayout: FC = () => {
       />
       <Header toggleSidebar={toggleSidebar} />
 
-      <div className="col-span-1 lg:col-start-2 lg:py-10 overflow-scroll hide-scrollbar">
+      <div className="col-span-1 lg:col-start-2 lg:py-10 overflow-scroll hide-scrollbar p-12">
         <Outlet />
       </div>
     </div>

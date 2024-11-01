@@ -3,11 +3,13 @@ import { FiPlus } from "react-icons/fi";
 import PrimaryButton from "../ui/PrimaryButton";
 import OutlineButton from "../ui/OutlineButton";
 import AdminReportTable from "../features/admin/reports/AdminReportTable";
+import ReportOperations from "../features/super-user/reports/ReportOperations";
 
 const AdminReports: FC = () => {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Reports</h1>
+      <ReportOperations />
 
       <div className="flex justify-between">
         <div className="flex gap-10">
