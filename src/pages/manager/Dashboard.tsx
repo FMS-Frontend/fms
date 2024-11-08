@@ -23,7 +23,7 @@
 import { FC } from "react";
 import StatsDashboard from "../../features/manager/DashboardStats";
 import ApexLineChart from "../../features/super-user/dashboard/ApexLineChart";
-import DashboardTable from "../../features/super-user/dashboard/DashboardTable";
+// import DashboardTable from "../../features/super-user/dashboard/DashboardTable";
 
 const ManagerDashboard: FC = () => {
   return (
