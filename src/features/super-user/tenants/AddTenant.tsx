@@ -2,7 +2,8 @@ import { FC } from "react";
 import PrimaryButton from "../../../ui/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
 import Modal from "../../../ui/Modal";
-import CreateTenantModal from "./CreateTenantModal";
+// import CreateTenantModal from "./CreateTenantModal";
+import TenantModal from "./TenantModal";
 
 const AddTenant: FC = () => {
   return (
@@ -14,28 +15,10 @@ const AddTenant: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-tenant">
-        <CreateTenantModal />
+        <TenantModal />
       </Modal.Window>
     </Modal>
   );
 };
 
 export default AddTenant;
-
-// const AddTenant: FC = () => {
-//   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-
-//   return (
-//     <>
-//       <PrimaryButton onClick={() => setIsOpenModal((show) => !show)}>
-//         <FiPlus />
-//         Add New Tenant
-//       </PrimaryButton>
-//       {isOpenModal && (
-//         <Modal>
-//           <CreateTenant onClose={() => setIsOpenModal(false)} />
-//         </Modal>
-//       )}
-//     </>
-//   );
-// };

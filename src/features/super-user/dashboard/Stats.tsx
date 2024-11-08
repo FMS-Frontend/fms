@@ -19,7 +19,7 @@ const Stats: FC = () => {
         title="Total Tenants Created"
         color="yellow"
         icon={<BsBoxFill />}
-        value={145}
+        value={1045}
       />
       <Stat
         title="Total Admin Created"
@@ -31,13 +31,13 @@ const Stats: FC = () => {
         title="Total Active Users"
         color="green"
         icon={<RiLineChartLine />}
-        value={207}
+        value={703}
       />
       <Stat
         title="Average Account Created Per Day"
         color="red"
         icon={<IoCreate />}
-        value={145}
+        value={45}
       />
     </>
   );

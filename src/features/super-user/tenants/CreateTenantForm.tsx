@@ -1,20 +1,14 @@
 import { FC } from "react";
 
-// interface ChildProps {
-//   onClick: MouseEventHandler;
-// }
+interface StepProps {
+  onNext: () => void;
+}
 
-const CreateTenant: FC = () => {
+const CreateTenantForm: FC<StepProps> = ({ onNext }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
-        {/* <button
-          onClick={onClick}
-          className="text-gray-400 hover:text-gray-800 text-4xl px-2 py-1 "
-        >
-          &times;
-        </button> */}
       </div>
 
       <form className="flex flex-col gap-3">
@@ -73,10 +67,11 @@ const CreateTenant: FC = () => {
 
         <div className="flex justify-center mt-6">
           <button
-            type="submit"
+            type="button"
+            onClick={onNext}
             className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Create Tenant
+            Next
           </button>
         </div>
       </form>
@@ -84,4 +79,4 @@ const CreateTenant: FC = () => {
   );
 };
 
-export default CreateTenant;
+export default CreateTenantForm;

@@ -12,12 +12,12 @@ const Tenant: FC = () => {
       <h1 className="font-bold text-4xl">Tenant Management</h1>
 
       <div className="flex justify-between">
+        <SearchInput />
+
         <div className="flex gap-10">
           <AddTenant />
           <OutlineButton>Export As</OutlineButton>
         </div>
-
-        <SearchInput />
       </div>
 
       <TenantTable />
