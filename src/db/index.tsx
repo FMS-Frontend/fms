@@ -8,15 +8,21 @@ import { PiBuildings } from "react-icons/pi";
 import { RiShieldUserLine } from "react-icons/ri";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { PiFolderSimpleUser, PiIntersectFill } from "react-icons/pi";
+import { IoStatsChart } from "react-icons/io5";
 
 export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { path: "/tenant", label: "Tenant", icon: PiBuildings },
   { path: "/administrator", label: "Administrator", icon: RiShieldUserLine },
+  { path: "/tenant", label: "Tenant", icon: PiBuildings },
   {
-    path: "/reporting",
-    label: "Reports & Analytics",
+    path: "/reports",
+    label: "Reports",
     icon: HiOutlineDocumentText,
+  },
+  {
+    path: "/analytics",
+    label: "Analytics",
+    icon: IoStatsChart,
   },
   {
     path: "/audit",

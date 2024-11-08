@@ -10,12 +10,12 @@ const Administrator: FC = () => {
       <h1 className="font-bold text-4xl">Administrators Management</h1>
 
       <div className="flex justify-between">
+        <SearchInput />
+
         <div className="flex gap-10">
           <AddAdmin />
           <OutlineButton>Export As</OutlineButton>
         </div>
-
-        <SearchInput />
       </div>
 
       <AdminsTable />
