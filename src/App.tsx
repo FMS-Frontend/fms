@@ -18,6 +18,7 @@ import AdminLayout from "./ui/AdminLayout";
 import AdminReports from "./pages/AdminReports";
 import AdminAudit from "./pages/AdminAudit";
 import AdminIntegration from "./pages/AdminIntegration";
+import ChangePassword from "./pages/ChangePassword";
 // import Integration from "./pages/Integration";
 
 // Define the ProtectedRoute component
@@ -60,6 +61,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="changePassword" element={<ChangePassword />} />
 
         {/* Superuser Routes */}
         <Route element={<AppLayout />}>
