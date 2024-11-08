@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import usePasswordToggle from "../hooks/usePasswordToggle";
 
-const LoginPage: React.FC = () => {
-  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const ChangePassword: FC = () => {
+  const [newPasswordInputType, newPasswordToggleIcon] = usePasswordToggle();
+  const [confirmPasswordInputType, confirmPasswordToggleIcon] =
+    usePasswordToggle();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log({ email, password });
+    console.log({ newPassword, confirmPassword });
   };
 
   return (
@@ -19,27 +22,30 @@ const LoginPage: React.FC = () => {
       ></div>
       <div className="z-10 bg-white p-20 rounded-2xl shadow-lg w-full max-w-2xl flex flex-col gap-4">
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
-          Login to Account
+          Change Password
         </h2>
         <p className="text-gray-600 text-center text-xl mb-6">
-          Please enter your email and password to continue
+          To login successfully, change your password
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-          <div>
+          <div className="relative">
             <label
               htmlFor="email"
               className="block text-gray-700 font-medium text-2xl mb-1"
             >
-              Email
+              New Password
             </label>
             <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 text-2xl rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xl"
+              id="password"
+              type={newPasswordInputType}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className=" w-full px-4 py-3 text-2xl rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xl"
               placeholder="Enter your email"
             />
+            <span className="absolute right-4 bottom-4 flex items-center cursor-pointer text-2xl">
+              {newPasswordToggleIcon}
+            </span>
           </div>
 
           <div className="relative">
@@ -47,24 +53,19 @@ const LoginPage: React.FC = () => {
               htmlFor="password"
               className="block text-gray-700 font-medium text-2xl mb-1"
             >
-              Password
+              Confirm Password
             </label>
             <input
               id="password"
-              type={PasswordInputType}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              type={confirmPasswordInputType}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-3 text-2xl  rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xl"
               placeholder="Enter your password"
             />
-            <span className="absolute right-4 bottom-12 flex items-center cursor-pointer text-2xl">
-              {ToggleIcon}
+            <span className="absolute right-4 bottom-4 flex items-center cursor-pointer text-2xl">
+              {confirmPasswordToggleIcon}
             </span>
-            <div className="flex justify-end mt-1">
-              <a href="#" className="text-xl text-blue-500 hover:underline">
-                Forgot Password?
-              </a>
-            </div>
           </div>
 
           <div className="flex items-center justify-center">
@@ -72,7 +73,7 @@ const LoginPage: React.FC = () => {
               type="submit"
               className="w-3/4 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
             >
-              Sign In
+              Create Password
             </button>
           </div>
         </form>
@@ -81,4 +82,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default ChangePassword;
