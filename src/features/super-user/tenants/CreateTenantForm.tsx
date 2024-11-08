@@ -1,20 +1,10 @@
 import { FC } from "react";
 
-/**
- * CreateTenant is a React functional component that renders a form for setting
- * up a new tenant. The form includes fields for tenant name, address, admin name,
- * email, and description, along with a submit button.
- *
- * @component
- * @returns {JSX.Element} The rendered form component for creating a new tenant.
- *
- * @example
- * return (
- *   <CreateTenant />
- * );
- */
+interface StepProps {
+  onNext: () => void;
+}
 
-const CreateTenant: FC = () => {
+const CreateTenantForm: FC<StepProps> = ({ onNext }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -77,10 +67,11 @@ const CreateTenant: FC = () => {
 
         <div className="flex justify-center mt-6">
           <button
-            type="submit"
+            type="button"
+            onClick={onNext}
             className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Create Tenant
+            Next
           </button>
         </div>
       </form>
@@ -88,4 +79,4 @@ const CreateTenant: FC = () => {
   );
 };
 
-export default CreateTenant;
+export default CreateTenantForm;

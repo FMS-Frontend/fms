@@ -27,7 +27,7 @@ import ApexLineChart from "../../features/super-user/dashboard/ApexLineChart";
 
 const ManagerDashboard: FC = () => {
   return (
-    <div className="p-8 md:p-16 flex flex-col gap-8 bg-slate-100 hide-scrollbar">
+    <div className=" flex flex-col gap-8 hide-scrollbar">
       <h1 className="font-bold text-4xl">Dashboard</h1>
       <StatsDashboard />
       <ApexLineChart />

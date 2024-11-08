@@ -91,7 +91,7 @@ const Window: FC<WindowProps> = ({ children, name }) => {
             <span className="absolute right-12 top-12">
               <CloseButton onClick={close} />
             </span>
-            {cloneElement(children as ReactElement, { onClick: () => close })}
+            {cloneElement(children as ReactElement, { onClose: () => close })}
           </div>
         </div>,
         modalContainer

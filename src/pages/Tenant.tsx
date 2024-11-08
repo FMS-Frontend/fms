@@ -8,16 +8,16 @@ import AddTenant from "../features/super-user/tenants/AddTenant";
 
 const Tenant: FC = () => {
   return (
-    <div className="p-8 lg:p-16 flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Tenant Management</h1>
 
       <div className="flex justify-between">
+        <SearchInput />
+
         <div className="flex gap-10">
           <AddTenant />
           <OutlineButton>Export As</OutlineButton>
         </div>
-
-        <SearchInput />
       </div>
 
       <TenantTable />

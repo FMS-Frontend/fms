@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import AppLayout from "./ui/AppLayout";
 import Tenant from "./pages/Tenant";
 import Administrator from "./pages/Administrator";
-import Reporting from "./pages/Reporting";
+import Reporting from "./pages/Reports";
 import Audit from "./pages/Audit";
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
@@ -18,6 +18,9 @@ import AdminLayout from "./ui/AdminLayout";
 import AdminReports from "./pages/AdminReports";
 import AdminAudit from "./pages/AdminAudit";
 import AdminIntegration from "./pages/AdminIntegration";
+import ChangePassword from "./pages/ChangePassword";
+import Reports from "./pages/Reports";
+import Analytics from "./pages/Analytics";
 // import Integration from "./pages/Integration";
 
 // Define the ProtectedRoute component
@@ -70,6 +73,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="changePassword" element={<ChangePassword />} />
 
         {/* Superuser Routes */}
         <Route element={<AppLayout />}>
@@ -101,7 +105,8 @@ function App() {
               />
             </>
           )}
-          <Route path="reporting" element={<Reporting />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="analytics" element={<Analytics />} />
           <Route path="audit" element={<Audit />} />
         </Route>
 

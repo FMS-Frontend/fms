@@ -1,6 +1,6 @@
 import { FC } from "react";
 import DashboardTable from "../features/admin/admin-dashboard/AdminDashboardTable";
-import DashboardStats from "../features/admin/admin-dashboard/AdminDashboardStats";
+import DashboardStats from "../features/admin/integration/AdminIntegrationStats";
 // import ApexLineChart from "../features/admin/admin-dashboard/ApexLineChart";
 import SearchInput from "../ui/SearchInput";
 import OutlineButton from "../ui/OutlineButton";

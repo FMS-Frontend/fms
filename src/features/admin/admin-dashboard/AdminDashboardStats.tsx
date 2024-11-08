@@ -1,10 +1,10 @@
 import { FC } from "react";
-import Stats from "./Stats";
+import AdminDashStats from "./AdminDashStats";
 
 const AdminDashboardStats: FC = () => {
   return (
     <div className="grid grid-cols-4 gap-10">
-      <Stats />
+      <AdminDashStats />
     </div>
   );
 };

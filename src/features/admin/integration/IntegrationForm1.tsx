@@ -1,53 +1,36 @@
 import { FC } from "react";
 
-const CreateIntegration: FC = () => {
+interface StepProps {
+  onNext: () => void;
+}
+
+const IntegrationForm1: FC<StepProps> = ({ onNext }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Create New User</h2>
+        <h2 className="text-3xl font-semibold">Add New Integration</h2>
       </div>
 
       <form className="flex flex-col gap-3">
+        <h3 className="text-2xl font-bold mb-2">Integration Information</h3>
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Tenant Name
+            Name
           </label>
           <input
             type="text"
-            placeholder="Enter tenant name"
+            placeholder="Enter Integration name"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Address
-          </label>
-          <input
-            type="text"
-            placeholder="Enter address"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin Name
+            Type
           </label>
           <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-            <option>Click to select and link Admin</option>
+            <option>CRM/KYC/Payment Gateway</option>
           </select>
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
         </div>
 
         <div className="mb-6">
@@ -63,10 +46,11 @@ const CreateIntegration: FC = () => {
 
         <div className="flex justify-center mt-6">
           <button
-            type="submit"
+            type="button"
+            onClick={onNext}
             className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Create Tenant
+            Next
           </button>
         </div>
       </form>
@@ -74,4 +58,4 @@ const CreateIntegration: FC = () => {
   );
 };
 
-export default CreateIntegration;
+export default IntegrationForm1;
