@@ -1,0 +1,43 @@
+name: Deploy Web to Bucket
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release_package:
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Install Dependencies 〽️
+          run: npm install
+
+        - name: Create .env File ✍🏾
+          run: |
+            echo "${{ secrets.ENV_PROD }}" > .env
+            echo "${{ secrets.ENV_PROD }}" > .env.production
+
+        - name: Build Application ⛑️
+          run: npm run build
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+        - name: Invalidate CloudFront 🧹
+          uses: chetan/invalidate-cloudfront-action@v2
+          env:
+            DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID_PROD }}
+            PATHS: "/*"
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+  
+        - name: Deploy to S3 bucket 🍔 🚀
+          run: aws s3 sync ./dist/ ${{ secrets.AWS_BUCKET_PROD }} --delete
