@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { formatDateTime } from "../../utils/helpers";
 import { FaCircleUser } from "react-icons/fa6";
+import { formatDateTime } from "../../../utils/helpers";
 
 interface RecentProp {
   cases: string

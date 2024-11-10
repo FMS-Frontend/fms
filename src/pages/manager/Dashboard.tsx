@@ -1,10 +1,10 @@
 import { FC } from "react";
-import StatsDashboard from "../../features/manager/DashboardStats";
-// import ApexLineChart from "../../features/super-user/dashboard/ApexLineChart";
-import PriorityTable from "../../features/manager/PriorityTable";
-import RecentTable from "../../features/manager/RecentTable";
+import StatsDashboard from "../../features/manager/dashboard/DashboardStats";
 import { priorityData, recentData } from "../../db";
-import ManagerTrendGraph from "../../features/manager/ManagerTrendGraph";
+import ManagerTrendGraph from "../../features/manager/dashboard/ManagerTrendGraph";
+import PriorityTable from "../../features/manager/dashboard/PriorityTable";
+import RecentTable from "../../features/manager/dashboard/RecentTable";
+
 
 const ManagerDashboard: FC = () => {
   const heading1 = ["Alert Type", "Time Stamp", "Status"];

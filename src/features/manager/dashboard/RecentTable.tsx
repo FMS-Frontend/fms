@@ -1,6 +1,7 @@
 import { FC } from "react";
-import Table from "../../ui/Table";
+import Table from "../../../ui/Table";
 import RecentTableRow from "./RecentTableRow";
+
 interface RecentTableProps {
   headingData: string[];
   data: {

@@ -126,6 +126,7 @@ function App() {
           <Route path="/manager" element={<ManagerLayout />}>
             <Route path="dashboard" element={<ManagerDashboard />} />
             <Route path="alerts" element={<Tenant />} />
+            <Route path="rules" element={<Tenant />} />
             <Route path="cases" element={<Administrator />} />
             <Route path="analytics" element={<Reporting />} />
           </Route>

@@ -4,11 +4,11 @@ import {
   HiOutlineDocumentText,
 } from "react-icons/hi2";
 import { MdOutlineDashboard } from "react-icons/md";
-import { PiBuildings } from "react-icons/pi";
 import { RiShieldUserLine } from "react-icons/ri";
 import { BsGraphUpArrow } from "react-icons/bs";
-import { PiFolderSimpleUser, PiIntersectFill } from "react-icons/pi";
-import { IoStatsChart } from "react-icons/io5";
+import { PiFolderSimpleUser, PiIntersectFill, PiBuildings } from "react-icons/pi";
+import { IoStatsChart, IoAlertCircleOutline } from "react-icons/io5";
+import { GoLaw } from "react-icons/go";
 
 export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
@@ -52,10 +52,11 @@ export const adminNavData = [
 
 export const managerNavData = [
   { path: "/manager/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { path: "/manager/alerts", label: "Alerts & Rules", icon: RiShieldUserLine },
+  { path: "/manager/alerts", label: "Alerts", icon: IoAlertCircleOutline },
+  { path: "/manager/rules", label: "Rules", icon: GoLaw },
   {
     path: "/manager/cases",
-    label: "Case Management",
+    label: "Cases",
     icon: PiFolderSimpleUser,
   },
   { path: "/manager/analytics", label: "Analytics", icon: BsGraphUpArrow },

@@ -1,7 +1,7 @@
 // StatsDashboard.tsx
 import { FC } from "react";
 import ManagerStat from "./ManagerStat";
-import { statsData } from "../../db";
+import { statsData } from "../../../db";
 
 const StatsDashboard: FC = () => {
   return (
