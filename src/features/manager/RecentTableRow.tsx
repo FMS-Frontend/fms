@@ -48,7 +48,7 @@ const RecentTableRow: FC<RecentProp> = ({ cases, user, date, index}) => {
         </div>
         <span className="px-2">{user.name}</span>
       </div>
-      <div>{formatDateTime(date)}</div>
+      <div className="text-slate-400">{formatDateTime(date)}</div>
       
     </div>
   );

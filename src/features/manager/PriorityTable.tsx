@@ -21,7 +21,7 @@ const PriorityTable: FC<PriorityTableProps> = ({ headingData, data }) => {
           {headingData.length > 0 && headingData.map((heading, index) => (
             <div
               key={index}
-              className="text-gray-600 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
+              className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
             >
               {heading}
             </div>

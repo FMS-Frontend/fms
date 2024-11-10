@@ -24,7 +24,7 @@ const RecentTable: FC<RecentTableProps> = ({ headingData, data }) => {
             headingData.map((heading, index) => (
               <div
                 key={index}
-                className="text-gray-600 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
+                className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
               >
                 {heading}
               </div>

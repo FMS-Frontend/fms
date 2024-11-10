@@ -36,7 +36,7 @@ const PriorityTableRow: FC<Tenant> = ({ alertType, timeStamp, status, index }) =
       <div className="">
         <span className={`px-2 py-1 rounded ${getStatusStyles(status)}`}>{status}</span>
       </div>
-      <div>{formatTime(timeStamp)}</div>
+      <div className="text-slate-400">{formatTime(timeStamp)}</div>
     </div>
   );
 };
