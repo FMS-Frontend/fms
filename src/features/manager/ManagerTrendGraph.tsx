@@ -107,7 +107,6 @@ const ManagerTrendGraph: React.FC = () => {
       curve: "straight",
       colors: ["#007BFF"],  // Keep stroke color solid
       width: 1,             // Width of the stroke line
-      opacity: 1,           // Full opacity to avoid gradient effect on the line
     },
     title: {
       text: "Case Trends",
@@ -149,7 +148,7 @@ const ManagerTrendGraph: React.FC = () => {
   };
   
   return (
-    <div id="chart" className="bg-white rounded-xl border p-4">
+    <div id="chart" className="bg-white rounded-2xl shadow-md border p-4">
       <ReactApexChart
         className="mt-8"
         options={options}
