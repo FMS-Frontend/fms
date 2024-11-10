@@ -30,7 +30,7 @@ const ManagerStat: FC<StatProps> = ({ icon, title, value, color, isGain, text, p
   }[color];
 
   return (
-    <div className="bg-white rounded-3xl p-4 grid shadow-md  grid-rows-[auto_auto] ">
+    <div className="bg-white rounded-3xl p-4 grid shadow-md border  grid-rows-[auto_auto] ">
       <div className="flex justify-between px-5 py-4">
         <div className="flex flex-col justify-between">
           <div className="text-xl text-gray-600">{title}</div>

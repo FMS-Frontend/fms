@@ -122,7 +122,7 @@ export interface Tenant {
   status: "Active" | "Unassigned" | "Deactivated";
 }
 
-export const mockData: Tenant[] = [
+export const priorityData: Tenant[] = [
   { id: 1, alertType: "Login", timeStamp: "2024-11-07T09:23", status: "Active" },
   { id: 2, alertType: "Logout", timeStamp: "2024-11-07T10:15:00Z", status: "Unassigned" },
   { id: 3, alertType: "Edit", timeStamp: "2024-11-07T11:30:00Z", status: "Deactivated" },
@@ -137,8 +137,8 @@ interface RecentProp {
   id: number;
   cases: string;
   user: {
-    image: string;  // URL or path to the user's image
-    name: string;   // Name of the user
+    image: string;  
+    name: string;
   };
   date: string;
 }

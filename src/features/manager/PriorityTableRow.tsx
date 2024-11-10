@@ -1,31 +1,5 @@
-// import { FC } from "react";
-
-// interface Tenant {
-//   alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
-//   timeStamp: string;
-//   status: "Active" | "Unassigned" | "Deactivated";
-//   index: number; 
-// }
-
-// const ManagerTableRow: FC<Tenant> = ({ alertType, timeStamp, status, index}) => {
-
-//   const formatTime = (timestamp: string) => {
-//     const date = new Date(timestamp);
-//     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-//   };
-//   return (
-    // <div className={`grid grid-cols-3 text-base gap-4 p-4 border-b border-gray-200 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white' }`}>
-    //   <div>{alertType}</div>
-    //   <div>{status}</div>
-    //   <div>{formatTime(timeStamp)}</div>
-    // </div>
-//   );
-// };
-
-// export default ManagerTableRow;
-
-
 import { FC } from "react";
+import { formatTime } from "../../utils/helpers";
 
 interface Tenant {
   alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
@@ -37,12 +11,7 @@ interface Tenant {
 
 
 const PriorityTableRow: FC<Tenant> = ({ alertType, timeStamp, status, index }) => {
-  // Format timestamp to "HH:MM AM/PM"
-  const formatTime = (timestamp: string) => {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-  };
-
+  
   // Get Tailwind CSS classes based on status
   const getStatusStyles = (status: string) => {
     switch (status) {
