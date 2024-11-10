@@ -4,10 +4,12 @@ import { createContext, useContext, ReactNode } from "react";
 interface TableProps {
   columns: string; // CSS grid-template-columns value
   children: ReactNode;
+  
 }
 
 interface RowProps {
   children: ReactNode;
+  bgColor: string | null;
 }
 
 interface BodyProps<T> {
@@ -27,7 +29,7 @@ const Table: React.FC<TableProps> & {
   Row: React.FC<RowProps>;
   Body: <T>(props: BodyProps<T>) => JSX.Element;
   Footer: React.FC<FooterProps>;
-} = ({ columns, children }) => {
+} = ({ columns, children}) => {
   return (
     <TableContext.Provider value={{ columns }}>
       <div
@@ -41,12 +43,12 @@ const Table: React.FC<TableProps> & {
 };
 
 // Header component
-const Header: React.FC<RowProps> = ({ children }) => {
+const Header: React.FC<RowProps> = ({ children, bgColor }) => {
   const { columns } = useContext(TableContext);
   return (
     <header
       role="row"
-      className={`grid ${columns} gap-6 items-center bg-gray-100 border-b border-gray-300 p-4 text-sm font-semibold uppercase tracking-wide text-gray-600  `}
+      className={`grid ${columns} ${bgColor} gap-6 items-center  border-b border-gray-300 p-4 text-sm font-semibold uppercase tracking-wide text-gray-600  `}
     >
       {children}
     </header>

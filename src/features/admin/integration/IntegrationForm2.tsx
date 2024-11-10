@@ -1,13 +1,6 @@
 import { FC } from "react";
 import PrimaryButton from "../../../ui/PrimaryButton";
 
-<<<<<<< HEAD:src/features/admin/integration/CreateIntegrationModal.tsx
-const CreateIntegration: FC = () => {
-  return (
-    <>
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Create New User</h2>
-=======
 interface StepProps {
   onPrevious: () => void;
   // onNext: () => void;
@@ -18,7 +11,6 @@ const IntegrationForm2: FC<StepProps> = ({ onPrevious }) => {
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-semibold">Add New Integration</h2>
->>>>>>> 5eeb653ba72a2df31cabbe3c3d56c0e879ebb486:src/features/admin/integration/IntegrationForm2.tsx
       </div>
 
       <form className="flex flex-col gap-3">

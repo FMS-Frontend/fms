@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { PiTrendUp } from "react-icons/pi";
-import { PiTrendDownBold, PiTrendUpBold } from "react-icons/pi";
+import { PiTrendDownBold, } from "react-icons/pi";
 
 interface StatProps {
   icon: React.ReactNode;
@@ -9,9 +9,10 @@ interface StatProps {
   color: "red" | "green" | "blue" | "yellow";
   isGain: boolean;
   text: string;
+  percent: number,
 }
 
-const ManagerStat: FC<StatProps> = ({ icon, title, value, color, isGain, text }) => {
+const ManagerStat: FC<StatProps> = ({ icon, title, value, color, isGain, text, percent }) => {
   console.log(color);
 
   const bgColorClass = {
@@ -45,6 +46,7 @@ const ManagerStat: FC<StatProps> = ({ icon, title, value, color, isGain, text })
         <div className={`px-5 flex items-center gap-2 text-gray-500`}>
           {isGain && <PiTrendUp className="text-green-500" />}
           {!isGain && <PiTrendDownBold className="text-red-500 font-bold" />}
+          <span className={`${isGain ? "text-green-500" : "text-red-500"} mx-2`}>{percent}</span>
           <p className="ms-3 text-xl text-gray-600">{text}</p>
         </div>
         

@@ -15,6 +15,7 @@ const StatsDashboard: FC = () => {
           color={stat.color}
           isGain={stat.isGain}
           text={stat.text}
+          percent={stat.percent}
         />
       ))}
     </div>
