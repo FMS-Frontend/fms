@@ -4,11 +4,11 @@ import {
   HiOutlineDocumentText,
 } from "react-icons/hi2";
 import { MdOutlineDashboard } from "react-icons/md";
-import { PiBuildings } from "react-icons/pi";
 import { RiShieldUserLine } from "react-icons/ri";
 import { BsGraphUpArrow } from "react-icons/bs";
-import { PiFolderSimpleUser, PiIntersectFill } from "react-icons/pi";
-import { IoStatsChart } from "react-icons/io5";
+import { PiFolderSimpleUser, PiIntersectFill, PiBuildings } from "react-icons/pi";
+import { IoStatsChart, IoAlertCircleOutline } from "react-icons/io5";
+import { GoLaw } from "react-icons/go";
 
 export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
@@ -52,10 +52,11 @@ export const adminNavData = [
 
 export const managerNavData = [
   { path: "/manager/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { path: "/manager/alerts", label: "Alerts & Rules", icon: RiShieldUserLine },
+  { path: "/manager/alerts", label: "Alerts", icon: IoAlertCircleOutline },
+  { path: "/manager/rules", label: "Rules", icon: GoLaw },
   {
     path: "/manager/cases",
-    label: "Case Management",
+    label: "Cases",
     icon: PiFolderSimpleUser,
   },
   { path: "/manager/analytics", label: "Analytics", icon: BsGraphUpArrow },
@@ -72,6 +73,7 @@ interface StatData {
   color: "red" | "green" | "blue" | "yellow";
   isGain: boolean;
   text: string;
+  percent: number;
 }
 
 export const statsData: StatData[] = [
@@ -82,6 +84,7 @@ export const statsData: StatData[] = [
     color: "green",
     isGain: false,
     text: "Down this year",
+    percent: 4.3,
   },
   {
     icon: <FaUsers />,
@@ -90,6 +93,7 @@ export const statsData: StatData[] = [
     color: "blue",
     isGain: true,
     text: "Up this month",
+    percent: 8.5,
   },
   {
     icon: <FaDollarSign />,
@@ -98,13 +102,107 @@ export const statsData: StatData[] = [
     color: "yellow",
     isGain: true,
     text: "Up from yesterday",
+    percent: 1.8
   },
   {
     icon: <FaTasks />,
-    title: "Tasks Completed",
-    value: 87,
+    title: "Cases Closed This Month",
+    value: 33,
     color: "red",
     isGain: true,
     text: "Up from past month",
+    percent: 1.3,
   },
 ];
+
+//
+export interface Tenant {
+  id: number;
+  alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
+  timeStamp: string;
+  status: "Active" | "Unassigned" | "Deactivated";
+}
+
+export const priorityData: Tenant[] = [
+  { id: 1, alertType: "Login", timeStamp: "2024-11-07T09:23", status: "Active" },
+  { id: 2, alertType: "Logout", timeStamp: "2024-11-07T10:15:00Z", status: "Unassigned" },
+  { id: 3, alertType: "Edit", timeStamp: "2024-11-07T11:30:00Z", status: "Deactivated" },
+  { id: 4, alertType: "Update", timeStamp: "2024-11-07T12:45:00Z", status: "Active" },
+  { id: 5, alertType: "Create", timeStamp: "2024-11-07T13:50:00Z", status: "Unassigned" },
+  { id: 6, alertType: "Delete", timeStamp: "2024-11-07T15:05:00Z", status: "Deactivated" }
+];
+
+
+
+interface RecentProp {
+  id: number;
+  cases: string;
+  user: {
+    image: string;  
+    name: string;
+  };
+  date: string;
+}
+
+
+
+export const recentData: RecentProp[] = [
+  {
+    id: 1,
+    cases: "Case Created",
+    user: {
+      image: "https://example.com/user1.jpg",
+      name: "Alice Johnson"
+    },
+    date: "2024-11-07T09:23:00Z"
+  },
+  {
+    id: 2,
+    cases: "Case Closed",
+    user: {
+      image: "https://example.com/user2.jpg",
+      name: "Bob Smith"
+    },
+    date: "2024-11-07T11:15:00Z"
+  },
+  {
+    id: 3,
+    cases: "Alert Review",
+    user: {
+      image: "https://example.com/user3.jpg",
+      name: "Carol Lee"
+    },
+    date: "2024-11-07T14:30:00Z"
+  },
+  {
+    id: 4,
+    cases: "Case Created",
+    user: {
+      image: "https://example.com/user4.jpg",
+      name: "David Kim"
+    },
+    date: "2024-11-08T08:00:00Z"
+  },
+  {
+    id: 5,
+    cases: "Case Closed",
+    user: {
+      image: "https://example.com/user5.jpg",
+      name: "Eva Green"
+    },
+    date: "2024-11-08T10:45:00Z"
+  },
+  {
+    id: 6,
+    cases: "Alert Review",
+    user: {
+      image: "https://example.com/user6.jpg",
+      name: "Frank White"
+    },
+    date: "2024-11-08T13:10:00Z"
+  }
+];
+
+
+
+

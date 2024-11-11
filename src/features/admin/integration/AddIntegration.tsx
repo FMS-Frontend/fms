@@ -7,13 +7,13 @@ import CreateIntegration from "./CreateIntegration";
 const AddIntegration: FC = () => {
   return (
     <Modal>
-      <Modal.Open opens="create-tenant">
+      <Modal.Open opens="integration">
         <PrimaryButton>
           <FiPlus />
           Add New Integration
         </PrimaryButton>
       </Modal.Open>
-      <Modal.Window name="create-tenant">
+      <Modal.Window name="integration">
         {({ onClose }) => <CreateIntegration onClose={onClose} />}
       </Modal.Window>
     </Modal>
