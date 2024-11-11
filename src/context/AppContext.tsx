@@ -18,7 +18,7 @@ interface AppProviderProps {
 
 // Create the AppProvider component
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const role = "superuser";
+  const role = "manager";
 
   /**
    * Check the user role and return the role string.

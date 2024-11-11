@@ -14,7 +14,7 @@ const AddIntegration: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-tenant">
-        <CreateIntegration />
+        {({ onClose }) => <CreateIntegration onClose={onClose} />}
       </Modal.Window>
     </Modal>
   );

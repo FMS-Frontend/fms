@@ -3,7 +3,6 @@ import PrimaryButton from "../../../ui/PrimaryButton";
 
 interface StepProps {
   onPrevious: () => void;
-  // onNext: () => void;
 }
 
 const IntegrationForm2: FC<StepProps> = ({ onPrevious }) => {

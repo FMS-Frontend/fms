@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-// interface ChildProps {
-//   onClick: MouseEventHandler;
-// }
+interface CreateUserProps {
+  onClose: () => void;
+}
 
-const CreateUser: FC = () => {
+const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -80,7 +80,15 @@ const CreateUser: FC = () => {
           />
         </div>
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-between mt-6">
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-xl px-4 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+          >
+            Close
+          </button>
+
           <button
             type="submit"
             className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
