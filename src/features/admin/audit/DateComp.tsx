@@ -23,8 +23,8 @@ const DateComp: FC = () => {
     const { selection } = ranges;
     setSelectionRange({
       ...selectionRange,
-      startDate: selection.startDate,
-      endDate: selection.endDate,
+      startDate: selection.startDate || new Date(),
+      endDate: selection.endDate || new Date(),
     });
     console.log(ranges);
   };

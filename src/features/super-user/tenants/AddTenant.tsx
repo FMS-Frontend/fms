@@ -29,7 +29,7 @@ const AddTenant: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-tenant">
-        <TenantModal />
+        {({ onClose }) => <TenantModal onClose={onClose} />}
       </Modal.Window>
     </Modal>
   );

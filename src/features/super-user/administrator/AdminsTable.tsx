@@ -25,7 +25,7 @@ import Table from "../../../ui/Table";
 
 const AdminsTable: FC = () => {
   // const { bookings, isLoading, count } = useBookings();
-  const admins: [] = [];
+  // const admins: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -55,10 +55,10 @@ const AdminsTable: FC = () => {
           </div>
         </Table.Header>
 
-        <Table.Body
+        {/* <Table.Body
           data={admins}
           render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
-        />
+        /> */}
 
         {/* <Table.Footer>
         <Pagination count={count} />
