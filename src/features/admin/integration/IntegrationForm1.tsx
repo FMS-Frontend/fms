@@ -2,9 +2,10 @@ import { FC } from "react";
 
 interface StepProps {
   onNext: () => void;
+  onClose: () => void;
 }
 
-const IntegrationForm1: FC<StepProps> = ({ onNext }) => {
+const IntegrationForm1: FC<StepProps> = ({ onNext, onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -44,7 +45,15 @@ const IntegrationForm1: FC<StepProps> = ({ onNext }) => {
           />
         </div>
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-between mt-6">
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-xl px-4 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+
           <button
             type="button"
             onClick={onNext}

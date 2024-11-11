@@ -21,10 +21,10 @@ interface Report {
 }
 
 interface ReportRowProps {
-  tenant: Report;
+  report: Report;
 }
 
-const ReportRow: FC<ReportRowProps> = ({ report }) => {
+const ReportRow: FC<ReportRowProps> = () => {
   return <div>Row</div>;
 };
 

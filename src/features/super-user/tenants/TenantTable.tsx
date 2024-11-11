@@ -1,10 +1,10 @@
 import { FC } from "react";
 import Table from "../../../ui/Table";
-import TenantRow from "./TenantRow";
+// import TenantRow from "./TenantRow";
 
 const TenantTable: FC = () => {
   // const { bookings, isLoading, count } = useBookings();
-  const tenants: [] = [];
+  // const tenants: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -34,10 +34,10 @@ const TenantTable: FC = () => {
           </div>
         </Table.Header>
 
-        <Table.Body
+        {/* <Table.Body
           data={tenants}
           render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
-        />
+        /> */}
 
         {/* <Table.Footer>
         <Pagination count={count} />

@@ -21,7 +21,7 @@ interface OpenProps {
 }
 
 interface WindowProps {
-  children: ReactNode;
+  children: ReactNode | ((props: { onClose: () => void }) => ReactNode);
   name: string;
 }
 
@@ -91,7 +91,10 @@ const Window: FC<WindowProps> = ({ children, name }) => {
             <span className="absolute right-12 top-12">
               <CloseButton onClick={close} />
             </span>
-            {cloneElement(children as ReactElement, { onClose: () => close })}
+            {/* {children({ onClose: close })} */}
+            {typeof children === "function"
+              ? children({ onClose: close })
+              : children}
           </div>
         </div>,
         modalContainer
