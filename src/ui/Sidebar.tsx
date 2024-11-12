@@ -7,6 +7,20 @@ type SidebarProps = {
   navData: NavItem[];
   className: string;
 };
+/**
+ * Sidebar component displays a navigation sidebar with a role-specific header.
+ *
+ * @component
+ * @returns {JSX.Element} A styled sidebar displaying the user's role (either "SuperUser"
+ * or "Admin") and the main navigation menu.
+ *
+ * @example
+ * // Usage
+ * <Sidebar />
+ */
+
+
+  
 
 /**
  * Sidebar component renders a sidebar with navigation links, displaying different roles based on the user's role.

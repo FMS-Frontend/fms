@@ -9,6 +9,29 @@ interface StatProps {
   color: "red" | "green" | "blue" | "yellow";
 }
 
+/**
+ * Stat is a React functional component that displays a statistical value
+ * with an associated title and icon. It also supports color theming.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.icon - The icon to display alongside the statistic.
+ * @param {string} props.title - The title of the statistic.
+ * @param {string | number} props.value - The value of the statistic.
+ * @param {'red' | 'green' | 'blue' | 'yellow'} props.color - The color theme for the background and text.
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @example
+ * return (
+ *   <Stat
+ *     icon={<SomeIcon />}
+ *     title="Total Sales"
+ *     value={1000}
+ *     color="green"
+ *   />
+ * );
+ */
+
 const Stat: FC<StatProps> = ({ icon, title, value, color }) => {
   console.log(color);
 

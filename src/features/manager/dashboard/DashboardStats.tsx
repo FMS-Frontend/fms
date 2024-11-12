@@ -1,7 +1,7 @@
 // StatsDashboard.tsx
 import { FC } from "react";
 import ManagerStat from "./ManagerStat";
-import { statsData } from "../../db";
+import { statsData } from "../../../db";
 
 const StatsDashboard: FC = () => {
   return (
@@ -15,6 +15,7 @@ const StatsDashboard: FC = () => {
           color={stat.color}
           isGain={stat.isGain}
           text={stat.text}
+          percent={stat.percent}
         />
       ))}
     </div>

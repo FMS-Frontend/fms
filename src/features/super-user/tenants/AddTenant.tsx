@@ -5,11 +5,17 @@ import Modal from "../../../ui/Modal";
 import TenantModal from "./TenantModal";
 
 /**
- * AddTenant component that opens a modal to add a new tenant.
- * It includes a button that triggers the opening of a modal with a form for creating a tenant.
- * The modal contains the form for tenant details and a close button to dismiss the modal.
+ * AddTenant is a React functional component that renders a button to open
+ * a modal for adding a new tenant. It uses a Modal component to handle the
+ * display and functionality of the modal window.
  *
- * @returns {JSX.Element} The rendered AddTenant component, including the button to open the modal and the modal itself.
+ * @component
+ * @returns {JSX.Element} The rendered component with a button to add a new tenant.
+ *
+ * @example
+ * return (
+ *   <AddTenant />
+ * );
  */
 
 const AddTenant: FC = () => {

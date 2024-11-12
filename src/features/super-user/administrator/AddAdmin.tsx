@@ -5,15 +5,19 @@ import Modal from "../../../ui/Modal";
 import CreateAdminModal from "./CreateAdminModal";
 
 /**
- * AddAdmin component that provides a button to open a modal for adding a new admin.
- * The modal includes a form (handled by `CreateAdminModal`) to add a new admin.
- * This component uses a modal context to manage the opening and closing of the modal.
+ * AddAdmin component renders a modal interface for adding a new admin user.
  *
  * @component
- * @example
- * <AddAdmin />
+ * @returns {JSX.Element} A button to open the modal and a modal window containing the
+ * form to create a new admin.
  *
- * @returns {JSX.Element} The rendered AddAdmin component, including the modal logic and button.
+ * The component structure includes:
+ * - `PrimaryButton` to trigger the modal open action with the label "Add New Admin."
+ * - `CreateAdminModal` is displayed within the modal window for adding admin details.
+ *
+ * @example
+ * // Usage
+ * <AddAdmin />
  */
 
 const AddAdmin: FC = () => {
