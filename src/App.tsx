@@ -21,6 +21,7 @@ import AdminIntegration from "./pages/AdminIntegration";
 import ChangePassword from "./pages/ChangePassword";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
+import AdminAnalytics from "./pages/AdminAnalytics";
 // import Integration from "./pages/Integration";
 
 // Define the ProtectedRoute component
@@ -116,6 +117,7 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="users" element={<Users />} />
             <Route path="reporting" element={<AdminReports />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
             <Route path="audit" element={<AdminAudit />} />
             <Route path="integration" element={<AdminIntegration />} />
           </Route>

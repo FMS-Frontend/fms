@@ -5,6 +5,20 @@ interface StepProps {
   onPrevious: () => void;
 }
 
+/**
+ * IntegrationForm2 component for the second step in the process of adding a new integration.
+ * This form collects connection settings for the integration, such as API endpoint, key, secret, and authentication method.
+ *
+ * @component
+ * @example
+ * <IntegrationForm2 onPrevious={handlePrevious} />
+ *
+ * @param {Object} props - The props for the component.
+ * @param {Function} props.onPrevious - A function to move to the previous step of the process.
+ *
+ * @returns {JSX.Element} The rendered IntegrationForm2 component with input fields for API connection settings.
+ */
+
 const IntegrationForm2: FC<StepProps> = ({ onPrevious }) => {
   return (
     <>
@@ -72,18 +86,18 @@ const IntegrationForm2: FC<StepProps> = ({ onPrevious }) => {
           </div>
         </div>
 
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-around mt-6">
           <button
             type="button"
             onClick={onPrevious}
-            className="text-xl px-4 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+            className="w-44 text-xl px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
             Back
           </button>
 
           <button
             type="submit"
-            className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
             Save
           </button>

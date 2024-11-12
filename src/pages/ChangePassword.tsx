@@ -1,7 +1,35 @@
 import { FC, FormEvent, useState } from "react";
 import usePasswordToggle from "../hooks/usePasswordToggle";
 
-const ChangePassword: FC = () => {
+/**
+ * ChangePassword Component
+ *
+ * This functional component renders a password change form for users. It includes inputs for the
+ * new password and the confirmation password, each with a toggle for visibility. Upon submission,
+ * it handles the form data for updating the password.
+ *
+ * @component
+ * @returns {JSX.Element} A JSX element representing the password change form.
+ *
+ * @example
+ * <ChangePassword />
+ *
+ * @dependencies
+ * - usePasswordToggle: A custom hook that provides the input type (password/text) and toggle icon for password fields.
+ *
+ * @state
+ * - newPasswordInputType (string): The type of the new password input (password or text).
+ * - newPasswordToggleIcon (JSX.Element): The icon for toggling new password visibility.
+ * - confirmPasswordInputType (string): The type of the confirm password input (password or text).
+ * - confirmPasswordToggleIcon (JSX.Element): The icon for toggling confirm password visibility.
+ * - newPassword (string): The value of the new password input.
+ * - confirmPassword (string): The value of the confirm password input.
+ *
+ * @event
+ * - handleSubmit: Handles form submission, preventing the default behavior and logging the passwords.
+ */
+
+const ChangePassword: FC = (): JSX.Element => {
   const [newPasswordInputType, newPasswordToggleIcon] = usePasswordToggle();
   const [confirmPasswordInputType, confirmPasswordToggleIcon] =
     usePasswordToggle();

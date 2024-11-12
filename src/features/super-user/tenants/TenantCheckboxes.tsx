@@ -1,5 +1,21 @@
 import { FC, useState } from "react";
 
+/**
+ * TenantCheckboxes component for setting up options when creating a new tenant.
+ * This component displays checkboxes for different options that can be enabled or disabled.
+ * The options include creating schema, syncing admin, sending a login email, and creating a rule folder.
+ * The user can interact with the checkboxes and choose which options to enable before proceeding.
+ *
+ * @component
+ * @example
+ * <TenantCheckboxes onClose={handleClose} />
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.onClose - Callback function to close the form (called on clicking the "Cancel" button)
+ *
+ * @returns {JSX.Element} The rendered TenantCheckboxes component.
+ */
+
 interface CheckboxProp {
   onClose: () => void;
 }
@@ -32,7 +48,7 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
             type="checkbox"
             checked={options.createSchema}
             onChange={() => handleCheckboxChange("createSchema")}
-            className="form-checkbox text-blue-600 w-6 h-6 rounded-md"
+            className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">
             Create Schema
@@ -43,7 +59,7 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
             type="checkbox"
             checked={options.syncAdmin}
             onChange={() => handleCheckboxChange("syncAdmin")}
-            className="form-checkbox text-blue-600 w-6 h-6 rounded-md"
+            className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">Sync Admin</span>
         </label>
@@ -52,7 +68,7 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
             type="checkbox"
             checked={options.sendLoginMail}
             onChange={() => handleCheckboxChange("sendLoginMail")}
-            className="form-checkbox text-blue-600 w-6 h-6 rounded-md"
+            className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">
             Send Login Mail
@@ -63,7 +79,7 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
             type="checkbox"
             checked={options.createRuleFolder}
             onChange={() => handleCheckboxChange("createRuleFolder")}
-            className="form-checkbox text-blue-600 w-6 h-6 rounded-md"
+            className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">
             Create Rule Folder
@@ -71,18 +87,18 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
         </label>
       </div>
 
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-around mt-6">
         <button
           type="button"
           onClick={onClose}
-          className="text-xl px-4 py-3 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+          className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
         >
           Cancel
         </button>
 
         <button
           type="submit"
-          className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+          className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
         >
           Execute
         </button>

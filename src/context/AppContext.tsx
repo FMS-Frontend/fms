@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, FC, ReactNode, Context, useContext } from "react";
 
 // Define the context type
@@ -18,7 +19,7 @@ interface AppProviderProps {
 
 // Create the AppProvider component
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const role = "manager";
+  const role = "admin";
 
   /**
    * Check the user role and return the role string.

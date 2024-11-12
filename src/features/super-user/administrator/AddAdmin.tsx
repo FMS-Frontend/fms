@@ -23,14 +23,14 @@ import CreateAdminModal from "./CreateAdminModal";
 const AddAdmin: FC = () => {
   return (
     <Modal>
-      <Modal.Open opens="create-tenant">
+      <Modal.Open opens="create-admin">
         <PrimaryButton>
           <FiPlus />
           Add New Admin
         </PrimaryButton>
       </Modal.Open>
-      <Modal.Window name="create-tenant">
-        <CreateAdminModal />
+      <Modal.Window name="create-admin">
+        {({ onClose }) => <CreateAdminModal onClose={onClose} />}
       </Modal.Window>
     </Modal>
   );

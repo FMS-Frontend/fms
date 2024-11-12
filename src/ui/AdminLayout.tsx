@@ -5,7 +5,20 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { adminNavData } from "../db";
 
-const AdminLayout: FC = () => {
+/**
+ * Admin Layout component that wraps the main content of the admin section.
+ *
+ * This component provides a responsive layout for the admin dashboard, including:
+ * - A sidebar that can be toggled on and off for smaller screens.
+ * - A header with a button to toggle the sidebar visibility.
+ * - The main content area where the page components are rendered through the `Outlet` component from React Router.
+ *
+ * The sidebar and content area are responsive and adjust based on the screen size.
+ *
+ * @returns {JSX.Element} The rendered layout with sidebar, header, and content.
+ */
+
+const AdminLayout: FC = (): JSX.Element => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
