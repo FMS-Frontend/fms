@@ -3,6 +3,22 @@ import SearchInput from "./SearchInput";
 import UserAvatar from "./UserAvatar";
 import { CgMenuGridO } from "react-icons/cg";
 
+/**
+ * Header component that displays the top navigation bar with a hamburger menu for mobile view,
+ * a search input field, and a user avatar.
+ * The hamburger menu toggles the sidebar visibility.
+ *
+ * @component
+ * @example
+ * const toggleSidebar = () => { console.log('Sidebar toggled'); };
+ * return <Header toggleSidebar={toggleSidebar} />;
+ *
+ * @param {Object} props - The props for the component.
+ * @param {Function} props.toggleSidebar - Function to toggle the sidebar visibility.
+ *
+ * @returns {JSX.Element} The rendered header component.
+ */
+
 interface HeaderProps {
   toggleSidebar: () => void;
 }

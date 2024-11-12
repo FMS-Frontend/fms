@@ -4,6 +4,18 @@ import { FC, useState } from "react";
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { format } from "date-fns";
 
+/**
+ * DateComp component that allows the user to select a date range using a calendar picker.
+ * The component displays a date range in the format "From - To" and allows the user to select
+ * a custom date range using a date picker.
+ *
+ * @component
+ * @example
+ * return <DateComp />;
+ *
+ * @returns {JSX.Element} The rendered date picker component.
+ */
+
 interface SelectionRange {
   startDate: Date;
   endDate: Date;

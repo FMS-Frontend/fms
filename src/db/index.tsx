@@ -35,8 +35,13 @@ export const adminNavData = [
   { path: "/admin/users", label: "Users", icon: HiOutlineUsers },
   {
     path: "/admin/reporting",
-    label: "Reports & Analytics",
+    label: "Reports",
     icon: HiOutlineDocumentText,
+  },
+  {
+    path: "/admin/analytics",
+    label: "Analytics",
+    icon: IoStatsChart,
   },
   {
     path: "/admin/audit",

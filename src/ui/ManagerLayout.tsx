@@ -5,7 +5,19 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { managerNavData } from "../db";
 
-const ManagerLayout: FC = () => {
+/**
+ * ManagerLayout component renders a layout for the manager's dashboard with a sidebar and a header.
+ * The layout includes dynamic rendering of the sidebar and allows toggling its visibility on mobile.
+ * The `managerNavData` is used to populate the sidebar with navigation items.
+ *
+ * @component
+ * @example
+ * return <ManagerLayout />;
+ *
+ * @returns {JSX.Element} The rendered layout component.
+ */
+
+const ManagerLayout: FC = (): JSX.Element => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar

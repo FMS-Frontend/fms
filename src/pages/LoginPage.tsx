@@ -1,7 +1,25 @@
 import React, { useState } from "react";
 import usePasswordToggle from "../hooks/usePasswordToggle";
 
-const LoginPage: React.FC = () => {
+/**
+ * LoginPage Component
+ *
+ * This functional component renders a login page for users to sign in to their accounts.
+ * It contains fields for entering an email address and password, a password visibility toggle,
+ * and a submission button. It also includes a "Forgot Password?" link for users who need to reset their password.
+ *
+ * @component
+ * @returns {JSX.Element} A JSX element representing the login page.
+ *
+ * @example
+ * <LoginPage />
+ *
+ * @dependencies
+ * - usePasswordToggle: A custom hook used to toggle password visibility.
+ *
+ */
+
+const LoginPage: React.FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

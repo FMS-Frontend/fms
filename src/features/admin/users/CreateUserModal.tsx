@@ -4,6 +4,21 @@ interface CreateUserProps {
   onClose: () => void;
 }
 
+/**
+ * CreateUser component to handle the creation of a new user.
+ * This component displays a form that allows users to input details for creating a new user.
+ * The form collects information such as the user's full name, address, email, phone number, role, and description.
+ *
+ * @component
+ * @example
+ * <CreateUser onClose={handleClose} />
+ *
+ * @param {Object} props - The component's props.
+ * @param {Function} props.onClose - A callback function to handle closing the form/modal.
+ *
+ * @returns {JSX.Element} The rendered form for creating a new user.
+ */
+
 const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
   return (
     <>
@@ -80,18 +95,18 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           />
         </div>
 
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-around mt-6">
           <button
             type="button"
             onClick={onClose}
-            className="text-xl px-4 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+            className="w-44 text-xl px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
             Close
           </button>
 
           <button
             type="submit"
-            className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
             Create Tenant
           </button>
