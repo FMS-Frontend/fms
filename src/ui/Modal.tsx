@@ -21,7 +21,7 @@ interface OpenProps {
 }
 
 interface WindowProps {
-  children: ReactNode;
+  children: ReactNode | ((props: { onClose: () => void }) => ReactNode);
   name: string;
 }
 
@@ -36,7 +36,36 @@ interface ModalType extends FC<ModalProps> {
   Window: FC<WindowProps>;
 }
 
+/**
+ * Modal component that provides context and methods to manage modals within the application.
+ * This component allows nested components to open and close modals using the `ModalContext`.
+ *
+ * @component
+ * @example
+ * <Modal>
+ *   <Modal.Open opens="exampleModal">
+ *     <button>Open Modal</button>
+ *   </Modal.Open>
+ *   <Modal.Window name="exampleModal">
+ *     <div>Modal Content</div>
+ *   </Modal.Window>
+ * </Modal>
+ *
+ * @returns {JSX.Element} The rendered Modal component with context provider.
+ */
+
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
+
+/**
+ * Modal component to manage and provide modal context.
+ * It exposes two child components: `Modal.Open` to trigger modal opening,
+ * and `Modal.Window` to render the modal content.
+ *
+ * @param {Object} props - The props for the Modal component.
+ * @param {ReactNode} props.children - The child components that are wrapped within the Modal context.
+ *
+ * @returns {JSX.Element} The rendered Modal context provider.
+ */
 
 const Modal: ModalType = ({ children }) => {
   const [openName, setOpenName] = useState<string>("");
@@ -49,6 +78,17 @@ const Modal: ModalType = ({ children }) => {
     </ModalContext.Provider>
   );
 };
+
+/**
+ * Open component that triggers the opening of a modal when clicked.
+ * It uses the modal context to open a modal with the specified `opens` prop.
+ *
+ * @param {Object} props - The props for the Open component.
+ * @param {ReactNode} props.children - The content that triggers the modal open when clicked.
+ * @param {string} props.opens - The name of the modal to open.
+ *
+ * @returns {JSX.Element} The rendered Open component with a click handler to open the modal.
+ */
 
 const Open: FC<OpenProps> = ({ children, opens: opensModalName }) => {
   const context = useContext(ModalContext);
@@ -64,6 +104,16 @@ const Open: FC<OpenProps> = ({ children, opens: opensModalName }) => {
     onClick: () => openModal(opensModalName),
   });
 };
+
+/**
+ * Window component that renders the modal content if the modal's name matches the open modal name.
+ * It uses the modal context to check if the current modal should be opened.
+ *
+ * @param {Object} props - The props for the Window component.
+ * @param {string} props.name - The name of the modal to match.
+ * @param {ReactNode | Function} props.children - The content to render inside the modal.
+ * @returns {JSX.Element} The rendered modal window content, or null if the modal isn't open.
+ */
 
 const Window: FC<WindowProps> = ({ children, name }) => {
   const context = useContext(ModalContext);
@@ -91,7 +141,10 @@ const Window: FC<WindowProps> = ({ children, name }) => {
             <span className="absolute right-12 top-12">
               <CloseButton onClick={close} />
             </span>
-            {cloneElement(children as ReactElement, { onClose: () => close })}
+            {/* {children({ onClose: close })} */}
+            {typeof children === "function"
+              ? children({ onClose: close })
+              : children}
           </div>
         </div>,
         modalContainer

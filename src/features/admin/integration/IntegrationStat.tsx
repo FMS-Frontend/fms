@@ -45,15 +45,3 @@ const IntegrationStat: FC<StatProps> = ({ icon, title, value, color }) => {
 };
 
 export default IntegrationStat;
-
-{
-  /* <div
-        className={`row-span-2 aspect-square rounded-full flex items-center justify-center bg-${color}-100`}
-      >
-        <div className={`w-8 h-8 text-${color}-700`}>{icon}</div>
-      </div>
-      <h5 className="self-end text-xs uppercase tracking-wide font-semibold text-gray-500">
-        {title}
-      </h5>
-      <p className="text-2xl font-medium leading-none">{value}</p> */
-}

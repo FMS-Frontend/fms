@@ -12,7 +12,9 @@ interface AuditRowProps {
   audit: Audit;
 }
 
-const AdminAuditRow: FC<AuditRowProps> = ({ audit }) => {
+// Took out audit prop
+
+const AdminAuditRow: FC<AuditRowProps> = () => {
   return <div>Row</div>;
 };
 

@@ -1,10 +1,27 @@
 import { FC } from "react";
 
+/**
+ * CreateTenantForm component for creating a new tenant.
+ * Displays a form to collect tenant details including name, address, admin, email, and description.
+ * It includes navigation buttons to close the form or proceed to the next step.
+ *
+ * @component
+ * @example
+ * <CreateTenantForm onNext={handleNext} onClose={handleClose} />
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.onNext - Callback function to proceed to the next step (called on clicking the "Next" button)
+ * @param {Function} props.onClose - Callback function to close the form (called on clicking the "Close" button)
+ *
+ * @returns {JSX.Element} The rendered CreateTenantForm component.
+ */
+
 interface StepProps {
   onNext: () => void;
+  onClose: () => void;
 }
 
-const CreateTenantForm: FC<StepProps> = ({ onNext }) => {
+const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -65,11 +82,19 @@ const CreateTenantForm: FC<StepProps> = ({ onNext }) => {
           />
         </div>
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-around mt-6">
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
+          >
+            Close
+          </button>
+
           <button
             type="button"
             onClick={onNext}
-            className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
             Next
           </button>

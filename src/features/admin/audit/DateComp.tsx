@@ -10,6 +10,18 @@ interface SelectionRange {
   key: string;
 }
 
+/**
+ * DateComp component that allows the user to select a date range using a calendar picker.
+ * The component displays a date range in the format "From - To" and allows the user to select
+ * a custom date range using a date picker.
+ *
+ * @component
+ * @example
+ * return <DateComp />;
+ *
+ * @returns {JSX.Element} The rendered date picker component.
+ */
+
 const DateComp: FC = () => {
   const [openDate, setOpenDate] = useState<boolean>(false);
 
@@ -23,8 +35,8 @@ const DateComp: FC = () => {
     const { selection } = ranges;
     setSelectionRange({
       ...selectionRange,
-      startDate: selection.startDate,
-      endDate: selection.endDate,
+      startDate: selection.startDate || new Date(),
+      endDate: selection.endDate || new Date(),
     });
     console.log(ranges);
   };

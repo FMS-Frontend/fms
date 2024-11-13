@@ -6,6 +6,27 @@ import {
   HiOutlineCog,
 } from "react-icons/hi2";
 
+
+/**
+ * MainNav component that renders a vertical navigation menu with dynamic links and a bottom section
+ * for settings and logout actions.
+ * The menu is populated using the provided `data` prop that contains navigation items.
+ *
+ * @component
+ * @example
+ * const navData = [
+ *   { path: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
+ *   { path: '/reports', icon: ReportIcon, label: 'Reports' },
+ * ];
+ * return <MainNav data={navData} />;
+ *
+ * @param {Object} props - The props for the component.
+ * @param {Array} props.data - An array of objects representing the navigation items.
+ * Each object should have `path` (string), `icon` (React component), and `label` (string).
+ *
+ * @returns {JSX.Element} The rendered navigation menu component.
+ */
+
 export type NavItem = {
   path: string;
   label: string;
@@ -102,10 +123,3 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-brand-50);
   }
 `;
-
-// {navlist.map((nav) => (
-//   <StyledNavLink key={nav.text} to={nav.link}>
-//     {nav.icon}
-//     <span>{nav.text}</span>
-//   </StyledNavLink>
-// ))}

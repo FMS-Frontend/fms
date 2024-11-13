@@ -10,7 +10,7 @@ import Table from "../../../ui/Table";
 
 function AdminIntegrationTable() {
   // const { bookings, isLoading, count } = useBookings();
-  const bookings: [] = [];
+  // const bookings: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -40,12 +40,12 @@ function AdminIntegrationTable() {
           </div>
         </Table.Header>
 
-        <Table.Body
+        {/* <Table.Body
           data={bookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
-        />
+        /> */}
 
         {/* <Table.Footer>
         <Pagination count={count} />

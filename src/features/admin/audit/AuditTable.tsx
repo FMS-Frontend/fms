@@ -1,10 +1,11 @@
 import { FC } from "react";
 import Table from "../../../ui/Table";
-import AuditRow from "./AdminAuditRow";
+// import AdminAuditRow from "./AdminAuditRow";
+// import AuditRow from "./AdminAuditRow";
 
 const AdminAuditTable: FC = () => {
   // const { bookings, isLoading, count } = useBookings();
-  const audit: [] = [];
+  // const audit: [] = [];
 
   // if (isLoading) return <Spinner />;
 
@@ -31,10 +32,10 @@ const AdminAuditTable: FC = () => {
           </div>
         </Table.Header>
 
-        <Table.Body
+        {/* <Table.Body
           data={audit}
-          render={(audit, i) => <AuditRow audit={audit} key={i} />}
-        />
+          render={(audit, i) => <AdminAuditRow audit={audit} key={i} />}
+        /> */}
 
         {/* <Table.Footer>
         <Pagination count={count} />

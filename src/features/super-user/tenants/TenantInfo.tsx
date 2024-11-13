@@ -1,5 +1,21 @@
 import { FC } from "react";
 
+/**
+ * TenantInfo component for displaying tenant information in the setup process.
+ * This component shows a read-only view of the tenant details such as Tenant Name, Address, Admin Name, Email, and Description.
+ * It provides buttons to either edit the information or proceed to the next step.
+ *
+ * @component
+ * @example
+ * <TenantInfo onPrevious={handlePrevious} onNext={handleNext} />
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.onPrevious - Callback function to navigate to the previous step (called on clicking the "Edit" button)
+ * @param {Function} props.onNext - Callback function to navigate to the next step (called on clicking the "Next" button)
+ *
+ * @returns {JSX.Element} The rendered TenantInfo component.
+ */
+
 interface StepProps {
   onPrevious: () => void;
   onNext: () => void;
@@ -58,11 +74,11 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
           </p>
         </div>
 
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-around mt-6">
           <button
             type="button"
             onClick={onPrevious}
-            className="text-xl px-4 py-3 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+            className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
           >
             Edit
           </button>
@@ -70,7 +86,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
           <button
             type="button"
             onClick={onNext}
-            className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
             Next
           </button>

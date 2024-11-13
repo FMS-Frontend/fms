@@ -24,7 +24,7 @@ interface TenantRowProps {
   tenant: Tenant;
 }
 
-const UserRow: FC<TenantRowProps> = ({ tenant }) => {
+const UserRow: FC<TenantRowProps> = () => {
   return <div>Row</div>;
 };
 

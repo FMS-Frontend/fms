@@ -1,7 +1,24 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Home: FC = () => {
+/**
+ * Home Component
+ *
+ * This functional component renders the homepage of the FMS (Fleet Management System) application.
+ * It displays a welcome message and provides navigation links to the Super User, Admin, and Manager dashboards.
+ *
+ * @component
+ * @returns {JSX.Element} A JSX element representing the FMS application home page.
+ *
+ * @example
+ * <Home />
+ *
+ * @dependencies
+ * - Link (react-router-dom): Used to navigate to different dashboard pages within the application.
+ *
+ */
+
+const Home: FC = (): JSX.Element => {
   return (
     <div className="w-full h-screen bg-primaryBlue flex flex-col justify-center items-center">
       <h1 className="text-6xl font-bold text-white py-3 text-center px-4">

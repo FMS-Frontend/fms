@@ -2,9 +2,25 @@ import { FC } from "react";
 
 interface StepProps {
   onNext: () => void;
+  onClose: () => void;
 }
 
-const IntegrationForm1: FC<StepProps> = ({ onNext }) => {
+/**
+ * IntegrationForm1 component for the first step in the process of adding a new integration.
+ * This form collects basic information about the integration, such as the name, type, and description.
+ *
+ * @component
+ * @example
+ * <IntegrationForm1 onNext={handleNext} onClose={handleClose} />
+ *
+ * @param {Object} props - The props for the component.
+ * @param {Function} props.onNext - A function to move to the next step of the process.
+ * @param {Function} props.onClose - A function to close the integration modal.
+ *
+ * @returns {JSX.Element} The rendered IntegrationForm1 component with input fields for integration details.
+ */
+
+const IntegrationForm1: FC<StepProps> = ({ onNext, onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -44,11 +60,19 @@ const IntegrationForm1: FC<StepProps> = ({ onNext }) => {
           />
         </div>
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-around mt-6">
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-44 text-xl px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+
           <button
             type="button"
             onClick={onNext}
-            className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
             Next
           </button>

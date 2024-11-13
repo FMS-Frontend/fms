@@ -21,6 +21,7 @@ import AdminIntegration from "./pages/AdminIntegration";
 import ChangePassword from "./pages/ChangePassword";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
+import AdminAnalytics from "./pages/AdminAnalytics";
 // import Integration from "./pages/Integration";
 
 // Define the ProtectedRoute component
@@ -28,6 +29,16 @@ interface ProtectedProps {
   role: string;
   children: ReactNode;
 }
+
+/**
+ * ProtectedRoute component restricts access based on user role.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.role - The required role to access the route.
+ * @param {React.ReactNode} props.children - The component's children to render if access is granted.
+ * @returns {JSX.Element} The children if the user role matches; otherwise, redirects to the login page.
+ */
 
 const ProtectedRoute: FC<ProtectedProps> = ({ role, children }) => {
   const { checkUserRole } = useAppContext();
@@ -106,6 +117,7 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="users" element={<Users />} />
             <Route path="reporting" element={<AdminReports />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
             <Route path="audit" element={<AdminAudit />} />
             <Route path="integration" element={<AdminIntegration />} />
           </Route>
@@ -116,6 +128,7 @@ function App() {
           <Route path="/manager" element={<ManagerLayout />}>
             <Route path="dashboard" element={<ManagerDashboard />} />
             <Route path="alerts" element={<Tenant />} />
+            <Route path="rules" element={<Tenant />} />
             <Route path="cases" element={<Administrator />} />
             <Route path="analytics" element={<Reporting />} />
           </Route>
