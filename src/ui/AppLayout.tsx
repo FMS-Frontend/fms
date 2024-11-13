@@ -5,6 +5,27 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { superUserNavdata } from "../db";
 
+/**
+ * App Layout component for the Super User dashboard.
+ *
+ * This layout provides a responsive structure for the Super User dashboard, which includes:
+ * - A sidebar that can be toggled on and off for mobile devices.
+ * - A header with a button to toggle the sidebar visibility.
+ * - The main content area where child components will be rendered using the `Outlet` from React Router.
+ *
+ * The sidebar adjusts its visibility based on the screen size and the toggle state.
+ *
+ * @component
+ * @example
+ * return (
+ *   <AppLayout>
+ *     { Children components will be rendered here }
+ *   </AppLayout>
+ * );
+ *
+ * @returns {JSX.Element} The rendered layout with a sidebar, header, and content area.
+ */
+
 const AppLayout: FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 

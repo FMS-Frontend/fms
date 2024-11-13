@@ -6,6 +6,21 @@ interface CreateIntegrationProps {
   onClose: () => void;
 }
 
+/**
+ * CreateIntegration component that handles the multi-step form for creating a new integration.
+ * The component uses a step-based approach, where the user navigates through two different forms
+ * (`IntegrationForm1` and `IntegrationForm2`) by clicking the "Next" and "Previous" buttons.
+ *
+ * @component
+ * @example
+ * <CreateIntegration onClose={handleClose} />
+ *
+ * @param {Object} props - The props for the component.
+ * @param {Function} props.onClose - A function that handles closing the modal.
+ *
+ * @returns {JSX.Element} The rendered CreateIntegration component, which displays a step-based form for integration creation.
+ */
+
 const CreateIntegration: FC<CreateIntegrationProps> = ({ onClose }) => {
   const [step, setStep] = useState(1);
 

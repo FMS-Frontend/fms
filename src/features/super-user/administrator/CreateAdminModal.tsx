@@ -1,26 +1,35 @@
 import { FC } from "react";
 
-// interface ChildProps {
-//   onClick: MouseEventHandler;
-// }
+/**
+ * CreateAdminModal component that provides a form to create a new admin.
+ * It includes fields for the admin's name, address, email, phone number, and a description.
+ * There are also buttons to close the modal and submit the form.
+ *
+ * @component
+ * @example
+ * <CreateAdminModal onClose={handleClose} />
+ *
+ * @param {Object} props - The props for the component.
+ * @param {Function} props.onClose - The function to call when the modal should be closed.
+ *
+ * @returns {JSX.Element} The rendered CreateAdminModal component containing the form and action buttons.
+ */
 
-const CreateTenant: FC = () => {
+interface AdminProps {
+  onClose: () => void;
+}
+
+const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
-        {/* <button
-          onClick={onClick}
-          className="text-gray-400 hover:text-gray-800 text-4xl px-2 py-1 "
-        >
-          &times;
-        </button> */}
+        <h2 className="text-3xl font-semibold">Create New Admin</h2>
       </div>
 
       <form className="flex flex-col gap-3">
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Tenant Name
+            Admin Name
           </label>
           <input
             type="text"
@@ -42,20 +51,22 @@ const CreateTenant: FC = () => {
 
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin Name
-          </label>
-          <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-            <option>Click to select and link Admin</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
             Email
           </label>
           <input
             type="email"
             placeholder="Enter email"
+            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Phone Number
+          </label>
+          <input
+            type="number"
+            placeholder="Enter Phone Number"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -71,10 +82,18 @@ const CreateTenant: FC = () => {
           />
         </div>
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-around mt-6">
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-44 text-xl px-4 py-3 bg-gray-600  text-white rounded-md hover:bg-gray-700"
+          >
+            Close
+          </button>
+
           <button
             type="submit"
-            className="text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
             Create Tenant
           </button>
@@ -84,4 +103,4 @@ const CreateTenant: FC = () => {
   );
 };
 
-export default CreateTenant;
+export default CreateAdminModal;

@@ -6,6 +6,26 @@ import PriorityTable from "../../features/manager/dashboard/PriorityTable";
 import RecentTable from "../../features/manager/dashboard/RecentTable";
 
 
+
+/**
+ * ManagerDashboard Component
+ *
+ * This functional component renders the Manager's Dashboard page, which includes statistics, a line chart, and a table.
+ * It is designed to provide a high-level overview of the manager's key metrics and data visualization.
+ *
+ * @component
+ * @returns {JSX.Element} A JSX element representing the Manager's Dashboard page.
+ *
+ * @example
+ * <ManagerDashboard />
+ *
+ * @dependencies
+ * - StatsDashboard: A component that displays various statistics related to the manager's dashboard.
+ * - ApexLineChart: A component that renders a line chart for visual data representation.
+ * - DashboardTable: A component that displays tabular data relevant to the manager's dashboard.
+ */
+
+
 const ManagerDashboard: FC = () => {
   const heading1 = ["Alert Type", "Time Stamp", "Status"];
   const heading2 = ["Action", "User", "Date/Time"];

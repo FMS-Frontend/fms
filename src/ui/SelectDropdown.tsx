@@ -7,6 +7,29 @@ interface SelectDropdownProps {
   onChange: (value: string) => void;
 }
 
+/**
+ * SelectDropdown component renders a customizable dropdown (select) menu with options.
+ * It allows the user to select a value from a list of options, and the selected value is controlled via props.
+ * The component supports an optional label to describe the dropdown field.
+ *
+ * @component
+ * @example
+ * <SelectDropdown
+ *   label="Select Role"
+ *   options={[{ value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }]}
+ *   selectedValue="admin"
+ *   onChange={(value) => console.log(value)}
+ * />
+ *
+ * @param {Object} props - The props for the SelectDropdown component.
+ * @param {string} [props.label] - An optional label for the dropdown menu.
+ * @param {Array} props.options - A list of options to display in the dropdown. Each option is an object with `value` and `label` properties.
+ * @param {string} props.selectedValue - The currently selected value in the dropdown.
+ * @param {Function} props.onChange - A function that will be called with the selected value when the user selects an option.
+ *
+ * @returns {JSX.Element} The rendered SelectDropdown component.
+ */
+
 const SelectDropdown: FC<SelectDropdownProps> = ({
   label,
   options,

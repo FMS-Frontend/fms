@@ -2,7 +2,6 @@ import { FC } from "react";
 import PrimaryButton from "../../../ui/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
 import Modal from "../../../ui/Modal";
-// import CreateTenantModal from "./CreateTenantModal";
 import TenantModal from "./TenantModal";
 
 /**
