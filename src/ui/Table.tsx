@@ -9,7 +9,7 @@ interface TableProps {
 
 interface RowProps {
   children: ReactNode;
-  bgColor: string | null;
+  bgColor?: string;
 }
 
 interface BodyProps<T> {
