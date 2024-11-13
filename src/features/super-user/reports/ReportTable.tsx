@@ -13,7 +13,7 @@ const ReportTable: FC = () => {
   return (
     <div className="mt-8">
       <Table columns="grid-cols-[1fr_1.5fr_1.5fr_2fr_1fr]">
-        <Table.Header>
+        <Table.Header bgColor="">
           <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
             Date
           </div>
