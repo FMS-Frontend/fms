@@ -37,6 +37,13 @@ const Home: FC = () => {
       >
         Go to Manager Dashboard
       </button>
+
+      <button
+        onClick={() => changeRoleAndNavigate("analyst", "/analyst/dashboard")}
+        className="text-3xl text-primaryBlue hover:text-white py-3 px-3 mt-3 border bg-white hover:bg-blue-700 rounded-lg transition duration-300"
+      >
+        Go to Analyst Dashboard
+      </button>
     </div>
   );
 };

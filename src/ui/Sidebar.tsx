@@ -19,9 +19,6 @@ type SidebarProps = {
  * <Sidebar />
  */
 
-
-  
-
 /**
  * Sidebar component renders a sidebar with navigation links, displaying different roles based on the user's role.
  * It receives a list of navigation items and a class name for styling, and dynamically shows the user role (Super User, Admin, Manager) based on the context.
@@ -53,6 +50,7 @@ const Sidebar: FC<SidebarProps> = ({ navData, className }) => {
           {userRole === "superuser" && "Super User"}
           {userRole === "admin" && "Admin"}
           {userRole === "manager" && "Manager"}
+          {userRole === "analyst" && "Analyst"}
         </h1>
       </div>
       <MainNav data={navData} />
