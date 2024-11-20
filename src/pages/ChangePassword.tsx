@@ -1,5 +1,11 @@
-import { FC, FormEvent, useState } from "react";
+import { FC } from "react";
+import { FormikHelpers, useFormik } from "formik";
+import * as Yup from "yup";
 import usePasswordToggle from "../hooks/usePasswordToggle";
+import SpinnerMini from "../ui/SpinnerMini";
+import URL from "../db/url";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 /**
  * ChangePassword Component
@@ -29,19 +35,92 @@ import usePasswordToggle from "../hooks/usePasswordToggle";
  * - handleSubmit: Handles form submission, preventing the default behavior and logging the passwords.
  */
 
+interface FormValues {
+  password: string;
+  confirmPassword: string;
+}
+
+const passwordChangeUrl = "/auth/reset-password";
+
 const ChangePassword: FC = (): JSX.Element => {
   const [newPasswordInputType, newPasswordToggleIcon] = usePasswordToggle();
   const [confirmPasswordInputType, confirmPasswordToggleIcon] =
     usePasswordToggle();
+  const navigate = useNavigate();
 
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // Validation of Inputed Details
+  const validate = Yup.object({
+    password: Yup.string().min(6).required("Required"),
+    confirmPassword: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .oneOf([Yup.ref("password"), undefined], "Passwords must match")
+      .required("Required"),
+  });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log({ newPassword, confirmPassword });
+  // Form Submission
+  const handleFormSubmit = async (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
+  ) => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const resetToken = localStorage.getItem("resetToken");
+    if (!accessToken) {
+      toast.error("Session expired, please log in again.");
+      navigate("/login", { replace: true });
+      return;
+    }
+    // const accessToken = localStorage.getItem("authToken");
+    // const config = {
+    //   headers: {
+    //     "x-access-token": accessToken,
+    //   },
+    // };
+
+    try {
+      // const accessToken = localStorage.getItem("authToken")
+
+      const res = await URL.post(
+        passwordChangeUrl,
+        {
+          password: values.password,
+        },
+        {
+          headers: {
+            "x-access-token": accessToken, // Include token in the header
+            "x-refresh-token": refreshToken, // Include token in the header
+            "x-reset-token": resetToken, // Include token in the header
+          },
+        }
+      );
+
+      console.log(res);
+      toast.success("Password changed successfully!");
+      navigate("/login", { replace: true });
+    } catch (err) {
+      toast.error("Error changing password, try again!");
+      console.log(err);
+    } finally {
+      actions.resetForm();
+    }
   };
+
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik<{ password: string; confirmPassword: string }>({
+    initialValues: {
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validate,
+    onSubmit: handleFormSubmit,
+  });
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
@@ -66,32 +145,54 @@ const ChangePassword: FC = (): JSX.Element => {
             <input
               id="password"
               type={newPasswordInputType}
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
               className=" w-full px-4 py-3 text-2xl rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xl"
               placeholder="Enter your email"
             />
-            <span className="absolute right-4 bottom-4 flex items-center cursor-pointer text-2xl">
+            {errors.password && touched.password && (
+              <span className="text-xl text-red-500">{errors.password}</span>
+            )}
+            <span
+              className={`${
+                errors.password && touched.password ? "bottom-[3.5rem]" : ""
+              } absolute right-4 bottom-4 flex items-center cursor-pointer text-2xl`}
+            >
               {newPasswordToggleIcon}
             </span>
           </div>
 
           <div className="relative">
             <label
-              htmlFor="password"
+              htmlFor="confirmPassword"
               className="block text-gray-700 font-medium text-2xl mb-1"
             >
               Confirm Password
             </label>
             <input
-              id="password"
+              id="confirmPassword"
               type={confirmPasswordInputType}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={values.confirmPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
               className="w-full px-4 py-3 text-2xl  rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xl"
               placeholder="Enter your password"
             />
-            <span className="absolute right-4 bottom-4 flex items-center cursor-pointer text-2xl">
+
+            {errors.confirmPassword && touched.confirmPassword && (
+              <span className="text-xl text-red-500">
+                {errors.confirmPassword}
+              </span>
+            )}
+
+            <span
+              className={`${
+                errors.confirmPassword && touched.confirmPassword
+                  ? "bottom-[3.5rem]"
+                  : ""
+              } absolute right-4 bottom-4 flex items-center cursor-pointer text-2xl`}
+            >
               {confirmPasswordToggleIcon}
             </span>
           </div>
@@ -99,9 +200,10 @@ const ChangePassword: FC = (): JSX.Element => {
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="w-3/4 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+              disabled={isSubmitting}
+              className="w-3/4 flex items-center justify-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
             >
-              Create Password
+              {isSubmitting ? <SpinnerMini /> : "Create New Password"}
             </button>
           </div>
         </form>

@@ -4,12 +4,11 @@ import { createContext, useContext, ReactNode } from "react";
 interface TableProps {
   columns: string; // CSS grid-template-columns value
   children: ReactNode;
-  
 }
 
 interface RowProps {
   children: ReactNode;
-  bgColor?: string;
+  bgColor?: string | null;
 }
 
 interface BodyProps<T> {
@@ -41,7 +40,7 @@ const Table: React.FC<TableProps> & {
   Row: React.FC<RowProps>;
   Body: <T>(props: BodyProps<T>) => JSX.Element;
   Footer: React.FC<FooterProps>;
-} = ({ columns, children}) => {
+} = ({ columns, children }) => {
   return (
     <TableContext.Provider value={{ columns }}>
       <div

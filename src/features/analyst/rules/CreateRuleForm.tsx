@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from "react";
+import { FC } from "react";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -21,25 +21,14 @@ interface StepProps {
   onClose: () => void;
 }
 
-// Define the type for roles
-type Role = "Manager" | "Admin" | "Analyst" | "";
-
-const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
-  const [selectedRole, setSelectedRole] = useState<Role>("");
-
-  // Event handler for dropdown change
-  const handleRoleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedRole(e.target.value as Role);
-  };
-
+const CreateRuleForm: FC<StepProps> = ({ onNext, onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
+        <h2 className="text-3xl font-semibold">Add Rule</h2>
       </div>
 
       <form className="flex flex-col gap-3">
-        {/* Tenant Name Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Tenant Name
@@ -51,7 +40,6 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           />
         </div>
 
-        {/* Address Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Address
@@ -63,24 +51,15 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           />
         </div>
 
-        {/* Role Dropdown */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Role
+            Admin Name
           </label>
-          <select
-            value={selectedRole}
-            onChange={handleRoleChange}
-            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
-          >
-            <option>-Select Role-</option>
-            <option value="Manager">Manager</option>
-            <option value="Admin">Admin</option>
-            <option value="Analyst">Analyst</option>
+          <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
+            <option>Click to select and link Admin</option>
           </select>
         </div>
 
-        {/* Email Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Email
@@ -92,14 +71,13 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           />
         </div>
 
-        {/* Phone Number Input */}
         <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Phone Number
+            Description
           </label>
           <input
             type="text"
-            placeholder="Enter number"
+            placeholder="Enter description"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -126,4 +104,4 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
   );
 };
 
-export default CreateTenantForm;
+export default CreateRuleForm;
