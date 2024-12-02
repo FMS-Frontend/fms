@@ -21,7 +21,7 @@ interface OpenProps {
 }
 
 interface WindowProps {
-  children: ReactNode | ((props: { onClose: () => void }) => ReactNode);
+  children: ReactNode | ((props: { onClose?: () => void }) => ReactNode);
   name: string;
 }
 

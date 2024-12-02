@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-const Home: FC = () => {
+const SuperUserHome: FC = () => {
   const { handleRoleChange } = useAppContext();
   const navigate = useNavigate();
 
@@ -48,4 +48,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default SuperUserHome;

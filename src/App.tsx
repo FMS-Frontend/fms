@@ -10,7 +10,6 @@ import Tenant from "./pages/Tenant";
 import Administrator from "./pages/Administrator";
 import Reporting from "./pages/Reports";
 import Audit from "./pages/Audit";
-import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
 import ManagerLayout from "./ui/ManagerLayout";
 import ManagerDashboard from "./pages/manager/Dashboard";
@@ -33,6 +32,12 @@ import AnalystRules from "./pages/analyst/AnalystRules";
 import AnalystCase from "./pages/analyst/AnalystCase";
 import AnalystAnalytics from "./pages/analyst/AnalystAnalytics";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
+import PasswordConfirmation from "./pages/PasswordConfirmation";
+import SuperUserHome from "./pages/SuperUserHome";
+import Index from "./pages/Index";
+// import { SuperUserProvider } from "./context/SuperuserContext";
 // import Integration from "./pages/Integration";
 
 // Define the ProtectedRoute component
@@ -97,9 +102,18 @@ function App() {
 
       <>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route index element={<Navigate replace to="login" />} /> */}
+          <Route path="/" element={<Index />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="home" element={<SuperUserHome />} />
           <Route path="change-password" element={<ChangePassword />} />
+
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="update-password" element={<UpdatePassword />} />
+          <Route
+            path="password-confirmation"
+            element={<PasswordConfirmation />}
+          />
 
           {/* Superuser Routes */}
           <Route element={<AppLayout />}>
