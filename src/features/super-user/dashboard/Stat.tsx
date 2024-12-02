@@ -33,8 +33,6 @@ interface StatProps {
  */
 
 const Stat: FC<StatProps> = ({ icon, title, value, color }) => {
-  console.log(color);
-
   const bgColorClass = {
     red: "bg-red-100",
     green: "bg-green-100",

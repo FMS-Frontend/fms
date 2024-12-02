@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useAppContext } from "../context/AppContext";
+import { Link } from "react-router-dom";
 
 /**
  * LoginPage Component
@@ -63,7 +64,7 @@ const LoginPage: FC = (): JSX.Element => {
       console.log(res);
       //Set Auth Token
       const accessToken = res.headers["x-access-token"];
-      console.log("accessToken => ", accessToken);
+      // console.log("accessToken => ", accessToken);
 
       if (accessToken) {
         setAccessToken(accessToken); //Save to Context
@@ -72,7 +73,7 @@ const LoginPage: FC = (): JSX.Element => {
 
       // Set Refresh Token
       const refreshToken = res.headers["x-refresh-token"];
-      console.log("refreshToken =>", refreshToken);
+      // console.log("refreshToken =>", refreshToken);
 
       if (refreshToken) {
         setRefreshToken(refreshToken); //Save to context
@@ -91,7 +92,7 @@ const LoginPage: FC = (): JSX.Element => {
 
       //
       if (res.data.data.role === "Super User") {
-        navigate("/");
+        navigate("/home");
         toast.success("Logged in Successfully");
       }
     } catch (err) {
@@ -192,9 +193,12 @@ const LoginPage: FC = (): JSX.Element => {
             )}
 
             <div className="flex justify-end mt-1">
-              <a href="#" className="text-xl text-blue-500 hover:underline">
+              <Link
+                to="/forgot-password"
+                className="text-xl text-blue-500 hover:underline"
+              >
                 Forgot Password?
-              </a>
+              </Link>
             </div>
           </div>
 

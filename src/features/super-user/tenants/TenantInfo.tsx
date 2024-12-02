@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTenant } from "./TenantContext";
 
 /**
  * TenantInfo component for displaying tenant information in the setup process.
@@ -22,6 +23,13 @@ interface StepProps {
 }
 
 const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
+  const { tenantData, admins } = useTenant();
+
+  // Find the selected admin based on tenantData.admin
+  const selectedAdmin = admins?.find(
+    (admin) => admin.id === tenantData.adminId
+  );
+
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -34,7 +42,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
             Tenant Name
           </label>
           <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
-            {"Salesforce"}
+            {tenantData.name}
           </p>
         </div>
 
@@ -43,7 +51,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
             Address
           </label>
           <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
-            {"Ijede Makoko Street"}
+            {tenantData.address}
           </p>
         </div>
 
@@ -52,7 +60,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
             Admin Name
           </label>
           <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
-            {"Darlene Robertson"}
+            {selectedAdmin?.name || "No Admin Selected"}
           </p>
         </div>
 
@@ -61,7 +69,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
             Email
           </label>
           <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
-            {"darlene@gmail.com"}
+            {tenantData.email}
           </p>
         </div>
 
@@ -70,7 +78,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
             Description
           </label>
           <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
-            {"Nil"}
+            {tenantData.description}
           </p>
         </div>
 

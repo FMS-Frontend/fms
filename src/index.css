@@ -60,7 +60,7 @@ html {
 }
 
 body {
-  font-family: "Nunito Sans", sans-serif;
+  font-family: "Nunito Sans", "DM Sans", sans-serif;
   /* color: var(--color-grey-700); */
 
   /* transition: color 0.3s, background-color 0.3s; */
@@ -85,6 +85,10 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+
+.text-h1 {
+  font-family: 'DM Sans', sans-serif; 
 }
 
 button {
