@@ -1,9 +1,8 @@
 import { FC, useState } from "react";
 import SelectDropdown from "../../../ui/SelectDropdown";
 import PrimaryButton from "../../../ui/PrimaryButton";
-import DateCompAnalyst from "./DateCompAnalyst";
-
-const RuleOperations: FC = () => {
+import DateCompAnalyst from "../../analyst/rules/DateCompAnalyst";
+const RuleMgtOperations: FC = () => {
   const [assignTo, setAsignedto] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -16,7 +15,8 @@ const RuleOperations: FC = () => {
 
 
   return (
-    <div className="px-4 py-5 w-4/5 border rounded-sm shadow-sm flex items-center justify-around">
+    <div className="px-4 py-5 w-9/12 border rounded-lg shadow-sm flex items-center justify-around">
+      <div className="">
       <SelectDropdown
         label="Assigned To"
         options={[
@@ -27,16 +27,20 @@ const RuleOperations: FC = () => {
         selectedValue={assignTo}
         onChange={handleOptionChange}
       />
+      </div>
 
+      <div className="">
       <SelectDropdown
         label="Status"
         options={[
-          { value: "option1", label: "Open" },
-          { value: "option2", label: "Closed" },
+          { value: "option1", label: "All" },
+          { value: "option2", label: "Open" },
+          { value: "option3", label: "Closed" },
         ]}
         selectedValue={selectedStatus}
           onChange={handleStatusChange}
       />
+      </div>
 
       <DateCompAnalyst />
 
@@ -47,4 +51,4 @@ const RuleOperations: FC = () => {
   );
 };
 
-export default RuleOperations;
+export default RuleMgtOperations;

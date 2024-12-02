@@ -10,7 +10,7 @@ import CreateRuleForm from "./CreateRuleForm";
  *
  * The modal component controls the flow of the setup process, providing navigation between steps (Next/Previous).
  *
- * @component
+ * @component 
  * @example
  * <TenantModal onClose={handleClose} />
  *

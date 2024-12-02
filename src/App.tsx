@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import AppLayout from "./ui/AppLayout";
 import Tenant from "./pages/Tenant";
 import Administrator from "./pages/Administrator";
-import Reporting from "./pages/Reports";
+// import Reporting from "./pages/Reports";
 import Audit from "./pages/Audit";
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
@@ -33,6 +33,10 @@ import AnalystRules from "./pages/analyst/AnalystRules";
 import AnalystCase from "./pages/analyst/AnalystCase";
 import AnalystAnalytics from "./pages/analyst/AnalystAnalytics";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
+import RulesManagement from "./features/manager/rules/RulesManagement";
+import AlertsManagement from "./features/manager/alerts/AlertsManagement";
+import CasesManagement from "./features/manager/cases/CasesManagement";
+import AnalystManagement from "./features/manager/analyst/AnalystManagement";
 // import Integration from "./pages/Integration";
 
 // Define the ProtectedRoute component
@@ -152,10 +156,10 @@ function App() {
           {userRole === "manager" && (
             <Route path="/manager" element={<ManagerLayout />}>
               <Route path="dashboard" element={<ManagerDashboard />} />
-              <Route path="alerts" element={<Tenant />} />
-              <Route path="rules" element={<Tenant />} />
-              <Route path="cases" element={<Administrator />} />
-              <Route path="analytics" element={<Reporting />} />
+              <Route path="alerts" element={<AlertsManagement/>} />
+              <Route path="rules" element={<RulesManagement/>} />
+              <Route path="cases" element={<CasesManagement/>} />
+              <Route path="analytics" element={<AnalystManagement/>} />
             </Route>
           )}
 
