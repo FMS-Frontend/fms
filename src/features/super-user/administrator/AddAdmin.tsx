@@ -30,7 +30,7 @@ const AddAdmin: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-admin">
-        {({ onClose }) => <CreateAdminModal onClose={onClose} />}
+        {({ onClose }) => <CreateAdminModal onClose={onClose || (() => {})} />}
       </Modal.Window>
     </Modal>
   );

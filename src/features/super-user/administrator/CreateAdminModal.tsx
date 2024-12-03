@@ -1,4 +1,9 @@
 import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import URL from "../../../db/url";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { capitalizeWords } from "../../../db/helperFunctions";
 
 /**
  * CreateAdminModal component that provides a form to create a new admin.
@@ -19,14 +24,49 @@ interface AdminProps {
   onClose: () => void;
 }
 
+interface FormData {
+  name: string;
+  email: string;
+  mobile: string;
+  address: string;
+}
+
+const createUrl = "/users";
+
 const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
+  const { register, handleSubmit } = useForm<FormData>();
+  const queryClient = useQueryClient();
+
+  const onFormSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      await URL.post(createUrl, {
+        name: capitalizeWords(data.name),
+        email: data.email,
+        mobile: data.mobile,
+        address: data.address,
+      });
+
+      toast.success("Admin Created");
+      onClose();
+      queryClient.invalidateQueries({
+        queryKey: ["admins"],
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error creating Admin, try again!");
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-semibold">Create New Admin</h2>
       </div>
 
-      <form className="flex flex-col gap-3">
+      <form
+        onSubmit={handleSubmit(onFormSubmit)}
+        className="flex flex-col gap-3"
+      >
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Admin Name
@@ -35,6 +75,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="text"
             placeholder="Enter tenant name"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            {...register("name")}
           />
         </div>
 
@@ -46,6 +87,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="text"
             placeholder="Enter address"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            {...register("address")}
           />
         </div>
 
@@ -57,6 +99,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="email"
             placeholder="Enter email"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            {...register("email")}
           />
         </div>
 
@@ -68,17 +111,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="number"
             placeholder="Enter Phone Number"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Description
-          </label>
-          <input
-            type="text"
-            placeholder="Enter description"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            {...register("mobile")}
           />
         </div>
 

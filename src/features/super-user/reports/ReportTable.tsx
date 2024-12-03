@@ -1,40 +1,58 @@
 import { FC } from "react";
 import Table from "../../../ui/Table";
-// import ReportRow from "./ReportRow";
+import { useQuery } from "@tanstack/react-query";
+import { getReports } from "../../../services/apiSuperUser";
+import ReportRow from "./ReportRow";
+import Spinner from "../../../ui/Spinner";
+
+export interface Reports {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  tenantName: string;
+  comment: string;
+  status: "Active" | "Pending" | "Deactivated";
+}
 
 const ReportTable: FC = () => {
-  // const { bookings, isLoading, count } = useBookings();
-  // const report: [] = [];
+  const { isLoading, data: reports } = useQuery({
+    queryKey: ["reports"],
+    queryFn: getReports,
+  });
 
-  // if (isLoading) return <Spinner />;
-
-  // if (!bookings.length) return <Empty resourceName="bookings" />;
+  // console.log(reports);
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_2fr_1fr]">
+      <Table columns="grid-cols-[1fr_1fr_1fr_2fr_0.5fr]">
         <Table.Header bgColor="">
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg">
             Date
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Login Time
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Tenants
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Comments
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Status
           </div>
         </Table.Header>
 
-        {/* <Table.Body
-          data={report}
-          render={(tenant, i) => <ReportRow report={report} key={i} />}
-        /> */}
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table.Body<Reports>
+            data={reports}
+            render={(report, index) => (
+              <ReportRow report={report} key={report.id} index={index} />
+            )}
+          />
+        )}
 
         {/* <Table.Footer>
         <Pagination count={count} />

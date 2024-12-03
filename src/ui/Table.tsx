@@ -4,17 +4,16 @@ import { createContext, useContext, ReactNode } from "react";
 interface TableProps {
   columns: string; // CSS grid-template-columns value
   children: ReactNode;
-  
 }
 
 interface RowProps {
   children: ReactNode;
-  bgColor?: string;
+  bgColor?: string | null;
 }
 
 interface BodyProps<T> {
   data: T[];
-  render: (item: T) => ReactNode;
+  render: (item: T, index: number) => ReactNode;
 }
 
 interface FooterProps {
@@ -41,7 +40,7 @@ const Table: React.FC<TableProps> & {
   Row: React.FC<RowProps>;
   Body: <T>(props: BodyProps<T>) => JSX.Element;
   Footer: React.FC<FooterProps>;
-} = ({ columns, children}) => {
+} = ({ columns, children }) => {
   return (
     <TableContext.Provider value={{ columns }}>
       <div
@@ -104,14 +103,18 @@ const Row: React.FC<RowProps> = ({ children }) => {
 
 // Body component
 const Body = <T,>({ data, render }: BodyProps<T>): JSX.Element => {
-  if (!data.length)
+  if (!data)
     return (
       <p className="text-center text-lg font-medium py-4">
         No data to show at the moment
       </p>
     );
 
-  return <section>{data.map(render)}</section>;
+  return (
+    <div role="row" className="py-2 px-3">
+      {data.map(render)}
+    </div>
+  );
 };
 
 /**

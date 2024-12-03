@@ -1,4 +1,8 @@
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useTenant } from "./TenantContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTenant } from "../../../services/apiSuperUser";
+import toast from "react-hot-toast";
 
 /**
  * TenantCheckboxes component for setting up options when creating a new tenant.
@@ -21,18 +25,30 @@ interface CheckboxProp {
 }
 
 const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
-  const [options, setOptions] = useState({
-    createSchema: true,
-    syncAdmin: true,
-    sendLoginMail: false,
-    createRuleFolder: false,
+  const { tenantData, setTenantData } = useTenant();
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: createTenant,
+    onSuccess: () => {
+      toast.success("Tenant created successfuly!");
+      queryClient.invalidateQueries({
+        queryKey: ["tenants"],
+      });
+      onClose();
+    },
+    onError: (err) => toast.error(err.message),
   });
 
-  const handleCheckboxChange = (option: keyof typeof options) => {
-    setOptions((prevOptions) => ({
-      ...prevOptions,
-      [option]: !prevOptions[option],
+  const toggleOption = (option: keyof typeof tenantData) => {
+    setTenantData((prev) => ({
+      ...prev,
+      [option]: !prev[option], // Toggle the specified boolean property
     }));
+  };
+
+  const submitData = () => {
+    mutate(tenantData);
   };
 
   return (
@@ -46,28 +62,30 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
         <label className="flex items-center space-x-3">
           <input
             type="checkbox"
-            checked={options.createSchema}
-            onChange={() => handleCheckboxChange("createSchema")}
+            checked={tenantData.createSchema}
+            onChange={() => toggleOption("createSchema")}
             className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">
             Create Schema
           </span>
         </label>
+
         <label className="flex items-center space-x-3">
           <input
             type="checkbox"
-            checked={options.syncAdmin}
-            onChange={() => handleCheckboxChange("syncAdmin")}
+            checked={tenantData.syncAdmin}
+            onChange={() => toggleOption("syncAdmin")}
             className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">Sync Admin</span>
         </label>
+
         <label className="flex items-center space-x-3">
           <input
             type="checkbox"
-            checked={options.sendLoginMail}
-            onChange={() => handleCheckboxChange("sendLoginMail")}
+            checked={tenantData.sendLoginMail}
+            onChange={() => toggleOption("sendLoginMail")}
             className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">
@@ -77,8 +95,8 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
         <label className="flex items-center space-x-3">
           <input
             type="checkbox"
-            checked={options.createRuleFolder}
-            onChange={() => handleCheckboxChange("createRuleFolder")}
+            checked={tenantData.createRuleFolder}
+            onChange={() => toggleOption("createRuleFolder")}
             className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer"
           />
           <span className="text-gray-700 text-2xl font-medium">
@@ -98,6 +116,7 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
 
         <button
           type="submit"
+          onClick={submitData}
           className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
         >
           Execute

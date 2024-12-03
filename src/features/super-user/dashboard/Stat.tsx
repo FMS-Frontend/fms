@@ -1,11 +1,11 @@
 // import clsx from "clsx";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 /* Define the props for the Stat component */
 interface StatProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
-  value: string | number;
+  value: string | number | JSX.Element;
   color: "red" | "green" | "blue" | "yellow";
 }
 
@@ -33,8 +33,6 @@ interface StatProps {
  */
 
 const Stat: FC<StatProps> = ({ icon, title, value, color }) => {
-  console.log(color);
-
   const bgColorClass = {
     red: "bg-red-100",
     green: "bg-green-100",

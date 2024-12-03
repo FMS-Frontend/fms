@@ -6,14 +6,18 @@ import {
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { BsGraphUpArrow } from "react-icons/bs";
-import { PiFolderSimpleUser, PiIntersectFill, PiBuildings } from "react-icons/pi";
+import {
+  PiFolderSimpleUser,
+  PiIntersectFill,
+  PiBuildings,
+} from "react-icons/pi";
 import { IoStatsChart, IoAlertCircleOutline } from "react-icons/io5";
 import { GoLaw } from "react-icons/go";
 
 export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/administrator", label: "Administrator", icon: RiShieldUserLine },
-  { path: "/tenant", label: "Tenant", icon: PiBuildings },
+  { path: "/organizations", label: "Organizations", icon: PiBuildings },
   {
     path: "/reports",
     label: "Reports",
@@ -67,6 +71,18 @@ export const managerNavData = [
   { path: "/manager/analytics", label: "Analytics", icon: BsGraphUpArrow },
 ];
 
+export const analystNavData = [
+  { path: "/analyst/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
+  { path: "/analyst/alerts", label: "Alerts", icon: IoAlertCircleOutline },
+  { path: "/analyst/rules", label: "Rules", icon: GoLaw },
+  {
+    path: "/analyst/cases",
+    label: "Cases",
+    icon: PiFolderSimpleUser,
+  },
+  { path: "/analyst/analytics", label: "Analytics", icon: BsGraphUpArrow },
+];
+
 // statData
 import { ReactNode } from "react";
 import { FaChartLine, FaUsers, FaDollarSign, FaTasks } from "react-icons/fa";
@@ -107,7 +123,7 @@ export const statsData: StatData[] = [
     color: "yellow",
     isGain: true,
     text: "Up from yesterday",
-    percent: 1.8
+    percent: 1.8,
   },
   {
     icon: <FaTasks />,
@@ -129,27 +145,53 @@ export interface Tenant {
 }
 
 export const priorityData: Tenant[] = [
-  { id: 1, alertType: "Login", timeStamp: "2024-11-07T09:23", status: "Active" },
-  { id: 2, alertType: "Logout", timeStamp: "2024-11-07T10:15:00Z", status: "Unassigned" },
-  { id: 3, alertType: "Edit", timeStamp: "2024-11-07T11:30:00Z", status: "Deactivated" },
-  { id: 4, alertType: "Update", timeStamp: "2024-11-07T12:45:00Z", status: "Active" },
-  { id: 5, alertType: "Create", timeStamp: "2024-11-07T13:50:00Z", status: "Unassigned" },
-  { id: 6, alertType: "Delete", timeStamp: "2024-11-07T15:05:00Z", status: "Deactivated" }
+  {
+    id: 1,
+    alertType: "Login",
+    timeStamp: "2024-11-07T09:23",
+    status: "Active",
+  },
+  {
+    id: 2,
+    alertType: "Logout",
+    timeStamp: "2024-11-07T10:15:00Z",
+    status: "Unassigned",
+  },
+  {
+    id: 3,
+    alertType: "Edit",
+    timeStamp: "2024-11-07T11:30:00Z",
+    status: "Deactivated",
+  },
+  {
+    id: 4,
+    alertType: "Update",
+    timeStamp: "2024-11-07T12:45:00Z",
+    status: "Active",
+  },
+  {
+    id: 5,
+    alertType: "Create",
+    timeStamp: "2024-11-07T13:50:00Z",
+    status: "Unassigned",
+  },
+  {
+    id: 6,
+    alertType: "Delete",
+    timeStamp: "2024-11-07T15:05:00Z",
+    status: "Deactivated",
+  },
 ];
-
-
 
 interface RecentProp {
   id: number;
   cases: string;
   user: {
-    image: string;  
+    image: string;
     name: string;
   };
   date: string;
 }
-
-
 
 export const recentData: RecentProp[] = [
   {
@@ -157,57 +199,53 @@ export const recentData: RecentProp[] = [
     cases: "Case Created",
     user: {
       image: "https://example.com/user1.jpg",
-      name: "Alice Johnson"
+      name: "Alice Johnson",
     },
-    date: "2024-11-07T09:23:00Z"
+    date: "2024-11-07T09:23:00Z",
   },
   {
     id: 2,
     cases: "Case Closed",
     user: {
       image: "https://example.com/user2.jpg",
-      name: "Bob Smith"
+      name: "Bob Smith",
     },
-    date: "2024-11-07T11:15:00Z"
+    date: "2024-11-07T11:15:00Z",
   },
   {
     id: 3,
     cases: "Alert Review",
     user: {
       image: "https://example.com/user3.jpg",
-      name: "Carol Lee"
+      name: "Carol Lee",
     },
-    date: "2024-11-07T14:30:00Z"
+    date: "2024-11-07T14:30:00Z",
   },
   {
     id: 4,
     cases: "Case Created",
     user: {
       image: "https://example.com/user4.jpg",
-      name: "David Kim"
+      name: "David Kim",
     },
-    date: "2024-11-08T08:00:00Z"
+    date: "2024-11-08T08:00:00Z",
   },
   {
     id: 5,
     cases: "Case Closed",
     user: {
       image: "https://example.com/user5.jpg",
-      name: "Eva Green"
+      name: "Eva Green",
     },
-    date: "2024-11-08T10:45:00Z"
+    date: "2024-11-08T10:45:00Z",
   },
   {
     id: 6,
     cases: "Alert Review",
     user: {
       image: "https://example.com/user6.jpg",
-      name: "Frank White"
+      name: "Frank White",
     },
-    date: "2024-11-08T13:10:00Z"
-  }
+    date: "2024-11-08T13:10:00Z",
+  },
 ];
-
-
-
-

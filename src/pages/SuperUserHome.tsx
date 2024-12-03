@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-const Home: FC = () => {
+const SuperUserHome: FC = () => {
   const { handleRoleChange } = useAppContext();
   const navigate = useNavigate();
 
@@ -37,8 +37,15 @@ const Home: FC = () => {
       >
         Go to Manager Dashboard
       </button>
+
+      <button
+        onClick={() => changeRoleAndNavigate("analyst", "/analyst/dashboard")}
+        className="text-3xl text-primaryBlue hover:text-white py-3 px-3 mt-3 border bg-white hover:bg-blue-700 rounded-lg transition duration-300"
+      >
+        Go to Analyst Dashboard
+      </button>
     </div>
   );
 };
 
-export default Home;
+export default SuperUserHome;

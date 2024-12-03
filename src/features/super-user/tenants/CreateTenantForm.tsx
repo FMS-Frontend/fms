@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, ChangeEvent } from "react";
+import { useTenant } from "./TenantContext";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -22,6 +23,15 @@ interface StepProps {
 }
 
 const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
+  const { admins, tenantData, setTenantData } = useTenant();
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setTenantData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -29,55 +39,82 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
       </div>
 
       <form className="flex flex-col gap-3">
+        {/* Tenant Name Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Tenant Name
           </label>
           <input
             type="text"
+            name="name"
+            value={tenantData.name}
+            onChange={handleChange}
             placeholder="Enter tenant name"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
 
+        {/* Address Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Address
           </label>
           <input
             type="text"
+            name="address"
+            value={tenantData.address}
+            onChange={handleChange}
             placeholder="Enter address"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
 
+        {/* Role Dropdown */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin Name
+            Admin
           </label>
-          <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-            <option>Click to select and link Admin</option>
+          <select
+            name="adminId"
+            value={tenantData.adminId}
+            onChange={handleChange}
+            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
+          >
+            <option value="">-- Select an Admin --</option>
+            {admins?.map((admin) => (
+              <option key={admin.id} value={admin.id}>
+                {admin.name}
+              </option>
+            ))}
           </select>
         </div>
 
+        {/* Email Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Email
           </label>
           <input
             type="email"
+            name="email"
+            value={tenantData.email}
+            onChange={handleChange}
             placeholder="Enter email"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
 
+        {/* Phone Number Input */}
         <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
           <input
+            name="description"
+            value={tenantData.description}
+            onChange={handleChange}
             type="text"
-            placeholder="Enter description"
+            placeholder=""
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
