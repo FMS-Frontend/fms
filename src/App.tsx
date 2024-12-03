@@ -128,7 +128,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="tenant"
+                  path="organizations"
                   element={
                     <ProtectedRoute role="superuser">
                       <Tenant />

@@ -5,7 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { capitalizeWords } from "../../../db/helperFunctions";
 import URL from "../../../db/url";
-import { Tenant } from "./TenantRow";
+import { Tenant } from "../../../db/types";
+// import { Tenant } from "./TenantRow";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -29,11 +30,9 @@ interface EditTenantProps {
 }
 
 const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
-  // const { admins, tenantData, setTenantData } = useTenant();
-  const { id: tenantId, ...tenantValues } = tenantToEdit;
-  console.log(tenantValues);
-
   const queryClient = useQueryClient();
+
+  const { ...tenantValues } = tenantToEdit;
 
   const { register, handleSubmit } = useForm<Tenant>({
     defaultValues: tenantValues,
@@ -46,8 +45,6 @@ const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
         address: data.address,
         description: data.description,
       });
-      // console.log(data);
-      console.log(tenantId);
 
       toast.success("Admin Edited Successfully");
       onClose();
@@ -55,8 +52,8 @@ const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
         queryKey: ["tenants"],
       });
     } catch (error) {
-      console.log(error);
       toast.error("Error Editing Tenant, Try Again!");
+      console.log(error);
     }
   };
 
