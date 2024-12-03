@@ -1,6 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 import { getAdmins } from "../../../services/apiSuperUser";
+import { useSearchParams } from "react-router-dom";
 
 // Define the shape of the tenant data
 export interface TenantData {
@@ -46,9 +48,12 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({
     createRuleFolder: false,
   });
 
+  const [searchParams] = useSearchParams();
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
   const { data: admins = [] } = useQuery({
-    queryKey: ["admins"],
-    queryFn: getAdmins,
+    queryKey: ["admins", page],
+    queryFn: () => getAdmins(page),
   });
 
   // Extract all admin IDs

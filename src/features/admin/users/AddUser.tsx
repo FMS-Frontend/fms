@@ -26,7 +26,7 @@ const AddUser: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-user">
-        {({ onClose }) => <CreateUser onClose={onClose} />}
+        {({ onClose }) => <CreateUser onClose={onClose || (() => {})} />}
       </Modal.Window>
     </Modal>
   );

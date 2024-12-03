@@ -28,7 +28,7 @@ const AddIntegration: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="integration">
-        {({ onClose }) => <CreateIntegration onClose={onClose} />}
+        {({ onClose }) => <CreateIntegration onClose={onClose || (() => {})} />}
       </Modal.Window>
     </Modal>
   );
