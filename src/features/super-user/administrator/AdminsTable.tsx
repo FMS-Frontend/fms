@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getAdmins } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/Spinner";
 import AdminRow from "./AdminRow";
+import Paginate from "../../../ui/Paginate";
+import SpinnerMini from "../../../ui/SpinnerMini";
+import { useSearchParams } from "react-router-dom";
 
 /**
  * AdminsTable component displays a table of administrator information,
@@ -36,9 +39,12 @@ interface Admin {
 }
 
 const AdminsTable: FC = () => {
-  const { isLoading, data: admins } = useQuery({
-    queryKey: ["admins"],
-    queryFn: getAdmins,
+  const [searchParams] = useSearchParams();
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
+  const { isLoading, data: { data: admins, pagination } = {} } = useQuery({
+    queryFn: () => getAdmins(page),
+    queryKey: ["admins", page],
   });
 
   return (
@@ -79,9 +85,17 @@ const AdminsTable: FC = () => {
           />
         )}
 
-        {/* <Table.Footer>
-        <Pagination count={count} />
-      </Table.Footer> */}
+        <Table.Footer>
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination?.pageSize}
+              totalItems={pagination?.totalItems}
+              totalPages={pagination?.totalPages}
+            />
+          )}
+        </Table.Footer>
       </Table>
     </div>
   );

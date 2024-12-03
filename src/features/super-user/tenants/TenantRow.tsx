@@ -10,39 +10,15 @@ import {
   capitalizeWords,
   formatDate,
   getFirstFourTenantId,
+  getStatusStyles,
 } from "../../../db/helperFunctions";
 import EditTenantForm from "./EditTenantForm";
-
-export interface Tenant {
-  id: string;
-  userName: string;
-  name: string;
-  createdAt: string;
-  address?: string;
-  description?: string;
-  admin: {
-    name: string;
-  };
-  status: "Active" | "Pending" | "Deactivated";
-}
+import { Tenant } from "../../../db/types";
 
 interface TenantRowProps {
   tenant: Tenant;
   index: number;
 }
-
-const getStatusStyles = (status: string) => {
-  switch (status) {
-    case "Active":
-      return "bg-green-100 text-green-600";
-    case "Pending":
-      return "bg-yellow-100 text-yellow-600";
-    case "Deactivated":
-      return "bg-red-100 text-red-600";
-    default:
-      return "bg-gray-100 text-gray-600"; // Default styling
-  }
-};
 
 const TenantRow: FC<TenantRowProps> = ({ tenant, index }) => {
   const { id: tenantId, name, createdAt, status, admin, userName } = tenant;

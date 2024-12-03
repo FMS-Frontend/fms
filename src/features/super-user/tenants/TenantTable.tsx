@@ -3,23 +3,18 @@ import Table from "../../../ui/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getTenants } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/Spinner";
-import TenantRow, { Tenant } from "./TenantRow";
-
-// interface Tenant {
-//   id: string;
-//   userName: string;
-//   name: string;
-//   createdAt: string;
-//   admin: {
-//     name: string;
-//   };
-//   status: "Active" | "Pending" | "Deactivated";
-// }
+import TenantRow from "./TenantRow";
+import { Tenant } from "../../../db/types";
+import { useSearchParams } from "react-router-dom";
+import Paginate from "../../../ui/Paginate";
 
 const TenantTable: FC = () => {
-  const { isLoading, data: tenants } = useQuery({
+  const [searchParams] = useSearchParams();
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
+  const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
     queryKey: ["tenants"],
-    queryFn: getTenants,
+    queryFn: () => getTenants(page),
   });
 
   return (
@@ -57,9 +52,13 @@ const TenantTable: FC = () => {
           />
         )}
 
-        {/* <Table.Footer>
-        <Pagination count={count} />
-      </Table.Footer> */}
+        <Table.Footer>
+          <Paginate
+            pageSize={pagination?.pageSize}
+            totalItems={pagination?.totalItems}
+            totalPages={pagination?.totalPages}
+          />
+        </Table.Footer>
       </Table>
     </div>
   );

@@ -48,7 +48,6 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
   };
 
   const submitData = () => {
-    console.log(tenantData);
     mutate(tenantData);
   };
 

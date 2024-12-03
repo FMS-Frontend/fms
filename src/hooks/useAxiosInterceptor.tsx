@@ -9,8 +9,7 @@ const url = "/auth/refresh";
 const refreshAccessToken = async (currentRefreshToken: string | null) => {
   try {
     const response = await axios.post(
-      `https://trusty-unicorn-loosely.ngrok-free.app${url}`,
-      {},
+      `https://staging-api.tranzgard.com${url}`,
       {
         headers: {
           "x-refresh-token": currentRefreshToken,

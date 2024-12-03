@@ -61,7 +61,7 @@ const LoginPage: FC = (): JSX.Element => {
         password: values.password,
       });
 
-      console.log(res);
+      // console.log(res);
       //Set Auth Token
       const accessToken = res.headers["x-access-token"];
       // console.log("accessToken => ", accessToken);
