@@ -167,10 +167,10 @@ function App() {
           {userRole === "analyst" && (
             <Route path="/analyst" element={<AnalystLayout />}>
               <Route path="dashboard" element={<AnalystDashboard />} />
-              <Route path="alerts" element={<AnalystAlerts />} />
-              <Route path="rules" element={<AnalystRules />} />
-              <Route path="cases" element={<AnalystCase />} />
-              <Route path="analytics" element={<AnalystAnalytics />} />
+              <Route path="alerts" element={<AlertsManagement/>} />
+              <Route path="rules" element={<RulesManagement/>} />
+              <Route path="cases" element={<CasesManagement/>} />
+              <Route path="analytics" element={<AnalystManagement/>} />
             </Route>
           )}
 
