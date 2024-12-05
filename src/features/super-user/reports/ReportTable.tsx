@@ -17,18 +17,19 @@ export interface Reports {
 }
 
 const ReportTable: FC = () => {
-  const {
-    isLoading,
-    data: { data: reports, pagination },
-  } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["reports"],
     queryFn: getReports,
   });
 
-  // console.log(data);
+  // : { data: reports, pagination }
+  console.log("ReportTable =>", data);
 
-  // console.log(reports);
-  // console.log(pagination);
+  const reports = data?.reports;
+  const pagination = data?.pagination;
+
+  // console.log(data.reports);
+  // console.log(data.pagination);
 
   return (
     <div className="mt-8">

@@ -101,10 +101,10 @@ export async function deleteTenant(tenant: string) {
 // ********** REPORTS ***************
 export async function getReports() {
   try {
-    const res = await URL.get(`/reports/tenant_reports`);
+    const { data } = await URL.get(`/reports/tenant_reports`);
 
-    // console.log(res.data);
-    return res.data;
+    // console.log(" Report res api ==> ", res);
+    return { reports: data.data, pagination: data.pagination };
   } catch (error) {
     console.log(error);
     throw new Error("Error fetching reports");
@@ -142,8 +142,7 @@ type UpdateProfileData = {
 
 export async function updateProfile(data: UpdateProfileData): Promise<void> {
   try {
-    const res = await URL.patch("/users/account/me", data);
-    // return
+    await URL.patch("/users/account/me", data);
   } catch (error) {
     console.log(error);
     throw new Error("Error fetching reports");

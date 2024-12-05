@@ -37,21 +37,3 @@ const SettingsPage: FC = () => {
 };
 
 export default SettingsPage;
-
-{
-  /* <div className="tab-content"> */
-}
-{
-  /* Dynamically Rendered Content */
-}
-{
-  /* {activeTab === "Profile" && <ProfileContent />}
-    {activeTab === "Rule Info" && <RuleInfoContent />}
-    {activeTab === "Logging" && <LoggingContent />} */
-}
-{
-  /* Add more content components as needed */
-}
-{
-  /* </div> */
-}
