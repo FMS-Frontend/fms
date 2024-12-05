@@ -37,6 +37,7 @@ import UpdatePassword from "./pages/UpdatePassword";
 import PasswordConfirmation from "./pages/PasswordConfirmation";
 import SuperUserHome from "./pages/SuperUserHome";
 import Index from "./pages/Index";
+import SettingsPage from "./pages/SettingsPage";
 // import { SuperUserProvider } from "./context/SuperuserContext";
 // import Integration from "./pages/Integration";
 
@@ -148,6 +149,7 @@ function App() {
             <Route path="reports" element={<Reports />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="audit" element={<Audit />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
 
           {/* Admin Routes */}

@@ -1,3 +1,16 @@
+// Admin Table
+export interface Admin {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  mobile: string;
+  tenant?: {
+    name: string;
+  };
+  status: "Active" | "Pending" | "Deactivated";
+}
+
 export interface Tenant {
   id: string;
   userName: string;
@@ -21,4 +34,21 @@ export interface Organization {
     email: string;
   };
   status: string;
+}
+
+// AUDIT TABLE*********
+interface Author {
+  id: string;
+  name: string;
+  tenant: {
+    name: string;
+    id: string;
+  };
+}
+export interface Audit {
+  id: string;
+  operation: string;
+  ipAddress: string;
+  updatedAt: string;
+  author: Author;
 }

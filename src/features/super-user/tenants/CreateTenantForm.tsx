@@ -1,5 +1,7 @@
 import { FC, ChangeEvent } from "react";
 import { useTenant } from "./TenantContext";
+import Spinner from "../../../ui/Spinner";
+// import { useQuery } from "@tanstack/react-query";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -23,7 +25,14 @@ interface StepProps {
 }
 
 const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
-  const { admins, tenantData, setTenantData } = useTenant();
+  // const { data: admins = [] } = useQuery({
+  //   queryKey: ["admins", page],
+  //   queryFn: () => getAdmins(page),
+  // });
+
+  // ****************************************
+
+  const { isLoading, admins, tenantData, setTenantData } = useTenant();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -38,105 +47,109 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
         <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
       </div>
 
-      <form className="flex flex-col gap-3">
-        {/* Tenant Name Input */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Tenant Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={tenantData.name}
-            onChange={handleChange}
-            placeholder="Enter tenant name"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <form className="flex flex-col gap-3">
+          {/* Tenant Name Input */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Tenant Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={tenantData.name}
+              onChange={handleChange}
+              placeholder="Enter tenant name"
+              className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-        {/* Address Input */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Address
-          </label>
-          <input
-            type="text"
-            name="address"
-            value={tenantData.address}
-            onChange={handleChange}
-            placeholder="Enter address"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
+          {/* Address Input */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={tenantData.address}
+              onChange={handleChange}
+              placeholder="Enter address"
+              className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-        {/* Role Dropdown */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin
-          </label>
-          <select
-            name="adminId"
-            value={tenantData.adminId}
-            onChange={handleChange}
-            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
-          >
-            <option value="">-- Select an Admin --</option>
-            {admins?.map((admin) => (
-              <option key={admin.id} value={admin.id}>
-                {admin.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          {/* Role Dropdown */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Admin
+            </label>
+            <select
+              name="adminId"
+              value={tenantData.adminId}
+              onChange={handleChange}
+              className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
+            >
+              <option value="">-- Select an Admin --</option>
+              {admins?.map((admin) => (
+                <option key={admin.id} value={admin.id}>
+                  {admin.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Email Input */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={tenantData.email}
-            onChange={handleChange}
-            placeholder="Enter email"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
+          {/* Email Input */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={tenantData.email}
+              onChange={handleChange}
+              placeholder="Enter email"
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-        {/* Phone Number Input */}
-        <div className="mb-6">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Description
-          </label>
-          <input
-            name="description"
-            value={tenantData.description}
-            onChange={handleChange}
-            type="text"
-            placeholder=""
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
+          {/* Phone Number Input */}
+          <div className="mb-6">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Description
+            </label>
+            <input
+              name="description"
+              value={tenantData.description}
+              onChange={handleChange}
+              type="text"
+              placeholder=""
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-        <div className="flex justify-around mt-6">
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
-          >
-            Close
-          </button>
+          <div className="flex justify-around mt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
+            >
+              Close
+            </button>
 
-          <button
-            type="button"
-            onClick={onNext}
-            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
-          >
-            Next
-          </button>
-        </div>
-      </form>
+            <button
+              type="button"
+              onClick={onNext}
+              className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      )}
     </>
   );
 };

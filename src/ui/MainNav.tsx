@@ -6,7 +6,6 @@ import {
   HiOutlineCog,
 } from "react-icons/hi2";
 
-
 /**
  * MainNav component that renders a vertical navigation menu with dynamic links and a bottom section
  * for settings and logout actions.

@@ -1,11 +1,3 @@
-// import BookingRow from "./BookingRow";
-// import Table from "../../ui/Table";
-// import Menus from "../../ui/Menus";
-// import Empty from "../../ui/Empty";
-// import { useBookings } from "./useBookings";
-// import Spinner from "../../ui/Spinner";
-// import Pagination from "../../ui/Pagination";
-
 import { useQuery } from "@tanstack/react-query";
 import Table from "../../../ui/Table";
 import { getTenants } from "../../../services/apiSuperUser";
@@ -13,18 +5,19 @@ import DashboardRow from "./DashboardRow";
 import { Organization } from "../../../db/types";
 import Paginate from "../../../ui/Paginate";
 import { useSearchParams } from "react-router-dom";
+import Spinner from "../../../ui/Spinner";
+import SpinnerMini from "../../../ui/SpinnerMini";
 
 function DashboardTable() {
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
 
-  const { data: { data: tenants, pagination } = {} } = useQuery({
+  const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
     queryFn: () => getTenants(page),
     queryKey: ["tenants", page],
   });
 
   // console.log(tenants);
-  // console.log(pagination);
 
   return (
     <div className="mt-8">
@@ -47,19 +40,27 @@ function DashboardTable() {
           </div>
         </Table.Header>
 
-        <Table.Body<Organization>
-          data={tenants}
-          render={(tenants, index) => (
-            <DashboardRow key={tenants.id} tenant={tenants} index={index} />
-          )}
-        />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table.Body<Organization>
+            data={tenants}
+            render={(tenants, index) => (
+              <DashboardRow key={tenants.id} tenant={tenants} index={index} />
+            )}
+          />
+        )}
 
         <Table.Footer>
-          <Paginate
-            pageSize={pagination?.pageSize}
-            totalItems={pagination?.totalItems}
-            totalPages={pagination?.totalPages}
-          />
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination?.pageSize}
+              totalItems={pagination?.totalItems}
+              totalPages={pagination?.totalPages}
+            />
+          )}
         </Table.Footer>
       </Table>
     </div>
