@@ -1,6 +1,9 @@
 import { FC } from "react";
 import Table from "../../../ui/Table";
-// import TenantRow from "./TenantRow";
+import { useQuery } from "@tanstack/react-query";
+import { getAdmins } from "../../../services/apiSuperUser";
+import Spinner from "../../../ui/Spinner";
+import AdminRow from "./AdminRow";
 
 /**
  * AdminsTable component displays a table of administrator information,
@@ -23,42 +26,58 @@ import Table from "../../../ui/Table";
  * <AdminsTable />
  */
 
+interface Admin {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  mobile: string;
+  status: "Active" | "Pending" | "Deactivated";
+}
+
 const AdminsTable: FC = () => {
-  // const { bookings, isLoading, count } = useBookings();
-  // const admins: [] = [];
-
-  // if (isLoading) return <Spinner />;
-
-  // if (!bookings.length) return <Empty resourceName="bookings" />;
+  const { isLoading, data: admins } = useQuery({
+    queryKey: ["admins"],
+    queryFn: getAdmins,
+  });
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr_0.5fr]">
+      <Table columns="grid-cols-[1fr__1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
         <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
             Administrators
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
+            Role
+          </div>
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
             Tenants
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
             Email
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
             Phone Number
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
             Status
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
+          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  text-center">
             Actions
           </div>
         </Table.Header>
 
-        {/* <Table.Body
-          data={admins}
-          render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
-        /> */}
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table.Body<Admin>
+            data={admins}
+            render={(admin, index) => (
+              <AdminRow admin={admin} key={admin.id} index={index} />
+            )}
+          />
+        )}
 
         {/* <Table.Footer>
         <Pagination count={count} />

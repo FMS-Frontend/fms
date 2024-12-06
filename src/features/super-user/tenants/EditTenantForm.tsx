@@ -1,5 +1,11 @@
-import { FC, ChangeEvent } from "react";
-import { useTenant } from "./TenantContext";
+import { FC } from "react";
+// import { useTenant } from "./TenantContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { capitalizeWords } from "../../../db/helperFunctions";
+import URL from "../../../db/url";
+import { Tenant } from "./TenantRow";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -17,28 +23,53 @@ import { useTenant } from "./TenantContext";
  * @returns {JSX.Element} The rendered CreateTenantForm component.
  */
 
-interface StepProps {
-  onNext: () => void;
+interface EditTenantProps {
   onClose: () => void;
+  tenantToEdit?: Tenant;
 }
 
-const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
-  const { admins, tenantData, setTenantData } = useTenant();
+const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
+  // const { admins, tenantData, setTenantData } = useTenant();
+  const { id: tenantId, ...tenantValues } = tenantToEdit;
+  console.log(tenantValues);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setTenantData((prev) => ({ ...prev, [name]: value }));
+  const queryClient = useQueryClient();
+
+  const { register, handleSubmit } = useForm<Tenant>({
+    defaultValues: tenantValues,
+  });
+
+  const onFormSubmit: SubmitHandler<Tenant> = async (data) => {
+    try {
+      await URL.patch(`/tenants/${tenantValues.userName}`, {
+        name: capitalizeWords(data.name),
+        address: data.address,
+        description: data.description,
+      });
+      // console.log(data);
+      console.log(tenantId);
+
+      toast.success("Admin Edited Successfully");
+      onClose();
+      queryClient.invalidateQueries({
+        queryKey: ["tenants"],
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Editing Tenant, Try Again!");
+    }
   };
 
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
+        <h2 className="text-3xl font-semibold">Edit New Tenant</h2>
       </div>
 
-      <form className="flex flex-col gap-3">
+      <form
+        onSubmit={handleSubmit(onFormSubmit)}
+        className="flex flex-col gap-3"
+      >
         {/* Tenant Name Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
@@ -46,9 +77,7 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           </label>
           <input
             type="text"
-            name="name"
-            value={tenantData.name}
-            onChange={handleChange}
+            {...register("name")}
             placeholder="Enter tenant name"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
@@ -61,59 +90,20 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           </label>
           <input
             type="text"
-            name="address"
-            value={tenantData.address}
-            onChange={handleChange}
+            {...register("address")}
             placeholder="Enter address"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
 
-        {/* Role Dropdown */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin
-          </label>
-          <select
-            name="adminId"
-            value={tenantData.adminId}
-            onChange={handleChange}
-            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
-          >
-            <option value="">-- Select an Admin --</option>
-            {admins?.map((admin) => (
-              <option key={admin.id} value={admin.id}>
-                {admin.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Email Input */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={tenantData.email}
-            onChange={handleChange}
-            placeholder="Enter email"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        {/* Phone Number Input */}
+        {/* Description Input */}
         <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
           <input
-            name="description"
-            value={tenantData.description}
-            onChange={handleChange}
             type="text"
+            {...register("description")}
             placeholder=""
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
@@ -129,11 +119,10 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           </button>
 
           <button
-            type="button"
-            onClick={onNext}
+            type="submit"
             className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Next
+            Update Tenant
           </button>
         </div>
       </form>
@@ -141,4 +130,4 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
   );
 };
 
-export default CreateTenantForm;
+export default EditTenantForm;

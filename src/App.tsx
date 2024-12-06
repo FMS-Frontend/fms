@@ -2,15 +2,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-
 import Dashboard from "./pages/Dashboard";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/auth/LoginPage";
 import AppLayout from "./ui/AppLayout";
 import Tenant from "./pages/Tenant";
 import Administrator from "./pages/Administrator";
-// import Reporting from "./pages/Reports";
 import Audit from "./pages/Audit";
-import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
 import ManagerLayout from "./ui/ManagerLayout";
 import ManagerDashboard from "./pages/manager/Dashboard";
@@ -28,58 +25,36 @@ import Analytics from "./pages/Analytics";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AnalystLayout from "./ui/AnalystLayout";
 import AnalystDashboard from "./pages/analyst/AnalystDashboard";
-import AnalystAlerts from "./pages/analyst/AnalystAlerts";
-import AnalystRules from "./pages/analyst/AnalystRules";
-import AnalystCase from "./pages/analyst/AnalystCase";
-import AnalystAnalytics from "./pages/analyst/AnalystAnalytics";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
 import RulesManagement from "./features/manager/rules/RulesManagement";
 import AlertsManagement from "./features/manager/alerts/AlertsManagement";
 import CasesManagement from "./features/manager/cases/CasesManagement";
 import AnalystManagement from "./features/manager/analyst/AnalystManagement";
-// import Integration from "./pages/Integration";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
+import PasswordConfirmation from "./pages/PasswordConfirmation";
+import Index from "./pages/Index";
+import TenantsLogin from "./pages/auth/TenantsLogin";
 
-// Define the ProtectedRoute component
+
+// ProtectedRoute Component
 interface ProtectedProps {
-  role: string;
+  userRole: string;
   children: ReactNode;
 }
 
-/**
- * ProtectedRoute component restricts access based on user role.
- *
- * @component
- * @param {Object} props - The properties passed to the component.
- * @param {string} props.role - The required role to access the route.
- * @param {React.ReactNode} props.children - The component's children to render if access is granted.
- * @returns {JSX.Element} The children if the user role matches; otherwise, redirects to the login page.
- */
+const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
+  const { role } = useAppContext();
 
-const ProtectedRoute: FC<ProtectedProps> = ({ role, children }) => {
-  const { checkUserRole } = useAppContext();
-  const userRole = checkUserRole(role);
-  if (userRole !== role) {
+  // Check role and redirect to login if unauthorized
+  if (role !== userRole) {
     return <Navigate to="/login" replace />;
   }
+
   return <>{children}</>;
 };
 
-// Define the RedirectToDashboard component
-// const RedirectToDashboard = () => {
-//   const { checkUserRole, role } = useAppContext();
-//   const userRole = checkUserRole(role);
-
-//   if (userRole === "superuser") {
-//     return <Navigate to="dashboard" replace />;
-//   } else if (userRole === "admin") {
-//     return <Navigate to="admin-dashboard" replace />;
-//   } else if (userRole === "manager") {
-//     return <Navigate to="manager/dashboard" replace />;
-//   } else {
-//     return <Navigate to="/login" replace />;
-//   }
-// };
-
+// QueryClient Configuration
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -89,94 +64,119 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { checkUserRole, role } = useAppContext();
-  const userRole = checkUserRole(role);
-
-  // Interceptor hook to set up token handling
+  // Set up token handling
   useAxiosInterceptor();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
 
-      <>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="change-password" element={<ChangePassword />} />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/:tenant/auth/login" element={<TenantsLogin />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/update-password" element={<UpdatePassword />} />
+        <Route path="/password-confirmation" element={<PasswordConfirmation />} />
 
-          {/* Superuser Routes */}
-          <Route element={<AppLayout />}>
-            {userRole === "superuser" && (
-              <>
-                <Route
-                  path="dashboard"
-                  element={
-                    <ProtectedRoute role="superuser">
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="tenant"
-                  element={
-                    <ProtectedRoute role="superuser">
-                      <Tenant />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="administrator"
-                  element={
-                    <ProtectedRoute role="superuser">
-                      <Administrator />
-                    </ProtectedRoute>
-                  }
-                />
-              </>
-            )}
-            <Route path="reports" element={<Reports />} />
-            <Route path="analytics" element={<Analytics />} />
-            <Route path="audit" element={<Audit />} />
-          </Route>
+        {/* Protected Routes */}
+        
+        <Route
+          path="/change-password"
+          element={
+            <ProtectedRoute userRole="Super User">
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
 
-          {/* Admin Routes */}
-          {userRole === "admin" && (
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<AdminDashboard />} />
-              <Route path="users" element={<Users />} />
-              <Route path="reporting" element={<AdminReports />} />
-              <Route path="analytics" element={<AdminAnalytics />} />
-              <Route path="audit" element={<AdminAudit />} />
-              <Route path="integration" element={<AdminIntegration />} />
-            </Route>
-          )}
+        {/* Super User Routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute userRole="Super User">
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="tenant" element={<Tenant />} />
+          <Route path="administrator" element={<Administrator />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="audit" element={<Audit />} />
+        </Route>
 
-          {/* Manager Routes */}
-          {userRole === "manager" && (
-            <Route path="/manager" element={<ManagerLayout />}>
-              <Route path="dashboard" element={<ManagerDashboard />} />
-              <Route path="alerts" element={<AlertsManagement/>} />
-              <Route path="rules" element={<RulesManagement/>} />
-              <Route path="cases" element={<CasesManagement/>} />
-              <Route path="analytics" element={<AnalystManagement/>} />
-            </Route>
-          )}
+        {/* Admin Routes */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute userRole="Admin">
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<Users />} />
+          <Route path="reporting" element={<AdminReports />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
+          <Route path="audit" element={<AdminAudit />} />
+          <Route path="integration" element={<AdminIntegration />} />
+        </Route>
 
-          {/* Analyst Routes */}
-          {userRole === "analyst" && (
-            <Route path="/analyst" element={<AnalystLayout />}>
-              <Route path="dashboard" element={<AnalystDashboard />} />
-              <Route path="alerts" element={<AlertsManagement/>} />
-              <Route path="rules" element={<RulesManagement/>} />
-              <Route path="cases" element={<CasesManagement/>} />
-              <Route path="analytics" element={<AnalystManagement/>} />
-            </Route>
-          )}
+        {/* Manager Routes */}
+        <Route
+          path="/manager"
+          element={
+            <ProtectedRoute userRole="Manager">
+              <ManagerLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<ManagerDashboard />} />
+          <Route path="alerts" element={<AlertsManagement />} />
+          <Route path="rules" element={<RulesManagement />} />
+          <Route path="cases" element={<CasesManagement />} />
+          <Route path="analytics" element={<AnalystManagement />} />
+        </Route>
 
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </>
+        {/* Analyst Routes */}
+        <Route
+          path="/analyst"
+          element={
+            <ProtectedRoute userRole="Analyst">
+              <AnalystLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AnalystDashboard />} />
+          <Route path="alerts" element={<AlertsManagement />} />
+          <Route path="rules" element={<RulesManagement />} />
+          <Route path="cases" element={<CasesManagement />} />
+          <Route path="analytics" element={<AnalystManagement />} />
+        </Route>
+
+
+        {/* Auditor Routes */}
+        <Route
+          path="/auditor"
+          element={
+            <ProtectedRoute userRole="Auditor">
+              <ManagerLayout/>
+           </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AnalystDashboard />} />
+          <Route path="alerts" element={<AlertsManagement />} />
+          <Route path="rules" element={<RulesManagement />} />
+          <Route path="cases" element={<CasesManagement />} />
+          <Route path="analytics" element={<AnalystManagement />} />
+        </Route>
+
+        {/* Fallback Route */}
+        <Route path="*" element={<Page404 />} />
+      </Routes>
 
       <Toaster
         position="top-center"
@@ -203,3 +203,4 @@ function App() {
 }
 
 export default App;
+

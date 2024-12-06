@@ -1,13 +1,15 @@
 import { FC } from "react";
-import usePasswordToggle from "../hooks/usePasswordToggle";
+import usePasswordToggle from "../../hooks/usePasswordToggle";
 import { useFormik, FormikHelpers } from "formik";
-
 import * as Yup from "yup";
-import URL from "../db/url";
+import URL from "../../db/url";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import SpinnerMini from "../ui/SpinnerMini";
-import { useAppContext } from "../context/AppContext";
+import SpinnerMini from "../../ui/SpinnerMini";
+import { useAppContext } from "../../context/AppContext";
+import { Link } from "react-router-dom";
+import { BsFillShieldLockFill } from "react-icons/bs";
+
 
 /**
  * LoginPage Component
@@ -37,7 +39,9 @@ const loginUrl = "/auth/login";
 const LoginPage: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
-  const { setAccessToken, setRefreshToken } = useAppContext();
+  const { setAccessToken, setRefreshToken, handleRoleChange } = useAppContext();
+  // const userRole = checkUserRole(role);
+
 
   // Validation for input data
   const validate = Yup.object({
@@ -60,10 +64,10 @@ const LoginPage: FC = (): JSX.Element => {
         password: values.password,
       });
 
-      console.log(res);
+      // console.log(res);
       //Set Auth Token
       const accessToken = res.headers["x-access-token"];
-      console.log("accessToken => ", accessToken);
+      // console.log("accessToken => ", accessToken);
 
       if (accessToken) {
         setAccessToken(accessToken); //Save to Context
@@ -72,7 +76,7 @@ const LoginPage: FC = (): JSX.Element => {
 
       // Set Refresh Token
       const refreshToken = res.headers["x-refresh-token"];
-      console.log("refreshToken =>", refreshToken);
+      // console.log("refreshToken =>", refreshToken);
 
       if (refreshToken) {
         setRefreshToken(refreshToken); //Save to context
@@ -89,9 +93,12 @@ const LoginPage: FC = (): JSX.Element => {
         return;
       }
 
+      const userRole = res.data.data?.role
+      handleRoleChange(userRole); //Save
+
       //
-      if (res.data.data.role === "Super User") {
-        navigate("/");
+      if (userRole === "Super User") {
+        navigate("/dashboard");
         toast.success("Logged in Successfully");
       }
     } catch (err) {
@@ -125,8 +132,13 @@ const LoginPage: FC = (): JSX.Element => {
         className={`absolute inset-0 bg-cover bg-center bg-[url("src/assets/Shape.png")]`}
       ></div>
       <div className="z-10 bg-white p-20 rounded-2xl shadow-lg w-full max-w-2xl flex flex-col gap-4">
+      <div className="w-full flex justify-center">
+        <Link to="/">
+        <BsFillShieldLockFill className="text-blue-500 h-16 w-16" />
+        </Link>
+      </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
-          Login to Account
+          Super User Login
         </h2>
         <p className="text-gray-600 text-center text-xl mb-6">
           Please enter your email and password to continue
@@ -192,9 +204,12 @@ const LoginPage: FC = (): JSX.Element => {
             )}
 
             <div className="flex justify-end mt-1">
-              <a href="#" className="text-xl text-blue-500 hover:underline">
+              <Link
+                to="/forgot-password"
+                className="text-xl text-blue-500 hover:underline"
+              >
                 Forgot Password?
-              </a>
+              </Link>
             </div>
           </div>
 

@@ -38,8 +38,7 @@ type SidebarProps = {
  */
 
 const Sidebar: FC<SidebarProps> = ({ navData, className }) => {
-  const { checkUserRole, role } = useAppContext();
-  const userRole = checkUserRole(role);
+  const { role } = useAppContext();
 
   return (
     <div
@@ -47,10 +46,7 @@ const Sidebar: FC<SidebarProps> = ({ navData, className }) => {
     >
       <div className="flex items-center justify-center">
         <h1 className="hidden lg:block text-white font-bold text-4xl">
-          {userRole === "superuser" && "Super User"}
-          {userRole === "admin" && "Admin"}
-          {userRole === "manager" && "Manager"}
-          {userRole === "analyst" && "Analyst"}
+          {role}
         </h1>
       </div>
       <MainNav data={navData} />

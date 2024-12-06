@@ -13,7 +13,7 @@ interface RowProps {
 
 interface BodyProps<T> {
   data: T[];
-  render: (item: T) => ReactNode;
+  render: (item: T, index: number) => ReactNode;
 }
 
 interface FooterProps {
@@ -103,14 +103,18 @@ const Row: React.FC<RowProps> = ({ children }) => {
 
 // Body component
 const Body = <T,>({ data, render }: BodyProps<T>): JSX.Element => {
-  if (!data.length)
+  if (!data)
     return (
       <p className="text-center text-lg font-medium py-4">
         No data to show at the moment
       </p>
     );
 
-  return <section>{data.map(render)}</section>;
+  return (
+    <div role="row" className="py-2 px-5">
+      {data.map(render)}
+    </div>
+  );
 };
 
 /**

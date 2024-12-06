@@ -1,18 +1,18 @@
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import URL from "../../../db/url";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import URL from "../../../db/url";
 import { capitalizeWords } from "../../../db/helperFunctions";
 
 /**
- * CreateAdminModal component that provides a form to create a new admin.
+ * EditAdminModal component that provides a form to create a new admin.
  * It includes fields for the admin's name, address, email, phone number, and a description.
  * There are also buttons to close the modal and submit the form.
  *
  * @component
  * @example
- * <CreateAdminModal onClose={handleClose} />
+ * <EditAdminModal onClose={handleClose} />
  *
  * @param {Object} props - The props for the component.
  * @param {Function} props.onClose - The function to call when the modal should be closed.
@@ -20,8 +20,18 @@ import { capitalizeWords } from "../../../db/helperFunctions";
  * @returns {JSX.Element} The rendered CreateAdminModal component containing the form and action buttons.
  */
 
-interface AdminProps {
+interface Admin {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  mobile: string;
+  status: "Active" | "Pending" | "Deactivated";
+}
+
+interface EditAdminProps {
   onClose: () => void;
+  adminToEdit?: Admin;
 }
 
 interface FormData {
@@ -31,36 +41,39 @@ interface FormData {
   address: string;
 }
 
-const createUrl = "/users";
+const EditAdminModal: FC<EditAdminProps> = ({ onClose, adminToEdit = {} }) => {
+  const { id: editId, ...editValues } = adminToEdit;
 
-const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>({
+    defaultValues: editValues,
+  });
+
   const queryClient = useQueryClient();
 
   const onFormSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      await URL.post(createUrl, {
+      await URL.patch(`/users/${editId}`, {
         name: capitalizeWords(data.name),
         email: data.email,
         mobile: data.mobile,
         address: data.address,
       });
 
-      toast.success("Admin Created");
+      toast.success("Admin Edited Successfully");
       onClose();
       queryClient.invalidateQueries({
         queryKey: ["admins"],
       });
     } catch (error) {
       console.log(error);
-      toast.error("Error creating Admin, try again!");
+      toast.error("Error Editing Admin, Try Again!");
     }
   };
 
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Create New Admin</h2>
+        <h2 className="text-3xl font-semibold">Edit Admin</h2>
       </div>
 
       <form
@@ -128,7 +141,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="submit"
             className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Create Tenant
+            Edit Admin
           </button>
         </div>
       </form>
@@ -136,4 +149,4 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
   );
 };
 
-export default CreateAdminModal;
+export default EditAdminModal;

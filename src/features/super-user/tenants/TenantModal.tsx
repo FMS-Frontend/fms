@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CreateTenantForm from "./CreateTenantForm";
 import TenantInfo from "./TenantInfo";
 import TenantCheckboxes from "./TenantCheckboxes";
+import { TenantProvider } from "./TenantContext";
 
 /**
  * TenantModal component for managing the multi-step process of setting up a new tenant.
@@ -31,9 +32,13 @@ const TenantModal: React.FC<TenantModalProps> = ({ onClose }) => {
 
   return (
     <>
-      {step === 1 && <CreateTenantForm onNext={nextStep} onClose={onClose} />}
-      {step === 2 && <TenantInfo onPrevious={previousStep} onNext={nextStep} />}
-      {step === 3 && <TenantCheckboxes onClose={onClose} />}
+      <TenantProvider>
+        {step === 1 && <CreateTenantForm onNext={nextStep} onClose={onClose} />}
+        {step === 2 && (
+          <TenantInfo onPrevious={previousStep} onNext={nextStep} />
+        )}
+        {step === 3 && <TenantCheckboxes onClose={onClose} />}
+      </TenantProvider>
     </>
   );
 };
