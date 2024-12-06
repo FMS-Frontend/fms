@@ -17,7 +17,7 @@ import { GoLaw } from "react-icons/go";
 export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/administrator", label: "Administrator", icon: RiShieldUserLine },
-  { path: "/tenant", label: "Tenant", icon: PiBuildings },
+  { path: "/organizations", label: "Organizations", icon: PiBuildings },
   {
     path: "/reports",
     label: "Reports",

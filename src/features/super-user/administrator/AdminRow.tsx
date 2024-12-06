@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteAdmin } from "../../../services/apiSuperUser";
 import toast from "react-hot-toast";
 import EditAdminModal from "./EditAdminModal";
+import { getStatusStyles } from "../../../db/helperFunctions";
 
 interface Admin {
   id: string;
@@ -38,19 +39,6 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
       toast.error("Error deleting, try again");
     },
   });
-
-  const getStatusStyles = (status: string) => {
-    switch (status) {
-      case "Active":
-        return "bg-green-100 text-green-600";
-      case "Pending":
-        return "bg-yellow-100 text-yellow-600";
-      case "Deactivated":
-        return "bg-red-100 text-red-600";
-      default:
-        return "bg-gray-100 text-gray-600"; // Default styling
-    }
-  };
 
   return (
     <div

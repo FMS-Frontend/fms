@@ -111,7 +111,7 @@ const Body = <T,>({ data, render }: BodyProps<T>): JSX.Element => {
     );
 
   return (
-    <div role="row" className="py-2 px-5">
+    <div role="row" className="py-2 px-3">
       {data.map(render)}
     </div>
   );

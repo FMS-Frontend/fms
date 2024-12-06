@@ -101,7 +101,7 @@ function App() {
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="tenant" element={<Tenant />} />
+          <Route path="organizations" element={<Tenant />} />
           <Route path="administrator" element={<Administrator />} />
           <Route path="reports" element={<Reports />} />
           <Route path="analytics" element={<Analytics />} />

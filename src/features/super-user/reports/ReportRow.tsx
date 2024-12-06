@@ -1,31 +1,52 @@
 import { FC } from "react";
-
-// interface TableRowData {
-//   tenant: string;
-//   admin: string;
-//   adminEmail: string;
-//   phoneNumber: string;
-//   status: 'Active' | 'Pending' | 'Deactivated';
-// }
+import { Reports } from "./ReportTable";
+import {
+  capitalizeWords,
+  formatDate,
+  formatTime,
+  getStatusStyles,
+} from "../../../db/helperFunctions";
 
 // interface TableProps {
 //   data: TableRowData[];
 // }
 
-interface Report {
-  tenant: string;
-  admin: string;
-  adminEmail: string;
-  phoneNumber: string;
-  status: "Active" | "Pending" | "Deactivated";
-}
-
 interface ReportRowProps {
-  report: Report;
+  report: Reports;
+  index: number;
 }
 
-const ReportRow: FC<ReportRowProps> = () => {
-  return <div>Row</div>;
+const ReportRow: FC<ReportRowProps> = ({ report, index }) => {
+  const {
+    createdAt: date,
+    updatedAt: loginTime,
+    tenantName,
+    comment,
+    status,
+  } = report;
+  // console.log(x);
+
+  return (
+    <div
+      className={`grid grid-cols-[1fr_1fr_1fr_2fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
+        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+      }`}
+    >
+      <span className="text-xl">{formatDate(date)}</span>
+      <span className="text-xl">{formatTime(loginTime)}</span>
+      <span className="text-xl">{capitalizeWords(tenantName)}</span>
+      <span className="text-xl">{comment}</span>
+      <div>
+        <span
+          className={`flex justify-center items-center px-4 py-1 rounded-full text-xl font-medium ${getStatusStyles(
+            status
+          )}`}
+        >
+          {status}
+        </span>
+      </div>
+    </div>
+  );
 };
 
 export default ReportRow;

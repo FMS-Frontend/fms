@@ -27,7 +27,7 @@ import AddTenant from "../features/super-user/tenants/AddTenant";
 const Tenant: FC = (): JSX.Element => {
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="font-bold text-4xl">Tenant Management</h1>
+      <h1 className="font-bold text-4xl">Organization Management</h1>
 
       <div className="flex justify-between">
         <SearchInput />

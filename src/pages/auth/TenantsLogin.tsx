@@ -21,7 +21,7 @@ const TenantsLogin: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
   const { tenant } = useParams<{ tenant: string }>(); 
-  const { setAccessToken, setRefreshToken, handleRoleChange } = useAppContext();
+  const { setAccessToken, setRefreshToken, handleRoleChange} = useAppContext();
 
   const validate = Yup.object({
     email: Yup.string()
@@ -75,13 +75,14 @@ const TenantsLogin: FC = (): JSX.Element => {
 
     
       // Extract role and set it globally
-      const userRole = res.data.data.role;
-      const subRole = res.data.data.subRole?.name || null;
+      const userRole = res.data.data?.role;
+      const subRole = res.data.data.subRole?.name;
       if (userRole === "User" && subRole) {
         handleRoleChange(subRole); // Set the sub-role if the user is a generic "User"
       } else {
         handleRoleChange(userRole); // Set the main role
       }
+
 
       // Handle redirection based on role
       const redirectPath =
@@ -90,7 +91,8 @@ const TenantsLogin: FC = (): JSX.Element => {
           : `/${userRole.toLowerCase()}/dashboard`;
 
       navigate(redirectPath);
-      toast.success(`Welcome back, ${subRole}!`);
+      toast.success(`Welcome back ${userRole === "User" && subRole ? subRole : userRole}`);
+
 
     } catch (err) {
       toast.error("Wrong credentials, enter correct email and password");
@@ -99,6 +101,7 @@ const TenantsLogin: FC = (): JSX.Element => {
       actions.resetForm();
     }
   };
+
 
   const {
     values,
@@ -116,7 +119,7 @@ const TenantsLogin: FC = (): JSX.Element => {
     validationSchema: validate,
     onSubmit: handleFormSubmit,
   });
-
+  
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
       <div
