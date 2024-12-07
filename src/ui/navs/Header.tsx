@@ -1,6 +1,6 @@
 import { FC } from "react";
-import SearchInput from "./SearchInput";
-import UserAvatar from "./UserAvatar";
+import SearchInput from "../utils/SearchInput";
+import UserAvatar from "../utils/UserAvatar";
 import { CgMenuGridO } from "react-icons/cg";
 
 /**

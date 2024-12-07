@@ -32,7 +32,7 @@ const AuditorDashboard: FC = () => {
 
   return (
     <div className="flex flex-col gap-8 hide-scrollbar lg:bg-slate-50 lg:space-y-8 lg:p-8">
-      <h1 className="font-bold text-4xl">Rule Analyst</h1>
+      <h1 className="font-bold text-4xl">Dashboard</h1>
       <div className="space-y-8">
       <StatsDashboard />
       <ManagerTrendGraph />

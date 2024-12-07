@@ -1,7 +1,7 @@
 import { FC } from "react";
 import MainNav from "./MainNav";
 import { NavItem } from "./MainNav";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
 
 type SidebarProps = {
   navData: NavItem[];
@@ -46,7 +46,7 @@ const Sidebar: FC<SidebarProps> = ({ navData, className }) => {
     >
       <div className="flex items-center justify-center">
         <h1 className="hidden lg:block text-white font-bold text-4xl">
-          {role}
+          {role === "Analyst" || role === "Manager" ? `Fraud ${role}`  : role}
         </h1>
       </div>
       <MainNav data={navData} />

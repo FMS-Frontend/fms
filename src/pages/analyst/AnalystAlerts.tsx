@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import OutlineButton from "../../ui/OutlineButton";
+import OutlineButton from "../../ui/utils/OutlineButton";
 import AlertsOperations from "../../features/analyst/alerts/AlertsOperations";
-import SearchInput from "../../ui/SearchInput";
+import SearchInput from "../../ui/utils/SearchInput";
 import AlertsTable from "../../features/analyst/alerts/AlertsTable";
 
 /**

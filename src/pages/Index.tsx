@@ -43,7 +43,7 @@
 // export default Index;
 
 import { FC } from "react";
-import HomeNav from "../ui/HomeNav";
+import HomeNav from "../ui/navs/HomeNav";
 import bg from "../images/home-bg.png";
 
 const Index: FC = () => {

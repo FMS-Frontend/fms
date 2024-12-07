@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import URL from "../../db/url";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import SpinnerMini from "../../ui/SpinnerMini";
+import SpinnerMini from "../../ui/utils/SpinnerMini";
 import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { BsFillShieldLockFill } from "react-icons/bs";

@@ -1,7 +1,7 @@
 import { FC } from "react";
-import StatsDashboard from "../../../features/manager/dashboard/DashboardStats";
 import ManagerTrendGraph from "../../../features/manager/dashboard/ManagerTrendGraph";
 import UserTrendGraph from "./UserTrends";
+import StatsDashboard2 from "./AnalystStatsDasboard";
 
 /**
  * AnalystDashboard Component
@@ -23,7 +23,7 @@ const AnalystManagement: FC = () => {
     <div className="flex flex-col gap-8 hide-scrollbar ">
       {/* <h1 className="font-bold text-4xl">Analytics</h1> */}
       <div className="space-y-8">
-        <StatsDashboard />
+        <StatsDashboard2 />
         <ManagerTrendGraph />
         <UserTrendGraph />
       </div>

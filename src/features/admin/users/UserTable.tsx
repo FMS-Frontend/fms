@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 // import TenantRow from "./UserRow";
 
 const UserTable: FC = () => {

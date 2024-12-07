@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 // import OutlineButton from "../../../ui/OutlineButton";
-import SearchInput from "../../../ui/SearchInput";
+import SearchInput from "../../../ui/utils/SearchInput";
 // import RuleOperations from "../../analyst/rules/RulesOperations";
 import RuleTable from "../../analyst/rules/RuleTable";
 import AddRule from "../../analyst/rules/AddRule";

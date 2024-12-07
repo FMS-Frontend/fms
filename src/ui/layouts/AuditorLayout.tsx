@@ -1,24 +1,22 @@
-// AppLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
-import { analystNavData } from "../db";
+import Sidebar from "../navs/Sidebar";
+import Header from "../navs/Header";
+import { auditorNavData } from "../../db";
 
 /**
- * Analyst Layout component that wraps the main content of the admin section.
+ * ManagerLayout component renders a layout for the manager's dashboard with a sidebar and a header.
+ * The layout includes dynamic rendering of the sidebar and allows toggling its visibility on mobile.
+ * The `managerNavData` is used to populate the sidebar with navigation items.
  *
- * This component provides a responsive layout for the admin dashboard, including:
- * - A sidebar that can be toggled on and off for smaller screens.
- * - A header with a button to toggle the sidebar visibility.
- * - The main content area where the page components are rendered through the `Outlet` component from React Router.
+ * @component
+ * @example
+ * return <ManagerLayout />;
  *
- * The sidebar and content area are responsive and adjust based on the screen size.
- *
- * @returns {JSX.Element} The rendered layout with sidebar, header, and content.
+ * @returns {JSX.Element} The rendered layout component.
  */
 
-const AnalystLayout: FC = (): JSX.Element => {
+const AuditorLayout: FC = (): JSX.Element => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -35,7 +33,7 @@ const AnalystLayout: FC = (): JSX.Element => {
         ></div>
       )}
       <Sidebar
-        navData={analystNavData}
+        navData={auditorNavData}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
@@ -49,4 +47,4 @@ const AnalystLayout: FC = (): JSX.Element => {
   );
 };
 
-export default AnalystLayout;
+export default AuditorLayout;

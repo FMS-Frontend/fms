@@ -1,23 +1,32 @@
-// ManagerLayout.tsx
+// AppLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
-import { managerNavData } from "../db";
+import Sidebar from "../navs/Sidebar";
+import Header from "../navs/Header";
+import { superUserNavdata } from "../../db";
 
 /**
- * ManagerLayout component renders a layout for the manager's dashboard with a sidebar and a header.
- * The layout includes dynamic rendering of the sidebar and allows toggling its visibility on mobile.
- * The `managerNavData` is used to populate the sidebar with navigation items.
+ * App Layout component for the Super User dashboard.
+ *
+ * This layout provides a responsive structure for the Super User dashboard, which includes:
+ * - A sidebar that can be toggled on and off for mobile devices.
+ * - A header with a button to toggle the sidebar visibility.
+ * - The main content area where child components will be rendered using the `Outlet` from React Router.
+ *
+ * The sidebar adjusts its visibility based on the screen size and the toggle state.
  *
  * @component
  * @example
- * return <ManagerLayout />;
+ * return (
+ *   <AppLayout>
+ *     { Children components will be rendered here }
+ *   </AppLayout>
+ * );
  *
- * @returns {JSX.Element} The rendered layout component.
+ * @returns {JSX.Element} The rendered layout with a sidebar, header, and content area.
  */
 
-const ManagerLayout: FC = (): JSX.Element => {
+const AppLayout: FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -34,7 +43,7 @@ const ManagerLayout: FC = (): JSX.Element => {
         ></div>
       )}
       <Sidebar
-        navData={managerNavData}
+        navData={superUserNavdata}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
@@ -48,4 +57,4 @@ const ManagerLayout: FC = (): JSX.Element => {
   );
 };
 
-export default ManagerLayout;
+export default AppLayout;

@@ -1,32 +1,23 @@
-// AppLayout.tsx
+// ManagerLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
-import { superUserNavdata } from "../db";
+import Sidebar from "../navs/Sidebar";
+import Header from "../navs/Header";
+import { managerNavData } from "../../db";
 
 /**
- * App Layout component for the Super User dashboard.
- *
- * This layout provides a responsive structure for the Super User dashboard, which includes:
- * - A sidebar that can be toggled on and off for mobile devices.
- * - A header with a button to toggle the sidebar visibility.
- * - The main content area where child components will be rendered using the `Outlet` from React Router.
- *
- * The sidebar adjusts its visibility based on the screen size and the toggle state.
+ * ManagerLayout component renders a layout for the manager's dashboard with a sidebar and a header.
+ * The layout includes dynamic rendering of the sidebar and allows toggling its visibility on mobile.
+ * The `managerNavData` is used to populate the sidebar with navigation items.
  *
  * @component
  * @example
- * return (
- *   <AppLayout>
- *     { Children components will be rendered here }
- *   </AppLayout>
- * );
+ * return <ManagerLayout />;
  *
- * @returns {JSX.Element} The rendered layout with a sidebar, header, and content area.
+ * @returns {JSX.Element} The rendered layout component.
  */
 
-const AppLayout: FC = () => {
+const ManagerLayout: FC = (): JSX.Element => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -43,7 +34,7 @@ const AppLayout: FC = () => {
         ></div>
       )}
       <Sidebar
-        navData={superUserNavdata}
+        navData={managerNavData}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
@@ -57,4 +48,4 @@ const AppLayout: FC = () => {
   );
 };
 
-export default AppLayout;
+export default ManagerLayout;

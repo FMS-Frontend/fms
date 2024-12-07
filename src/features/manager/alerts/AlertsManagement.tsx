@@ -1,8 +1,6 @@
 import { FC } from "react";
-
-import SearchInput from "../../../ui/SearchInput";
-import AlertsTable from "../../../features/analyst/alerts/AlertsTable";
-import AlertsMgtOperations from "./AlartsMgtOperations";
+import AlertMgtTable from "./AlertMgtTable";
+import { alertsData } from "../../../db";
 
 /**
  * Analyst Alert's Component
@@ -22,17 +20,19 @@ import AlertsMgtOperations from "./AlartsMgtOperations";
  */
 
 const AlertsManagement: FC = (): JSX.Element => {
+  const headings = [
+    "Date",
+    "Alert ID",
+    "Type",
+    "Status",
+    "Severity",
+    "Timestamp",
+    "Actions",
+  ];
   return (
     <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Alerts Management</h1>
-      {/* <AlertsOperations /> */}
-      <AlertsMgtOperations />
-
-      <div className="flex justify-between">
-        <SearchInput />
-      </div>
-
-      <AlertsTable />
+      <AlertMgtTable headingData={headings} data={alertsData}/>
     </div>
   );
 };

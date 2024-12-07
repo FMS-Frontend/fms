@@ -1,9 +1,9 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getReports } from "../../../services/apiSuperUser";
 import ReportRow from "./ReportRow";
-import Spinner from "../../../ui/Spinner";
+import Spinner from "../../../ui/utils/Spinner";
 
 export interface Reports {
   id: string;

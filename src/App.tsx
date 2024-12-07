@@ -4,18 +4,18 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import LoginPage from "./pages/auth/LoginPage";
-import AppLayout from "./ui/AppLayout";
+import AppLayout from "./ui/layouts/AppLayout";
 import Tenant from "./pages/Tenant";
 import Administrator from "./pages/Administrator";
 import Audit from "./pages/Audit";
 import Page404 from "./pages/Page404";
-import ManagerLayout from "./ui/ManagerLayout";
+import ManagerLayout from "./ui/layouts/ManagerLayout";
 import ManagerDashboard from "./pages/manager/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import { FC, ReactNode } from "react";
 import Users from "./pages/Users";
 import { useAppContext } from "./context/AppContext";
-import AdminLayout from "./ui/AdminLayout";
+import AdminLayout from "./ui/layouts/AdminLayout";
 import AdminReports from "./pages/AdminReports";
 import AdminAudit from "./pages/AdminAudit";
 import AdminIntegration from "./pages/AdminIntegration";
@@ -23,7 +23,7 @@ import ChangePassword from "./pages/ChangePassword";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
 import AdminAnalytics from "./pages/AdminAnalytics";
-import AnalystLayout from "./ui/AnalystLayout";
+import AnalystLayout from "./ui/layouts/AnalystLayout";
 import AnalystDashboard from "./pages/analyst/AnalystDashboard";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
 import RulesManagement from "./features/manager/rules/RulesManagement";
@@ -35,6 +35,7 @@ import UpdatePassword from "./pages/UpdatePassword";
 import PasswordConfirmation from "./pages/PasswordConfirmation";
 import Index from "./pages/Index";
 import TenantsLogin from "./pages/auth/TenantsLogin";
+import AuditorLayout from "./ui/layouts/AuditorLayout";
 
 
 // ProtectedRoute Component
@@ -162,9 +163,9 @@ function App() {
         <Route
           path="/auditor"
           element={
-            <ProtectedRoute userRole="Auditor">
-              <ManagerLayout/>
-           </ProtectedRoute>
+            // <ProtectedRoute userRole="Auditor">
+              <AuditorLayout/>
+            // </ProtectedRoute>
           }
         >
           <Route path="dashboard" element={<AnalystDashboard />} />

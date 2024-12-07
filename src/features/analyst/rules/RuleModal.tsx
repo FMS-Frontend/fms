@@ -21,7 +21,7 @@ import CreateRuleForm from "./CreateRuleForm";
  */
 
 interface TenantModalProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const RuleModal: React.FC<TenantModalProps> = ({ onClose }) => {

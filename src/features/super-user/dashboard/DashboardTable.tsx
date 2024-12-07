@@ -7,11 +7,11 @@
 // import Pagination from "../../ui/Pagination";
 
 import { useQuery } from "@tanstack/react-query";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { getTenants } from "../../../services/apiSuperUser";
 import DashboardRow from "./DashboardRow";
 import { Organization } from "../../../db/types";
-import Paginate from "../../../ui/Paginate";
+import Paginate from "../../../ui/utils/Paginate";
 import { useSearchParams } from "react-router-dom";
 
 function DashboardTable() {

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import SearchInput from "../../../ui/SearchInput";
+import SearchInput from "../../../ui/utils/SearchInput";
 import RuleMgtOperations from "../rules/RuleMgtOperation";
 import AddCase from "./AddCase";
 import CaseTable from "./CaseTable";

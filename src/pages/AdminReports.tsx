@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FiPlus } from "react-icons/fi";
-import PrimaryButton from "../ui/PrimaryButton";
-import OutlineButton from "../ui/OutlineButton";
+import PrimaryButton from "../ui/utils/PrimaryButton";
+import OutlineButton from "../ui/utils/OutlineButton";
 import AdminReportTable from "../features/admin/reports/AdminReportTable";
 import ReportOperations from "../features/super-user/reports/ReportOperations";
 

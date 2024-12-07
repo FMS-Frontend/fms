@@ -1,8 +1,8 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import { useQuery } from "@tanstack/react-query";
-import { getUserTrends } from "../../../services/apiSuperUser";
+// import { useQuery } from "@tanstack/react-query";
+// import { getUserTrends } from "../../../services/apiSuperUser";
 
 const data = [
   {

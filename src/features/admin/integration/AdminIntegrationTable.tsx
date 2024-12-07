@@ -6,7 +6,7 @@
 // import Spinner from "../../ui/Spinner";
 // import Pagination from "../../ui/Pagination";
 
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 
 function AdminIntegrationTable() {
   // const { bookings, isLoading, count } = useBookings();

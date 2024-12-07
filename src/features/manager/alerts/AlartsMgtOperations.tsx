@@ -1,22 +1,23 @@
-// AlertsMgtOperations.tsx
-import { FC, useState } from "react";
-import DateComp from "../../../ui/DateComp";
-import SelectDropdown from "../../../ui/SelectDropdown";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import { FC } from "react";
+import DateComp from "../../../ui/utils/DateComp";
+import SelectDropdown from "../../../ui/utils/SelectDropdown";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 
-const AlertsMgtOperations: FC = () => {
-  // Separate state variables for Severity and Status
-  const [selectedSeverity, setSelectedSeverity] = useState<string>("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
+interface AlertsMgtOperationsProps {
+  selectedSeverity: string;
+  selectedStatus: string;
+  onSeverityChange: (value: string) => void;
+  onStatusChange: (value: string) => void;
+  onDateChange: (dateRange: { startDate: Date; endDate: Date }) => void;
+}
 
-  const handleSeverityChange = (value: string) => {
-    setSelectedSeverity(value);
-  };
-
-  const handleStatusChange = (value: string) => {
-    setSelectedStatus(value);
-  };
-
+const AlertsMgtOperations: FC<AlertsMgtOperationsProps> = ({
+  selectedSeverity,
+  selectedStatus,
+  onSeverityChange,
+  onStatusChange,
+  onDateChange, // Accept the date change handler
+}) => {
   const handleSearch = () => {
     console.log("Selected Severity:", selectedSeverity);
     console.log("Selected Status:", selectedStatus);
@@ -26,7 +27,7 @@ const AlertsMgtOperations: FC = () => {
     <div className="px-4 py-5 w-9/12 border rounded-lg shadow-sm flex items-center justify-around">
       {/* Date Range Picker */}
       <div>
-        <DateComp />
+        <DateComp onDateChange={onDateChange} /> {/* Pass the handler */}
       </div>
 
       {/* Severity Dropdown */}
@@ -39,7 +40,7 @@ const AlertsMgtOperations: FC = () => {
             { value: "medium", label: "Medium" },
           ]}
           selectedValue={selectedSeverity}
-          onChange={handleSeverityChange}
+          onChange={onSeverityChange}
         />
       </div>
 
@@ -52,7 +53,7 @@ const AlertsMgtOperations: FC = () => {
             { value: "closed", label: "Closed" },
           ]}
           selectedValue={selectedStatus}
-          onChange={handleStatusChange}
+          onChange={onStatusChange}
         />
       </div>
 

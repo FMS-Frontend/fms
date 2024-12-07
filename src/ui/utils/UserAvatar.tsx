@@ -1,5 +1,5 @@
 // import React from "react";
-import avatar from "../assets/default-avatar.jpg";
+import avatar from "../../assets/default-avatar.jpg"
 
 /**
  * UserAvatar component that displays a user's avatar image along with their name and role.

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import DashboardTable from "../features/admin/admin-dashboard/AdminDashboardTable";
 import DashboardStats from "../features/admin/integration/AdminIntegrationStats";
-import SearchInput from "../ui/SearchInput";
-import OutlineButton from "../ui/OutlineButton";
+import SearchInput from "../ui/utils/SearchInput";
+import OutlineButton from "../ui/utils/OutlineButton";
 import AddIntegration from "../features/admin/integration/AddIntegration";
 
 /**

@@ -1,8 +1,8 @@
 import { FC } from "react";
-import OutlineButton from "../ui/OutlineButton";
-import SearchInput from "../ui/SearchInput";
+import OutlineButton from "../ui/utils/OutlineButton";
+import SearchInput from "../ui/utils/SearchInput";
 import AuditTable from "../features/super-user/audit/AuditTable";
-import DateComp from "../ui/DateComp";
+import DateComp from "../ui/utils/DateComp";
 
 /**
  * Audit Component

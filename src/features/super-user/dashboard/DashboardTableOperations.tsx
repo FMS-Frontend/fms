@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Filter from "../../../ui/Filter";
+import Filter from "../../../ui/utils/Filter";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { HiOutlineExclamationCircle, HiOutlineFlag } from "react-icons/hi2";
 

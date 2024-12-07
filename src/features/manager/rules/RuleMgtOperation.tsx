@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import SelectDropdown from "../../../ui/SelectDropdown";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import SelectDropdown from "../../../ui/utils/SelectDropdown";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import DateCompAnalyst from "../../analyst/rules/DateCompAnalyst";
 const RuleMgtOperations: FC = () => {
   const [assignTo, setAsignedto] = useState<string>("");

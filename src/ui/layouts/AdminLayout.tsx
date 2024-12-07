@@ -1,9 +1,9 @@
 // AppLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
-import { adminNavData } from "../db";
+import Header from "../navs/Header";
+import Sidebar from "../navs/Sidebar";
+import { adminNavData } from "../../db";
 
 /**
  * Admin Layout component that wraps the main content of the admin section.

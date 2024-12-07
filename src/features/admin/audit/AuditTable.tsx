@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 // import AdminAuditRow from "./AdminAuditRow";
 // import AuditRow from "./AdminAuditRow";
 
