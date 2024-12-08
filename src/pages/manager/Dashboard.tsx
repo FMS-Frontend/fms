@@ -27,7 +27,7 @@ import RecentTable from "../../features/manager/dashboard/RecentTable";
 
 
 const ManagerDashboard: FC = () => {
-  const heading1 = ["Alert Type", "Time Stamp", "Status"];
+  const heading1 = ["Alert Type",  "Risk Score","Time Stamp",];
   const heading2 = ["Action", "User", "Date/Time"];
 
   return (

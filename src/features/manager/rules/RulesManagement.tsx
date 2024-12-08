@@ -6,6 +6,8 @@ import SearchInput from "../../../ui/utils/SearchInput";
 import RuleTable from "../../analyst/rules/RuleTable";
 import AddRule from "../../analyst/rules/AddRule";
 import RuleMgtOperations from "./RuleMgtOperation";
+import RuleMgtTable from "./RuleMgtTable";
+import { rulesData } from "../../../db";
 
 /**
  * Analyst Rules Component
@@ -25,17 +27,18 @@ import RuleMgtOperations from "./RuleMgtOperation";
  */
 
 const RulesManagement: FC = (): JSX.Element => {
+  const headings = [
+    "Rule ID",
+    "Rule Name",
+    "Status",
+    "Assigned to",
+    "Last Modified",
+    "Actions",
+  ];
   return (
     <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Rule Management</h1>
-      <RuleMgtOperations/>
-
-      <div className="flex justify-between">
-        <SearchInput />
-        <AddRule/>
-      </div>
-
-      <RuleTable />
+      <RuleMgtTable headingData={headings} data={rulesData} />
     </div>
   );
 };

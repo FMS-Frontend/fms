@@ -84,7 +84,7 @@ export const analystNavData = [
 ];
 export const auditorNavData = [
   { path: "/auditor/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { path: "/auditor/auditlogs", label: "Audit Logs", icon: MdOutlineDashboard },
+  { path: "/auditor/auditlogs", label: "Audit Logs", icon: LuBox },
   { path: "/auditor/compliance", label: "Compliance Reports", icon: MdOutlineDashboard },
   { path: "/auditor/rules", label: "Rules History", icon: GoLaw },
   { path: "/auditor/alerts", label: "Alerts Overview", icon: IoAlertCircleOutline },
@@ -95,7 +95,11 @@ export const auditorNavData = [
     icon: PiFolderSimpleUser,
   },
   { path: "/auditor/tenants", label: "Tenants", icon: BsGraphUpArrow },
-  { path: "/auditor/tenants", label: "Tenants", icon: BsGraphUpArrow },
+  {
+    path: "/admin/integration",
+    label: "Integration",
+    icon: PiIntersectFill,
+  },
 ];
 
 // statData
@@ -204,7 +208,7 @@ export const priorityData: Tenant[] = [
   {
     id: 1,
     alertType: "Login",
-    timeStamp: "2024-11-07T09:23",
+    timeStamp: "2024-11-07T09:23:00Z",
     status: "Active",
   },
   {
@@ -407,5 +411,119 @@ export const alertsData: Alert[] = [
     severity: "High",
     timestamp: "09:15:00 PM",
     actions: "View",
+  },
+];
+
+import { RuleTableRowProps } from "../features/manager/rules/RuleTableRow";
+export const rulesData: RuleTableRowProps[] = [
+  {
+    ruleId: "R001",
+    ruleName: "Login Check",
+    status: "Active",
+    assignedTo: {
+      image: "/images/user1.jpg",
+      name: "Alice Johnson",
+    },
+    lastModified: "2024-12-07T11:30:00Z",
+    index: 0,
+  },
+  {
+    ruleId: "R002",
+    ruleName: "Payment Cap",
+    status: "Inactive",
+    assignedTo: {
+      image: "/images/user2.jpg",
+      name: "Bob Smith",
+    },
+    lastModified: "2024-12-15T08:20:00Z",
+    index: 1,
+  },
+  {
+    ruleId: "R003",
+    ruleName: "IP Block",
+    status: "Active",
+    assignedTo: {
+      image: "/images/user3.jpg",
+      name: "Catherine Lee",
+    },
+    lastModified: "2024-12-08T14:00:00Z",
+    index: 2,
+  },
+  {
+    ruleId: "R004",
+    ruleName: "Email Verification",
+    status: "Inactive",
+    assignedTo: {
+      image: "/images/user4.jpg",
+      name: "David Brown",
+    },
+    lastModified: "2024-12-07T09:45:00Z",
+    index: 3,
+  },
+  {
+    ruleId: "R005",
+    ruleName: "Password Strength",
+    status: "Active",
+    assignedTo: {
+      image: "/images/user5.jpg",
+      name: "Eleanor Martinez",
+    },
+    lastModified: "2024-12-08T16:30:00Z",
+    index: 4,
+  },
+  {
+    ruleId: "R006",
+    ruleName: "Multi-Factor Auth",
+    status: "Inactive",
+    assignedTo: {
+      image: "/images/user6.jpg",
+      name: "Frank Williams",
+    },
+    lastModified: "2024-01-10T12:10:00Z",
+    index: 5,
+  },
+  {
+    ruleId: "R007",
+    ruleName: "Transaction Limits",
+    status: "Active",
+    assignedTo: {
+      image: "/images/user7.jpg",
+      name: "Grace Kim",
+    },
+    lastModified: "2024-07-22T10:00:00Z",
+    index: 6,
+  },
+  {
+    ruleId: "R008",
+    ruleName: "Geolocation Check",
+    status: "Inactive",
+    assignedTo: {
+      image: "/images/user8.jpg",
+      name: "Henry Allen",
+    },
+    lastModified: "2024-08-19T13:15:00Z",
+    index: 7,
+  },
+  {
+    ruleId: "R009",
+    ruleName: "Device Blacklist",
+    status: "Active",
+    assignedTo: {
+      image: "/images/user9.jpg",
+      name: "Isabel Clark",
+    },
+    lastModified: "2024-09-30T15:40:00Z",
+    index: 8,
+  },
+  {
+    ruleId: "R010",
+    ruleName: "Suspicious Login Alert",
+    status: "Inactive",
+    assignedTo: {
+      image: "/images/user10.jpg",
+      name: "Jack Taylor",
+    },
+    lastModified: "2024-10-12T11:00:00Z",
+    index: 9,
   },
 ];

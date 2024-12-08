@@ -24,7 +24,6 @@ import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AnalystLayout from "./ui/layouts/AnalystLayout";
-import AnalystDashboard from "./pages/analyst/AnalystDashboard";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
 import RulesManagement from "./features/manager/rules/RulesManagement";
 import AlertsManagement from "./features/manager/alerts/AlertsManagement";
@@ -151,7 +150,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="dashboard" element={<AnalystDashboard />} />
+          <Route path="dashboard" element={<ManagerDashboard />} />
           <Route path="alerts" element={<AlertsManagement />} />
           <Route path="rules" element={<RulesManagement />} />
           <Route path="cases" element={<CasesManagement />} />
@@ -168,7 +167,7 @@ function App() {
             // </ProtectedRoute>
           }
         >
-          <Route path="dashboard" element={<AnalystDashboard />} />
+          <Route path="dashboard" element={<ManagerDashboard />} />
           <Route path="alerts" element={<AlertsManagement />} />
           <Route path="rules" element={<RulesManagement />} />
           <Route path="cases" element={<CasesManagement />} />
