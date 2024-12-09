@@ -85,7 +85,7 @@ export const analystNavData = [
 export const auditorNavData = [
   { path: "/auditor/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/auditor/auditlogs", label: "Audit Logs", icon: LuBox },
-  { path: "/auditor/compliance", label: "Compliance Reports", icon: MdOutlineDashboard },
+  { path: "/auditor/report", label: "Compliance Reports", icon: HiOutlineDocumentText },
   { path: "/auditor/rules", label: "Rules History", icon: GoLaw },
   { path: "/auditor/alerts", label: "Alerts Overview", icon: IoAlertCircleOutline },
 
@@ -94,9 +94,9 @@ export const auditorNavData = [
     label: "Cases",
     icon: PiFolderSimpleUser,
   },
-  { path: "/auditor/tenants", label: "Tenants", icon: BsGraphUpArrow },
+  { path: "/auditor/organization", label: "Organization", icon: BsGraphUpArrow },
   {
-    path: "/admin/integration",
+    path: "/auditor/integration",
     label: "Integration",
     icon: PiIntersectFill,
   },

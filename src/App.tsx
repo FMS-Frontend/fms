@@ -141,7 +141,23 @@ function App() {
           <Route path="analytics" element={<AnalystManagement />} />
         </Route>
 
-        {/* Analyst Routes */}
+        {/* Rule Analyst Routes */}
+        <Route
+          path="/rule-analyst"
+          element={
+            <ProtectedRoute userRole="Analyst">
+              <AnalystLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<ManagerDashboard />} />
+          <Route path="alerts" element={<AlertsManagement />} />
+          <Route path="rules" element={<RulesManagement />} />
+          <Route path="cases" element={<CasesManagement />} />
+          <Route path="analytics" element={<AnalystManagement />} />
+        </Route>
+
+        {/*Fraud Analyst Routes */}
         <Route
           path="/analyst"
           element={
@@ -168,10 +184,13 @@ function App() {
           }
         >
           <Route path="dashboard" element={<ManagerDashboard />} />
-          <Route path="alerts" element={<AlertsManagement />} />
+          <Route path="auditlogs" element={<Audit />} />
+          <Route path="report" element={<Reports />} />
           <Route path="rules" element={<RulesManagement />} />
+          <Route path="alerts" element={<AlertsManagement />} />
           <Route path="cases" element={<CasesManagement />} />
-          <Route path="analytics" element={<AnalystManagement />} />
+          <Route path="organization" element={<Tenant />} />
+          <Route path="integration" element={<AdminIntegration />} />
         </Route>
 
         {/* Fallback Route */}

@@ -20,7 +20,7 @@ const HomeNav: FC = () => {
         </Link>
       </div>
 
-      <ul className="hidden lg:w-1/3 md:flex gap-10 items-center px-5 py-3 rounded-full bg-blue-950">
+      <ul className="hidden lg:w-[440px] md:flex justify-center gap-10 items-center p-3 rounded-full bg-blue-950">
         <NavLink
           to="/"
           className={({ isActive }) =>
