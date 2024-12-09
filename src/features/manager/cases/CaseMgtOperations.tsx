@@ -11,7 +11,7 @@ interface RuleMgtOperationsProps {
   onDateChange: (newDateRange: { startDate: Date; endDate: Date }) => void;
 }
 
-const RuleMgtOperations: FC<RuleMgtOperationsProps> = ({
+const CaseMgtOperations: FC<RuleMgtOperationsProps> = ({
   assignedTo,
   selectedStatus,
   onAssignedToChange,
@@ -19,7 +19,9 @@ const RuleMgtOperations: FC<RuleMgtOperationsProps> = ({
   onDateChange,
 }) => {
   return (
-    <div className="px-4 py-5 w-9/12 border rounded-lg shadow-sm flex items-center justify-around">
+    <div className="px-4 py-5 w-full md:w-11/12 lg:w-9/12 border rounded-lg shadow-sm flex flex-col md:flex-row md:items-center md:justify-around">
+      <div className="flex gap-2 lg:gap-8">
+      <div className="">
       <SelectDropdown
         label="Assigned To"
         options={[
@@ -31,20 +33,25 @@ const RuleMgtOperations: FC<RuleMgtOperationsProps> = ({
         selectedValue={assignedTo}
         onChange={onAssignedToChange}
       />
+      </div>
+      <div className="mx-2">
       <SelectDropdown
         label="Status"
         options={[
           { value: "", label: "All" },
-          { value: "active", label: "Active" },
-          { value: "inactive", label: "Inactive" },
+          { value: "Open", label: "Open" },
+          { value: "Closed", label: "Closed" },
         ]}
         selectedValue={selectedStatus}
         onChange={onStatusChange}
       />
+      </div>
+      </div>
       <DateComp onDateChange={onDateChange} />
       <PrimaryButton>Search</PrimaryButton>
+    
     </div>
   );
 };
 
-export default RuleMgtOperations;
+export default CaseMgtOperations;

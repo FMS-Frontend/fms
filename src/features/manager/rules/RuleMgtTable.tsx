@@ -4,6 +4,7 @@ import RuleTableRow from "./RuleTableRow";
 import RuleMgtOperations from "./RuleMgtOperation";
 import { RuleTableRowProps } from "./RuleTableRow";
 import SearchInput from "../../../ui/utils/SearchInput";
+import { formatRuleDate } from "../../../ui/utils/helpers";
 
 interface RuleMgtTableProps {
   headingData: string[];
@@ -23,9 +24,11 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({ headingData, data }) => {
   // Filter data based on selected filters, search query, and date range
   const filteredData = data.filter((rule) => {
     const matchesAssignedTo =
-      assignedTo === "" || rule.assignedTo.name.toLowerCase().includes(assignedTo.toLowerCase());
+      assignedTo === "" ||
+      rule.assignedTo.name.toLowerCase().includes(assignedTo.toLowerCase());
     const matchesStatus =
-      selectedStatus === "" || rule.status.toLowerCase() === selectedStatus.toLowerCase();
+      selectedStatus === "" ||
+      rule.status.toLowerCase() === selectedStatus.toLowerCase();
     const matchesSearch =
       searchQuery === "" ||
       rule.ruleId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,17 +36,25 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({ headingData, data }) => {
     const ruleDate = new Date(rule.lastModified);
     const matchesDateRange =
       ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate;
+      console.log(matchesDateRange);
 
-    return matchesAssignedTo && matchesStatus && matchesSearch && matchesDateRange;
+      //  "matchesDateRange" can also be added to the returned statement if you want to activate filtering by date range
+    return (
+      matchesAssignedTo && matchesStatus && matchesSearch 
+    );
   });
 
   const handleAssignedToChange = (value: string) => setAssignedTo(value);
   const handleStatusChange = (value: string) => setSelectedStatus(value);
 
-  const handleDateChange = (newDateRange: { startDate: Date; endDate: Date }) => {
+  const handleDateChange = (newDateRange: {
+    startDate: Date;
+    endDate: Date;
+  }) => {
     setDateRange(newDateRange);
   };
 
+  
   return (
     <div className="mt-8">
       {/* Filter Operations */}
@@ -57,6 +68,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({ headingData, data }) => {
         />
         <SearchInput
           width="40%"
+          placeholder="Search by ruleId or name"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -77,8 +89,16 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({ headingData, data }) => {
         </Table.Header>
 
         {/* Dynamic Row Rendering */}
-        {filteredData.map((rule) => (
-          <RuleTableRow key={rule.ruleId}  {...rule} />
+        {filteredData.map((rule, index) => (
+          <RuleTableRow
+            key={rule.ruleId}
+            ruleId={rule.ruleId}
+            ruleName={rule.ruleName}
+            status={rule.status}
+            assignedTo={rule.assignedTo}
+            lastModified={formatRuleDate(rule.lastModified)}
+            index={index}
+          />
         ))}
 
         {/* No Data Message */}

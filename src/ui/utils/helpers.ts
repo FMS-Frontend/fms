@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 // const userRole = 'superuser';
 export function checkUserRole(role: string) {
   if (role === "superuser") {
@@ -28,4 +30,9 @@ export const formatDateTime = (timestamp: string) => {
 export const formatTime = (timestamp: string) => {
   const date = new Date(timestamp);
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+};
+
+export const formatRuleDate = (timestamp: string): string => {
+  const date = new Date(timestamp);
+  return format(date, "MMMM d, yyyy");
 };

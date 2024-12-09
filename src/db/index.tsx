@@ -313,7 +313,6 @@ export const recentData: RecentProp[] = [
 
 export interface Alert {
   id: string;
-  date: string;
   type: string;
   status: string;
   severity: string;
@@ -324,92 +323,82 @@ export interface Alert {
 export const alertsData: Alert[] = [
   {
     id: "A101",
-    date: "December 1, 2024",
     type: "Login",
     status: "Closed",
     severity: "Critical",
-    timestamp: "10:00:00 AM",
+    timestamp: "2024-12-01T10:00:00Z",
     actions: "View",
   },
   {
     id: "A102",
-    date: "December 2, 2024",
     type: "Payment",
     status: "Closed",
     severity: "High",
-    timestamp: "11:15:00 AM",
+    timestamp: "2024-12-02T11:15:00Z",
     actions: "View",
   },
   {
     id: "A103",
-    date: "December 3, 2024",
     type: "Transfer",
     status: "Open",
     severity: "Medium",
-    timestamp: "12:30:00 PM",
+    timestamp: "2024-12-03T12:30:00Z",
     actions: "View",
   },
   {
     id: "A104",
-    date: "December 4, 2024",
     type: "Transfer",
     status: "Closed",
     severity: "Critical",
-    timestamp: "01:45:00 PM",
+    timestamp: "2024-12-04T13:45:00Z",
     actions: "View",
   },
   {
     id: "A105",
-    date: "December 5, 2024",
     type: "Payment",
     status: "Closed",
     severity: "Critical",
-    timestamp: "03:00:00 PM",
+    timestamp: "2024-12-05T15:00:00Z",
     actions: "View",
   },
   {
     id: "A106",
-    date: "December 6, 2024",
     type: "Login",
     status: "Open",
     severity: "High",
-    timestamp: "04:15:00 PM",
+    timestamp: "2024-12-06T16:15:00Z",
     actions: "View",
   },
   {
     id: "A107",
-    date: "December 7, 2024",
-    type: "Tranfer",
+    type: "Transfer",
     status: "Open",
     severity: "Medium",
-    timestamp: "05:30:00 PM",
+    timestamp: "2024-12-07T17:30:00Z",
     actions: "View",
   },
   {
     id: "A108",
-    date: "December 8, 2024",
-    type: "Tranfer",
+    type: "Transfer",
     status: "Closed",
     severity: "Medium",
-    timestamp: "06:45:00 PM",
+    timestamp: "2024-12-08T18:45:00Z",
     actions: "View",
   },
   {
     id: "A109",
-    date: "December 9, 2024",
     type: "Login",
     status: "Closed",
     severity: "Critical",
-    timestamp: "08:00:00 PM",
+    timestamp: "2024-12-09T20:00:00Z",
     actions: "View",
   },
   {
     id: "A110",
-    date: "December 10, 2024",
     type: "Payment",
     status: "Open",
     severity: "High",
-    timestamp: "09:15:00 PM",
+    timestamp: "2024-12-10T21:15:00Z",
     actions: "View",
   },
 ];
@@ -433,7 +422,7 @@ export const rulesData: RuleTableRowProps[] = [
     status: "Inactive",
     assignedTo: {
       image: "/images/user2.jpg",
-      name: "Bob Smith",
+      name: "Catherine Lee",
     },
     lastModified: "2024-12-15T08:20:00Z",
     index: 1,
@@ -510,7 +499,7 @@ export const rulesData: RuleTableRowProps[] = [
     status: "Active",
     assignedTo: {
       image: "/images/user9.jpg",
-      name: "Isabel Clark",
+      name: "David Brown",
     },
     lastModified: "2024-09-30T15:40:00Z",
     index: 8,
@@ -522,6 +511,128 @@ export const rulesData: RuleTableRowProps[] = [
     assignedTo: {
       image: "/images/user10.jpg",
       name: "Jack Taylor",
+    },
+    lastModified: "2024-10-12T11:00:00Z",
+    index: 9,
+  },
+];
+
+export interface CasesTableRowProps {
+  caseId: string;
+  priority: "Critical" | "High" | "Medium";
+  status: "Open" | "Closed";
+  assignedTo: { image: string; name: string };
+  lastModified: string;
+  index: number;
+}
+
+export const casesData: CasesTableRowProps[] = [
+  {
+    caseId: "C001",
+    priority: "Critical",
+    status: "Open",
+    assignedTo: {
+      image: "/images/user1.jpg",
+      name: "Alice Johnson",
+    },
+    lastModified: "2024-12-07T11:30:00Z",
+    index: 0,
+  },
+  {
+    caseId: "C002",
+    priority: "Medium",
+    status: "Closed",
+    assignedTo: {
+      image: "/images/user2.jpg",
+      name: "Catherine Lee",
+    },
+    lastModified: "2024-12-15T08:20:00Z",
+    index: 1,
+  },
+  {
+    caseId: "C003",
+    priority: "High",
+    status: "Open",
+    assignedTo: {
+      image: "/images/user3.jpg",
+      name: "David Brown",
+    },
+    lastModified: "2024-12-08T14:00:00Z",
+    index: 2,
+  },
+  {
+    caseId: "C004",
+    priority: "Medium",
+    status: "Closed",
+    assignedTo: {
+      image: "/images/user4.jpg",
+      name: "Eleanor Martinez",
+    },
+    lastModified: "2024-12-07T09:45:00Z",
+    index: 3,
+  },
+  {
+    caseId: "C005",
+    priority: "Critical",
+    status: "Open",
+    assignedTo: {
+      image: "/images/user5.jpg",
+      name: "Frank Williams",
+    },
+    lastModified: "2024-12-08T16:30:00Z",
+    index: 4,
+  },
+  {
+    caseId: "C006",
+    priority: "High",
+    status: "Closed",
+    assignedTo: {
+      image: "/images/user6.jpg",
+      name: "Grace Kim",
+    },
+    lastModified: "2024-01-10T12:10:00Z",
+    index: 5,
+  },
+  {
+    caseId: "C007",
+    priority: "Critical",
+    status: "Open",
+    assignedTo: {
+      image: "/images/user7.jpg",
+      name: "Henry Allen",
+    },
+    lastModified: "2024-07-22T10:00:00Z",
+    index: 6,
+  },
+  {
+    caseId: "C008",
+    priority: "Medium",
+    status: "Closed",
+    assignedTo: {
+      image: "/images/user8.jpg",
+      name: "Jack Taylor",
+    },
+    lastModified: "2024-08-19T13:15:00Z",
+    index: 7,
+  },
+  {
+    caseId: "C009",
+    priority: "High",
+    status: "Open",
+    assignedTo: {
+      image: "/images/user9.jpg",
+      name: "Alice Johnson",
+    },
+    lastModified: "2024-09-30T15:40:00Z",
+    index: 8,
+  },
+  {
+    caseId: "C010",
+    priority: "Critical",
+    status: "Closed",
+    assignedTo: {
+      image: "/images/user10.jpg",
+      name: "Catherine Lee",
     },
     lastModified: "2024-10-12T11:00:00Z",
     index: 9,

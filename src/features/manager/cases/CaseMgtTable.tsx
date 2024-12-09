@@ -1,17 +1,18 @@
 import { FC, useState } from "react";
 import Table from "../../../ui/utils/Table";
-import AlertTableRow from "./AlertTableRow";
-import AlertsMgtOperations from "./AlartsMgtOperations";
+import CaseTableRow from "./CaseTableRow";
+import CaseMgtOperations from "./CaseMgtOperations";
+import { CasesTableRowProps } from "../../../db";
 import SearchInput from "../../../ui/utils/SearchInput";
-import { Alert } from "../../../db";
+import { formatRuleDate } from "../../../ui/utils/helpers";
 
-interface AlertTableProps {
+interface CaseMgtTableProps {
   headingData: string[];
-  data: Alert[];
+  data: CasesTableRowProps[];
 }
 
-const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
-  const [selectedSeverity, setSelectedSeverity] = useState<string>("");
+const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
+  const [assignedTo, setAssignedTo] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -21,24 +22,29 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
   });
 
   // Filter data based on selected filters, search query, and date range
-  const filteredData = data.filter((alert) => {
-    const matchesSeverity =
-      selectedSeverity === "" ||
-      alert.severity.toLowerCase() === selectedSeverity;
+  const filteredData = data.filter((rule) => {
+    const matchesAssignedTo =
+      assignedTo === "" ||
+      rule.assignedTo.name.toLowerCase().includes(assignedTo.toLowerCase());
     const matchesStatus =
-      selectedStatus === "" || alert.status.toLowerCase() === selectedStatus;
+      selectedStatus === "" ||
+      rule.status.toLowerCase() === selectedStatus.toLowerCase();
     const matchesSearch =
       searchQuery === "" ||
-      alert.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      alert.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      alert.status.toLowerCase().includes(searchQuery.toLowerCase());
+      rule.caseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      rule.priority.toLowerCase().includes(searchQuery.toLowerCase());
+    const ruleDate = new Date(rule.lastModified);
+    const matchesDateRange =
+      ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate;
+      console.log(matchesDateRange);
 
+      //  "matchesDateRange" can also be added to the returned statement if you want to activate filtering by date range
     return (
-      matchesSeverity && matchesStatus && matchesSearch 
+      matchesAssignedTo && matchesStatus && matchesSearch 
     );
   });
 
-  const handleSeverityChange = (value: string) => setSelectedSeverity(value);
+  const handleAssignedToChange = (value: string) => setAssignedTo(value);
   const handleStatusChange = (value: string) => setSelectedStatus(value);
 
   const handleDateChange = (newDateRange: {
@@ -48,22 +54,21 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
     setDateRange(newDateRange);
   };
 
-    console.log(dateRange);
-
+  
   return (
     <div className="mt-8">
       {/* Filter Operations */}
       <div className="flex flex-wrap items-center justify-between mb-4 gap-4">
-        <AlertsMgtOperations
-          selectedSeverity={selectedSeverity}
+        <CaseMgtOperations
+          assignedTo={assignedTo}
           selectedStatus={selectedStatus}
-          onSeverityChange={handleSeverityChange}
+          onAssignedToChange={handleAssignedToChange}
           onStatusChange={handleStatusChange}
           onDateChange={handleDateChange} // Pass the date handler
         />
         <SearchInput
           width="40%"
-          placeholder="Search by Alert id, type or status"
+          placeholder="Search by caseId or priority"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -84,14 +89,14 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
         </Table.Header>
 
         {/* Dynamic Row Rendering */}
-        {filteredData.map((alert, index) => (
-          <AlertTableRow
-            key={alert.id}
-            id={alert.id}
-            type={alert.type}
-            status={alert.status}
-            severity={alert.severity}
-            timestamp={alert.timestamp}
+        {filteredData.map((rule, index) => (
+          <CaseTableRow
+            key={rule.caseId}
+            caseId={rule.caseId}
+            priority={rule.priority}
+            status={rule.status}
+            assignedTo={rule.assignedTo}
+            lastModified={formatRuleDate(rule.lastModified)}
             index={index}
           />
         ))}
@@ -99,7 +104,7 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
         {/* No Data Message */}
         {filteredData.length === 0 && (
           <div className="text-center text-gray-500 p-4">
-            No alerts match the selected filters or search query.
+            No rules match the selected filters or search query.
           </div>
         )}
       </Table>
@@ -107,4 +112,4 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
   );
 };
 
-export default AlertMgtTable;
+export default CaseMgtTable;

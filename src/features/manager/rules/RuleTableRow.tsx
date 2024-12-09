@@ -1,4 +1,6 @@
 import { FC } from "react";
+import EditRule from "./modals/EditRule";
+import ViewRule from "./modals/ViewRule";
 
 export interface RuleTableRowProps {
   ruleId: string; // R001, R002, R003, etc...
@@ -8,7 +10,7 @@ export interface RuleTableRowProps {
     image: string;
     name: string;
   };
-  lastModified: string; // 2024-06-07T11:30:00Z   
+  lastModified: string; // 2024-06-07T11:30:00Z
   index: number;
 }
 
@@ -41,15 +43,10 @@ const RuleTableRow: FC<RuleTableRowProps> = ({
       </div>
       <div>{assignedTo.name}</div>
 
-      {/* lastModified should be in the format "December 6, 2024" */}
-      <div>{lastModified}</div> 
+      <div>{lastModified}</div>
       <div className="flex justify-between lg:max-w-[50%]">
-        <button className="px-2 py-1 rounded bg-green-100 hover:bg-green-50 text-green-500">
-          Edit
-        </button>
-        <button className="px-2 py-1 rounded bg-primaryBlue text-white cursor-pointer hover:bg-primaryBlue/70">
-          View
-        </button>
+        <EditRule />
+        <ViewRule />
       </div>
     </div>
   );

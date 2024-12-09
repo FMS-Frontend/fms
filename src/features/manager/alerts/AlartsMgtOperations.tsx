@@ -35,6 +35,7 @@ const AlertsMgtOperations: FC<AlertsMgtOperationsProps> = ({
         <SelectDropdown
           label="Severity"
           options={[
+            { value: "", label: "All" },
             { value: "critical", label: "Critical" },
             { value: "high", label: "High" },
             { value: "medium", label: "Medium" },
@@ -49,6 +50,7 @@ const AlertsMgtOperations: FC<AlertsMgtOperationsProps> = ({
         <SelectDropdown
           label="Status"
           options={[
+            { value: "", label: "All" },
             { value: "open", label: "Open" },
             { value: "closed", label: "Closed" },
           ]}

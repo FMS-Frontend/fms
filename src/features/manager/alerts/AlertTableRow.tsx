@@ -1,8 +1,11 @@
 import { FC } from "react";
+import { formatRuleDate, formatTime } from "../../../ui/utils/helpers";
+import ReopenAlert from "./modals/ReopenAlert";
+import AssignAlert from "./modals/AssignAlert";
+import ViewAlert from "./modals/ViewAlert";
 
 interface Alert {
   id: string;
-  date: string;
   type: string;
   status: string;
   severity: string;
@@ -16,7 +19,6 @@ interface AlertTableRowProps extends Alert {
 
 const AlertTableRow: FC<AlertTableRowProps> = ({
   id,
-  date,
   type,
   status,
   severity,
@@ -29,27 +31,17 @@ const AlertTableRow: FC<AlertTableRowProps> = ({
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
-      <div>{date}</div>
+      <div>{formatRuleDate(timestamp)}</div>
       <div>{id}</div>
       <div>{type}</div>
       <div>
         <span className={`px-2 py-1 rounded-full ${status === "Closed" ? "bg-slate-100 text-slate-400" : "text-red-500"}`}>{status}</span>
       </div>
       <div>{severity}</div>
-      <div>{timestamp}</div>
+      <div>{formatTime(timestamp)}</div>
       <div className="flex justify-between lg:max-w-[70%]">
-        <button
-          className={`px-2 py-1 rounded ${
-            status === "Closed"
-              ? "bg-red-50 hover:bg-red-100 text-red-500"
-              : "bg-green-50 hover:bg-green-100 text-green-500"
-          }`}
-        >
-          {status === "Closed" ? "Reopen" : "Assign"}
-        </button>
-        <button className="px-2 py-1 rounded bg-primaryBlue text-white cursor-pointer hover:bg-primaryBlue/70">
-          View
-        </button>
+        {status === "Closed" ? <ReopenAlert /> : <AssignAlert />}
+        <ViewAlert />
       </div>
     </div>
   );
