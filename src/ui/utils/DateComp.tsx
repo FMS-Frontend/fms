@@ -90,7 +90,7 @@ interface SelectionRange {
 }
 
 interface DateCompProps {
-  onDateChange: (dateRange: { startDate: Date; endDate: Date }) => void;
+  onDateChange?: (dateRange: { startDate: Date; endDate: Date }) => void;
 }
 
 const DateComp: FC<DateCompProps> = ({ onDateChange }) => {
@@ -113,8 +113,9 @@ const DateComp: FC<DateCompProps> = ({ onDateChange }) => {
     };
     setSelectionRange(updatedRange);
 
-    // Notify parent of the date range change
-    onDateChange({ startDate: updatedRange.startDate, endDate: updatedRange.endDate });
+    if (onDateChange) {
+      onDateChange({ startDate: updatedRange.startDate, endDate: updatedRange.endDate });
+    }
   };
 
   const toggleDateOpen = () => {

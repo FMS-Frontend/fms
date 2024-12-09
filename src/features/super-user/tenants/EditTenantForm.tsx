@@ -25,7 +25,7 @@ import { Tenant } from "../../../db/types";
  */
 
 interface EditTenantProps {
-  onClose: () => void;
+  onClose?: () => void;
   tenantToEdit?: Tenant;
 }
 
@@ -47,7 +47,10 @@ const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
       });
 
       toast.success("Admin Edited Successfully");
-      onClose();
+      
+      if(onClose){
+        onClose()
+      }
       queryClient.invalidateQueries({
         queryKey: ["tenants"],
       });

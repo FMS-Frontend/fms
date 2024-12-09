@@ -3,7 +3,7 @@ import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getTenants } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/utils/Spinner";
-import TenantRow from "./TenantRow";
+// import TenantRow from "./TenantRow";
 import { Tenant } from "../../../db/types";
 import { useSearchParams } from "react-router-dom";
 import Paginate from "../../../ui/utils/Paginate";
@@ -17,6 +17,8 @@ const TenantTable: FC = () => {
     queryFn: () => getTenants(page),
   });
 
+  console.log(tenants);
+  
   return (
     <div className="mt-8">
       <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">

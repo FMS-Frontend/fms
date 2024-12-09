@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { CasesTableRowProps } from "../../../db";
-import AddCase from "./modals/ReopenCase";
 import ViewCase from "./modals/ViewCase";
 import ReopenCase from "./modals/ReopenCase";
 import AssignCase from "./modals/AssignCase";
