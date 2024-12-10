@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface CreateUserProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 /**

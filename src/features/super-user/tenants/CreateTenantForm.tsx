@@ -1,6 +1,6 @@
 import { FC, ChangeEvent } from "react";
 import { useTenant } from "./TenantContext";
-import Spinner from "../../../ui/Spinner";
+import Spinner from "../../../ui/utils/Spinner";
 // import { useQuery } from "@tanstack/react-query";
 
 /**

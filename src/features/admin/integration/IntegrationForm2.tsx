@@ -1,8 +1,8 @@
 import { FC } from "react";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 
 interface StepProps {
-  onPrevious: () => void;
+  onPrevious?: () => void;
 }
 
 /**

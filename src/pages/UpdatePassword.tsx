@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 import usePasswordToggle from "../hooks/usePasswordToggle";
-import SpinnerMini from "../ui/SpinnerMini";
+import SpinnerMini from "../ui/utils/SpinnerMini";
 import URL from "../db/url";
 import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";

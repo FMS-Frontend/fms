@@ -1,14 +1,19 @@
 import { FC, useState } from "react";
-import SelectDropdown from "../../../ui/SelectDropdown";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import SelectDropdown from "../../../ui/utils/SelectDropdown";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import DateCompAnalyst from "./DateCompAnalyst";
 
 const RuleOperations: FC = () => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [assignTo, setAsignedto] = useState<string>("");
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
 
   const handleOptionChange = (value: string) => {
-    setSelectedOption(value);
+    setAsignedto(value);
   };
+  const handleStatusChange = (value: string) => {
+    setSelectedStatus(value);
+  };
+
 
   return (
     <div className="px-4 py-5 w-4/5 border rounded-sm shadow-sm flex items-center justify-around">
@@ -19,19 +24,18 @@ const RuleOperations: FC = () => {
           { value: "option2", label: "Admin" },
           { value: "option3", label: "Manager" },
         ]}
-        selectedValue={selectedOption}
+        selectedValue={assignTo}
         onChange={handleOptionChange}
       />
 
       <SelectDropdown
         label="Status"
         options={[
-          { value: "option1", label: "Open/Closed" },
-          { value: "option2", label: "Sales Force" },
-          { value: "option3", label: "LinkedIn" },
+          { value: "option1", label: "Open" },
+          { value: "option2", label: "Closed" },
         ]}
-        selectedValue={selectedOption}
-        onChange={handleOptionChange}
+        selectedValue={selectedStatus}
+          onChange={handleStatusChange}
       />
 
       <DateCompAnalyst />

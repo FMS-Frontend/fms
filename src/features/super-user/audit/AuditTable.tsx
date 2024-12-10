@@ -1,13 +1,13 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAudit } from "../../../services/apiSuperUser";
 import { useSearchParams } from "react-router-dom";
 import { Audit } from "../../../db/types";
 import AuditRow from "./AuditRow";
-import Spinner from "../../../ui/Spinner";
-import Paginate from "../../../ui/Paginate";
-import SpinnerMini from "../../../ui/SpinnerMini";
+import Spinner from "../../../ui/utils/Spinner";
+import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
 const AuditTable: FC = () => {
   const [searchParams] = useSearchParams();

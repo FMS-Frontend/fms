@@ -10,7 +10,7 @@ import CreateRuleForm from "./CreateRuleForm";
  *
  * The modal component controls the flow of the setup process, providing navigation between steps (Next/Previous).
  *
- * @component
+ * @component 
  * @example
  * <TenantModal onClose={handleClose} />
  *
@@ -21,7 +21,7 @@ import CreateRuleForm from "./CreateRuleForm";
  */
 
 interface TenantModalProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const RuleModal: React.FC<TenantModalProps> = ({ onClose }) => {

@@ -1,8 +1,8 @@
 import { FC } from "react";
 
 interface StepProps {
-  onNext: () => void;
-  onClose: () => void;
+  onNext?: () => void;
+  onClose?: () => void;
 }
 
 /**

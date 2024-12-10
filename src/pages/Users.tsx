@@ -1,6 +1,6 @@
 import { FC } from "react";
-import OutlineButton from "../ui/OutlineButton";
-import SearchInput from "../ui/SearchInput";
+import OutlineButton from "../ui/utils/OutlineButton";
+import SearchInput from "../ui/utils/SearchInput";
 import AddUser from "../features/admin/users/AddUser";
 import UserTable from "../features/admin/users/UserTable";
 

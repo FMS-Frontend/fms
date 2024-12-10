@@ -1,13 +1,13 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getTenants } from "../../../services/apiSuperUser";
-import Spinner from "../../../ui/Spinner";
-import TenantRow from "./TenantRow";
+import Spinner from "../../../ui/utils/Spinner";
+// import TenantRow from "./TenantRow";
 import { Tenant } from "../../../db/types";
 import { useSearchParams } from "react-router-dom";
-import Paginate from "../../../ui/Paginate";
-import SpinnerMini from "../../../ui/SpinnerMini";
+import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
 const TenantTable: FC = () => {
   const [searchParams] = useSearchParams();
