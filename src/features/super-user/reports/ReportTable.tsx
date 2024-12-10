@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getReports } from "../../../services/apiSuperUser";
 // import ReportRow from "./ReportRow";
 import Spinner from "../../../ui/utils/Spinner";
+import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
 export interface Reports {
   id: string;
@@ -15,12 +17,19 @@ export interface Reports {
 }
 
 const ReportTable: FC = () => {
-  const { isLoading, data: reports } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["reports"],
     queryFn: getReports,
   });
 
-  // console.log(reports);
+  // : { data: reports, pagination }
+  console.log("ReportTable =>", data);
+
+  const reports = data?.reports;
+  const pagination = data?.pagination;
+
+  // console.log(data.reports);
+  // console.log(data.pagination);
 
   return (
     <div className="mt-8">
@@ -54,9 +63,17 @@ const ReportTable: FC = () => {
           />
         )}
 
-        {/* <Table.Footer>
-        <Pagination count={count} />
-      </Table.Footer> */}
+        <Table.Footer>
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination?.pageSize}
+              totalItems={pagination?.totalItems}
+              totalPages={pagination?.totalPages}
+            />
+          )}
+        </Table.Footer>
       </Table>
     </div>
   );

@@ -7,18 +7,21 @@ import Spinner from "../../../ui/utils/Spinner";
 import { Tenant } from "../../../db/types";
 import { useSearchParams } from "react-router-dom";
 import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
 const TenantTable: FC = () => {
   const [searchParams] = useSearchParams();
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const page = !Number(searchParams.get("page"))
+    ? 1
+    : Number(searchParams.get("page"));
 
   const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
     queryKey: ["tenants"],
     queryFn: () => getTenants(page),
   });
 
-  console.log(tenants);
-  
+  // console.log(tenants);
+
   return (
     <div className="mt-8">
       <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
@@ -55,11 +58,15 @@ const TenantTable: FC = () => {
         )}
 
         <Table.Footer>
-          <Paginate
-            pageSize={pagination?.pageSize}
-            totalItems={pagination?.totalItems}
-            totalPages={pagination?.totalPages}
-          />
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination?.pageSize}
+              totalItems={pagination?.totalItems}
+              totalPages={pagination?.totalPages}
+            />
+          )}
         </Table.Footer>
       </Table>
     </div>

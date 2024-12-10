@@ -1,6 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
-import { getAdmins } from "../../../services/apiSuperUser";
+import { getAdminsModal } from "../../../services/apiSuperUser";
 
 // Define the shape of the tenant data
 export interface TenantData {
@@ -26,6 +27,7 @@ interface TenantContextType {
   setTenantData: React.Dispatch<React.SetStateAction<TenantData>>;
   admins: Admin[] | undefined; // Fetched admin data
   adminsId: string[]; // Array of admin IDs extracted from the fetched data
+  isLoading: boolean;
 }
 
 const TenantContext = createContext<TenantContextType | undefined>(undefined);
@@ -46,9 +48,9 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({
     createRuleFolder: false,
   });
 
-  const { data: admins = [] } = useQuery({
-    queryKey: ["admins"],
-    queryFn: getAdmins,
+  const { isLoading, data: admins = [] } = useQuery({
+    queryKey: ["adminsModal"],
+    queryFn: getAdminsModal,
   });
 
   // Extract all admin IDs
@@ -56,7 +58,7 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <TenantContext.Provider
-      value={{ tenantData, setTenantData, admins, adminsId }}
+      value={{ tenantData, setTenantData, admins, adminsId, isLoading }}
     >
       {children}
     </TenantContext.Provider>

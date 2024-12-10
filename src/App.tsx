@@ -35,6 +35,9 @@ import PasswordConfirmation from "./pages/PasswordConfirmation";
 import Index from "./pages/Index";
 import TenantsLogin from "./pages/auth/TenantsLogin";
 import AuditorLayout from "./ui/layouts/AuditorLayout";
+import SettingsPage from "./pages/SettingsPage";
+// import { SuperUserProvider } from "./context/SuperuserContext";
+// import Integration from "./pages/Integration";
 
 
 // ProtectedRoute Component
@@ -123,6 +126,7 @@ function App() {
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="audit" element={<AdminAudit />} />
           <Route path="integration" element={<AdminIntegration />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
 
         {/* Manager Routes */}

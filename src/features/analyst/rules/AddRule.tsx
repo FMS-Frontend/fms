@@ -28,7 +28,7 @@ const AddRule: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-rule">
-        {({ onClose }) => <RuleModal onClose={onClose} />}
+        {({ onClose }) => <RuleModal onClose={onClose || (() => {})} />}
       </Modal.Window>
     </Modal>
   );

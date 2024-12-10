@@ -7,6 +7,7 @@ import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import { useSearchParams } from "react-router-dom";
+import { Admin } from "../../../db/types";
 
 /**
  * AdminsTable component displays a table of administrator information,
@@ -29,15 +30,6 @@ import { useSearchParams } from "react-router-dom";
  * <AdminsTable />
  */
 
-interface Admin {
-  id: string;
-  name: string;
-  role: string;
-  email: string;
-  mobile: string;
-  status: "Active" | "Pending" | "Deactivated";
-}
-
 const AdminsTable: FC = () => {
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
@@ -46,6 +38,8 @@ const AdminsTable: FC = () => {
     queryFn: () => getAdmins(page),
     queryKey: ["admins", page],
   });
+
+  // console.log(admins);
 
   return (
     <div className="mt-8">

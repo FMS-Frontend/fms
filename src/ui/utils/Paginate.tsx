@@ -10,13 +10,12 @@ interface PaginationProps {
 
 const Paginate: FC<PaginationProps> = ({
   pageSize,
-
   totalItems,
   totalPages,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentPage = !searchParams.get("page")
+  const currentPage = !Number(searchParams.get("page"))
     ? 1
     : Number(searchParams.get("page"));
 
@@ -24,6 +23,7 @@ const Paginate: FC<PaginationProps> = ({
     const next = currentPage === totalPages ? totalPages : currentPage + 1;
 
     searchParams.set("page", next.toString());
+
     setSearchParams(searchParams);
   };
 
