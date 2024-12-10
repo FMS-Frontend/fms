@@ -52,3 +52,13 @@ export interface Audit {
   updatedAt: string;
   author: Author;
 }
+
+// ********** ADMIN (USER) **********
+export interface User {
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  mobile: string;
+  status: string;
+}

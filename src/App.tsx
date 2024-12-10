@@ -39,7 +39,6 @@ import SettingsPage from "./pages/SettingsPage";
 // import { SuperUserProvider } from "./context/SuperuserContext";
 // import Integration from "./pages/Integration";
 
-
 // ProtectedRoute Component
 interface ProtectedProps {
   userRole: string;
@@ -81,10 +80,13 @@ function App() {
         <Route path="/:tenant/auth/login" element={<TenantsLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/update-password" element={<UpdatePassword />} />
-        <Route path="/password-confirmation" element={<PasswordConfirmation />} />
+        <Route
+          path="/password-confirmation"
+          element={<PasswordConfirmation />}
+        />
 
         {/* Protected Routes */}
-        
+
         <Route
           path="/change-password"
           element={
@@ -177,13 +179,12 @@ function App() {
           <Route path="analytics" element={<AnalystManagement />} />
         </Route>
 
-
         {/* Auditor Routes */}
         <Route
           path="/auditor"
           element={
             // <ProtectedRoute userRole="Auditor">
-              <AuditorLayout/>
+            <AuditorLayout />
             // </ProtectedRoute>
           }
         >
@@ -226,4 +227,3 @@ function App() {
 }
 
 export default App;
-

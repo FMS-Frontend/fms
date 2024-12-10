@@ -25,13 +25,6 @@ interface StepProps {
 }
 
 const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
-  // const { data: admins = [] } = useQuery({
-  //   queryKey: ["admins", page],
-  //   queryFn: () => getAdmins(page),
-  // });
-
-  // ****************************************
-
   const { isLoading, admins, tenantData, setTenantData } = useTenant();
 
   const handleChange = (

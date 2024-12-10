@@ -1,4 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
+import URL from "../../../db/url";
+import toast from "react-hot-toast";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface CreateUserProps {
   onClose?: () => void;
@@ -19,14 +23,49 @@ interface CreateUserProps {
  * @returns {JSX.Element} The rendered form for creating a new user.
  */
 
+interface FormData {
+  name: string;
+  email: string;
+  mobile: string;
+  address: string;
+  description: string;
+}
+
+interface CreateUserProps {
+  onClose: () => void;
+}
+
 const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
+  const queryClient = useQueryClient();
+  const { register, handleSubmit } = useForm<FormData>();
+
+  const onFormSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      await URL.post(createUrl, {
+        name: capitalizeWords(data.name),
+        email: data.email,
+        mobile: data.mobile,
+        address: data.address,
+      });
+
+      toast.success("Admin Created");
+      onClose();
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error creating User, try again!");
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-semibold">Create New User</h2>
       </div>
 
-      <form className="flex flex-col gap-3">
+      <form onSubmit={onFormSubmit} className="flex flex-col gap-3">
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Full Name
@@ -34,6 +73,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="text"
             placeholder="Enter full name"
+            {...register("name")}
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -45,6 +85,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="text"
             placeholder="Enter address"
+            {...register("address")}
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -56,6 +97,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="email"
             placeholder="Enter email"
+            {...register("email")}
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -67,6 +109,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="number"
             placeholder="Enter phone number"
+            {...register("mobile")}
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -91,6 +134,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="textarea"
             placeholder="Enter description"
+            {...register("description")}
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>

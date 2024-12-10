@@ -68,9 +68,9 @@ export async function deleteAdmin(id: string) {
 //*********** TENANTS **************/
 export async function getTenants(page: number) {
   try {
-    const tenants = await URL.get(`/tenants?page=${page}`);
+    const res = await URL.get(`/tenants?page=${page}`);
 
-    return tenants.data;
+    return res.data;
   } catch (error) {
     console.log(error);
     throw new Error("Tenants could not be fetched");
