@@ -37,6 +37,7 @@ export const superUserNavdata = [
 export const adminNavData = [
   { path: "/admin/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/admin/users", label: "Users", icon: HiOutlineUsers },
+  { path: "/admin/rules", label: "Rule", icon: GoLaw },
   {
     path: "/admin/reporting",
     label: "Reports",
@@ -85,16 +86,28 @@ export const analystNavData = [
 export const auditorNavData = [
   { path: "/auditor/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
   { path: "/auditor/auditlogs", label: "Audit Logs", icon: LuBox },
-  { path: "/auditor/report", label: "Compliance Reports", icon: HiOutlineDocumentText },
+  {
+    path: "/auditor/report",
+    label: "Compliance Reports",
+    icon: HiOutlineDocumentText,
+  },
   { path: "/auditor/rules", label: "Rules History", icon: GoLaw },
-  { path: "/auditor/alerts", label: "Alerts Overview", icon: IoAlertCircleOutline },
+  {
+    path: "/auditor/alerts",
+    label: "Alerts Overview",
+    icon: IoAlertCircleOutline,
+  },
 
   {
     path: "/auditor/cases",
     label: "Cases",
     icon: PiFolderSimpleUser,
   },
-  { path: "/auditor/organization", label: "Organization", icon: BsGraphUpArrow },
+  {
+    path: "/auditor/organization",
+    label: "Organization",
+    icon: BsGraphUpArrow,
+  },
   {
     path: "/auditor/integration",
     label: "Integration",
@@ -104,7 +117,7 @@ export const auditorNavData = [
 
 // statData
 import { ReactNode } from "react";
-import { FaChartLine, FaUsers, } from "react-icons/fa";
+import { FaChartLine, FaUsers } from "react-icons/fa";
 import { IoTimerOutline } from "react-icons/io5";
 import { LuBox } from "react-icons/lu";
 
@@ -309,7 +322,6 @@ export const recentData: RecentProp[] = [
     date: "2024-11-08T13:10:00Z",
   },
 ];
-
 
 export interface Alert {
   id: string;

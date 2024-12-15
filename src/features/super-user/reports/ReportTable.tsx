@@ -2,7 +2,7 @@ import { FC } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getReports } from "../../../services/apiSuperUser";
-// import ReportRow from "./ReportRow";
+import ReportRow from "./ReportRow";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
@@ -23,7 +23,7 @@ const ReportTable: FC = () => {
   });
 
   // : { data: reports, pagination }
-  console.log("ReportTable =>", data);
+  // console.log("ReportTable =>", data);
 
   const reports = data?.reports;
   const pagination = data?.pagination;

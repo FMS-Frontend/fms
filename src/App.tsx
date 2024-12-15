@@ -36,9 +36,9 @@ import Index from "./pages/Index";
 import TenantsLogin from "./pages/auth/TenantsLogin";
 import AuditorLayout from "./ui/layouts/AuditorLayout";
 import SettingsPage from "./pages/SettingsPage";
+import AdminRule from "./pages/AdminRule";
 // import { SuperUserProvider } from "./context/SuperuserContext";
 // import Integration from "./pages/Integration";
-
 
 // ProtectedRoute Component
 interface ProtectedProps {
@@ -81,10 +81,13 @@ function App() {
         <Route path="/:tenant/auth/login" element={<TenantsLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/update-password" element={<UpdatePassword />} />
-        <Route path="/password-confirmation" element={<PasswordConfirmation />} />
+        <Route
+          path="/password-confirmation"
+          element={<PasswordConfirmation />}
+        />
 
         {/* Protected Routes */}
-        
+
         <Route
           path="/change-password"
           element={
@@ -109,6 +112,7 @@ function App() {
           <Route path="reports" element={<Reports />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="audit" element={<Audit />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
 
         {/* Admin Routes */}
@@ -122,6 +126,7 @@ function App() {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users" element={<Users />} />
+          <Route path="rules" element={<AdminRule />} />
           <Route path="reporting" element={<AdminReports />} />
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="audit" element={<AdminAudit />} />
@@ -177,13 +182,12 @@ function App() {
           <Route path="analytics" element={<AnalystManagement />} />
         </Route>
 
-
         {/* Auditor Routes */}
         <Route
           path="/auditor"
           element={
             // <ProtectedRoute userRole="Auditor">
-              <AuditorLayout/>
+            <AuditorLayout />
             // </ProtectedRoute>
           }
         >
@@ -226,4 +230,3 @@ function App() {
 }
 
 export default App;
-

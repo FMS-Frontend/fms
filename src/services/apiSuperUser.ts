@@ -9,7 +9,7 @@ export async function getUserTrends() {
     const res = await URL.get(
       "/analytics/trends/user?startDate=2024-01-01&endDate=2024-12-01&intervalUnit=month"
     );
-    // console.log(res.data.data);
+    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -35,7 +35,7 @@ export async function getAdmins(page: number = 1) {
   try {
     const res = await URL.get(`/users?page=${page}`);
 
-    // console.log(admins.data);
+    // console.log(res);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -68,9 +68,9 @@ export async function deleteAdmin(id: string) {
 //*********** TENANTS **************/
 export async function getTenants(page: number) {
   try {
-    const tenants = await URL.get(`/tenants?page=${page}`);
+    const res = await URL.get(`/tenants?page=${page}`);
 
-    return tenants.data;
+    return res.data;
   } catch (error) {
     console.log(error);
     throw new Error("Tenants could not be fetched");

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 
 import {
   createContext,
@@ -35,7 +36,6 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
     () => localStorage.getItem("role") || ""
   );
 
-  
   useEffect(() => {
     if (role) {
       localStorage.setItem("role", role);
@@ -79,7 +79,11 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
     const storedRole = localStorage.getItem("role");
 
     // If the role matches, render the child routes; otherwise, redirect to /login
-    return storedRole === requiredRole ? <Outlet /> : <Navigate to="/" replace />;
+    return storedRole === requiredRole ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" replace />
+    );
   };
 
   const logout = () => {
