@@ -70,6 +70,8 @@ function App() {
   // Set up token handling
   useAxiosInterceptor();
 
+  
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -121,6 +123,7 @@ function App() {
           }
         >
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="rules" element={<RulesManagement />} />
           <Route path="users" element={<Users />} />
           <Route path="reporting" element={<AdminReports />} />
           <Route path="analytics" element={<AdminAnalytics />} />

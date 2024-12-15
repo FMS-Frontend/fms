@@ -8,16 +8,92 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "../../../ui/utils/Spinner";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
+// function DashboardTable() {
+//   const [searchParams] = useSearchParams();
+//   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
+//   const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
+//     queryFn: () => getTenants(page),
+//     queryKey: ["tenants", page],
+//   });
+
+//   // console.log(tenants);
+
+//   return (
+//     <div className="mt-8">
+//       <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr]">
+//         <Table.Header>
+//           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+//             Tenant
+//           </div>
+//           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+//             Admin Assigned
+//           </div>
+//           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+//             Email
+//           </div>
+//           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+//             Phone Number
+//           </div>
+//           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+//             Status
+//           </div>
+//         </Table.Header>
+
+//         {isLoading ? (
+//           <Spinner />
+//         ) : (
+//           <Table.Body<Organization>
+//             data={tenants}
+//             render={(tenants, index) => (
+//               <DashboardRow key={tenants.id} tenant={tenants} index={index} />
+//             )}
+//           />
+//         )}
+
+//         <Table.Footer>
+//           {isLoading ? (
+//             <SpinnerMini />
+//           ) : (
+//             <Paginate
+//               pageSize={pagination?.pageSize}
+//               totalItems={pagination?.totalItems}
+//               totalPages={pagination?.totalPages}
+//             />
+//           )}
+//         </Table.Footer>
+//       </Table>
+//     </div>
+//   );
+// }
+
+// export default DashboardTable;
+
+
 function DashboardTable() {
   const [searchParams] = useSearchParams();
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
-  const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
+  // Use React Query for data fetching
+  const { isLoading, data, error } = useQuery({
     queryFn: () => getTenants(page),
     queryKey: ["tenants", page],
+    staleTime: 1000 * 60, // Optional: Cache data for 1 minute
+    retry: 3, // Optional: Retry fetching if it fails
+    initialData: {
+      data: [],
+      pagination: { pageSize: 10, totalItems: 0, totalPages: 1 },
+    }, // Default structure for data to avoid undefined issues
   });
 
-  // console.log(tenants);
+  // Handle fetched data
+  const tenants = data?.data || [];
+  const pagination = data?.pagination || {};
+
+  // Error handling for fetch failure
+  if (error) {
+    return <div>Error loading data. Please try again.</div>;
+  }
 
   return (
     <div className="mt-8">
@@ -45,8 +121,8 @@ function DashboardTable() {
         ) : (
           <Table.Body<Organization>
             data={tenants}
-            render={(tenants, index) => (
-              <DashboardRow key={tenants.id} tenant={tenants} index={index} />
+            render={(tenant, index) => (
+              <DashboardRow key={tenant.id} tenant={tenant} index={index} />
             )}
           />
         )}
@@ -56,9 +132,9 @@ function DashboardTable() {
             <SpinnerMini />
           ) : (
             <Paginate
-              pageSize={pagination?.pageSize}
-              totalItems={pagination?.totalItems}
-              totalPages={pagination?.totalPages}
+              pageSize={pagination.pageSize}
+              totalItems={pagination.totalItems}
+              totalPages={pagination.totalPages}
             />
           )}
         </Table.Footer>
