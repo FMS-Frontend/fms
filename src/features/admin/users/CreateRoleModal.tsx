@@ -1,5 +1,9 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
+import URL from "../../../db/url";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+// import useSubdomain from "../../../hooks/useSubdomain";
 
 interface CreateRoleProps {
   onClose: () => void;
@@ -11,9 +15,15 @@ interface FormData {
   description: string;
 }
 
+// /tenants/:tenant/roles
+
 const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
   const { register, handleSubmit } = useForm<FormData>();
   const [permissions, setPermissions] = useState<string[]>([]);
+  const queryClient = useQueryClient();
+
+  // const { subdomain } = useSubdomain();
+  const subdomain = "ten";
 
   const handleCheckboxChange = (permission: string) => {
     setPermissions((prev) =>
@@ -21,6 +31,28 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
         ? prev.filter((item) => item !== permission)
         : [...prev, permission]
     );
+  };
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      const roleData = {
+        name: data.name,
+        description: data.description,
+        permissions,
+      };
+
+      await URL.post(`/tenants/${subdomain}/roles`, roleData);
+
+      toast.success("Role created successfully");
+      onClose?.();
+      queryClient.invalidateQueries({
+        queryKey: ["roles"],
+      });
+      // console.log(res);
+    } catch (error) {
+      console.log(error);
+      toast.error("Error creating role, try again");
+    }
   };
 
   return (
@@ -31,7 +63,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
       </div>
 
       {/* Form */}
-      <form className="p-4 space-y-4">
+      <form className="p-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* Role Name */}
         <div>
           <label className="block text-gray-700 text-xl font-bold mb-1">
@@ -40,6 +72,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
           <input
             type="text"
             placeholder=""
+            {...register("name", { required: true })}
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -51,6 +84,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
           </label>
           <textarea
             placeholder="Provide a brief description of this role"
+            {...register("description", { required: true })}
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             rows={3}
           ></textarea>
@@ -62,19 +96,19 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
             Permissions
           </label>
 
-          <div className="ml-6 space-y-4">
+          <div className="ml-6 space-y-4 mb-16">
             <div className="flex items-center">
               <input
                 type="checkbox"
                 className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="caseRead"
-                onChange={() => handleCheckboxChange("case:read")}
+                id="user:create"
+                onChange={() => handleCheckboxChange("user:create")}
               />
               <label
-                htmlFor="caseRead"
+                htmlFor="user:create"
                 className="text-gray-700 text-xl font-medium"
               >
-                View Dashboard
+                Create
               </label>
             </div>
 
@@ -82,86 +116,17 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
               <input
                 type="checkbox"
                 className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="caseCreate"
-                onChange={() => handleCheckboxChange("case:create")}
+                id="user:modify"
+                onChange={() => handleCheckboxChange("user:modify")}
               />
               <label
-                htmlFor="caseCreate"
+                htmlFor="user:modify"
                 className="text-gray-700 text-xl font-medium"
               >
-                Manage Alerts
-              </label>
-            </div>
-
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="caseModify"
-                onChange={() => handleCheckboxChange("case:modify")}
-              />
-              <label
-                htmlFor="caseModify"
-                className="text-gray-700 text-xl font-medium"
-              >
-                Manage Cases
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="ruleRead"
-                onChange={() => handleCheckboxChange("rule:read")}
-              />
-              <label
-                htmlFor="ruleRead"
-                className="text-gray-700 text-xl font-medium"
-              >
-                Assign Cases
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="ruleCreate"
-                onChange={() => handleCheckboxChange("rule:create")}
-              />
-              <label
-                htmlFor="ruleCreate"
-                className="text-gray-700 text-xl font-medium"
-              >
-                Edit Rules
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="ruleModify"
-                onChange={() => handleCheckboxChange("rule:modify")}
-              />
-              <label
-                htmlFor="ruleModify"
-                className="text-gray-700 text-xl font-medium"
-              >
-                Manage Users
+                Modify
               </label>
             </div>
           </div>
-        </div>
-
-        {/* Assigned To */}
-        <div className="mt-4">
-          <label className="block text-gray-700 text-xl font-bold mt-8 mb-1">
-            Assigned To (Optional)
-          </label>
-          <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-            <option>Darlene Robertson</option>
-            <option>John Doe</option>
-            <option>Jane Smith</option>
-          </select>
         </div>
 
         {/* Actions */}

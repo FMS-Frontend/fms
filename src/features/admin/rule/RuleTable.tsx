@@ -1,45 +1,44 @@
 import { FC } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "../../../services/apiAdmin";
-import { User } from "../../../db/types";
-import UserRow from "./UserRow";
+import { getRules } from "../../../services/apiAdmin";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";
+import RuleRow from "./RuleRow";
+import { Rule } from "../../../db/types";
 // import useSubdomain from "../../../hooks/useSubdomain";
 
-const UserTable: FC = () => {
+const RuleTable: FC = () => {
   // const { subdomain } = useSubdomain();
   const subdomain = "ten";
   const { page } = usePageParam();
 
-  const { isLoading, data: { data: users, pagination } = {} } = useQuery({
-    queryFn: () => getUsers(subdomain, page),
-    queryKey: ["users"],
+  const { isLoading, data: { data: rules, pagination } = {} } = useQuery({
+    queryFn: () => getRules(subdomain, page),
+    queryKey: ["rules"],
   });
+
+  console.log(rules);
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr_0.5fr]">
+      <Table columns="grid-cols-[0.5fr_1fr_0.5fr_1fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-lg">
-            Name
+            Rule ID
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg">
-            Role
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg">
-            Email
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg">
-            Phone Number
+            Rule Name
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg">
             Status
           </div>
           <div className="text-gray-600 font-semibold uppercase text-lg">
+            Last Modified
+          </div>
+          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
             Actions
           </div>
         </Table.Header>
@@ -47,10 +46,10 @@ const UserTable: FC = () => {
         {isLoading ? (
           <Spinner />
         ) : (
-          <Table.Body<User>
-            data={users}
-            render={(user, index) => (
-              <UserRow user={user} key={user.id} index={index} />
+          <Table.Body<Rule>
+            data={rules}
+            render={(rule, index) => (
+              <RuleRow rule={rule} key={rule.id} index={index} />
             )}
           />
         )}
@@ -71,4 +70,4 @@ const UserTable: FC = () => {
   );
 };
 
-export default UserTable;
+export default RuleTable;

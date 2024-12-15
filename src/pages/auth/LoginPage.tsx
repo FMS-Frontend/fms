@@ -10,7 +10,6 @@ import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { BsFillShieldLockFill } from "react-icons/bs";
 
-
 /**
  * LoginPage Component
  *
@@ -42,7 +41,6 @@ const LoginPage: FC = (): JSX.Element => {
   const { setAccessToken, setRefreshToken, handleRoleChange } = useAppContext();
   // const userRole = checkUserRole(role);
 
-
   // Validation for input data
   const validate = Yup.object({
     email: Yup.string()
@@ -65,6 +63,7 @@ const LoginPage: FC = (): JSX.Element => {
       });
 
       // console.log(res);
+
       //Set Auth Token
       const accessToken = res.headers["x-access-token"];
       // console.log("accessToken => ", accessToken);
@@ -84,6 +83,7 @@ const LoginPage: FC = (): JSX.Element => {
       }
 
       // If it's a first time User Login
+
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
@@ -93,7 +93,7 @@ const LoginPage: FC = (): JSX.Element => {
         return;
       }
 
-      const userRole = res.data.data?.role
+      const userRole = res.data.data?.role;
       handleRoleChange(userRole); //Save
 
       //
@@ -132,11 +132,11 @@ const LoginPage: FC = (): JSX.Element => {
         className={`absolute inset-0 bg-cover bg-center bg-[url("src/assets/Shape.png")]`}
       ></div>
       <div className="z-10 bg-white p-20 rounded-2xl shadow-lg w-full max-w-2xl flex flex-col gap-4">
-      <div className="w-full flex justify-center">
-        <Link to="/">
-        <BsFillShieldLockFill className="text-blue-500 h-16 w-16" />
-        </Link>
-      </div>
+        <div className="w-full flex justify-center">
+          <Link to="/">
+            <BsFillShieldLockFill className="text-blue-500 h-16 w-16" />
+          </Link>
+        </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
           Super User Login
         </h2>

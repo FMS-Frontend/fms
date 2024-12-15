@@ -1,12 +1,10 @@
 import { FC } from "react";
-// import { useTenant } from "./TenantContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { capitalizeWords } from "../../../db/helperFunctions";
 import URL from "../../../db/url";
 import { Tenant } from "../../../db/types";
-// import { Tenant } from "./TenantRow";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -47,9 +45,9 @@ const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
       });
 
       toast.success("Admin Edited Successfully");
-      
-      if(onClose){
-        onClose()
+
+      if (onClose) {
+        onClose();
       }
       queryClient.invalidateQueries({
         queryKey: ["tenants"],

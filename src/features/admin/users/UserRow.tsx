@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { User } from "../../../db/types";
 import { getStatusStyles } from "../../../db/helperFunctions";
 import Modal from "../../../ui/utils/Modal";
@@ -8,24 +8,20 @@ import { AiFillEdit } from "react-icons/ai";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteUser } from "../../../services/apiAdmin";
 import toast from "react-hot-toast";
+import EditUser from "./EditUserModal";
+// import useSubdomain from "../../../hooks/useSubdomain";
 
-interface TenantRowProps {
+interface UserRowProps {
   user: User;
   index: number;
 }
 
-const UserRow: FC<TenantRowProps> = ({ user, index }) => {
-  const [subdomain, setSubdomain] = useState<string | null>(null);
-
-  useEffect(() => {
-    const hostname = window.location.hostname;
-    const subdomainPart = hostname.split(".")[0];
-    setSubdomain(subdomainPart);
-  }, []);
+const UserRow: FC<UserRowProps> = ({ user, index }) => {
+  // const { subdomain } = useSubdomain();
+  const subdomain = "ten";
 
   const queryClient = useQueryClient();
   const { id: userId, name, role, email, mobile, status } = user;
-  console.log(user);
 
   const { mutate } = useMutation({
     mutationFn: () => deleteUser(subdomain, userId),
@@ -36,7 +32,7 @@ const UserRow: FC<TenantRowProps> = ({ user, index }) => {
       toast.success("Deleted successfully");
     },
     onError: () => {
-      toast.error("Error deleting, try again");
+      toast.error("Error deleting user, try again");
     },
   });
 
@@ -72,9 +68,7 @@ const UserRow: FC<TenantRowProps> = ({ user, index }) => {
               <ConfirmDelete
                 resourceName="Admin"
                 onCloseModal={onClose || (() => {})}
-                onConfirm={() => {
-                  mutate();
-                }}
+                onConfirm={mutate}
               />
             )}
           </Modal.Window>
@@ -84,6 +78,11 @@ const UserRow: FC<TenantRowProps> = ({ user, index }) => {
               <AiFillEdit className="hover:text-blue-700 text-gray-600 text-2xl transition-all duration-200 cursor-pointer" />
             </button>
           </Modal.Open>
+          <Modal.Window name="edit">
+            {({ onClose }) => (
+              <EditUser onClose={onClose || (() => {})} userToEdit={user} />
+            )}
+          </Modal.Window>
         </Modal>
       </div>
     </div>
