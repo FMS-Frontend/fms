@@ -20,6 +20,7 @@ const ViewRuleModal: React.FC<ViewRuleModalProps> = ({ onClose, ruleId }) => {
   const { data: rule, isLoading, error } = useQuery({
     queryKey: ["rule", tenant, ruleId],
     queryFn: () => getRuleById(tenant, ruleId),
+    staleTime: 0,
     enabled: !!ruleId, // Ensure the query only runs if ruleId exists
   });
 

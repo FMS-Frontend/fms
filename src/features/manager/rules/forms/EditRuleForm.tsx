@@ -101,7 +101,7 @@ const EditRuleForm: FC<EditRuleFormProps> = ({ tenantId, ruleId, rule, onClose }
       <div>
         <label className="block text-gray-700 text-xl font-medium mb-1">Conditions</label>
         {conditionFields.map((condition, index) => (
-          <div key={condition.id} className="flex gap-4 mb-2">
+          <div key={condition.id} className="flex flex-col gap-4 mb-2">
             <input
               placeholder="Field"
               {...register(`conditions.${index}.field` as const)}
@@ -125,7 +125,7 @@ const EditRuleForm: FC<EditRuleFormProps> = ({ tenantId, ruleId, rule, onClose }
       <div>
         <label className="block text-gray-700 text-xl font-medium mb-1">Actions</label>
         {actionFields.map((action, index) => (
-          <div key={action.id} className="flex gap-4 mb-2">
+          <div key={action.id} className="flex flex-col gap-4 mb-2">
             <input
               placeholder="Target"
               {...register(`actions.${index}.target` as const)}

@@ -62,7 +62,7 @@ const EditRuleModal: React.FC<EditRuleModalProps> = ({ ruleId, onClose }) => {
     <EditRuleForm
       tenantId={tenant}
       ruleId={ruleId}
-      rule={rule} // Pass fetched rule data to the form
+      rule={rule?.data} // Pass fetched rule data to the form
       onClose={onClose}
       onPrevious={onClose}
     />

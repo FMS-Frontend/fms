@@ -76,7 +76,7 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Last Modified 
           </label>
-          <p className="text-gray-700 text-xl font-medium mb-1">{formatRuleDate(rule.last_modified_date)}</p>
+          <p className="text-gray-700 text-xl font-medium mb-1">{rule && formatRuleDate(rule.last_modified_date)}</p>
         </div>
           </div>        
 
