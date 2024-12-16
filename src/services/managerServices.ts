@@ -1,8 +1,6 @@
 import URL from "../db/url";
-// import { RuleTableRowProps } from "../features/manager/rules/RuleTableRow";
 import { Rule2 } from "../features/manager/rules/forms/ViewRuleForm";
 
-// Define the response structure for rules
 export interface Rule {
   id: string;
   rule_name: string;
@@ -53,10 +51,10 @@ export async function getRules(tenantId: string, page: number): Promise<Paginate
  * @param identity Identity of the rule
  * @returns Rule details
  */
-// import { Rule2 } from "../features/manager/rules/forms/ViewRuleForm";
+
 export async function getRuleById(tenantId: string, identity: string){
   try {
-    const response = await URL.get(`/rules/${tenantId}/${identity}}`);
+    const response = await URL.get(`/rules/${tenantId}/${identity}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching rule by ID:", error);
@@ -69,16 +67,22 @@ export async function getRuleById(tenantId: string, identity: string){
  * @param tenantId ID of the tenant
  * @param newRule Rule data to create
  * @returns Created rule data
-//  */
-// export async function createRule(tenantId: string, newRule: RuleTableRowProps): Promise<Rule> {
-//   try {
-//     const response = await URL.post(`/rules/${tenantId}`, newRule);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error creating rule:", error);
-//     throw new Error("Rule could not be created");
-//   }
-// }
+ */
+
+export async function createRule(
+  tenantId: string,
+  newRule: RuleCreationRequest
+): Promise<Rule2> {
+  try {
+    const response = await URL.post(`/rules/${tenantId}`, newRule);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating rule:", error);
+    throw new Error("Rule could not be created");
+  }
+}
+
+
 
 
 export interface RuleCreationRequest {
@@ -99,18 +103,32 @@ export interface RuleCreationRequest {
   };
 }
 
-export async function createRule(
+
+
+export interface RuleUpdateData {
+  rule_name: string;
+  description: string;
+  conditions: Array<{ field: string; operator: string; value: string }>;
+  actions: Array<{ target: string; property: string; value: string }>;
+  flow_operators: { salience: number };
+}
+
+import { Rule3 } from "../features/manager/rules/forms/EditRuleForm";
+
+export async function editRule(
   tenantId: string,
-  newRule: RuleCreationRequest
+  identity: string,
+  rule: Rule3 
 ): Promise<Rule2> {
   try {
-    const response = await URL.post(`/rules/${tenantId}`, newRule);
+    const response = await URL.patch(`/rules/${tenantId}/${identity}`, rule);
     return response.data;
   } catch (error) {
-    console.error("Error creating rule:", error);
-    throw new Error("Rule could not be created");
+    console.error("Error updating rule:", error);
+    throw new Error("Rule could not be updated");
   }
 }
+
 
 
 /**

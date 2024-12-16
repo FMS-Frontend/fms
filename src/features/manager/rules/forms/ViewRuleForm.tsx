@@ -1,113 +1,6 @@
-// import { FC } from "react";
-
-// /**
-//  * CreateTenantForm component for creating a new tenant.
-//  * Displays a form to collect tenant details including name, address, admin, email, and description.
-//  * It includes navigation buttons to close the form or proceed to the next step.
-//  *
-//  * @component
-//  * @example
-//  * <CreateTenantForm onNext={handleNext} onClose={handleClose} />
-//  *
-//  * @param {Object} props - Component props
-//  * @param {Function} props.onNext - Callback function to proceed to the next step (called on clicking the "Next" button)
-//  * @param {Function} props.onClose - Callback function to close the form (called on clicking the "Close" button)
-//  *
-//  * @returns {JSX.Element} The rendered CreateTenantForm component.
-//  */
-
-// interface StepProps {
-//   onNext?: () => void;
-//   onClose?: () => void;
-// }
-
-// const ViewRuleForm: FC<StepProps> = ({ onNext, onClose }) => {
-//   return (
-//     <>
-//       <div className="flex justify-between items-center mb-8">
-//         <h2 className="text-3xl font-semibold">Rule-R001</h2>
-//       </div>
-
-//       <form className="flex flex-col gap-3">
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-xl font-medium mb-1">
-//             Tenant Name
-//           </label>
-//           <input
-//             type="text"
-//             placeholder="Enter tenant name"
-//             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-//           />
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-xl font-medium mb-1">
-//             Address
-//           </label>
-//           <input
-//             type="text"
-//             placeholder="Enter address"
-//             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-//           />
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-xl font-medium mb-1">
-//             Admin Name
-//           </label>
-//           <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-//             <option>Click to select and link Admin</option>
-//           </select>
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-xl font-medium mb-1">
-//             Email
-//           </label>
-//           <input
-//             type="email"
-//             placeholder="Enter email"
-//             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-//           />
-//         </div>
-
-//         <div className="mb-6">
-//           <label className="block text-gray-700 text-xl font-medium mb-1">
-//             Description
-//           </label>
-//           <input
-//             type="text"
-//             placeholder="Enter description"
-//             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-//           />
-//         </div>
-
-//         <div className="flex justify-around mt-6">
-//           <button
-//             type="button"
-//             onClick={onClose}
-//             className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
-//           >
-//             Close
-//           </button>
-
-//           <button
-//             type="button"
-//             onClick={onNext}
-//             className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
-//           >
-//             Next
-//           </button>
-//         </div>
-//       </form>
-//     </>
-//   );
-// };
-
-// export default ViewRuleForm;
-
 
 import { FC } from "react";
+import { formatRuleDate } from "../../../../ui/utils/helpers";
 
 interface Condition {
   field: string;
@@ -146,6 +39,7 @@ export interface Rule2 {
 }
 
 export interface ViewRuleFormProps {
+  onPrevious?: () => void;
   onNext?: () => void;
   onClose?: () => void;
   rule?: Rule2; 
@@ -155,57 +49,44 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Rule - {rule?.id}</h2>
+        <h2 className="text-3xl font-semibold"><b>Rule</b>-R{rule?.id.slice(0, 4)}</h2>
       </div>
-
       <form className="flex flex-col gap-6">
-        {/* Rule Details */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
+        <div className="">
+        <div className="flex justify-between">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+            RuleId
+          </label>
+          <p className="text-gray-700 text-xl font-medium mb-1">R{rule?.id.slice(0, 4)}</p>
+        </div>
+        <div className="flex justify-between">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Rule Name
           </label>
-          <input
-            type="text"
-            value={rule?.rule_name || ""}
-            readOnly
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none"
-          />
+          <p className="text-gray-700 text-xl font-medium mb-1">{rule?.rule_name}</p>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
+        <div className="flex justify-between items-center">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Status
           </label>
-          <input
-            type="text"
-            value={rule?.status || ""}
-            readOnly
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none"
-          />
+          <p className="text-gray-700 text-xl font-medium mb-1">{rule?.status}</p>
         </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Last Modified Date
+        <div className="flex justify-between">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+            Last Modified 
           </label>
-          <input
-            type="text"
-            value={rule?.last_modified_date.toLocaleString() || ""}
-            readOnly
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none"
-          />
+          <p className="text-gray-700 text-xl font-medium mb-1">{formatRuleDate(rule.last_modified_date)}</p>
         </div>
+          </div>        
+
+        <h3 className="font-bold">Rule Details</h3>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
-          <textarea
-            value={rule?.description || ""}
-            readOnly
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none"
-            rows={3}
-          ></textarea>
+          <p className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3">{rule?.description}</p>
         </div>
 
         {/* Conditions */}
@@ -243,14 +124,9 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
         {/* Flow Operators */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Flow Operators - Salience
+            Salience
           </label>
-          <input
-            type="text"
-            value={rule?.flow_operators.salience || ""}
-            readOnly
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none"
-          />
+          <p className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3">{rule?.flow_operators.salience}</p>
         </div>
 
         {/* Created By */}
@@ -258,12 +134,9 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Created By
           </label>
-          <input
-            type="text"
-            value={rule?.createdBy.name || ""}
-            readOnly
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none"
-          />
+          <p className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3">
+            {rule?.createdBy.name}
+          </p>
         </div>
 
         {/* Action Buttons */}
@@ -281,7 +154,7 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
             onClick={onNext}
             className="w-44 text-xl px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >
-            Next
+            Edit Rule
           </button>
         </div>
       </form>
