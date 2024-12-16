@@ -17,7 +17,7 @@ const refreshAccessToken = async (currentRefreshToken: string | null) => {
       }
     );
 
-    console.log("refreshTee => ", response);
+    // console.log("refreshTee => ", response);
 
     // localStorage.setItem("refreshToken", )
 
@@ -32,13 +32,27 @@ export const useAxiosInterceptor = () => {
   // const { authToken, refreshToken, setAuthToken, setRefreshToken } =
   //   useAppContext();
 
+  // Add a request interceptor
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
   useEffect(() => {
-    // Add a request interceptor
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const skippedPaths = ["login"];
 
     const requestInterceptor = URL.interceptors.request.use(
       (config) => {
+        console.log(config.url);
+
+        const pathUrl = config.url?.split("/").reverse()[0];
+
+        if (skippedPaths.includes(pathUrl!)) {
+          console.log("skipping login ====>");
+          console.log("default headers", config.headers["x-access-token"]);
+          console.log("from local", accessToken);
+
+          return config;
+        }
+
         // console.log("autheee1 ======> ", accessToken);
         // console.log("refreshhhh1 ======> ", refreshToken);
         config.headers["x-access-token"] = accessToken; // Attach the token to the header
@@ -77,5 +91,5 @@ export const useAxiosInterceptor = () => {
       axios.interceptors.request.eject(requestInterceptor);
       axios.interceptors.response.eject(responseInterceptor);
     };
-  }, []);
+  }, [accessToken, refreshToken]);
 };

@@ -85,7 +85,11 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
     const storedRole = localStorage.getItem("role");
 
     // If the role matches, render the child routes; otherwise, redirect to /login
-    return storedRole === requiredRole ? <Outlet /> : <Navigate to="/" replace />;
+    return storedRole === requiredRole ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" replace />
+    );
   };
 
   const logout = () => {

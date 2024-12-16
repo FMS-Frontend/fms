@@ -1,59 +1,9 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-// import { useQuery } from "@tanstack/react-query";
-// import { getUserTrends } from "../../../services/apiSuperUser";
-
-const data = [
-  {
-    month: "January",
-    users: 100,
-  },
-  {
-    month: "February",
-    users: 63,
-  },
-  {
-    month: "March",
-    users: 75,
-  },
-  {
-    month: "April",
-    users: 200,
-  },
-  {
-    month: "May",
-    users: 150,
-  },
-  {
-    month: "June",
-    users: 175,
-  },
-  {
-    month: "July",
-    users: 100,
-  },
-  {
-    month: "August",
-    users: 78,
-  },
-  {
-    month: "September",
-    users: 95,
-  },
-  {
-    month: "October",
-    users: 120,
-  },
-  {
-    month: "November",
-    users: 70,
-  },
-  {
-    month: "December",
-    users: 99,
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getUserTrends } from "../../../services/apiSuperUser";
+import Spinner from "../../../ui/utils/Spinner";
 
 /**
  * ApexLineChart component renders an area chart displaying user data over time.
@@ -74,15 +24,23 @@ const data = [
  */
 
 const ApexLineChart: React.FC = () => {
-  // const { data: trends } = useQuery({
-  //   queryFn: getUserTrends,
-  //   queryKey: ["userTrends"],
-  // });
-  // console.log(trends);
+  const { isLoading, data: { data: chartData } = {} } = useQuery({
+    queryFn: getUserTrends,
+    queryKey: ["charts"],
+    retry: true,
+  });
+  // console.log(chartData);
 
   // Map data for the Y-axis (users) and X-axis (months)
-  const seriesData = data.map((d) => d.users);
-  const categoriesData = data.map((d) => d.month);
+  // const seriesData = data.map((d) => d.users);
+  // const categoriesData = data.map((d) => d.month);
+
+  const seriesData = chartData?.map((d: { count: number }) => d.count) || [];
+  const categoriesData =
+    chartData?.map((d: { date: string | number | Date }) => {
+      const date = new Date(d.date);
+      return date.toLocaleString("default", { month: "long" }); // Format: "January"
+    }) || [];
 
   const options: ApexOptions = {
     series: [
@@ -100,6 +58,10 @@ const ApexLineChart: React.FC = () => {
     },
     stroke: {
       curve: "smooth",
+    },
+    title: {
+      text: "User Trends",
+      align: "left",
     },
     xaxis: {
       type: "category",
@@ -121,81 +83,20 @@ const ApexLineChart: React.FC = () => {
   };
 
   return (
-    <div id="chart">
-      <ReactApexChart
-        className="mt-8 p-8"
-        options={options}
-        series={options.series}
-        type="area"
-        height={350}
-      />
+    <div id="chart" className="bg-white rounded-2xl shadow-md border p-4">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <ReactApexChart
+          className="mt-8 p-8"
+          options={options}
+          series={options.series}
+          type="area"
+          height={350}
+        />
+      )}
     </div>
   );
 };
 
 export default ApexLineChart;
-
-// const data = [
-//   { date: "2024-01-15", count: 10 },
-//   { date: "2024-02-10", count: 20 },
-//   { date: "2024-01-25", count: 15 },
-//   { date: "2024-03-05", count: 30 },
-//   { date: "2024-02-20", count: 25 },
-// ];
-
-// import ApexCharts from "react-apexcharts";
-
-// const processData = (data: { date: string; count: number }[]) => {
-//   const monthCounts: { [month: string]: number } = {};
-
-//   data.forEach((item) => {
-//     const month = new Date(item.date).toLocaleString("default", { month: "short" }); // e.g., "Jan", "Feb"
-//     monthCounts[month] = (monthCounts[month] || 0) + item.count;
-//   });
-
-//   // Ensure all months are represented, even with 0 counts
-//   const months = [
-//     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-//     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-//   ];
-
-//   const categories = months;
-//   const series = months.map((month) => monthCounts[month] || 0);
-
-//   return { categories, series };
-// };
-
-// const ChartComponent = () => {
-//   const data = [
-//     { date: "2024-01-15", count: 10 },
-//     { date: "2024-02-10", count: 20 },
-//     { date: "2024-01-25", count: 15 },
-//     { date: "2024-03-05", count: 30 },
-//     { date: "2024-02-20", count: 25 },
-//   ];
-
-//   const { categories, series } = processData(data);
-
-//   const options = {
-//     chart: {
-//       type: "line",
-//     },
-//     xaxis: {
-//       categories,
-//     },
-//     title: {
-//       text: "User Counts by Month",
-//     },
-//   };
-
-//   const seriesData = [
-//     {
-//       name: "Users",
-//       data: series,
-//     },
-//   ];
-
-//   return <ApexCharts options={options} series={seriesData} type="line" height={350} />;
-// };
-
-// export default ChartComponent;

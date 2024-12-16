@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useTenant } from "./TenantContext";
 
 /**
  * TenantInfo component for displaying tenant information in the setup process.
@@ -17,24 +16,23 @@ import { useTenant } from "./TenantContext";
  * @returns {JSX.Element} The rendered TenantInfo component.
  */
 
-interface StepProps {
-  onPrevious: () => void;
-  onNext: () => void;
+interface ViewRuleProps {
+  onClose: () => void;
 }
 
-const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
-  const { tenantData, admins } = useTenant();
+const ViewRule: FC<ViewRuleProps> = ({ onClose }) => {
+  // const { tenantData, admins } = useTenant();
 
-  // Find the selected admin based on tenantData.admin
-  const selectedAdmin = admins?.find(
-    (admin) => admin.id === tenantData.adminId
-  );
+  // // Find the selected admin based on tenantData.admin
+  // const selectedAdmin = admins?.find(
+  //   (admin) => admin.id === tenantData.adminId
+  // );
   // console.log(selectedAdmin);
 
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
+        <h2 className="text-3xl font-semibold">Rule Details</h2>
       </div>
 
       <form className="flex flex-col gap-3">
@@ -42,62 +40,62 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Tenant Name
           </label>
-          <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
+          {/* <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
             {tenantData.name}
-          </p>
+          </p> */}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Address
           </label>
-          <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
+          {/* <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
             {tenantData.address}
-          </p>
+          </p> */}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Admin Name
           </label>
-          <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
+          {/* <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
             {selectedAdmin?.name || "No Admin Selected"}
-          </p>
+          </p> */}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Email
           </label>
-          <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
+          {/* <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
             {tenantData.email}
-          </p>
+          </p> */}
         </div>
 
         <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
-          <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
+          {/* <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
             {tenantData.description}
-          </p>
+          </p> */}
         </div>
 
-        <div className="flex justify-around mt-6">
-          <button
+        <div className="flex justify-center mt-6">
+          {/* <button
             type="button"
             onClick={onPrevious}
             className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
           >
-            Edit
-          </button>
+            Cancel
+          </button> */}
 
           <button
             type="button"
-            onClick={onNext}
+            onClick={onClose}
             className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Next
+            Close
           </button>
         </div>
       </form>
@@ -105,4 +103,4 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
   );
 };
 
-export default TenantInfo;
+export default ViewRule;

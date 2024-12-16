@@ -3,7 +3,7 @@ import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdmins } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/utils/Spinner";
-// import AdminRow from "./AdminRow";
+import AdminRow from "./AdminRow";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import { useSearchParams } from "react-router-dom";

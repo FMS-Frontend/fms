@@ -3,24 +3,19 @@ import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getTenants } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/utils/Spinner";
-// import TenantRow from "./TenantRow";
+import TenantRow from "./TenantRow";
 import { Tenant } from "../../../db/types";
-import { useSearchParams } from "react-router-dom";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
+import usePageParam from "../../../hooks/usePageParam";
 
 const TenantTable: FC = () => {
-  const [searchParams] = useSearchParams();
-  const page = !Number(searchParams.get("page"))
-    ? 1
-    : Number(searchParams.get("page"));
+  const { page } = usePageParam();
 
   const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
     queryKey: ["tenants"],
     queryFn: () => getTenants(page),
   });
-
-  // console.log(tenants);
 
   return (
     <div className="mt-8">
