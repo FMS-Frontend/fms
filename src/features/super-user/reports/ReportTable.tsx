@@ -22,9 +22,7 @@ const ReportTable: FC = () => {
     queryFn: getReports,
   });
 
-  // : { data: reports, pagination }
-  // console.log("ReportTable =>", data);
-
+  
   const reports = data?.reports;
   const pagination = data?.pagination;
 

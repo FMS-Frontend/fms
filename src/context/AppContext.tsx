@@ -1,5 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-
 import {
   createContext,
   FC,
@@ -13,6 +11,8 @@ import { Navigate, Outlet } from "react-router-dom";
 
 interface AppContextType {
   role: string;
+  tenant: string | "";
+  setTenant: React.Dispatch<React.SetStateAction<string | "">>;
   checkRole: (role: string) => string;
   handleRoleChange: (newRole: string) => void;
   accessToken: string | null;
@@ -35,12 +35,18 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
   const [role, setRole] = useState<string>(
     () => localStorage.getItem("role") || ""
   );
+  const [tenant, setTenant] = useState<string>(
+    () => localStorage.getItem("tenant") || ""
+  );
 
   useEffect(() => {
     if (role) {
       localStorage.setItem("role", role);
     }
-  }, [role]);
+    if (tenant) {
+      localStorage.setItem("tenant", tenant);
+    }
+  }, [role, tenant]);
 
   const handleRoleChange = (newRole: string) => {
     setRole(newRole);
@@ -91,6 +97,7 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     setRole("");
+    setTenant(""); // Clear tenant as well on logout
   };
 
   return (
@@ -104,7 +111,9 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
         accessToken,
         setRefreshToken,
         refreshToken,
-        PrivateRoutes, // Included in the context
+        tenant,
+        setTenant, 
+        PrivateRoutes,
       }}
     >
       {children}

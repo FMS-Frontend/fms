@@ -5,57 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserTrends } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/utils/Spinner";
 
-// const data = [
-//   {
-//     month: "January",
-//     users: 100,
-//   },
-//   {
-//     month: "February",
-//     users: 63,
-//   },
-//   {
-//     month: "March",
-//     users: 75,
-//   },
-//   {
-//     month: "April",
-//     users: 200,
-//   },
-//   {
-//     month: "May",
-//     users: 150,
-//   },
-//   {
-//     month: "June",
-//     users: 175,
-//   },
-//   {
-//     month: "July",
-//     users: 100,
-//   },
-//   {
-//     month: "August",
-//     users: 78,
-//   },
-//   {
-//     month: "September",
-//     users: 95,
-//   },
-//   {
-//     month: "October",
-//     users: 120,
-//   },
-//   {
-//     month: "November",
-//     users: 70,
-//   },
-//   {
-//     month: "December",
-//     users: 99,
-//   },
-// ];
-
 /**
  * ApexLineChart component renders an area chart displaying user data over time.
  * The chart uses monthly categories on the X-axis and displays the number of users on the Y-axis.
@@ -80,7 +29,7 @@ const ApexLineChart: React.FC = () => {
     queryKey: ["charts"],
     retry: true,
   });
-  console.log(chartData);
+  // console.log(chartData);
 
   // Map data for the Y-axis (users) and X-axis (months)
   // const seriesData = data.map((d) => d.users);
@@ -151,17 +100,3 @@ const ApexLineChart: React.FC = () => {
 };
 
 export default ApexLineChart;
-
-// {
-//   isLoading ? (
-//     <Spinner />
-//   ) : (
-//     <ReactApexChart
-//       className="mt-8 p-8"
-//       options={options}
-//       series={options.series}
-//       type="area"
-//       height={350}
-//     />
-//   );
-// }

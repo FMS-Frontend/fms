@@ -10,18 +10,16 @@ import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { BsFillShieldLockFill } from "react-icons/bs";
 
-
 interface FormValues {
   email: string;
   password: string;
 }
 
-
 const TenantsLogin: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
   const { tenant } = useParams<{ tenant: string }>(); 
-  const { setAccessToken, setRefreshToken, handleRoleChange} = useAppContext();
+  const { setAccessToken, setRefreshToken, setTenant, handleRoleChange } = useAppContext();
 
   const validate = Yup.object({
     email: Yup.string()
@@ -49,8 +47,6 @@ const TenantsLogin: FC = (): JSX.Element => {
         password: values.password,
       });
 
-      console.log(res.data);
-
       // Set tokens
       const accessToken = res.headers["x-access-token"];
       const refreshToken = res.headers["x-refresh-token"];
@@ -63,6 +59,10 @@ const TenantsLogin: FC = (): JSX.Element => {
         localStorage.setItem("refreshToken", refreshToken);
       }
 
+      // Save tenant to AppContext and localStorage
+      setTenant(tenant);
+      localStorage.setItem("tenant", tenant);
+
       // Handle first-time user login
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
@@ -73,16 +73,14 @@ const TenantsLogin: FC = (): JSX.Element => {
         return;
       }
 
-    
       // Extract role and set it globally
       const userRole = res.data.data?.role;
       const subRole = res.data.data.subRole?.name;
       if (userRole === "User" && subRole) {
-        handleRoleChange(subRole); // Set the sub-role if the user is a generic "User"
+        handleRoleChange(subRole);
       } else {
-        handleRoleChange(userRole); // Set the main role
+        handleRoleChange(userRole);
       }
-
 
       // Handle redirection based on role
       const redirectPath =
@@ -92,8 +90,6 @@ const TenantsLogin: FC = (): JSX.Element => {
 
       navigate(redirectPath);
       toast.success(`Welcome back ${userRole === "User" && subRole ? subRole : userRole}`);
-
-
     } catch (err) {
       toast.error("Wrong credentials, enter correct email and password");
       console.error(err);
@@ -101,7 +97,6 @@ const TenantsLogin: FC = (): JSX.Element => {
       actions.resetForm();
     }
   };
-
 
   const {
     values,
@@ -119,7 +114,7 @@ const TenantsLogin: FC = (): JSX.Element => {
     validationSchema: validate,
     onSubmit: handleFormSubmit,
   });
-  
+
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
       <div
@@ -132,7 +127,7 @@ const TenantsLogin: FC = (): JSX.Element => {
         </Link>
       </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
-          Tenant Login 
+          Tenant Login
         </h2>
         <p className="text-gray-600 text-center text-xl mb-6">
           Please enter your email and password to continue

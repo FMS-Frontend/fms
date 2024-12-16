@@ -8,15 +8,13 @@ import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";
-// import useSubdomain from "../../../hooks/useSubdomain";
-
+import { useAppContext } from "../../../context/AppContext";
 const UserTable: FC = () => {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
   const { page } = usePageParam();
 
   const { isLoading, data: { data: users, pagination } = {} } = useQuery({
-    queryFn: () => getUsers(subdomain, page),
+    queryFn: () => getUsers(tenant, page),
     queryKey: ["users"],
   });
 

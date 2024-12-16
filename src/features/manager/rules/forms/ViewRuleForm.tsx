@@ -1,92 +1,150 @@
+
 import { FC } from "react";
+import { formatRuleDate } from "../../../../ui/utils/helpers";
 
-/**
- * CreateTenantForm component for creating a new tenant.
- * Displays a form to collect tenant details including name, address, admin, email, and description.
- * It includes navigation buttons to close the form or proceed to the next step.
- *
- * @component
- * @example
- * <CreateTenantForm onNext={handleNext} onClose={handleClose} />
- *
- * @param {Object} props - Component props
- * @param {Function} props.onNext - Callback function to proceed to the next step (called on clicking the "Next" button)
- * @param {Function} props.onClose - Callback function to close the form (called on clicking the "Close" button)
- *
- * @returns {JSX.Element} The rendered CreateTenantForm component.
- */
-
-interface StepProps {
-  onNext?: () => void;
-  onClose?: () => void;
+interface Condition {
+  field: string;
+  operator: string;
+  value: string;
 }
 
-const ViewRuleForm: FC<StepProps> = ({ onNext, onClose }) => {
+interface Action {
+  target: string;
+  property: string;
+  value: string;
+}
+
+interface FlowOperators {
+  salience: number;
+}
+
+interface CreatedBy {
+  id: string;
+  name: string;
+}
+
+export interface Rule2 {
+  id: string;
+  rule_name: string;
+  last_modified_date: string;
+  status: string;
+  description: string;
+  conditions: Condition[];
+  actions: Action[];
+  flow_operators: FlowOperators;
+  createdAt: string;
+  updatedAt: string;
+  historyLogs: any[];
+  createdBy: CreatedBy;
+}
+
+export interface ViewRuleFormProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+  onClose?: () => void;
+  rule?: Rule2; 
+}
+
+const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Rule-R001</h2>
+        <h2 className="text-3xl font-semibold"><b>Rule</b>-R{rule?.id.slice(0, 4)}</h2>
       </div>
-
-      <form className="flex flex-col gap-3">
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Tenant Name
+      <form className="flex flex-col gap-6">
+        <div className="">
+        <div className="flex justify-between">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+            RuleId
           </label>
-          <input
-            type="text"
-            placeholder="Enter tenant name"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
+          <p className="text-gray-700 text-xl font-medium mb-1">R{rule?.id.slice(0, 4)}</p>
+        </div>
+        <div className="flex justify-between">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+            Rule Name
+          </label>
+          <p className="text-gray-700 text-xl font-medium mb-1">{rule?.rule_name}</p>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Address
+        <div className="flex justify-between items-center">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+            Status
           </label>
-          <input
-            type="text"
-            placeholder="Enter address"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
+          <p className="text-gray-700 text-xl font-medium mb-1">{rule?.status}</p>
         </div>
+        <div className="flex justify-between">
+          <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+            Last Modified 
+          </label>
+          <p className="text-gray-700 text-xl font-medium mb-1">{rule && formatRuleDate(rule.last_modified_date)}</p>
+        </div>
+          </div>        
+
+        <h3 className="font-bold">Rule Details</h3>
 
         <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin Name
-          </label>
-          <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-            <option>Click to select and link Admin</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
-          <input
-            type="text"
-            placeholder="Enter description"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
+          <p className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3">{rule?.description}</p>
         </div>
 
+        {/* Conditions */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Conditions
+          </label>
+          <ul className="list-disc pl-6">
+            {rule?.conditions.map((condition, index) => (
+              <li key={index} className="text-lg">
+                <strong>Field:</strong> {condition.field}, 
+                <strong> Operator:</strong> {condition.operator}, 
+                <strong> Value:</strong> {condition.value}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Actions */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Actions
+          </label>
+          <ul className="list-disc pl-6">
+            {rule?.actions.map((action, index) => (
+              <li key={index} className="text-lg">
+                <strong>Target:</strong> {action.target}, 
+                <strong> Property:</strong> {action.property}, 
+                <strong> Value:</strong> {action.value}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Flow Operators */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Salience
+          </label>
+          <p className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3">{rule?.flow_operators.salience}</p>
+        </div>
+
+        {/* Created By */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Created By
+          </label>
+          <p className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3">
+            {rule?.createdBy.name}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
         <div className="flex justify-around mt-6">
           <button
             type="button"
             onClick={onClose}
-            className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
+            className="w-44 text-xl px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
             Close
           </button>
@@ -94,9 +152,9 @@ const ViewRuleForm: FC<StepProps> = ({ onNext, onClose }) => {
           <button
             type="button"
             onClick={onNext}
-            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >
-            Next
+            Edit Rule
           </button>
         </div>
       </form>

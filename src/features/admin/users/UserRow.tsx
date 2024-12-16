@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteUser } from "../../../services/apiAdmin";
 import toast from "react-hot-toast";
 import EditUser from "./EditUserModal";
-// import useSubdomain from "../../../hooks/useSubdomain";
+import { useAppContext } from "../../../context/AppContext";
 
 interface UserRowProps {
   user: User;
@@ -17,14 +17,13 @@ interface UserRowProps {
 }
 
 const UserRow: FC<UserRowProps> = ({ user, index }) => {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
 
   const queryClient = useQueryClient();
   const { id: userId, name, role, email, mobile, status } = user;
 
   const { mutate } = useMutation({
-    mutationFn: () => deleteUser(subdomain, userId),
+    mutationFn: () => deleteUser(tenant, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["users"],

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import URL from "../../../db/url";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-// import useSubdomain from "../../../hooks/useSubdomain";
+import { useAppContext } from "../../../context/AppContext";
 
 interface CreateRoleProps {
   onClose: () => void;
@@ -22,8 +22,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
   const [permissions, setPermissions] = useState<string[]>([]);
   const queryClient = useQueryClient();
 
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
 
   const handleCheckboxChange = (permission: string) => {
     setPermissions((prev) =>
@@ -41,7 +40,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
         permissions,
       };
 
-      await URL.post(`/tenants/${subdomain}/roles`, roleData);
+      await URL.post(`/tenants/${tenant}/roles`, roleData);
 
       toast.success("Role created successfully");
       onClose?.();

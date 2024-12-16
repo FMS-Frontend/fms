@@ -8,14 +8,14 @@ import { User } from "../../../db/types";
 import Spinner from "../../../ui/utils/Spinner";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import Paginate from "../../../ui/utils/Paginate";
+import { useAppContext } from "../../../context/AppContext";
 
 function AdminDashboardTable() {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
   const { page } = usePageParam();
 
   const { isLoading, data: { data: users, pagination } = {} } = useQuery({
-    queryFn: () => getUsers(subdomain, page),
+    queryFn: () => getUsers(tenant, page),
     queryKey: ["users"],
     retry: true,
   });

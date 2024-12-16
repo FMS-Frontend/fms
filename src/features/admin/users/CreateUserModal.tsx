@@ -5,7 +5,8 @@ import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { getRoles } from "../../../services/apiAdmin";
 import { CreateUserFormData } from "../../../db/types";
-// import useSubdomain from "../../../hooks/useSubdomain";
+import { useAppContext } from "../../../context/AppContext";
+
 
 /**
  * CreateUser component to handle the creation of a new user.
@@ -22,14 +23,6 @@ import { CreateUserFormData } from "../../../db/types";
  * @returns {JSX.Element} The rendered form for creating a new user.
  */
 
-// interface FormData {
-//   name: string;
-//   email: string;
-//   mobile: string;
-//   address: string;
-//   description: string;
-//   roleId: string;
-// }
 
 interface CreateUserProps {
   onClose?: () => void;
@@ -43,18 +36,17 @@ interface Role {
 const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm<CreateUserFormData>();
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
 
   const { isLoading, data: { data: roles } = {} } = useQuery<{ data: Role[] }>({
-    queryFn: () => getRoles(subdomain),
+    queryFn: () => getRoles(tenant),
     queryKey: ["roles"],
   });
   // console.log(roles);
 
   const onFormSubmit: SubmitHandler<CreateUserFormData> = async (data) => {
     try {
-      const createUrl = `/users/tenants/${subdomain}`;
+      const createUrl = `/users/tenants/${tenant}`;
 
       await URL.post(createUrl, {
         name: data.name,

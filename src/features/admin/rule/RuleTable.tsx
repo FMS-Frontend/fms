@@ -8,19 +8,17 @@ import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";
 import RuleRow from "./RuleRow";
 import { Rule } from "../../../db/types";
-// import useSubdomain from "../../../hooks/useSubdomain";
-
+import { useAppContext } from "../../../context/AppContext";
 const RuleTable: FC = () => {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
   const { page } = usePageParam();
 
   const { isLoading, data: { data: rules, pagination } = {} } = useQuery({
-    queryFn: () => getRules(subdomain, page),
+    queryFn: () => getRules(tenant, page),
     queryKey: ["rules"],
   });
 
-  console.log(rules);
+  // console.log(rules);
 
   return (
     <div className="mt-8">

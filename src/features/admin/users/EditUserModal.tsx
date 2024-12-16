@@ -5,8 +5,7 @@ import { CreateUserFormData, User } from "../../../db/types";
 import URL from "../../../db/url";
 import toast from "react-hot-toast";
 import { capitalizeWords } from "../../../db/helperFunctions";
-// import useSubdomain from "../../../hooks/useSubdomain";
-
+import { useAppContext } from "../../../context/AppContext";
 /**
  * CreateUser component to handle the creation of a new user.
  * This component displays a form that allows users to input details for creating a new user.
@@ -30,8 +29,7 @@ interface EditUserProps {
 const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
   const { id: userId, ...usertoEditValues } = userToEdit!;
 
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
 
   const queryClient = useQueryClient();
 
@@ -41,7 +39,7 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
 
   const onFormSubmit: SubmitHandler<CreateUserFormData> = async (data) => {
     try {
-      const editUrl = `/users/tenants/${subdomain}/${userId}`;
+      const editUrl = `/users/tenants/${tenant}/${userId}`;
 
       await URL.patch(editUrl, {
         name: capitalizeWords(data.name),

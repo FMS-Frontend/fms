@@ -1,68 +1,17 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-// import useSubdomain from "../../../hooks/useSubdomain";
 import { useQuery } from "@tanstack/react-query";
 import { getTenantChart } from "../../../services/apiAdmin";
 import Spinner from "../../../ui/utils/Spinner";
+import { useAppContext } from "../../../context/AppContext";
 
-// const data = [
-//   {
-//     month: "January",
-//     users: 100,
-//   },
-//   {
-//     month: "February",
-//     users: 63,
-//   },
-//   {
-//     month: "March",
-//     users: 75,
-//   },
-//   {
-//     month: "April",
-//     users: 200,
-//   },
-//   {
-//     month: "May",
-//     users: 150,
-//   },
-//   {
-//     month: "June",
-//     users: 175,
-//   },
-//   {
-//     month: "July",
-//     users: 100,
-//   },
-//   {
-//     month: "August",
-//     users: 78,
-//   },
-//   {
-//     month: "September",
-//     users: 95,
-//   },
-//   {
-//     month: "October",
-//     users: 120,
-//   },
-//   {
-//     month: "November",
-//     users: 70,
-//   },
-//   {
-//     month: "December",
-//     users: 99,
-//   },
-// ];
 
 const ApexLineChart: React.FC = () => {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
 
   const { isLoading, data: { data: chartData } = {} } = useQuery({
-    queryFn: () => getTenantChart(subdomain),
+    queryFn: () => getTenantChart(tenant),
     queryKey: ["chart"],
     retry: true,
   });

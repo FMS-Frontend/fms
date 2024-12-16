@@ -17,7 +17,7 @@ const refreshAccessToken = async (currentRefreshToken: string | null) => {
       }
     );
 
-    console.log("refreshTee => ", response);
+    // console.log("refreshTee => ", response);
 
     // localStorage.setItem("refreshToken", )
 
@@ -93,15 +93,3 @@ export const useAxiosInterceptor = () => {
     };
   }, [accessToken, refreshToken]);
 };
-
-// URL.interceptors.request.use((req) => {
-//   console.log(req);
-
-//   return req;
-// });
-
-// URL.interceptors.response.use((res) => {
-//   console.log(res);
-
-//   return res;
-// });

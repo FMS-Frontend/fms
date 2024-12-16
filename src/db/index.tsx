@@ -421,10 +421,6 @@ export const rulesData: RuleTableRowProps[] = [
     ruleId: "R001",
     ruleName: "Login Check",
     status: "Active",
-    assignedTo: {
-      image: "/images/user1.jpg",
-      name: "Alice Johnson",
-    },
     lastModified: "2024-12-07T11:30:00Z",
     index: 0,
   },

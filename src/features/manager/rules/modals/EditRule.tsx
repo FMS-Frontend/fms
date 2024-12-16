@@ -15,7 +15,11 @@ import EditRuleModal from "./EditRuleModal";
  * );
  */
 
-const EditRule: FC = () => {
+interface EditRuleProps {
+  ruleId: string; // Pass the rule ID to fetch specific rule details
+}
+
+const EditRule: FC<EditRuleProps> = ({ ruleId }) => {
   return (
     <Modal>
       <Modal.Open opens="edit-rule">
@@ -24,7 +28,7 @@ const EditRule: FC = () => {
         </button>
       </Modal.Open>
       <Modal.Window name="edit-rule">
-        {({ onClose }) => <EditRuleModal onClose={onClose} />}
+        {({ onClose }) => <EditRuleModal ruleId={ruleId} onClose={onClose} />}
       </Modal.Window>
     </Modal>
   );
