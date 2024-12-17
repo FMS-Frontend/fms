@@ -21,7 +21,7 @@ const refreshAccessToken = async (currentRefreshToken: string | null) => {
 
     // localStorage.setItem("refreshToken", )
 
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.error(error);
     throw error;
@@ -41,14 +41,12 @@ export const useAxiosInterceptor = () => {
 
     const requestInterceptor = URL.interceptors.request.use(
       (config) => {
-        console.log(config.url);
-
         const pathUrl = config.url?.split("/").reverse()[0];
 
         if (skippedPaths.includes(pathUrl!)) {
-          console.log("skipping login ====>");
-          console.log("default headers", config.headers["x-access-token"]);
-          console.log("from local", accessToken);
+          // console.log("skipping login ====>");
+          // console.log("default headers", config.headers["x-access-token"]);
+          // console.log("from local", accessToken);
 
           return config;
         }

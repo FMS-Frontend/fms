@@ -15,7 +15,7 @@ const AdminReportTable: FC = () => {
 
   const { isLoading, data: { data: reports, pagination } = {} } = useQuery({
     queryFn: () => getAdminReports(tenant, page),
-    queryKey: ["adminreports"],
+    queryKey: ["adminreports", page],
   });
   // console.log(pagination);
 

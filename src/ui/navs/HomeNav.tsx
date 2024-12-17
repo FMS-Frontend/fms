@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { BsFillShieldLockFill } from "react-icons/bs";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 const HomeNav: FC = () => {
   const [loginType, setLoginType] = useState<"Super" | "Tenant">("Tenant");
@@ -19,19 +19,6 @@ const HomeNav: FC = () => {
           <BsFillShieldLockFill className="text-gray-100 h-16 w-16" />
         </Link>
       </div>
-
-      <ul className="hidden  md:flex justify-center  items-center p-3 px-5 rounded-2xl bg-blue-950">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-gray-100 text-blue-950" : ""
-            } px-5 py-1 rounded-lg hover:bg-gray-100 hover:text-blue-950 transition-all duration-200 cursor-pointer`
-          }
-        >
-          Home
-        </NavLink>
-      </ul>
 
       {/* Login Button */}
       <div className="w-[150px] flex justify-between items-center">

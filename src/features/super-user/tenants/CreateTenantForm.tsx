@@ -37,7 +37,7 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
+        <h2 className="text-3xl font-semibold">Setup New Organization</h2>
       </div>
 
       {isLoading ? (

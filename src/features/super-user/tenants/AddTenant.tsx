@@ -24,7 +24,7 @@ const AddTenant: FC = () => {
       <Modal.Open opens="create-tenant">
         <PrimaryButton>
           <FiPlus />
-          Add New Tenant
+          Add New Organization
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-tenant">

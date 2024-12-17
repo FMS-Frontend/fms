@@ -54,7 +54,7 @@ const TenantCheckboxes: FC<CheckboxProp> = ({ onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Setup New Tenant</h2>
+        <h2 className="text-3xl font-semibold">Setup New Organization</h2>
       </div>
 
       {/* Checkbox Options */}

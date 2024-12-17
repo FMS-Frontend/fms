@@ -61,7 +61,7 @@ const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Edit New Tenant</h2>
+        <h2 className="text-3xl font-semibold">Edit New Organization</h2>
       </div>
 
       <form

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
@@ -46,12 +46,68 @@ interface ProtectedProps {
   children: ReactNode;
 }
 
-const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
-  const { role } = useAppContext();
+// const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
+//   const { role } = useAppContext();
 
-  // Check role and redirect to login if unauthorized
+//   const skip = ["settings"];
+
+//   // Check role and redirect to login if unauthorized
+//   if (role !== userRole) {
+//     return <Navigate to="/login" replace />;
+//   }
+
+//   return <>{children}</>;
+// };
+
+// const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
+//   const { role } = useAppContext();
+//   const location = useLocation(); // Get the current path
+//   // const skip = ["settings"]; // Array of paths to skip role checks
+
+//   // // Check if the current path is in the skip array
+//   // const isSkipped = skip.some((path) => location.pathname.includes(path));
+
+//   const skipPaths = ["/settings", "/admin/settings"]; // Fully qualified skip paths
+//   // Check if the current path is in the skip array
+//   const isSkipped = skipPaths.includes(location.pathname);
+
+//   // If role doesn't match and the route is not in the skip array, redirect to home
+//   if (!isSkipped && role !== userRole) {
+//     console.log("Redirecting to home due to role mismatch");
+
+//     return <Navigate to="/" state={{ from: location }} replace />;
+//   }
+
+//   return <>{children}</>;
+//   // return <Outlet />; // Render child routes
+// };
+
+const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
+  console.log("user role  in props ===>", userRole);
+  const { role } = useAppContext();
+  console.log("from context ===>", role);
+
+  const location = useLocation();
+
+  // Function to check if current path is a settings route
+  const isSettingsRoute = location.pathname.includes("/settings");
+  console.log("is settings ===>", isSettingsRoute);
+
+  // If it's a settings route, allow access based on the user having any valid role
+  if (isSettingsRoute) {
+    const validRoles = ["Admin", "Manager", "Analyst", "Auditor", "Super User"];
+    const hasValidRole = validRoles.includes(role);
+
+    if (!hasValidRole) {
+      return <Navigate to="/login" replace state={{ from: location }} />;
+    }
+
+    return <>{children}</>;
+  }
+
+  // For non-settings routes, check if the user has the specific required role
   if (role !== userRole) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return <>{children}</>;
@@ -89,7 +145,6 @@ function App() {
         />
 
         {/* Protected Routes */}
-
         <Route
           path="/change-password"
           element={
@@ -110,14 +165,26 @@ function App() {
         >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="organizations" element={<Tenant />} />
-          <Route path="administrator" element={<Administrator />} />
+          <Route path="contact" element={<Administrator />} />
           <Route path="reports" element={<Reports />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="audit" element={<Audit />} />
-          <Route path="settings" element={<SettingsPage />} />
+          <Route path="settings/super" element={<SettingsPage />} />
         </Route>
 
         {/* Admin Routes */}
+        {/* <Route path="/admin" element={<ProtectedRoute userRole="Admin" />}>
+          <Route path="" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="users" element={<Users />} />
+            <Route path="rules" element={<AdminRule />} />
+            <Route path="reporting" element={<AdminReports />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="audit" element={<AdminAudit />} />
+            <Route path="integration" element={<AdminIntegration />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+        </Route> */}
         <Route
           path="/admin"
           element={
