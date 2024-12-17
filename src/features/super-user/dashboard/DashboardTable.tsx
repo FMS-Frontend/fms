@@ -17,7 +17,8 @@ function DashboardTable() {
     queryFn: () => getTenants(page),
     queryKey: ["tenants", page],
   });
-  // Handle fetched data
+
+  // Handle fetched dataa
   const tenants = data?.data || [];
   const pagination = data?.pagination || {};
 
