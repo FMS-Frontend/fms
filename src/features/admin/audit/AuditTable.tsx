@@ -8,6 +8,7 @@ import AdminAuditRow from "./AdminAuditRow";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import Paginate from "../../../ui/utils/Paginate";
 import Spinner from "../../../ui/utils/Spinner";
+import { useAppContext } from "../../../context/AppContext";
 // import AuditRow from "./AdminAuditRow";
 
 export interface AdminAudit {
@@ -23,15 +24,14 @@ export interface AdminAudit {
 }
 
 const AdminAuditTable: FC = () => {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
   const { page } = usePageParam();
 
   const { isLoading, data: { data: audit, pagination } = {} } = useQuery({
-    queryFn: () => getAdminAudit(subdomain, page),
+    queryFn: () => getAdminAudit(tenant, page),
     queryKey: ["adminaudit", page],
   });
-  console.log(audit);
+  // console.log(audit);
 
   return (
     <div className="mt-8">

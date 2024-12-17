@@ -8,14 +8,11 @@ import URL from "../db/url";
 const url = "/auth/refresh";
 const refreshAccessToken = async (currentRefreshToken: string | null) => {
   try {
-    const response = await axios.post(
-      `https://staging-api.tranzgard.com${url}`,
-      {
-        headers: {
-          "x-refresh-token": currentRefreshToken,
-        },
-      }
-    );
+    await axios.post(`https://staging-api.tranzgard.com${url}`, {
+      headers: {
+        "x-refresh-token": currentRefreshToken,
+      },
+    });
 
     // console.log("refreshTee => ", response);
 
