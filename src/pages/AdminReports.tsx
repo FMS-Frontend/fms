@@ -1,9 +1,6 @@
 import { FC } from "react";
-import { FiPlus } from "react-icons/fi";
-import PrimaryButton from "../ui/utils/PrimaryButton";
-import OutlineButton from "../ui/utils/OutlineButton";
-import AdminReportTable from "../features/admin/reports/AdminReportTable";
 import ReportOperations from "../features/super-user/reports/ReportOperations";
+import AdminReportsTab from "./AdminReportsTab";
 
 /**
  * AdminReports Component
@@ -28,23 +25,11 @@ import ReportOperations from "../features/super-user/reports/ReportOperations";
 
 const AdminReports: FC = (): JSX.Element => {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-12">
       <h1 className="font-bold text-4xl">Reports</h1>
       <ReportOperations />
 
-      <div className="flex justify-between">
-        <div className="flex gap-10">
-          <PrimaryButton>Schedule Report</PrimaryButton>
-          <OutlineButton>Export As</OutlineButton>
-        </div>
-
-        <PrimaryButton>
-          <FiPlus />
-          Add to Report
-        </PrimaryButton>
-      </div>
-
-      <AdminReportTable />
+      <AdminReportsTab />
     </div>
   );
 };

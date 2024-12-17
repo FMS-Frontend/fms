@@ -30,7 +30,8 @@ const Stats: FC = () => {
   const { data: stats, isLoading } = useQuery<StatData[]>({
     queryFn: getSummary,
     queryKey: ["stats"],
-    retry: true,
+    refetchOnWindowFocus: true,
+    retry: (failureCount) => failureCount < 6,
   });
   // console.log(stats);
 

@@ -8,7 +8,6 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "../../../ui/utils/Spinner";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
-
 function DashboardTable() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;

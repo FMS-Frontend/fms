@@ -27,6 +27,7 @@ const ApexLineChart: React.FC = () => {
   const { isLoading, data: { data: chartData } = {} } = useQuery({
     queryFn: getUserTrends,
     queryKey: ["charts"],
+    refetchOnWindowFocus: true,
     retry: true,
   });
   // console.log(chartData);

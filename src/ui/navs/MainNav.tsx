@@ -1,10 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IconType } from "react-icons";
-import {
-  HiOutlineArrowLeftOnRectangle,
-  HiOutlineCog,
-} from "react-icons/hi2";
+import { HiOutlineArrowLeftOnRectangle, HiOutlineCog } from "react-icons/hi2";
 import { useAppContext } from "../../context/AppContext";
 
 /**
@@ -27,13 +24,21 @@ type MainNavProps = {
 };
 
 function MainNav({ data }: MainNavProps) {
-  const { logout } = useAppContext();
+  const { logout, role } = useAppContext();
   const navigate = useNavigate();
 
   // Handle logout and redirect
   const handleLogout = () => {
     logout();
     navigate("/"); // Redirect to the home page
+  };
+
+  const getSettingsRoute = (role: string) => {
+    if (role === "Super User") {
+      return "/settings/super";
+    } else if (role === "Admin") {
+      return "settings";
+    } else return "";
   };
 
   return (
@@ -51,7 +56,7 @@ function MainNav({ data }: MainNavProps) {
 
       <BottomNavList>
         <li>
-          <StyledNavLink to="/settings">
+          <StyledNavLink to={getSettingsRoute(role)}>
             <HiOutlineCog />
             <span>Settings</span>
           </StyledNavLink>
@@ -153,4 +158,3 @@ const LogoutButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
-

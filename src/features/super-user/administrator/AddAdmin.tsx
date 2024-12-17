@@ -26,7 +26,7 @@ const AddAdmin: FC = () => {
       <Modal.Open opens="create-admin">
         <PrimaryButton>
           <FiPlus />
-          Add New Admin
+          Add New Contact
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-admin">

@@ -16,8 +16,7 @@ function AdminDashboardTable() {
 
   const { isLoading, data: { data: users, pagination } = {} } = useQuery({
     queryFn: () => getUsers(tenant, page),
-    queryKey: ["users"],
-    retry: true,
+    queryKey: ["users", page],
   });
 
   return (

@@ -15,7 +15,7 @@ const RuleTable: FC = () => {
 
   const { isLoading, data: { data: rules, pagination } = {} } = useQuery({
     queryFn: () => getRules(tenant, page),
-    queryKey: ["rules"],
+    queryKey: ["rules", page],
   });
 
   // console.log(rules);

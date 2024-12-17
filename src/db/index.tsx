@@ -2,6 +2,7 @@ import {
   HiOutlineClipboardDocumentCheck,
   HiOutlineUsers,
   HiOutlineDocumentText,
+  HiOutlineCog,
 } from "react-icons/hi2";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
@@ -16,7 +17,7 @@ import { GoLaw } from "react-icons/go";
 
 export const superUserNavdata = [
   { path: "/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { path: "/administrator", label: "Administrator", icon: RiShieldUserLine },
+  { path: "/contact", label: "Contact", icon: RiShieldUserLine },
   { path: "/organizations", label: "Organizations", icon: PiBuildings },
   {
     path: "/reports",
@@ -112,6 +113,14 @@ export const auditorNavData = [
     path: "/auditor/integration",
     label: "Integration",
     icon: PiIntersectFill,
+  },
+];
+
+export const general = [
+  {
+    path: "/settings",
+    label: "Settings",
+    icon: HiOutlineCog,
   },
 ];
 

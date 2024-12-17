@@ -16,7 +16,7 @@ interface AuditRowProps {
 }
 
 const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
-  const { id: adminId, name, role, email, mobile, status, tenant } = admin;
+  const { id: adminId, name, email, mobile, status, tenant } = admin;
 
   const queryClient = useQueryClient();
 
@@ -35,12 +35,12 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
 
   return (
     <div
-      className={`grid grid-cols-[1fr_1fr_1fr_1.5fr_1fr_0.5fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
+      className={`grid grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
       <span className="text-2xl">{name}</span>
-      <span className="text-2xl">{role}</span>
+      {/* <span className="text-2xl">{role}</span> */}
       <span className="text-2xl">{tenant?.name || "-"}</span>
       <span className="text-blue-700 text-2xl">{email}</span>
       <span className="text-xl">{mobile}</span>

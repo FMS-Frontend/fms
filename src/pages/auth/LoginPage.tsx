@@ -83,7 +83,6 @@ const LoginPage: FC = (): JSX.Element => {
       }
 
       // If it's a first time User Login
-
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
@@ -98,8 +97,8 @@ const LoginPage: FC = (): JSX.Element => {
 
       //
       if (userRole === "Super User") {
-        navigate("/dashboard");
         toast.success("Logged in Successfully");
+        navigate("/dashboard");
       }
     } catch (err) {
       toast.error("Wrong credentials, enter correct email and password");

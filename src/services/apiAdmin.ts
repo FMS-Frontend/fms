@@ -104,3 +104,19 @@ export async function getAdminReports(tenant: string | null, page: number) {
     throw new Error("Error fetching reports");
   }
 }
+
+// ********** AUDIT & COMPLIANCE **********************
+export async function getAdminAudit(tenant: string, page: number) {
+  try {
+    const res = await URL.get(
+      `/reports/tenants/${tenant}/audit_logs?page=${page}`
+    );
+
+    console.log(res.data);
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching Audit");
+  }
+}

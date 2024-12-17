@@ -60,7 +60,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Create New Admin</h2>
+        <h2 className="text-3xl font-semibold">Create New Contact</h2>
       </div>
 
       <form
@@ -69,11 +69,11 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
       >
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin Name
+            Contact Name
           </label>
           <input
             type="text"
-            placeholder="Enter tenant name"
+            placeholder="Enter name"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             {...register("name")}
           />
@@ -128,7 +128,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="submit"
             className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
           >
-            Create Tenant
+            Create Contact
           </button>
         </div>
       </form>

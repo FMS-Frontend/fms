@@ -15,7 +15,7 @@ const UserTable: FC = () => {
 
   const { isLoading, data: { data: users, pagination } = {} } = useQuery({
     queryFn: () => getUsers(tenant, page),
-    queryKey: ["users"],
+    queryKey: ["users", page],
   });
 
   return (
