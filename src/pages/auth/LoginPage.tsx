@@ -95,6 +95,7 @@ const LoginPage: FC = (): JSX.Element => {
 
       const userRole = res.data.data?.role;
       handleRoleChange(userRole); //Save
+      // console.log(res);
 
       //
       if (userRole === "Super User") {
