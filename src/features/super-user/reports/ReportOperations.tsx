@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import DateComp from "../../../ui/DateComp";
-import SelectDropdown from "../../../ui/SelectDropdown";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import DateComp from "../../../ui/utils/DateComp";
+import SelectDropdown from "../../../ui/utils/SelectDropdown";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 
 const ReportOperations: FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>("");

@@ -1,7 +1,7 @@
 import { FC } from "react";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-import Modal from "../../../ui/Modal";
+import Modal from "../../../ui/utils/Modal";
 import CreateAdminModal from "./CreateAdminModal";
 
 /**
@@ -26,7 +26,7 @@ const AddAdmin: FC = () => {
       <Modal.Open opens="create-admin">
         <PrimaryButton>
           <FiPlus />
-          Add New Admin
+          Add New Contact
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-admin">

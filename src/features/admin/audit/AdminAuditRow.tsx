@@ -1,21 +1,29 @@
 import { FC } from "react";
-
-interface Audit {
-  audit: string;
-  admin: string;
-  adminEmail: string;
-  phoneNumber: string;
-  status: "Active" | "Pending" | "Deactivated";
-}
+import { AdminAudit } from "./AuditTable";
+import { formatTime } from "../../../db/helperFunctions";
 
 interface AuditRowProps {
-  audit: Audit;
+  audit: AdminAudit;
+  index: number;
 }
 
-// Took out audit prop
+const AdminAuditRow: FC<AuditRowProps> = ({ audit, index }) => {
+  console.log(audit);
+  const { operation, updatedAt, ipAddress, author } = audit;
 
-const AdminAuditRow: FC<AuditRowProps> = () => {
-  return <div>Row</div>;
+  return (
+    <div
+      className={`grid grid-cols-[1.5fr_1fr_1.5fr_1.5fr_1fr] py-2 px-2 gap-6 my-2 items-center ${
+        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+      }`}
+    >
+      <span className="text-xl">{operation}</span>
+      <span className="text-xl">{formatTime(updatedAt)}</span>
+      <span className="text-xl">{ipAddress}</span>
+      <span className="text-xl">{author.name}</span>
+      <span className="text-xl">{author.role}</span>
+    </div>
+  );
 };
 
 export default AdminAuditRow;

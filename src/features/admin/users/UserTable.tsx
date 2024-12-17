@@ -1,47 +1,69 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
-// import TenantRow from "./UserRow";
-
+import Table from "../../../ui/utils/Table";
+import { useQuery } from "@tanstack/react-query";
+import { getUsers } from "../../../services/apiAdmin";
+import { User } from "../../../db/types";
+import UserRow from "./UserRow";
+import Spinner from "../../../ui/utils/Spinner";
+import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
+import usePageParam from "../../../hooks/usePageParam";
+import { useAppContext } from "../../../context/AppContext";
 const UserTable: FC = () => {
-  // const { bookings, isLoading, count } = useBookings();
-  // const users: [] = [];
+  const { tenant } = useAppContext();
+  const { page } = usePageParam();
 
-  // if (isLoading) return <Spinner />;
-
-  // if (!bookings.length) return <Empty resourceName="bookings" />;
+  const { isLoading, data: { data: users, pagination } = {} } = useQuery({
+    queryFn: () => getUsers(tenant, page),
+    queryKey: ["users", page],
+  });
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_1fr_0.5fr]">
+      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr_0.5fr]">
         <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-lg">
             Name
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-lg">
             Role
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-lg">
             Email
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-lg">
             Phone Number
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-lg">
             Status
           </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+          <div className="text-gray-600 font-semibold uppercase text-lg">
             Actions
           </div>
         </Table.Header>
 
-        {/* <Table.Body
-          data={users}
-          render={(tenant, i) => <TenantRow tenant={tenant} key={i} />}
-        /> */}
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table.Body<User>
+            data={users}
+            render={(user, index) => (
+              <UserRow user={user} key={user.id} index={index} />
+            )}
+          />
+        )}
 
-        {/* <Table.Footer>
-        <Pagination count={count} />
-      </Table.Footer> */}
+        <Table.Footer>
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination?.pageSize}
+              totalItems={pagination?.totalItems}
+              totalPages={pagination?.totalPages}
+            />
+          )}
+        </Table.Footer>
       </Table>
     </div>
   );

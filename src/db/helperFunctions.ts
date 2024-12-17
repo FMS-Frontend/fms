@@ -61,3 +61,23 @@ export const getStatusStyles = (status: string) => {
       return "bg-gray-100 text-gray-600"; // Default styling
   }
 };
+
+export function formatDateTime(dateTimeString: string) {
+  const date = new Date(dateTimeString);
+
+  // Extract time components
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  // Format hours to 12-hour clock
+  const formattedHours = hours % 12 || 12; // Converts 0 to 12 for midnight
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+
+  // Extract date components
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" }); // e.g., Nov
+  const year = date.getFullYear();
+
+  return `${formattedHours}:${formattedMinutes} ${ampm} - ${month} ${day}, ${year}`;
+}

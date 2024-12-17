@@ -1,30 +1,31 @@
-// import BookingRow from "./BookingRow";
-// import Table from "../../ui/Table";
-// import Menus from "../../ui/Menus";
-// import Empty from "../../ui/Empty";
-// import { useBookings } from "./useBookings";
-// import Spinner from "../../ui/Spinner";
-// import Pagination from "../../ui/Pagination";
-
 import { useQuery } from "@tanstack/react-query";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { getTenants } from "../../../services/apiSuperUser";
 import DashboardRow from "./DashboardRow";
 import { Organization } from "../../../db/types";
-import Paginate from "../../../ui/Paginate";
+import Paginate from "../../../ui/utils/Paginate";
 import { useSearchParams } from "react-router-dom";
+import Spinner from "../../../ui/utils/Spinner";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
 function DashboardTable() {
   const [searchParams] = useSearchParams();
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
-  const { data: { data: tenants, pagination } = {} } = useQuery({
+  // Use React Query for data fetching
+  const { isLoading, data, error } = useQuery({
     queryFn: () => getTenants(page),
     queryKey: ["tenants", page],
   });
 
-  // console.log(tenants);
-  // console.log(pagination);
+  // Handle fetched dataa
+  const tenants = data?.data || [];
+  const pagination = data?.pagination || {};
+
+  // Error handling for fetch failure
+  if (error) {
+    return <div>Error loading data. Please try again.</div>;
+  }
 
   return (
     <div className="mt-8">
@@ -47,19 +48,27 @@ function DashboardTable() {
           </div>
         </Table.Header>
 
-        <Table.Body<Organization>
-          data={tenants}
-          render={(tenants, index) => (
-            <DashboardRow key={tenants.id} tenant={tenants} index={index} />
-          )}
-        />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table.Body<Organization>
+            data={tenants}
+            render={(tenant, index) => (
+              <DashboardRow key={tenant.id} tenant={tenant} index={index} />
+            )}
+          />
+        )}
 
         <Table.Footer>
-          <Paginate
-            pageSize={pagination?.pageSize}
-            totalItems={pagination?.totalItems}
-            totalPages={pagination?.totalPages}
-          />
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination.pageSize}
+              totalItems={pagination.totalItems}
+              totalPages={pagination.totalPages}
+            />
+          )}
         </Table.Footer>
       </Table>
     </div>
@@ -67,3 +76,10 @@ function DashboardTable() {
 }
 
 export default DashboardTable;
+
+// staleTime: 1000 * 60, // Optional: Cache data for 1 minute
+// retry: 3, // Optional: Retry fetching if it fails
+// initialData: {
+//   data: [],
+//   pagination: { pageSize: 10, totalItems: 0, totalPages: 1 },
+// }, // Default structure for data to avoid undefined issues

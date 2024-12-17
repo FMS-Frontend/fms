@@ -1,8 +1,7 @@
 import { FC } from "react";
-import OutlineButton from "../ui/OutlineButton";
-import SearchInput from "../ui/SearchInput";
+import SearchInput from "../ui/utils/SearchInput";
 import AdminAuditTable from "../features/admin/audit/AuditTable";
-import DateComp from "../ui/DateComp";
+import DateComp from "../ui/utils/DateComp";
 
 /**
  * AdminAudit Component
@@ -34,8 +33,7 @@ const AdminAudit: FC = (): JSX.Element => {
           <DateComp />
         </div>
 
-        <div className="flex gap-4">
-          <OutlineButton>Export as</OutlineButton>
+        <div className="w-4/5 flex items-center justify-end">
           <SearchInput width="w-full" />
         </div>
       </div>

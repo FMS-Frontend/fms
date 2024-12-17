@@ -1,6 +1,6 @@
 import { FC } from "react";
-import Modal from "../../../ui/Modal";
-import ConfirmDelete from "../../../ui/ConfirmDelete";
+import Modal from "../../../ui/utils/Modal";
+import ConfirmDelete from "../../../ui/utils/ConfirmDelete";
 import { GoTrash } from "react-icons/go";
 import { AiFillEdit } from "react-icons/ai";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

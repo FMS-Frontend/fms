@@ -1,12 +1,13 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdmins } from "../../../services/apiSuperUser";
-import Spinner from "../../../ui/Spinner";
+import Spinner from "../../../ui/utils/Spinner";
 import AdminRow from "./AdminRow";
-import Paginate from "../../../ui/Paginate";
-import SpinnerMini from "../../../ui/SpinnerMini";
+import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import { useSearchParams } from "react-router-dom";
+import { Admin } from "../../../db/types";
 
 /**
  * AdminsTable component displays a table of administrator information,
@@ -29,14 +30,9 @@ import { useSearchParams } from "react-router-dom";
  * <AdminsTable />
  */
 
-interface Admin {
-  id: string;
-  name: string;
-  role: string;
-  email: string;
-  mobile: string;
-  status: "Active" | "Pending" | "Deactivated";
-}
+// *****************************************
+// NOTE: ADMINS NOW REFERRED TO AS "CONTACT" **********************************
+// *****************************************
 
 const AdminsTable: FC = () => {
   const [searchParams] = useSearchParams();
@@ -45,20 +41,21 @@ const AdminsTable: FC = () => {
   const { isLoading, data: { data: admins, pagination } = {} } = useQuery({
     queryFn: () => getAdmins(page),
     queryKey: ["admins", page],
+    retry: true,
   });
+
+  // console.log(admins);
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr__1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
+      <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Administrators
+            Contacts
           </div>
+
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Role
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Tenants
+            Organization
           </div>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
             Email

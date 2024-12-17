@@ -29,6 +29,7 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
   const selectedAdmin = admins?.find(
     (admin) => admin.id === tenantData.adminId
   );
+  // console.log(selectedAdmin);
 
   return (
     <>

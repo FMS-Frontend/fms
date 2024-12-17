@@ -3,7 +3,7 @@ import IntegrationForm1 from "./IntegrationForm1";
 import IntegrationForm2 from "./IntegrationForm2";
 
 interface CreateIntegrationProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 /**

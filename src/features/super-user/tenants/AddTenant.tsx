@@ -1,7 +1,7 @@
 import { FC } from "react";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-import Modal from "../../../ui/Modal";
+import Modal from "../../../ui/utils/Modal";
 import TenantModal from "./TenantModal";
 
 /**
@@ -24,7 +24,7 @@ const AddTenant: FC = () => {
       <Modal.Open opens="create-tenant">
         <PrimaryButton>
           <FiPlus />
-          Add New Tenant
+          Add New Organization
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-tenant">

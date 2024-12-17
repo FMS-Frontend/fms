@@ -6,71 +6,115 @@ import {
   Context,
   useContext,
   useState,
+  useEffect,
 } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
 interface AppContextType {
   role: string;
-  checkUserRole: (role: string) => string | undefined;
+  tenant: string | "";
+  setTenant: React.Dispatch<React.SetStateAction<string | "">>;
+  checkRole: (role: string) => string;
   handleRoleChange: (newRole: string) => void;
   accessToken: string | null;
   setAccessToken: (token: string | null) => void;
   refreshToken: string | null;
   setRefreshToken: (token: string | null) => void;
+  logout: () => void;
+  PrivateRoutes: ({ requiredRole }: { requiredRole: string }) => JSX.Element;
 }
 
-// Create the context with the appropriate type
 const AppContext: Context<AppContextType | undefined> = createContext<
   AppContextType | undefined
 >(undefined);
 
-// Define props for the AppProvider
 interface AppProviderProps {
   children: ReactNode;
 }
 
-// Create the AppProvider component
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const [role, setRole] = useState("superuser");
+  const [role, setRole] = useState<string>(
+    () => localStorage.getItem("role") || ""
+  );
+  const [tenant, setTenant] = useState<string>(
+    () => localStorage.getItem("tenant") || ""
+  );
 
-  // handleRoleChange
+  useEffect(() => {
+    if (role) {
+      localStorage.setItem("role", role);
+    }
+    if (tenant) {
+      localStorage.setItem("tenant", tenant);
+    }
+  }, [role, tenant]);
+
   const handleRoleChange = (newRole: string) => {
     setRole(newRole);
   };
 
   const [accessToken, setAccessToken] = useState<string | null>("");
+
   const [refreshToken, setRefreshToken] = useState<string | null>("");
 
-  // const role = "superuser";
+  const checkRole = (role: string): string => {
+    let normalizedRole: string;
 
-  /**
-   * Check the user role and return the role string.
-   *
-   * @param {string} role - The role of the user to check.
-   * @returns {string | undefined} The role string if valid, otherwise undefined.
-   */
-  function checkUserRole(role: string): string | undefined {
-    if (role === "superuser") {
-      return "superuser";
-    } else if (role === "admin") {
-      return "admin";
-    } else if (role === "manager") {
-      return "manager";
-    } else if (role === "analyst") {
-      return "analyst";
+    switch (role) {
+      case "":
+        normalizedRole = "Super User";
+        break;
+      case "Admin":
+        normalizedRole = "Admin";
+        break;
+      case "Manager":
+        normalizedRole = "Manager";
+        break;
+      case "Analyst":
+        normalizedRole = "Analyst";
+        break;
+      default:
+        normalizedRole = "Unknown";
+        break;
     }
-    return undefined; // Return undefined if the role is invalid
-  }
+
+    setRole(normalizedRole);
+    return normalizedRole;
+  };
+
+  const PrivateRoutes = ({ requiredRole }: { requiredRole: string }) => {
+    const storedRole = localStorage.getItem("role");
+
+    // If the role matches, render the child routes; otherwise, redirect to /login
+    return storedRole === requiredRole ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" replace />
+    );
+  };
+
+  const logout = () => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setRole("");
+    setTenant(""); // Clear tenant as well on logout
+  };
 
   return (
     <AppContext.Provider
       value={{
         handleRoleChange,
-        checkUserRole,
+        checkRole,
         role,
+        logout,
         setAccessToken,
         accessToken,
         setRefreshToken,
         refreshToken,
+        tenant,
+        setTenant,
+        PrivateRoutes,
       }}
     >
       {children}
@@ -78,12 +122,6 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
   );
 };
 
-/**
- * Custom hook to use the AppContext.
- *
- * @returns {AppContextType} The context value containing the checkUserRole function and role.
- * @throws {Error} Throws an error if the context is accessed outside of its provider.
- */
 const useAppContext = (): AppContextType => {
   const context = useContext(AppContext);
 

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { formatTime } from "../../../utils/helpers";
+import { formatTime } from "../../../ui/utils/helpers";
 
 interface Tenant {
   alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";

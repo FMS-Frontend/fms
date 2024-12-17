@@ -1,22 +1,14 @@
 import { FC } from "react";
 import { GoTrash } from "react-icons/go";
 import { AiFillEdit } from "react-icons/ai";
-import Modal from "../../../ui/Modal";
-import ConfirmDelete from "../../../ui/ConfirmDelete";
+import Modal from "../../../ui/utils/Modal";
+import ConfirmDelete from "../../../ui/utils/ConfirmDelete";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteAdmin } from "../../../services/apiSuperUser";
 import toast from "react-hot-toast";
 import EditAdminModal from "./EditAdminModal";
 import { getStatusStyles } from "../../../db/helperFunctions";
-
-interface Admin {
-  id: string;
-  name: string;
-  role: string;
-  email: string;
-  mobile: string;
-  status: "Active" | "Pending" | "Deactivated";
-}
+import { Admin } from "../../../db/types";
 
 interface AuditRowProps {
   admin: Admin;
@@ -24,7 +16,8 @@ interface AuditRowProps {
 }
 
 const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
-  const { id: adminId, name, role, email, mobile, status } = admin;
+  const { id: adminId, name, email, mobile, status, tenant } = admin;
+
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -42,13 +35,13 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
 
   return (
     <div
-      className={`grid grid-cols-[1fr_1fr_1fr_1.5fr_1fr_0.5fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
+      className={`grid grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
       <span className="text-2xl">{name}</span>
-      <span className="text-2xl">{role}</span>
-      <span className="text-2xl">-</span>
+      {/* <span className="text-2xl">{role}</span> */}
+      <span className="text-2xl">{tenant?.name || "-"}</span>
       <span className="text-blue-700 text-2xl">{email}</span>
       <span className="text-xl">{mobile}</span>
       <div>

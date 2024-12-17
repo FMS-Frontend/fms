@@ -1,7 +1,7 @@
 import { FC } from "react";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-import Modal from "../../../ui/Modal";
+import Modal from "../../../ui/utils/Modal";
 import CreateIntegration from "./CreateIntegration";
 
 /**
@@ -18,6 +18,7 @@ import CreateIntegration from "./CreateIntegration";
  * @returns {JSX.Element} The rendered AddIntegration component, which contains the modal for adding a new integration.
  */
 
+
 const AddIntegration: FC = () => {
   return (
     <Modal>
@@ -28,7 +29,7 @@ const AddIntegration: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="integration">
-        {({ onClose }) => <CreateIntegration onClose={onClose} />}
+        {({ onClose }) => <CreateIntegration onClose={onClose || (() => {})} />}
       </Modal.Window>
     </Modal>
   );

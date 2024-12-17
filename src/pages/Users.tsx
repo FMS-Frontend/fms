@@ -1,8 +1,8 @@
 import { FC } from "react";
-import OutlineButton from "../ui/OutlineButton";
-import SearchInput from "../ui/SearchInput";
+import SearchInput from "../ui/utils/SearchInput";
 import AddUser from "../features/admin/users/AddUser";
 import UserTable from "../features/admin/users/UserTable";
+import AddRole from "../features/admin/users/AddRole";
 
 /**
  * Users Component
@@ -33,7 +33,7 @@ const Users: FC = () => {
 
         <div className="flex gap-10">
           <AddUser />
-          <OutlineButton>Export As</OutlineButton>
+          <AddRole />
         </div>
       </div>
 

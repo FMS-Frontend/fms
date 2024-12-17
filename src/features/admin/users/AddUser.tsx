@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FiPlus } from "react-icons/fi";
-import PrimaryButton from "../../../ui/PrimaryButton";
-import Modal from "../../../ui/Modal";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
+import Modal from "../../../ui/utils/Modal";
 import CreateUser from "./CreateUserModal";
 
 /**
@@ -26,7 +26,7 @@ const AddUser: FC = () => {
         </PrimaryButton>
       </Modal.Open>
       <Modal.Window name="create-user">
-        {({ onClose }) => <CreateUser onClose={onClose} />}
+        {({ onClose }) => <CreateUser onClose={onClose || (() => {})} />}
       </Modal.Window>
     </Modal>
   );

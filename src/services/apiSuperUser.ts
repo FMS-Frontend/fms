@@ -9,7 +9,7 @@ export async function getUserTrends() {
     const res = await URL.get(
       "/analytics/trends/user?startDate=2024-01-01&endDate=2024-12-01&intervalUnit=month"
     );
-    // console.log(res.data.data);
+    // console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -20,7 +20,7 @@ export async function getUserTrends() {
 export const getSummary = async (): Promise<StatData[]> => {
   try {
     const res = await URL.get(
-      "/analytics/summary?metrics=TotalTenants&metrics=TotalActiveAdmins&metrics=TotalAdmins&metrics=AverageAdminCreatedPerDay"
+      "/analytics/summary?metrics=Total_Tenants&metrics=Total_Active_Admins&metrics=Total_Admins&metrics=Average_Admin_Created_Per_Day"
     );
     // console.log(res.data.data);
     return res.data.data;
@@ -31,12 +31,23 @@ export const getSummary = async (): Promise<StatData[]> => {
 };
 
 // ******* ADMINS **************
-export async function getAdmins(page: number) {
+export async function getAdmins(page: number = 1) {
   try {
-    const admins = await URL.get(`/users?page=${page}`);
+    const res = await URL.get(`/users?page=${page}`);
 
-    // console.log(admins.data);
-    return admins.data;
+    // console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Admin could not be fetched");
+  }
+}
+
+export async function getAdminsModal() {
+  try {
+    const res = await URL.get(`/users`);
+
+    return res.data.data;
   } catch (error) {
     console.log(error);
     throw new Error("Admin could not be fetched");
@@ -54,24 +65,12 @@ export async function deleteAdmin(id: string) {
   }
 }
 
-// export async function editAdmin(id: string) {
-//   try {
-//     const { data } = await URL.patch(`/users/${id}`); // Use PATCH for partial updates
-
-//     console.log(data);
-//     return data; // Return the response data
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error("Admin could not be updated"); // Throw a descriptive error
-//   }
-// }
-
 //*********** TENANTS **************/
 export async function getTenants(page: number) {
   try {
-    const tenants = await URL.get(`/tenants?page=${page}`);
+    const res = await URL.get(`/tenants?page=${page}`);
 
-    return tenants.data;
+    return res.data;
   } catch (error) {
     console.log(error);
     throw new Error("Tenants could not be fetched");
@@ -102,10 +101,48 @@ export async function deleteTenant(tenant: string) {
 // ********** REPORTS ***************
 export async function getReports() {
   try {
-    const res = await URL.get(`/reports/tenant_reports`);
+    const { data } = await URL.get(`/reports/tenant_reports`);
 
-    // console.log(res.data.data);
+    // console.log(" Report res api ==> ", res);
+    return { reports: data.data, pagination: data.pagination };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching reports");
+  }
+}
+
+// ********* AUDIT & COMPLIANCE *********
+export async function getAudit(page: number) {
+  try {
+    const res = await URL.get(`/reports/audit_logs?page=${page}`);
+
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching reports");
+  }
+}
+
+//********* SETTINGS ******* */
+export async function getProfile() {
+  try {
+    const res = await URL.get("/users/account/me");
+
     return res.data.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching reports");
+  }
+}
+
+type UpdateProfileData = {
+  [key: string]: string;
+};
+
+export async function updateProfile(data: UpdateProfileData): Promise<void> {
+  try {
+    await URL.patch("/users/account/me", data);
   } catch (error) {
     console.log(error);
     throw new Error("Error fetching reports");

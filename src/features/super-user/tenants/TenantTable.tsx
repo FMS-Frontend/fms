@@ -1,20 +1,20 @@
 import { FC } from "react";
-import Table from "../../../ui/Table";
+import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getTenants } from "../../../services/apiSuperUser";
-import Spinner from "../../../ui/Spinner";
+import Spinner from "../../../ui/utils/Spinner";
 import TenantRow from "./TenantRow";
 import { Tenant } from "../../../db/types";
-import { useSearchParams } from "react-router-dom";
-import Paginate from "../../../ui/Paginate";
+import Paginate from "../../../ui/utils/Paginate";
+import SpinnerMini from "../../../ui/utils/SpinnerMini";
+import usePageParam from "../../../hooks/usePageParam";
 
 const TenantTable: FC = () => {
-  const [searchParams] = useSearchParams();
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const { page } = usePageParam();
 
   const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
-    queryKey: ["tenants"],
     queryFn: () => getTenants(page),
+    queryKey: ["tenants", page],
   });
 
   return (
@@ -22,10 +22,10 @@ const TenantTable: FC = () => {
       <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Tenant
+            Organization
           </div>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Tenant ID
+            Organization ID
           </div>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Admin Assigned
@@ -53,11 +53,15 @@ const TenantTable: FC = () => {
         )}
 
         <Table.Footer>
-          <Paginate
-            pageSize={pagination?.pageSize}
-            totalItems={pagination?.totalItems}
-            totalPages={pagination?.totalPages}
-          />
+          {isLoading ? (
+            <SpinnerMini />
+          ) : (
+            <Paginate
+              pageSize={pagination?.pageSize}
+              totalItems={pagination?.totalItems}
+              totalPages={pagination?.totalPages}
+            />
+          )}
         </Table.Footer>
       </Table>
     </div>

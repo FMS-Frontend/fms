@@ -1,62 +1,33 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import { useQuery } from "@tanstack/react-query";
+import { getTenantChart } from "../../../services/apiAdmin";
+import Spinner from "../../../ui/utils/Spinner";
+import { useAppContext } from "../../../context/AppContext";
 
-const data = [
-  {
-    month: "January",
-    users: 100,
-  },
-  {
-    month: "February",
-    users: 63,
-  },
-  {
-    month: "March",
-    users: 75,
-  },
-  {
-    month: "April",
-    users: 200,
-  },
-  {
-    month: "May",
-    users: 150,
-  },
-  {
-    month: "June",
-    users: 175,
-  },
-  {
-    month: "July",
-    users: 100,
-  },
-  {
-    month: "August",
-    users: 78,
-  },
-  {
-    month: "September",
-    users: 95,
-  },
-  {
-    month: "October",
-    users: 120,
-  },
-  {
-    month: "November",
-    users: 70,
-  },
-  {
-    month: "December",
-    users: 99,
-  },
-];
 
 const ApexLineChart: React.FC = () => {
+  const { tenant } = useAppContext();
+
+  const { isLoading, data: { data: chartData } = {} } = useQuery({
+    queryFn: () => getTenantChart(tenant),
+    queryKey: ["chart"],
+    retry: true,
+  });
+
+  // console.log(chartData);
+
   // Map data for the Y-axis (users) and X-axis (months)
-  const seriesData = data.map((d) => d.users);
-  const categoriesData = data.map((d) => d.month);
+  // const seriesData = data.map((d) => d.users);
+  // const categoriesData = data.map((d) => d.month);
+
+  const seriesData = chartData?.map((d: { count: number }) => d.count) || [];
+  const categoriesData =
+    chartData?.map((d: { date: string | number | Date }) => {
+      const date = new Date(d.date);
+      return date.toLocaleString("default", { month: "long" }); // Format: "January"
+    }) || [];
 
   const options: ApexOptions = {
     series: [
@@ -74,6 +45,10 @@ const ApexLineChart: React.FC = () => {
     },
     stroke: {
       curve: "smooth",
+    },
+    title: {
+      text: "User Trends",
+      align: "left",
     },
     xaxis: {
       type: "category",
@@ -95,14 +70,18 @@ const ApexLineChart: React.FC = () => {
   };
 
   return (
-    <div id="chart">
-      <ReactApexChart
-        className="mt-8 p-8"
-        options={options}
-        series={options.series}
-        type="area"
-        height={350}
-      />
+    <div id="chart" className="bg-white rounded-2xl shadow-md border p-4">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <ReactApexChart
+          className="mt-8 p-8"
+          options={options}
+          series={options.series}
+          type="area"
+          height={350}
+        />
+      )}
     </div>
   );
 };

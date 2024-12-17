@@ -1,6 +1,6 @@
 import { FC } from "react";
-import SearchInput from "../ui/SearchInput";
-import OutlineButton from "../ui/OutlineButton";
+import SearchInput from "../ui/utils/SearchInput";
+import OutlineButton from "../ui/utils/OutlineButton";
 import AddIntegration from "../features/admin/integration/AddIntegration";
 import AdminIntegrationTable from "../features/admin/integration/AdminIntegrationTable";
 import AdminIntegrationStats from "../features/admin/integration/AdminIntegrationStats";

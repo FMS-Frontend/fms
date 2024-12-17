@@ -5,13 +5,11 @@ import { FC } from "react";
 interface StatProps {
   icon: React.ReactNode;
   title: string;
-  value: string | number;
+  value: string | number | JSX.Element;
   color: "red" | "green" | "blue" | "yellow";
 }
 
 const AdminDashStat: FC<StatProps> = ({ icon, title, value, color }) => {
-  console.log(color);
-
   const bgColorClass = {
     red: "bg-red-100",
     green: "bg-green-100",
@@ -45,15 +43,3 @@ const AdminDashStat: FC<StatProps> = ({ icon, title, value, color }) => {
 };
 
 export default AdminDashStat;
-
-{
-  /* <div
-        className={`row-span-2 aspect-square rounded-full flex items-center justify-center bg-${color}-100`}
-      >
-        <div className={`w-8 h-8 text-${color}-700`}>{icon}</div>
-      </div>
-      <h5 className="self-end text-xs uppercase tracking-wide font-semibold text-gray-500">
-        {title}
-      </h5>
-      <p className="text-2xl font-medium leading-none">{value}</p> */
-}
