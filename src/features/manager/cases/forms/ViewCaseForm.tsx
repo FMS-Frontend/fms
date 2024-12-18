@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { CaseDetails } from "./AssignCaseForm";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -19,82 +20,114 @@ import { FC } from "react";
 interface StepProps {
   onNext?: () => void;
   onClose?: () => void;
+  data: CaseDetails;
 }
 
-const ViewCaseForm: FC<StepProps> = ({ onNext, onClose }) => {
+const ViewCaseForm: FC<StepProps> = ({ onNext, onClose, data }) => {
   return (
     <>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Case-C-001</h2>
+        <h2 className="text-3xl font-semibold">
+          <b>Case</b>-C{data?.id.slice(0, 4)}
+        </h2>
       </div>
 
       <form className="flex flex-col gap-3">
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Tenant Name
-          </label>
-          <input
-            type="text"
-            placeholder="Enter tenant name"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              CaseId
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+              C{data?.id.slice(0, 4)}
+            </p>
+          </div>
+          <div className="flex justify-between">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              Case code
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+              {data?.code}
+            </p>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              Status
+            </label>
+            <p className={`text-xl font-medium mb-1 rounded-full ${
+            data.status === "Closed" ? "bg-slate-100 text-slate-400" : "text-red-500"
+          }`}>
+              {data?.status}
+            </p>
+          </div>
+          <div className="flex justify-between items-center">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              Priority
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+              {data?.priority}
+            </p>
+          </div>
+          <div className="flex justify-between">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              AssignedTo
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+            {data.assignee?.name || "Unassigned"}
+            </p>
+          </div>
         </div>
 
+        <h3 className="font-bold MY-2">Case Details</h3>
         <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Address
-          </label>
-          <input
-            type="text"
-            placeholder="Enter address"
-            className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Admin Name
-          </label>
-          <select className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500">
-            <option>Click to select and link Admin</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
+          <div className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 overflow-y-auto h-16">
+          {data?.description.length > 100 ? data.description.slice(0, 50) : data.description }
+          </div>
+        </div>        
+
+        {/* Created At */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Created At
+          </label>
           <input
             type="text"
-            placeholder="Enter description"
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            value={new Date(data.createdAt).toLocaleString()}
+            readOnly
+            className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 focus:outline-none"
           />
         </div>
 
+        {/* Updated At */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Last Updated At
+          </label>
+          <input
+            type="text"
+            value={new Date(data.updatedAt).toLocaleString()}
+            readOnly
+            className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 focus:outline-none"
+          />
+        </div>
+
+        {/* Buttons */}
         <div className="flex justify-around mt-6">
           <button
             type="button"
             onClick={onClose}
-            className="w-44 text-xl px-4 py-3 bg-gray-500  text-white rounded-md hover:bg-gray-600"
+            className="w-44 text-xl px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
             Close
           </button>
-
           <button
             type="button"
             onClick={onNext}
-            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >
             Next
           </button>
