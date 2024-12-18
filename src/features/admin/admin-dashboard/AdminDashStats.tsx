@@ -22,25 +22,25 @@ const AdminDashStats: FC = () => {
   return (
     <>
       <AdminDashStat
-        title="Total Tenants Created"
+        title="Total Users Created"
         color="yellow"
         icon={<BsBoxFill />}
         value={isLoading ? <Skeleton /> : stats?.[0]?.value ?? "N/A"}
       />
       <AdminDashStat
-        title="Total Admin Created"
+        title="New Users"
         color="blue"
         icon={<IoPeople />}
         value={isLoading ? <Skeleton /> : stats?.[1]?.value ?? "N/A"}
       />
       <AdminDashStat
-        title="Total Active Users"
+        title="Active Sessions"
         color="green"
         icon={<RiLineChartLine />}
         value={isLoading ? <Skeleton /> : stats?.[2]?.value ?? "N/A"}
       />
       <AdminDashStat
-        title="Average Account Created Per Day"
+        title="Total Integrations"
         color="red"
         icon={<IoCreate />}
         value={isLoading ? <Skeleton /> : stats?.[3]?.value ?? "N/A"}

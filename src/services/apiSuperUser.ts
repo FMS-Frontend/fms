@@ -9,7 +9,7 @@ export async function getUserTrends() {
     const res = await URL.get(
       "/analytics/trends/user?startDate=2024-01-01&endDate=2024-12-01&intervalUnit=month"
     );
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);

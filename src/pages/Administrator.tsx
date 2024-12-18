@@ -27,7 +27,7 @@ import AddAdmin from "../features/super-user/administrator/AddAdmin";
 const Administrator: FC = (): JSX.Element => {
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="font-bold text-4xl">Administrators Management</h1>
+      <h1 className="font-bold text-4xl">Contact Management</h1>
 
       <div className="flex justify-between">
         <SearchInput />

@@ -13,8 +13,8 @@ const TenantTable: FC = () => {
   const { page } = usePageParam();
 
   const { isLoading, data: { data: tenants, pagination } = {} } = useQuery({
-    queryKey: ["tenants"],
     queryFn: () => getTenants(page),
+    queryKey: ["tenants", page],
   });
 
   return (
@@ -22,10 +22,10 @@ const TenantTable: FC = () => {
       <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Tenant
+            Organization
           </div>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Tenant ID
+            Organization ID
           </div>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Admin Assigned

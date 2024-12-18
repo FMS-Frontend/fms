@@ -8,7 +8,6 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "../../../ui/utils/Spinner";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
-
 function DashboardTable() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
@@ -17,15 +16,9 @@ function DashboardTable() {
   const { isLoading, data, error } = useQuery({
     queryFn: () => getTenants(page),
     queryKey: ["tenants", page],
-    staleTime: 1000 * 60, // Optional: Cache data for 1 minute
-    retry: 3, // Optional: Retry fetching if it fails
-    initialData: {
-      data: [],
-      pagination: { pageSize: 10, totalItems: 0, totalPages: 1 },
-    }, // Default structure for data to avoid undefined issues
   });
 
-  // Handle fetched data
+  // Handle fetched dataa
   const tenants = data?.data || [];
   const pagination = data?.pagination || {};
 
@@ -83,3 +76,10 @@ function DashboardTable() {
 }
 
 export default DashboardTable;
+
+// staleTime: 1000 * 60, // Optional: Cache data for 1 minute
+// retry: 3, // Optional: Retry fetching if it fails
+// initialData: {
+//   data: [],
+//   pagination: { pageSize: 10, totalItems: 0, totalPages: 1 },
+// }, // Default structure for data to avoid undefined issues

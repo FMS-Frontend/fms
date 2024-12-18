@@ -3,12 +3,13 @@ import usePasswordToggle from "../../hooks/usePasswordToggle";
 import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import URL from "../../db/url";
-import { useNavigate, useParams } from "react-router-dom"; 
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import SpinnerMini from "../../ui/utils/SpinnerMini";
 import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { BsFillShieldLockFill } from "react-icons/bs";
+import bg from "../../images/Shape.png";
 
 interface FormValues {
   email: string;
@@ -18,8 +19,9 @@ interface FormValues {
 const TenantsLogin: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
-  const { tenant } = useParams<{ tenant: string }>(); 
-  const { setAccessToken, setRefreshToken, setTenant, handleRoleChange } = useAppContext();
+  const { tenant } = useParams<{ tenant: string }>();
+  const { setAccessToken, setRefreshToken, setTenant, handleRoleChange } =
+    useAppContext();
 
   const validate = Yup.object({
     email: Yup.string()
@@ -89,7 +91,9 @@ const TenantsLogin: FC = (): JSX.Element => {
           : `/${userRole.toLowerCase()}/dashboard`;
 
       navigate(redirectPath);
-      toast.success(`Welcome back ${userRole === "User" && subRole ? subRole : userRole}`);
+      toast.success(
+        `Welcome back ${userRole === "User" && subRole ? subRole : userRole}`
+      );
     } catch (err) {
       toast.error("Wrong credentials, enter correct email and password");
       console.error(err);
@@ -118,14 +122,17 @@ const TenantsLogin: FC = (): JSX.Element => {
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
       <div
-        className={`absolute inset-0 bg-cover bg-center bg-[url("src/assets/Shape.png")]`}
+        className="absolute inset-0 bg-no-repeat bg-cover bg-center z-0 "
+        style={{
+          backgroundImage: `url(${bg})`,
+        }}
       ></div>
       <div className="z-10 bg-white p-20 rounded-2xl shadow-lg w-full max-w-2xl flex flex-col gap-4">
-      <div className="w-full flex justify-center">
-        <Link to="/">
-        <BsFillShieldLockFill className="text-blue-500 h-16 w-16" />
-        </Link>
-      </div>
+        <div className="w-full flex justify-center">
+          <Link to="/">
+            <BsFillShieldLockFill className="text-blue-500 h-16 w-16" />
+          </Link>
+        </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
           Tenant Login
         </h2>

@@ -9,6 +9,7 @@ import SpinnerMini from "../../ui/utils/SpinnerMini";
 import { useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { BsFillShieldLockFill } from "react-icons/bs";
+import bg from "../../images/Shape.png";
 
 /**
  * LoginPage Component
@@ -83,7 +84,6 @@ const LoginPage: FC = (): JSX.Element => {
       }
 
       // If it's a first time User Login
-
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
@@ -95,11 +95,12 @@ const LoginPage: FC = (): JSX.Element => {
 
       const userRole = res.data.data?.role;
       handleRoleChange(userRole); //Save
+      // console.log(res);
 
       //
       if (userRole === "Super User") {
-        navigate("/dashboard");
         toast.success("Logged in Successfully");
+        navigate("/dashboard");
       }
     } catch (err) {
       toast.error("Wrong credentials, enter correct email and password");
@@ -129,7 +130,10 @@ const LoginPage: FC = (): JSX.Element => {
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
       <div
-        className={`absolute inset-0 bg-cover bg-center bg-[url("src/assets/Shape.png")]`}
+        className="absolute inset-0 bg-no-repeat bg-cover bg-center z-0"
+        style={{
+          backgroundImage: `url(${bg})`,
+        }}
       ></div>
       <div className="z-10 bg-white p-20 rounded-2xl shadow-lg w-full max-w-2xl flex flex-col gap-4">
         <div className="w-full flex justify-center">

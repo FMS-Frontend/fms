@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   createContext,
   FC,
@@ -112,7 +113,7 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
         setRefreshToken,
         refreshToken,
         tenant,
-        setTenant, 
+        setTenant,
         PrivateRoutes,
       }}
     >

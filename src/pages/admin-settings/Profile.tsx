@@ -1,6 +1,6 @@
 import { FC, FocusEvent, useState } from "react";
-import useProfile from "../features/super-user/settings/useProfile";
-import { useUpdateProfile } from "../features/super-user/settings/useUpdateProfile";
+import useProfile from "../../features/super-user/settings/useProfile";
+import { useUpdateProfile } from "../../features/super-user/settings/useUpdateProfile";
 
 const Profile: FC = () => {
   // Hook to fetch User's Profile
@@ -33,7 +33,7 @@ const Profile: FC = () => {
 
   return (
     <div className="p-6">
-      <div className="flex  mb-6">
+      <div className="flex mb-6">
         <div className="relative w-32 h-32">
           <img
             src={image || "https://via.placeholder.com/96?text=Avatar"} // Default placeholder
