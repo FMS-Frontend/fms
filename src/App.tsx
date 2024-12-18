@@ -195,6 +195,7 @@ function App() {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="rules" element={<RulesManagement />} />
+          <Route path="cases" element={<CasesManagement />} />
           <Route path="users" element={<Users />} />
           <Route path="rules" element={<AdminRule />} />
           <Route path="reporting" element={<AdminReports />} />

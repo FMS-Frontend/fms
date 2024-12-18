@@ -15,16 +15,19 @@ import ViewCaseModal from "./ViewCasesModal";
  * );
  */
 
-const ViewCase: FC = () => {
+interface ViewCaseProps {
+  caseId: string; // Pass the rule ID to fetch specific rule details
+}
+const ViewCase: FC<ViewCaseProps> = ({caseId}) => {
   return (
     <Modal>
-      <Modal.Open opens="view-case">
+      <Modal.Open opens={`view-case-${caseId}`}>
         <button className="px-2 py-1 rounded bg-primaryBlue text-white cursor-pointer hover:bg-primaryBlue/70">
           View
         </button>
       </Modal.Open>
-      <Modal.Window name="view-case">
-        {({ onClose }) => <ViewCaseModal onClose={onClose} />}
+      <Modal.Window name={`view-case-${caseId}`}>
+        {({ onClose }) => <ViewCaseModal onClose={onClose} caseId={caseId} />}
       </Modal.Window>
     </Modal>
   );

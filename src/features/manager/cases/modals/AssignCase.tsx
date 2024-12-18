@@ -15,16 +15,19 @@ import AssignCaseModal from "./AssignCaseModal";
  * );
  */
 
-const AssignCase: FC = () => {
+interface AssignCaseProps {
+  caseId: string; // Pass the rule ID to fetch specific rule details
+}
+const AssignCase: FC<AssignCaseProps> = ({caseId}) => {
   return (
     <Modal>
-      <Modal.Open opens="reopen-case">
+      <Modal.Open opens={`view-rule-${caseId}`}>
         <button className="px-2 py-1 rounded bg-green-50 hover:bg-green-100 text-green-500">
           Assign
         </button>
       </Modal.Open>
-      <Modal.Window name="reopen-case">
-        {({ onClose }) => <AssignCaseModal onClose={onClose} />}
+      <Modal.Window name={`view-rule-${caseId}`}>
+        {({ onClose }) => <AssignCaseModal  caseId={caseId} onClose={onClose} />}
       </Modal.Window>
     </Modal>
   );

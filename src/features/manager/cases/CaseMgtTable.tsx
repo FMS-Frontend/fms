@@ -2,17 +2,17 @@ import { FC, useState } from "react";
 import Table from "../../../ui/utils/Table";
 import CaseTableRow from "./CaseTableRow";
 import CaseMgtOperations from "./CaseMgtOperations";
-import { CasesTableRowProps } from "../../../db";
 import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
+import { Case } from "../../../services/managerServices";
 
 interface CaseMgtTableProps {
   headingData: string[];
-  data: CasesTableRowProps[];
+  data: Case[];
 }
 
 const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
-  const [assignedTo, setAssignedTo] = useState<string>("");
+  const [assignedTo, setAssignedTo] = useState<string>(""); // Default to "All"
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -21,27 +21,28 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
     endDate: new Date(),
   });
 
+  console.log(dateRange);
+  
   // Filter data based on selected filters, search query, and date range
-  const filteredData = data.filter((rule) => {
+  const filteredData = data.filter((caseItem) => {
+    // Handle nullable assignee safely
+    const assigneeName = caseItem.assignee?.id || "";
+
     const matchesAssignedTo =
       assignedTo === "" ||
-      rule.assignedTo.name.toLowerCase().includes(assignedTo.toLowerCase());
+      assigneeName.toLowerCase().includes(assignedTo.toLowerCase());
+
     const matchesStatus =
       selectedStatus === "" ||
-      rule.status.toLowerCase() === selectedStatus.toLowerCase();
+      caseItem.status.toLowerCase() === selectedStatus.toLowerCase();
+
     const matchesSearch =
       searchQuery === "" ||
-      rule.caseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rule.priority.toLowerCase().includes(searchQuery.toLowerCase());
-    const ruleDate = new Date(rule.lastModified);
-    const matchesDateRange =
-      ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate;
-      console.log(matchesDateRange);
+      caseItem.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      caseItem.priority.toLowerCase().includes(searchQuery.toLowerCase());
 
-      //  "matchesDateRange" can also be added to the returned statement if you want to activate filtering by date range
-    return (
-      matchesAssignedTo && matchesStatus && matchesSearch 
-    );
+    // Optional: Include date range filtering if necessary
+    return matchesAssignedTo && matchesStatus && matchesSearch;
   });
 
   const handleAssignedToChange = (value: string) => setAssignedTo(value);
@@ -54,7 +55,6 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
     setDateRange(newDateRange);
   };
 
-  
   return (
     <div className="mt-8">
       {/* Filter Operations */}
@@ -64,19 +64,17 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
           selectedStatus={selectedStatus}
           onAssignedToChange={handleAssignedToChange}
           onStatusChange={handleStatusChange}
-          onDateChange={handleDateChange} // Pass the date handler
+          onDateChange={handleDateChange}
         />
         <SearchInput
           width="40%"
-          placeholder="Search by caseId or priority"
+          placeholder="Search by case ID or priority"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      {/* Table Display */}
       <Table columns={`grid grid-cols-${headingData.length} gap-4`}>
-        {/* Dynamic Header Rendering */}
         <Table.Header>
           {headingData.map((heading, index) => (
             <div
@@ -88,15 +86,14 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
           ))}
         </Table.Header>
 
-        {/* Dynamic Row Rendering */}
-        {filteredData.map((rule, index) => (
+        {filteredData.map((caseItem, index) => (
           <CaseTableRow
-            key={rule.caseId}
-            caseId={rule.caseId}
-            priority={rule.priority}
-            status={rule.status}
-            assignedTo={rule.assignedTo}
-            lastModified={formatRuleDate(rule.lastModified)}
+            key={caseItem.id}
+            id={caseItem.id}
+            priority={caseItem.priority}
+            status={caseItem.status}
+            assignee={caseItem.assignee}
+            updatedAt={caseItem.updatedAt ? formatRuleDate(caseItem.updatedAt) : "N/A"} 
             index={index}
           />
         ))}
@@ -104,7 +101,7 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
         {/* No Data Message */}
         {filteredData.length === 0 && (
           <div className="text-center text-gray-500 p-4">
-            No rules match the selected filters or search query.
+            No cases match the selected filters or search query.
           </div>
         )}
       </Table>
