@@ -122,7 +122,7 @@ const TenantsLogin: FC = (): JSX.Element => {
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
       <div
-        className="absolute inset-0 bg-no-repeat bg-cover bg-center z-0"
+        className="absolute inset-0 bg-no-repeat bg-cover bg-center z-0 "
         style={{
           backgroundImage: `url(${bg})`,
         }}

@@ -1,10 +1,9 @@
-
 import { FC } from "react";
 import { useQuery } from "@tanstack/react-query";
 import RuleMgtTable from "./RuleMgtTable";
 import { getRules } from "../../../services/managerServices";
 import { useAppContext } from "../../../context/AppContext";
-
+import Spinner from "../../../ui/utils/Spinner";
 
 /**
  * Analyst Rules Component
@@ -23,14 +22,13 @@ import { useAppContext } from "../../../context/AppContext";
  * - ReportTable: A component displaying the list of reports or report entries in a table format.
  */
 
-
 /**
  * RulesManagement Component
  *
  * This component fetches rule data and passes it to the RuleMgtTable for display.
  */
 const RulesManagement: FC = (): JSX.Element => {
-  const { tenant } = useAppContext() 
+  const { tenant } = useAppContext();
   const headings = [
     "Rule ID",
     "Rule Name",
@@ -40,10 +38,10 @@ const RulesManagement: FC = (): JSX.Element => {
   ];
 
   const { data, isLoading, error } = useQuery({
-    queryFn: () => getRules(tenant, 1), // Fetch rules for tenantId and page 1
+    queryFn: () => getRules(tenant, 1),
     queryKey: ["rules", tenant, 1],
-    staleTime: 0, 
-    retry: 3, 
+    staleTime: 0,
+    retry: 3,
     initialData: {
       data: [],
       pagination: {
@@ -57,8 +55,17 @@ const RulesManagement: FC = (): JSX.Element => {
 
   // console.log(data.data);
   // console.log(isLoading);
-  
 
+  if (isLoading) {
+    return (
+      <div className="mt-8 relative">
+        {/* Spinner Overlay */}
+        <div className="absolute inset-0 bg-gray-50 bg-opacity-50 flex items-center justify-center z-10">
+          <Spinner />
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
