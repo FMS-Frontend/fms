@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
 import SuperSettingsPage from "./SuperSettings";
 import AdminSettingsPage from "./AdminSettingsPage";
 
-const SettingsPage: FC = () => {
+const Settings: FC = () => {
   const { role } = useAppContext();
-  console.log(role);
 
   return (
     <>
@@ -15,4 +14,4 @@ const SettingsPage: FC = () => {
   );
 };
 
-export default SettingsPage;
+export default Settings;

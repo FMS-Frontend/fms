@@ -1,12 +1,19 @@
 import { FC, useState } from "react";
 import Profile from "./admin-settings/Profile";
-import { useAppContext } from "../context/AppContext";
+import RuleInfo from "./admin-settings/RuleInfo";
+import RuleParameters from "./admin-settings/RuleParameters";
+import Logging from "./admin-settings/Logging";
+import Security from "./admin-settings/Security";
 
-const SuperSettingsPage: FC = () => {
+const AdminSettingsPage: FC = () => {
   const [activeTab, setActiveTab] = useState("Profile");
-  const tabs = ["Profile"];
-  const { role } = useAppContext();
-  console.log(role);
+  const tabs = [
+    "Profile",
+    "Rule Info",
+    "Rule Parameters",
+    "Logging",
+    "Security",
+  ];
 
   return (
     <div className="flex flex-col gap-8 ">
@@ -33,10 +40,17 @@ const SuperSettingsPage: FC = () => {
             </button>
           ))}
         </div>
+
         <div className="mt-8">{activeTab === "Profile" && <Profile />}</div>
+        <div className="mt-8">{activeTab === "Rule Info" && <RuleInfo />}</div>
+        <div className="mt-8">
+          {activeTab === "Rule Parameters" && <RuleParameters />}
+        </div>
+        <div className="mt-8">{activeTab === "Logging" && <Logging />}</div>
+        <div className="mt-8">{activeTab === "Security" && <Security />}</div>
       </div>
     </div>
   );
 };
 
-export default SuperSettingsPage;
+export default AdminSettingsPage;

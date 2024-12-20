@@ -40,7 +40,6 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
       }`}
     >
       <span className="text-2xl">{name}</span>
-      {/* <span className="text-2xl">{role}</span> */}
       <span className="text-2xl">{tenant?.name || "-"}</span>
       <span className="text-blue-700 text-2xl">{email}</span>
       <span className="text-xl">{mobile}</span>

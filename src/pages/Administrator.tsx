@@ -24,6 +24,10 @@ import AddAdmin from "../features/super-user/administrator/AddAdmin";
  * - AdminsTable: A table displaying the list of administrators.
  */
 
+// **************************************************
+// ************* ADMIN now: CONTACT *****************
+// ***************************************************
+
 const Administrator: FC = (): JSX.Element => {
   return (
     <div className="flex flex-col gap-8">

@@ -29,6 +29,7 @@ const AddAdmin: FC = () => {
           Add New Contact
         </PrimaryButton>
       </Modal.Open>
+
       <Modal.Window name="create-admin">
         {({ onClose }) => <CreateAdminModal onClose={onClose || (() => {})} />}
       </Modal.Window>
