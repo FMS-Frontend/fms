@@ -31,7 +31,7 @@ export const superUserNavdata = [
   },
   {
     path: "/audit",
-    label: "Audit & Compliance",
+    label: "Audit Trail",
     icon: HiOutlineClipboardDocumentCheck,
   },
 ];
@@ -51,7 +51,7 @@ export const adminNavData = [
   },
   {
     path: "/admin/audit",
-    label: "Audit & Compliance",
+    label: "Audit Trail",
     icon: HiOutlineClipboardDocumentCheck,
   },
   {

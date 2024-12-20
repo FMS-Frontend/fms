@@ -24,6 +24,10 @@ import AddTenant from "../features/super-user/tenants/AddTenant";
  * - TenantTable: A component that displays a table of tenants or tenant-related data.
  */
 
+// **************************************************
+// ********* TENANTS now referred to as ORGANIZATION **************
+// ********************************************************
+
 const Tenant: FC = (): JSX.Element => {
   return (
     <div className="flex flex-col gap-8">
