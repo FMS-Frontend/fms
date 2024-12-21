@@ -75,6 +75,8 @@ import SpinnerMini from "../../../../ui/utils/SpinnerMini";
 interface TenantModalProps {
   caseId: string;
   onClose?: () => void;
+  onPrevious?: () => void;
+
 }
 
 const ReopenCaseModal: React.FC<TenantModalProps> = ({ onClose, caseId }) => {

@@ -17,18 +17,7 @@ const RuleMgtOperations: FC<RuleMgtOperationsProps> = ({
   onDateChange,
 }) => {
   return (
-    <div className="px-4 py-5 w-9/12 border rounded-lg shadow-sm flex items-center justify-around">
-      {/* <SelectDropdown
-        label="Assigned To"
-        options={[
-          { value: "", label: "Analyst" },
-          { value: "Alice Johnson", label: "Fraud Analyst" },
-          { value: "David Brown", label: "Admin" },
-          { value: "Catherine Lee", label: "Manager" },
-        ]}
-        selectedValue={assignedTo}
-        onChange={onAssignedToChange}
-      /> */}
+    <div className="px-4 py-5 w-full md:w-11/12 xl:w-9/12 border rounded-lg shadow-sm flex flex-col md:flex-row md:items-center md:justify-around">
       <SelectDropdown
         label="Status"
         options={[

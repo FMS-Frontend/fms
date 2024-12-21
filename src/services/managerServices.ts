@@ -266,3 +266,34 @@ export const assignCase = async (
     throw new Error("Failed to assign case.");
   }
 };
+export const updateCase = async (
+  tenantId: string,
+  identity: string,
+  formData: { [key: string]: any }
+) => {
+  try {
+    
+    const response = await URL.patch(`/cases/tenants/${tenantId}/${identity}`, formData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating case:", error);
+    throw new Error("Failed to update case.");
+  }
+};
+
+export const addComment = async (
+  tenantId: string,
+  identity: string,
+  commentData: { comment: string }
+) => {
+  try {
+    const response = await URL.post(
+      `/cases/tenants/${tenantId}/${identity}/comment`,
+      commentData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    throw new Error("Failed to add comment.");
+  }
+};

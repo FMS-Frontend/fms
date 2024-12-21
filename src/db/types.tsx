@@ -96,3 +96,53 @@ export interface AdminReport {
     name: string;
   };
 }
+
+export interface CaseDetailsType {
+  id: string;
+  code: number;
+  priority: "Low" | "Medium" | "High";
+  status: "Open" | "Closed";
+  description: string;
+  assignedTo: string;
+  createdAt: string;
+  updatedAt: string;
+  assignee?: {
+    id: string;
+    name: string;
+  };
+  comments: Array<{
+    id: string;
+    caseId: string;
+    userId: string;
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+    author: {
+      id: string;
+      name: string;
+    };
+  }>;
+  alerts: Array<{
+    id: string;
+    caseId: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    author: {
+      id: string;
+      name: string;
+    };
+  }>;
+  actions: Array<{
+    id: string;
+    caseId: string;
+    userId: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    author: {
+      id: string;
+      name: string;
+    };
+  }>;
+}

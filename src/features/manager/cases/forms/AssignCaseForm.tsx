@@ -43,6 +43,9 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
   const [selectedAssignee, setSelectedAssignee] = useState<string>("");
   const { tenant } = useAppContext();
   const queryClient = useQueryClient(); 
+  const [notifyAssignee, setNotifyAssignee] = useState<boolean>(false);
+  const [notifyAssignee2, setNotifyAssignee2] = useState<boolean>(false);
+
 
   // Fetch all users
   const { data: users, isLoading, error } = useQuery({
@@ -53,7 +56,6 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
 
   // Add "All" option and map user data to dropdown options
   const userOptions = [
-    { value: "", label: "Select Assignee" }, // Default option
     ...(users?.data.map((user: Assignee) => ({
       value: user.id,
       label: user.name,
@@ -96,26 +98,47 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
       </div>
 
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        {/* Case Code */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">Case ID</label>
-          <input
-            type="text"
-            value={caseId}
-            readOnly
-            className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 focus:outline-none"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">Case Code</label>
-          <input
-            type="text"
-            value={caseDetails?.code}
-            readOnly
-            className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 focus:outline-none"
-          />
-        </div>
+      <div className="">
+         <div className="space-y-4">
+          <div className="flex justify-between">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              CaseId
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+              C{caseDetails?.id.slice(0, 4)}
+            </p>
+          </div>
 
+          <div className="flex justify-between items-center">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              Status
+            </label>
+            <p className={`text-xl font-medium mb-1 rounded-full ${
+            caseDetails?.status === "Closed" ? "bg-slate-100 text-slate-400" : "text-red-500"
+          }`}>
+              {caseDetails?.status}
+            </p>
+          </div>
+          <div className="flex justify-between items-center">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              Priority
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+              {caseDetails?.priority}
+            </p>
+          </div>
+          
+          <div className="flex justify-between">
+            <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
+              Timestamp
+            </label>
+            <p className="text-gray-700 text-xl font-medium mb-1">
+            {new Date(caseDetails.createdAt).toLocaleString()}
+            </p>
+          </div>
+        </div>
+      </div>
+        
         {/* Description */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">Description</label>
@@ -137,30 +160,32 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
           {error && <p className="text-red-500 mt-1">Failed to load users.</p>}
         </div>
 
-        {/* Priority */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">Priority</label>
-          <select
-            defaultValue={caseDetails?.priority}
-            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none"
-          >
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
-        </div>
-
-        {/* Status */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-xl font-medium mb-1">Status</label>
-          <select
-            defaultValue={caseDetails?.status}
-            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none"
-          >
-            <option value="Open">Open</option>
-            <option value="Closed">Closed</option>
-          </select>
-        </div>
+       {/* Notification Options */}
+       <label className="block text-gray-700 text-xl font-medium mb-1">Notification Options</label>
+       <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="notifyAssignee"
+          checked={notifyAssignee}
+          onChange={(e) => setNotifyAssignee(e.target.checked)}
+          className="w-5 h-5"
+        />
+        <label htmlFor="notifyAssignee" className="text-gray-700 text-lg">
+          Send Email Notification
+        </label>
+      </div>
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="notifyAssignee2"
+          checked={notifyAssignee2}
+          onChange={(e) => setNotifyAssignee2(e.target.checked)}
+          className="w-5 h-5"
+        />
+        <label htmlFor="notifyAssignee" className="text-gray-700 text-lg">
+          Send In-App Notification
+        </label>
+      </div>
 
         {/* Buttons */}
         <div className="flex justify-around mt-6">
@@ -169,7 +194,7 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
             onClick={onClose}
             className="w-44 text-xl px-4 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
-            Close
+            Cancel
           </button>
           <button
             type="submit"
