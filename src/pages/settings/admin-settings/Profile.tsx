@@ -1,6 +1,6 @@
 import { FC, FocusEvent, useState } from "react";
-import useProfile from "../../features/super-user/settings/useProfile";
-import { useUpdateProfile } from "../../features/super-user/settings/useUpdateProfile";
+import useProfile from "../../../hooks/settings/useProfile";
+import { useUpdateProfile } from "../../../hooks/settings/useUpdateProfile";
 
 const Profile: FC = () => {
   // Hook to fetch User's Profile
@@ -14,7 +14,7 @@ const Profile: FC = () => {
   // Handler function that updates each input onBlur
   function handleUpdate(e: FocusEvent<HTMLInputElement>, field: string) {
     const { value } = e.target;
-    console.log(value);
+    // console.log(value);
 
     if (!value) return;
     updateProfileSetting({ [field]: value });
@@ -81,22 +81,6 @@ const Profile: FC = () => {
             className="mt-1 block w-auto px-5 py-4 text-2xl placeholder:text-xl rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
-
-        {/* Last Name */}
-        {/* <div>
-          <label
-            htmlFor="lastName"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Last Name
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            placeholder="Surname"
-            className="mt-1 block w-auto px-5 py-4 text-2xl placeholder:text-xl rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div> */}
 
         {/* Email */}
         <div>

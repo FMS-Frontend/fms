@@ -15,16 +15,20 @@ import ReopenCaseModal from "./ReopenCaseModal";
  * );
  */
 
-const ReopenCase: FC = () => {
+interface ReopenCaseProps  {
+  caseId: string;
+}
+
+const ReopenCase: FC<ReopenCaseProps> = ({caseId}) => {
   return (
     <Modal>
-      <Modal.Open opens="reopen-case">
+      <Modal.Open opens={`reopen-case-${caseId}`}>
         <button className="px-2 py-1 rounded bg-red-50 hover:bg-red-100 text-red-500">
           Reopen
         </button>
       </Modal.Open>
-      <Modal.Window name="reopen-case">
-        {({ onClose }) => <ReopenCaseModal onClose={onClose} />}
+      <Modal.Window name={`reopen-case-${caseId}`}>
+        {({ onClose }) => <ReopenCaseModal onClose={onClose} caseId={caseId} />}
       </Modal.Window>
     </Modal>
   );

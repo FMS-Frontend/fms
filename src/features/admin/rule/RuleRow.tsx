@@ -14,7 +14,6 @@ import {
 } from "../../../db/helperFunctions";
 // import EditTenantForm from "./EditTenantForm";
 // import { formatDateTime } from "../../../ui/utils/helpers";
-import { Rule } from "../../../db/types";
 import ViewRule from "./ViewRuleModal";
 import EditRule from "./EditRuleModal";
 

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Reports } from "./ReportTable";
 import {
   capitalizeWords,
   formatDate,

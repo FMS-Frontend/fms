@@ -39,7 +39,7 @@ const RulesManagement: FC = (): JSX.Element => {
 
   const { data, isLoading, error } = useQuery({
     queryFn: () => getRules(tenant, 1),
-    queryKey: ["rules", tenant, 1],
+    queryKey: ["rules", tenant],
     staleTime: 0,
     retry: 3,
     initialData: {

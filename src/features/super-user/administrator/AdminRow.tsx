@@ -8,7 +8,6 @@ import { deleteAdmin } from "../../../services/apiSuperUser";
 import toast from "react-hot-toast";
 import EditAdminModal from "./EditAdminModal";
 import { getStatusStyles } from "../../../db/helperFunctions";
-import { Admin } from "../../../db/types";
 
 interface AuditRowProps {
   admin: Admin;
@@ -40,7 +39,6 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
       }`}
     >
       <span className="text-2xl">{name}</span>
-      {/* <span className="text-2xl">{role}</span> */}
       <span className="text-2xl">{tenant?.name || "-"}</span>
       <span className="text-blue-700 text-2xl">{email}</span>
       <span className="text-xl">{mobile}</span>

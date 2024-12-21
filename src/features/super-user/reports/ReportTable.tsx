@@ -7,14 +7,6 @@ import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 
-export interface Reports {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  tenantName: string;
-  comment: string;
-  status: "Active" | "Pending" | "Deactivated";
-}
 
 const ReportTable: FC = () => {
   const { isLoading, data } = useQuery({

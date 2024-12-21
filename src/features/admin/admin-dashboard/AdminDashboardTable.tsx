@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import usePageParam from "../../../hooks/usePageParam";
-// import useSubdomain from "../../../hooks/useSubdomain";
 import Table from "../../../ui/utils/Table";
 import { getUsers } from "../../../services/apiAdmin";
 import AdminDashRow from "./AdminDashRow";
-import { User } from "../../../db/types";
 import Spinner from "../../../ui/utils/Spinner";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import Paginate from "../../../ui/utils/Paginate";

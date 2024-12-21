@@ -3,22 +3,20 @@ import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminReports } from "../../../services/apiAdmin";
 import ReportRow from "./AdminReportRow";
-import { AdminReport } from "../../../db/types";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";
 import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import OutlineButton from "../../../ui/utils/OutlineButton";
-// import useSubdomain from "../../../hooks/useSubdomain";
+import { useAppContext } from "../../../context/AppContext";
 
 const FraudReportTable: FC = () => {
-  // const { subdomain } = useSubdomain();
-  const subdomain = "ten";
+  const { tenant } = useAppContext();
   const { page } = usePageParam();
 
   const { isLoading, data: { data: reports, pagination } = {} } = useQuery({
-    queryFn: () => getAdminReports(subdomain, page),
+    queryFn: () => getAdminReports(tenant, page),
     queryKey: ["adminreports", page],
   });
   // console.log(pagination);

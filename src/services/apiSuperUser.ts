@@ -1,7 +1,5 @@
 import URL from "../db/url";
-import { StatData } from "../features/super-user/dashboard/Stats";
-import { TenantData } from "../features/super-user/tenants/TenantContext";
-// import { Tenant } from "../features/super-user/tenants/TenantRow";
+import { StatProps } from "../features/super-user/dashboard/Stat";
 
 // ********** DASHBOARD ***********
 export async function getUserTrends() {
@@ -17,7 +15,7 @@ export async function getUserTrends() {
 }
 
 // ********* SUMMARY (DASHBOARD) *********
-export const getSummary = async (): Promise<StatData[]> => {
+export const getSummary = async (): Promise<StatProps[]> => {
   try {
     const res = await URL.get(
       "/analytics/summary?metrics=Total_Tenants&metrics=Total_Active_Admins&metrics=Total_Admins&metrics=Average_Admin_Created_Per_Day"
@@ -136,9 +134,7 @@ export async function getProfile() {
   }
 }
 
-type UpdateProfileData = {
-  [key: string]: string;
-};
+
 
 export async function updateProfile(data: UpdateProfileData): Promise<void> {
   try {

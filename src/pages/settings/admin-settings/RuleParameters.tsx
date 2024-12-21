@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import PrimaryButton from "../../ui/utils/PrimaryButton";
+import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
 
-const RuleInfo: React.FC = () => {
+const RuleParameters: React.FC = () => {
   const [packageDetails, setPackageDetails] = useState<string[]>([]);
 
   const handleAddPackage = () => {
@@ -85,4 +85,4 @@ const RuleInfo: React.FC = () => {
   );
 };
 
-export default RuleInfo;
+export default RuleParameters;

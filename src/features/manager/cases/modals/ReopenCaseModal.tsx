@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import ReopenCaseForm from "../forms/ReopenCaseForm";
+import { useAppContext } from "../../../../context/AppContext";
+import { useQuery } from "@tanstack/react-query";
+import { getCase } from "../../../../services/managerServices";
+import SpinnerMini from "../../../../ui/utils/SpinnerMini";
+
+
 // import CreateTenantForm from "./CreateTenantForm";
 // import TenantInfo from "./TenantInfo";
 // import TenantCheckboxes from "./TenantCheckboxes";
@@ -10,7 +16,7 @@ import ReopenCaseForm from "../forms/ReopenCaseForm";
  *
  * The modal component controls the flow of the setup process, providing navigation between steps (Next/Previous).
  *
- * @component 
+ * @component
  * @example
  * <TenantModal onClose={handleClose} />
  *
@@ -20,19 +26,58 @@ import ReopenCaseForm from "../forms/ReopenCaseForm";
  * @returns {JSX.Element} The rendered TenantModal component, containing a multi-step form.
  */
 
+
 interface TenantModalProps {
+  caseId: string;
   onClose?: () => void;
+  onPrevious?: () => void;
+
 }
 
-const ReopenCaseModal: React.FC<TenantModalProps> = ({ onClose }) => {
+const ReopenCaseModal: React.FC<TenantModalProps> = ({ onClose, caseId }) => {
   const [step, setStep] = useState(1);
+  const { tenant } = useAppContext();
+
+  // Fetch rule details
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["case", tenant],
+    queryFn: () => getCase(tenant, caseId),
+    enabled: !!caseId,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <SpinnerMini />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 text-center">
+        Failed to load rule details. Please try again later.
+      </div>
+    );
+  }
+  
 
   const nextStep = () => setStep((prev) => prev + 1);
   // const previousStep = () => setStep((prev) => prev - 1);
 
+  console.log(data?.data);
+  
   return (
     <>
-      {step === 1 && <ReopenCaseForm onNext={nextStep} onClose={onClose} />}
+      {step === 1 && (
+        <ReopenCaseForm
+          onNext={nextStep}
+          tenantId={tenant}
+          caseId={caseId}
+          caseDetails={data?.data}
+          onClose={onClose}
+        />
+      )}
       {/* {step === 2 && <TenantInfo onPrevious={previousStep} onNext={nextStep} />}
       {step === 3 && <TenantCheckboxes onClose={onClose} />} */}
     </>

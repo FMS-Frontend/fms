@@ -3,7 +3,6 @@ import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminReports } from "../../../services/apiAdmin";
 import ReportRow from "./AdminReportRow";
-import { AdminReport } from "../../../db/types";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";

@@ -4,33 +4,20 @@ import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import DateComp from "../../../ui/utils/DateComp";
 
 interface RuleMgtOperationsProps {
-  assignedTo: string;
+  assignedTo?: string;
   selectedStatus: string;
-  onAssignedToChange: (value: string) => void;
+  onAssignedToChange?: (value: string) => void;
   onStatusChange: (value: string) => void;
   onDateChange: (newDateRange: { startDate: Date; endDate: Date }) => void;
 }
 
 const RuleMgtOperations: FC<RuleMgtOperationsProps> = ({
-  assignedTo,
   selectedStatus,
-  onAssignedToChange,
   onStatusChange,
   onDateChange,
 }) => {
   return (
-    <div className="px-4 py-5 w-9/12 border rounded-lg shadow-sm flex items-center justify-around">
-      <SelectDropdown
-        label="Assigned To"
-        options={[
-          { value: "", label: "Analyst" },
-          { value: "Alice Johnson", label: "Fraud Analyst" },
-          { value: "David Brown", label: "Admin" },
-          { value: "Catherine Lee", label: "Manager" },
-        ]}
-        selectedValue={assignedTo}
-        onChange={onAssignedToChange}
-      />
+    <div className="px-4 py-5 w-full md:w-11/12 xl:w-9/12 border rounded-lg shadow-sm flex flex-col md:flex-row md:items-center md:justify-around">
       <SelectDropdown
         label="Status"
         options={[

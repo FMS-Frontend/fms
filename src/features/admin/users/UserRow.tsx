@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { User } from "../../../db/types";
 import { getStatusStyles } from "../../../db/helperFunctions";
 import Modal from "../../../ui/utils/Modal";
 import ConfirmDelete from "../../../ui/utils/ConfirmDelete";

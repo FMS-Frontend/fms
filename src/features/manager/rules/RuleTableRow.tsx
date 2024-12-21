@@ -2,17 +2,6 @@ import { FC } from "react";
 import EditRule from "./modals/EditRule";
 import ViewRule from "./modals/ViewRule";
 
-export interface RuleTableRowProps {
-  ruleId: string; // R001, R002, R003, etc.
-  ruleName: string; // login Check, Payment Cap, Ip Block, etc.
-  status: "Active" | "Inactive";
-  assignedTo?: {
-    image: string;
-    name: string;
-  };
-  lastModified: string; // 2024-06-07T11:30:00Z
-  index: number;
-}
 
 const RuleTableRow: FC<RuleTableRowProps> = ({
   ruleId,
