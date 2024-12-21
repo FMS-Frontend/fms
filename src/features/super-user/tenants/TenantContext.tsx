@@ -4,17 +4,6 @@ import React, { createContext, useContext, useState } from "react";
 import { getAdminsModal } from "../../../services/apiSuperUser";
 
 // Define the shape of the tenant data
-export interface TenantData {
-  name: string;
-  address: string;
-  adminId: string;
-  email: string;
-  description: string;
-  createSchema: boolean;
-  syncAdmin: boolean;
-  sendLoginMail: boolean;
-  createRuleFolder: boolean;
-}
 
 interface Admin {
   id: string; // Assuming each admin has a unique ID

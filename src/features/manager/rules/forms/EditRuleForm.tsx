@@ -22,12 +22,6 @@ import { useQueryClient } from "@tanstack/react-query";
 //  * @returns {JSX.Element} The rendered CreateTenantForm component.
 //  */
 
-export interface Rule3 {
-  rule_name: string;
-  description: string;
-  conditions: Array<{ field: string; operator: string; value: string }>;
-  actions: Array<{ target: string; property: string; value: string }>;
-}
 
 interface EditRuleFormProps {
   tenantId: string; 

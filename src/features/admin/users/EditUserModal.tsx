@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CreateUserFormData, User } from "../../../db/types";
 import URL from "../../../db/url";
 import toast from "react-hot-toast";
 import { capitalizeWords } from "../../../db/helperFunctions";

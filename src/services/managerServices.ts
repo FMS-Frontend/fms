@@ -1,27 +1,5 @@
 import URL from "../db/url";
-import { Rule2 } from "../features/manager/rules/forms/ViewRuleForm";
 
-export interface Rule {
-  id: string;
-  rule_name: string;
-  status: "Active" | "Inactive";
-  assignedTo: {
-    image: string;
-    name: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface PaginatedResponse<T> {
-  data: T[];
-  pagination: {
-    totalItems: number;
-    pageSize: number;
-    currentPage: number;
-    totalPages: number;
-  };
-}
 
 //*********** RULES Services **************/
 
@@ -34,7 +12,7 @@ interface PaginatedResponse<T> {
 export async function getRules(
   tenantId: string,
   page: number
-): Promise<PaginatedResponse<Rule>> {
+): Promise<PaginatedResponse<Rule1>> {
   try {
     const response = await URL.get(`/rules/${tenantId}`, {
       params: { page },
@@ -85,33 +63,6 @@ export async function createRule(
   }
 }
 
-export interface RuleCreationRequest {
-  rule_name: string;
-  description: string;
-  conditions: Array<{
-    field: string;
-    operator: string;
-    value: string;
-  }>;
-  actions: Array<{
-    target: string;
-    property: string;
-    value: string;
-  }>;
-  flow_operators: {
-    salience: number;
-  };
-}
-
-export interface RuleUpdateData {
-  rule_name: string;
-  description: string;
-  conditions: Array<{ field: string; operator: string; value: string }>;
-  actions: Array<{ target: string; property: string; value: string }>;
-  flow_operators: { salience: number };
-}
-
-import { Rule3 } from "../features/manager/rules/forms/EditRuleForm";
 
 export async function editRule(
   tenantId: string,
@@ -143,79 +94,6 @@ export async function deleteRule(
     console.error("Error deleting rule:", error);
     throw new Error("Rule could not be deleted");
   }
-}
-
-// ============ CASES =================
-// export async function getCases(tenantId: string, page: number, status: string): Promise<PaginatedResponse<Rule>> {
-//   try {
-//     const response = await URL.get(`/cases/tenants/${tenantId}`, {
-//       params: { page, status },
-//     });
-//     // console.log(response?.data);
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching cases:", error);
-//     throw new Error("Cases could not be fetched");
-//   }
-// }
-
-// export interface Assignee {
-//   id: string;
-//   name: string;
-// }
-
-// export interface Case {
-//   id: string;
-//   code: number;
-//   priority: string;
-//   status: string;
-//   description: string;
-//   assignedTo: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   assignee: Assignee;
-// }
-
-// export async function getCases(
-//   tenantId: string,
-//   page: number,
-//   stat: string
-// ): Promise<Case[]> {
-//   try {
-//     const response = await URL.get(`/cases/tenants/${tenantId}`, {
-//       params: { page, stat },
-//     });
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching cases:", error);
-//     throw new Error("Cases could not be fetched");
-//   }
-// }
-
-
-export interface Pagination {
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
-  currentPage: number;
-}
-
-export interface Case {
-  id: string;
-  priority: "Low" | "High" | "Medium";
-  status: "Open" | "Closed"| "All";
-  assignee: {
-    id: string;
-  name: string;
-  };
-  updatedAt: string;
-}
-
-export interface CaseData {
-  data: Case[];
-  pagination: Pagination;
 }
 
 export const getCases = async (
@@ -269,7 +147,7 @@ export const assignCase = async (
 export const updateCase = async (
   tenantId: string,
   identity: string,
-  formData: { [key: string]: any }
+  formData: UpdateProfileData,
 ) => {
   try {
     

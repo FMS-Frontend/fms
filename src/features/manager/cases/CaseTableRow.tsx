@@ -2,7 +2,6 @@ import { FC } from "react";
 import ViewCase from "./modals/ViewCase";
 import ReopenCase from "./modals/ReopenCase";
 import AssignCase from "./modals/AssignCase";
-import { CasesTableRowProps } from "../../../db";
 
 const CaseTableRow: FC<CasesTableRowProps> = ({
   id,

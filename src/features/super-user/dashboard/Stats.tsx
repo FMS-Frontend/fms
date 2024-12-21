@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Stat from "./Stat";
+import Stat, { StatProps } from "./Stat";
 import { BsBoxFill } from "react-icons/bs";
 import { IoPeople, IoCreate } from "react-icons/io5";
 import { RiLineChartLine } from "react-icons/ri";
@@ -27,7 +27,7 @@ export interface StatData {
 }
 
 const Stats: FC = () => {
-  const { data: stats, isLoading } = useQuery<StatData[]>({
+  const { data: stats, isLoading } = useQuery<StatProps[]>({
     queryFn: getSummary,
     queryKey: ["stats"],
     refetchOnWindowFocus: true,

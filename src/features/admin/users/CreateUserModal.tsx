@@ -4,7 +4,6 @@ import URL from "../../../db/url";
 import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { getRoles } from "../../../services/apiAdmin";
-import { CreateUserFormData } from "../../../db/types";
 import { useAppContext } from "../../../context/AppContext";
 
 

@@ -7,7 +7,6 @@ import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";
 import RuleRow from "./RuleRow";
-import { Rule } from "../../../db/types";
 import { useAppContext } from "../../../context/AppContext";
 const RuleTable: FC = () => {
   const { tenant } = useAppContext();

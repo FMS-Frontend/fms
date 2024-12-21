@@ -1,14 +1,12 @@
-// import clsx from "clsx";
 import { FC, ReactNode } from "react";
 
 /* Define the props for the Stat component */
-interface StatProps {
+export interface StatProps {
   icon: ReactNode;
   title: string;
   value: string | number | JSX.Element;
   color: "red" | "green" | "blue" | "yellow";
 }
-
 /**
  * Stat is a React functional component that displays a statistical value
  * with an associated title and icon. It also supports color theming.

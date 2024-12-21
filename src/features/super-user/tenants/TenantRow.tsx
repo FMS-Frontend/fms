@@ -13,7 +13,6 @@ import {
   getStatusStyles,
 } from "../../../db/helperFunctions";
 import EditTenantForm from "./EditTenantForm";
-import { Tenant } from "../../../db/types";
 
 interface TenantRowProps {
   tenant: Tenant;

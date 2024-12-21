@@ -125,20 +125,9 @@ export const general = [
 ];
 
 // statData
-import { ReactNode } from "react";
 import { FaChartLine, FaUsers } from "react-icons/fa";
 import { IoTimerOutline } from "react-icons/io5";
 import { LuBox } from "react-icons/lu";
-
-interface StatData {
-  icon: ReactNode;
-  title: string;
-  value: string | number;
-  color: "red" | "green" | "blue" | "yellow";
-  isGain: boolean;
-  text: string;
-  percent: number;
-}
 
 export const statsData: StatData[] = [
   {
@@ -219,14 +208,8 @@ export const statsData2: StatData[] = [
 ];
 
 //
-export interface Tenant {
-  id: number;
-  alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
-  timeStamp: string;
-  status: "Active" | "Unassigned" | "Deactivated";
-}
 
-export const priorityData: Tenant[] = [
+export const priorityData: priorityDataProps[] = [
   {
     id: 1,
     alertType: "Login",
@@ -264,16 +247,6 @@ export const priorityData: Tenant[] = [
     status: "Deactivated",
   },
 ];
-
-interface RecentProp {
-  id: number;
-  cases: string;
-  user: {
-    image: string;
-    name: string;
-  };
-  date: string;
-}
 
 export const recentData: RecentProp[] = [
   {
@@ -331,15 +304,6 @@ export const recentData: RecentProp[] = [
     date: "2024-11-08T13:10:00Z",
   },
 ];
-
-export interface Alert {
-  id: string;
-  type: string;
-  status: string;
-  severity: string;
-  timestamp: string;
-  actions: string;
-}
 
 export const alertsData: Alert[] = [
   {
@@ -424,7 +388,6 @@ export const alertsData: Alert[] = [
   },
 ];
 
-import { RuleTableRowProps } from "../features/manager/rules/RuleTableRow";
 export const rulesData: RuleTableRowProps[] = [
   {
     ruleId: "R001",
@@ -533,14 +496,3 @@ export const rulesData: RuleTableRowProps[] = [
     index: 9,
   },
 ];
-
-export interface CasesTableRowProps {
-  id: string;
-  priority: "Low" | "High" | "Medium";
-  status: "Open" | "Closed"| "All";
-  assignee: { id: string; name: string };
-  updatedAt: string;
-  index: number;
-}
-
-

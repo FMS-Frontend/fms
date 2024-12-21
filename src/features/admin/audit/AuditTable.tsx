@@ -11,18 +11,6 @@ import Spinner from "../../../ui/utils/Spinner";
 import { useAppContext } from "../../../context/AppContext";
 // import AuditRow from "./AdminAuditRow";
 
-export interface AdminAudit {
-  id: string;
-  operation: string;
-  ipAddress: string;
-  updatedAt: string;
-  author: {
-    id: string;
-    name: string;
-    role: string;
-  };
-}
-
 const AdminAuditTable: FC = () => {
   const { tenant } = useAppContext();
   const { page } = usePageParam();

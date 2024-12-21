@@ -6,34 +6,6 @@ import DateComp from "../../../ui/utils/DateComp";
 import { getUsers } from "../../../services/apiAdmin";
 import { useAppContext } from "../../../context/AppContext";
 
-
-
-interface Assignee {
-  id: string;
-  name: string;
-}
-
-interface CaseMgtOperationsProps {
-  assignedTo: string;
-  selectedStatus: string;
-  onAssignedToChange: (value: string) => void;
-  onStatusChange: (value: string) => void;
-  onDateChange: (newDateRange: { startDate: Date; endDate: Date }) => void;
-}
-
-interface Assignee {
-  id: string;
-  name: string;
-}
-
-interface CaseMgtOperationsProps {
-  assignedTo: string;
-  selectedStatus: string;
-  onAssignedToChange: (value: string) => void;
-  onStatusChange: (value: string) => void;
-  onDateChange: (newDateRange: { startDate: Date; endDate: Date }) => void;
-}
-
 const CaseMgtOperations: FC<CaseMgtOperationsProps> = ({
   assignedTo,
   selectedStatus,

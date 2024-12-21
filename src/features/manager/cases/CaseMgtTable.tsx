@@ -4,7 +4,6 @@ import CaseTableRow from "./CaseTableRow";
 import CaseMgtOperations from "./CaseMgtOperations";
 import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
-import { Case } from "../../../services/managerServices";
 
 interface CaseMgtTableProps {
   headingData: string[];

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { CaseDetailsType } from "../../../../db/types";
 import { formatDate } from "../../../../db/helperFunctions";
 
 // /**
@@ -24,7 +23,7 @@ import { formatDate } from "../../../../db/helperFunctions";
 interface StepProps {
   onNext?: () => void;
   onClose?: () => void;
-  data: CaseDetailsType;
+  data: CaseDetailsAll;
 }
 
 const ViewCaseForm: FC<StepProps> = ({ onNext, onClose, data }) => {

@@ -7,7 +7,6 @@ import AdminRow from "./AdminRow";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import { useSearchParams } from "react-router-dom";
-import { Admin } from "../../../db/types";
 
 /**
  * AdminsTable component displays a table of administrator information,

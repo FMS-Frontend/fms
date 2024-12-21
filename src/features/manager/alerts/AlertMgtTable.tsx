@@ -3,7 +3,7 @@ import Table from "../../../ui/utils/Table";
 import AlertTableRow from "./AlertTableRow";
 import AlertsMgtOperations from "./AlartsMgtOperations";
 import SearchInput from "../../../ui/utils/SearchInput";
-import { Alert } from "../../../db";
+// import { Alert } from "../../../db";
 
 interface AlertTableProps {
   headingData: string[];

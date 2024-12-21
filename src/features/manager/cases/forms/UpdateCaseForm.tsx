@@ -4,21 +4,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { updateCase } from "../../../../services/managerServices";
 import toast from "react-hot-toast";
 
-export interface CaseDetails {
-  id: string;
-  code: number;
-  priority: "Low" | "Medium" | "High";
-  status: "Open" | "Closed";
-  description: string;
-  assignedTo: string;
-  createdAt: string;
-  updatedAt: string;
-  assignee?: {
-    id: string;
-    name: string;
-  };
-}
-
 interface UpdateCaseFormProps {
   onClose?: () => void;
   onPrevious?: () => void;

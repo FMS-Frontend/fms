@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { capitalizeWords, getStatusStyles } from "../../../db/helperFunctions";
-import { User } from "../../../db/types";
 
 interface DashboardRowProps {
   user: User;

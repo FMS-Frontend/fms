@@ -1,42 +1,6 @@
-
 import { FC } from "react";
 import { formatRuleDate } from "../../../../ui/utils/helpers";
 
-interface Condition {
-  field: string;
-  operator: string;
-  value: string;
-}
-
-interface Action {
-  target: string;
-  property: string;
-  value: string;
-}
-
-interface FlowOperators {
-  salience: number;
-}
-
-interface CreatedBy {
-  id: string;
-  name: string;
-}
-
-export interface Rule2 {
-  id: string;
-  rule_name: string;
-  last_modified_date: string;
-  status: string;
-  description: string;
-  conditions: Condition[];
-  actions: Action[];
-  flow_operators: FlowOperators;
-  createdAt: string;
-  updatedAt: string;
-  historyLogs: any[];
-  createdBy: CreatedBy;
-}
 
 export interface ViewRuleFormProps {
   onPrevious?: () => void;

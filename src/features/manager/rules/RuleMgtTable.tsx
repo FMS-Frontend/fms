@@ -5,11 +5,10 @@ import RuleMgtOperations from "./RuleMgtOperation";
 import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
 import Spinner from "../../../ui/utils/Spinner";
-import { Rule } from "../../../services/managerServices";
 
 interface RuleMgtTableProps {
   headingData: string[];
-  data: Rule[];
+  data: Rule1[];
   isLoading: boolean;
 }
 

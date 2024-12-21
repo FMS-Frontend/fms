@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCases, CaseData } from "../../../services/managerServices";
+import { getCases} from "../../../services/managerServices";
 import { useAppContext } from "../../../context/AppContext";
 import Spinner from "../../../ui/utils/Spinner";
 import CaseMgtTable from "./CaseMgtTable";
