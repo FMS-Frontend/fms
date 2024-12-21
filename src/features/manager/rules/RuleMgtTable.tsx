@@ -5,6 +5,7 @@ import RuleMgtOperations from "./RuleMgtOperation";
 import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
 import Spinner from "../../../ui/utils/Spinner";
+import AddRule2 from "./modals/AddRule2";
 
 interface RuleMgtTableProps {
   headingData: string[];
@@ -78,6 +79,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+        <AddRule2/>
       </div>
 
       {/* Table Display */}
