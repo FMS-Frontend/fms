@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import SelectDropdown from "../../../../ui/utils/SelectDropdown";
 import { useAppContext } from "../../../../context/AppContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUsers } from "../../../../services/apiAdmin";
 import { assignCase } from "../../../../services/managerServices";
 import toast from "react-hot-toast";
@@ -42,6 +42,7 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
 }) => {
   const [selectedAssignee, setSelectedAssignee] = useState<string>("");
   const { tenant } = useAppContext();
+  const queryClient = useQueryClient(); 
 
   // Fetch all users
   const { data: users, isLoading, error } = useQuery({
@@ -75,14 +76,18 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
     try {
       await assignCase(tenantId, caseId, selectedAssignee);
       toast.success("Case assigned successfully.");
+
+      // Invalidate the cases query to refetch updated data
+      queryClient.invalidateQueries({
+        queryKey: ["cases", tenant],
+      });
+
       onClose?.();
     } catch (error) {
       console.error("Failed to assign case:", error);
       toast.error("Failed to assign case. Please try again.");
     }
   };
-  // console.log(selectedAssignee);
-  
 
   return (
     <>
@@ -179,4 +184,3 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
 };
 
 export default AssignCaseForm;
-

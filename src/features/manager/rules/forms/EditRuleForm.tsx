@@ -4,6 +4,7 @@ import { editRule } from "../../../../services/managerServices";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../../context/AppContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 // /**
 //  * CreateTenantForm component for creating a new tenant.
@@ -38,6 +39,7 @@ interface EditRuleFormProps {
 }
 
 const EditRuleForm: FC<EditRuleFormProps> = ({ tenantId, ruleId, rule, onClose }) => {
+  const queryClient = useQueryClient(); 
   const { control, register, handleSubmit, reset } = useForm<Rule3>({
     defaultValues: {
       rule_name: "",
@@ -69,6 +71,10 @@ const EditRuleForm: FC<EditRuleFormProps> = ({ tenantId, ruleId, rule, onClose }
     try {
       await editRule(tenantId, ruleId, formData);
       toast.success("Rule updated successfully!");
+      // Invalidate the cases query to refetch updated data
+      queryClient.invalidateQueries({
+        queryKey: ["rules", tenantId],
+      });
       navigate(`/${role.toLowerCase()}/rules`);
       if (onClose) onClose();
     } catch (error) {
