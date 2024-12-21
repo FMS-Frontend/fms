@@ -9,7 +9,7 @@ export const getAdminSummary = async (): Promise<StatData[]> => {
     const res = await URL.get(
       "/analytics/summary?metrics=Total_Tenant_User&metrics=Total_New_Users&metrics=Total_Active_Sessions&metrics=Total_Integrations"
     );
-    console.log(res.data);
+
     return res.data.data;
   } catch (error) {
     console.log(error);
@@ -112,7 +112,7 @@ export async function getAdminAudit(tenant: string, page: number) {
       `/reports/tenants/${tenant}/audit_logs?page=${page}`
     );
 
-    console.log(res.data);
+    // console.log(res.data);
 
     return res.data;
   } catch (error) {

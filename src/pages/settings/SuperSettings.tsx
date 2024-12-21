@@ -1,11 +1,9 @@
 import { FC, useState } from "react";
-import Profile from "./admin-settings/Profile";
-import RuleInfo from "./admin-settings/RuleInfo";
-import RuleParameters from "./admin-settings/RuleParameters";
+import Profile from "./super-settings/Profile";
 
-const AdminSettingsPage: FC = () => {
+const SuperSettingsPage: FC = () => {
   const [activeTab, setActiveTab] = useState("Profile");
-  const tabs = ["Profile", "Rule Info", "Rule Parameters"];
+  const tabs = ["Profile"];
 
   return (
     <div className="flex flex-col gap-8 ">
@@ -32,15 +30,10 @@ const AdminSettingsPage: FC = () => {
             </button>
           ))}
         </div>
-
         <div className="mt-8">{activeTab === "Profile" && <Profile />}</div>
-        <div className="mt-8">{activeTab === "Rule Info" && <RuleInfo />}</div>
-        <div className="mt-8">
-          {activeTab === "Rule Parameters" && <RuleParameters />}
-        </div>
       </div>
     </div>
   );
 };
 
-export default AdminSettingsPage;
+export default SuperSettingsPage;
