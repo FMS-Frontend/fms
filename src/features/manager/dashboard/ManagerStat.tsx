@@ -3,7 +3,7 @@ import { PiTrendUp } from "react-icons/pi";
 import { PiTrendDownBold, } from "react-icons/pi";
 
 
-const ManagerStat: FC<StatData> = ({ icon, title, value, color, isGain, text, percent }) => {
+const ManagerStat: FC<StatData> = ({ icon, title, caseValue, color, isGain, text, percent }) => {
   // console.log(color);
 
   const bgColorClass = {
@@ -25,7 +25,7 @@ const ManagerStat: FC<StatData> = ({ icon, title, value, color, isGain, text, pe
       <div className="flex justify-between px-5 py-4">
         <div className="flex flex-col justify-between">
           <div className="text-xl text-gray-600">{title}</div>
-          <div className={`text-4xl font-bold text-gray-800 py-2`}>{value.toLocaleString()}</div>
+          <div className={`text-4xl font-bold text-gray-800 py-2`}>{caseValue}</div>
         </div>
         <div
           className={`${bgColorClass} ${textColorClass}

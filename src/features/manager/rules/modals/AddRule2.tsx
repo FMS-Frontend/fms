@@ -1,8 +1,9 @@
 import { FC } from "react";
 import PrimaryButton from "../../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-import Modal from "../../../../ui/utils/Modal";
-import CreateRuleForm from "../forms/CreateRuleForm";
+// import CreateRuleForm from "../forms/CreateRuleForm";
+import Modal2 from "../../../../ui/utils/Modal.Rule";
+import AddRuleForm from "../forms/AddRuleForm";
 
 /**
  * AddRule is a React functional component that renders a button to open
@@ -20,17 +21,17 @@ import CreateRuleForm from "../forms/CreateRuleForm";
 
 const AddRule2: FC = () => {
   return (
-    <Modal>
-      <Modal.Open opens="create-rule2">
+    <Modal2>
+      <Modal2.Open opens="create-rule2">
         <PrimaryButton>
           <FiPlus />
           Add New Rule
         </PrimaryButton>
-      </Modal.Open>
-      <Modal.Window name="create-rule2">
-        {({ onClose }) => <CreateRuleForm onClose={onClose || (() => {})} />}
-      </Modal.Window>
-    </Modal>
+      </Modal2.Open>
+      <Modal2.Window name="create-rule2">
+        {({ onClose }) => <AddRuleForm onClose={onClose || (() => {})} />}
+      </Modal2.Window>
+    </Modal2>
   );
 };
 

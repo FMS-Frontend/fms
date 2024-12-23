@@ -188,3 +188,41 @@ export const createCase = async (
     throw new Error("Failed to update case.");
   }
 };
+
+
+export const fetchCaseStats = async (tenantId: string) => {
+  try {
+    const response = await URL.get(`/cases/tenants/${tenantId}`);
+    const cases = response.data.data;
+
+    if (!Array.isArray(cases)) {
+      throw new Error("Invalid case data");
+    }
+
+    const totalActive = cases.filter((c: any) => c.status === "Open").length;
+    const totalUnassigned = cases.filter((c: any) => !c.assignee.name).length;
+    const alertsAwaitingReview = cases.reduce(
+      (count: number, c: any) => count + (c.alerts?.length || 0),
+      0
+    );
+    const totalClosedThisMonth = cases.filter((c: any) => {
+      const updatedDate = new Date(c.updatedAt);
+      const now = new Date();
+      return (
+        c.status === "Closed" &&
+        updatedDate.getMonth() === now.getMonth() &&
+        updatedDate.getFullYear() === now.getFullYear()
+      );
+    }).length;
+
+    return {
+      totalActive,
+      totalUnassigned,
+      alertsAwaitingReview,
+      totalClosedThisMonth,
+    };
+  } catch (error) {
+    console.error("Error fetching cases:", error);
+    throw new Error("Failed to fetch case stats.");
+  }
+};

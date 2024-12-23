@@ -4,23 +4,6 @@ import { useAppContext } from "../../../../context/AppContext";
 import { createRule } from "../../../../services/managerServices";
 import { useQueryClient } from "@tanstack/react-query";
 
-export interface RuleData {
-  rule_name: string;
-  description: string;
-  conditions: Array<{
-    field: string;
-    operator: string;
-    value: string;
-  }>;
-  actions: Array<{
-    target: string;
-    property: string;
-    value: string;
-  }>;
-  flow_operators: {
-    salience: number;
-  };
-}
 
 interface CreateRuleFormProps {
   onClose?: () => void;
@@ -29,10 +12,10 @@ interface CreateRuleFormProps {
 const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
   const [ruleName, setRuleName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [conditions, setConditions] = useState<RuleData["conditions"]>([
+  const [conditions, setConditions] = useState<RuleCreationRequest["conditions"]>([
     { field: "", operator: "", value: "" },
   ]);
-  const [actions, setActions] = useState<RuleData["actions"]>([
+  const [actions, setActions] = useState<RuleCreationRequest["actions"]>([
     { target: "", property: "", value: "" },
   ]);
   const [salience, setSalience] = useState<number>(100);
@@ -41,7 +24,7 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
 
   const handleConditionChange = (
     index: number,
-    field: keyof RuleData["conditions"][0],
+    field: keyof RuleCreationRequest["conditions"][0],
     value: string
   ) => {
     const updatedConditions = [...conditions];
@@ -51,7 +34,7 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
 
   const handleActionChange = (
     index: number,
-    field: keyof RuleData["actions"][0],
+    field: keyof RuleCreationRequest["actions"][0],
     value: string
   ) => {
     const updatedActions = [...actions];
@@ -70,7 +53,7 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const newRule: RuleData = {
+    const newRule: RuleCreationRequest = {
       rule_name: ruleName,
       description,
       conditions,
@@ -82,7 +65,7 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
       await createRule(tenant, newRule);
       toast.success("Rule created successfully!");
       queryClient.invalidateQueries({
-        queryKey: ["rules", tenant], // Ensure query key matches the one used for fetching rules
+        queryKey: ["rules", tenant],
       });
       onClose?.();
     } catch (error) {
@@ -115,9 +98,14 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
       </div>
 
       <div>
+        <div className="flex justify-between">
         <label className="block text-lg font-medium">Conditions</label>
+        <button type="button" onClick={addCondition} className="text-blue-500">
+          + Add Condition
+        </button>
+        </div>
         {conditions.map((condition, index) => (
-          <div key={index} className="flex gap-4 mb-2">
+          <div key={index} className="grid grid-cols-3 gap-4">
             <input
               type="text"
               placeholder="Field"
@@ -150,15 +138,19 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
             />
           </div>
         ))}
-        <button type="button" onClick={addCondition} className="text-blue-500">
-          + Add Condition
-        </button>
+        
       </div>
 
       <div>
+        <div className="flex justify-between">
         <label className="block text-lg font-medium">Actions</label>
+        <button type="button" onClick={addAction} className="text-blue-500">
+          + Add Action
+        </button>
+        </div>
+        
         {actions.map((action, index) => (
-          <div key={index} className="flex gap-4 mb-2">
+          <div key={index} className="grid grid-cols-3 gap-4">
             <input
               type="text"
               placeholder="Target"
@@ -191,9 +183,7 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
             />
           </div>
         ))}
-        <button type="button" onClick={addAction} className="text-blue-500">
-          + Add Action
-        </button>
+        
       </div>
 
       <div>
