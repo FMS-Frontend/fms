@@ -12,8 +12,8 @@ declare global {
   interface StatData {
     icon: ReactNode;
     title: string;
-    value: string | number;
-    color: "red" | "green" | "blue" | "yellow";
+    caseValue: string | number;
+    color: string;
     isGain: boolean;
     text: string;
     percent: number;
@@ -203,6 +203,23 @@ interface  TenantData {
       salience: number;
     };
   }
+  interface RuleData {
+  rule_name: string;
+  description: string;
+  conditions: Array<{
+    field: string;
+    operator: string;
+    value: string;
+  }>;
+  actions: Array<{
+    target: string;
+    property: string;
+    value: string;
+  }>;
+  flow_operators: {
+    salience: number;
+  };
+}
 
   interface RuleUpdateData {
     rule_name: string;

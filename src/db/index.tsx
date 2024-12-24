@@ -133,7 +133,7 @@ export const statsData: StatData[] = [
   {
     icon: <FaChartLine />,
     title: "Total Active Cases",
-    value: 89000,
+    caseValue: 89000,
     color: "green",
     isGain: false,
     text: "Down this year",
@@ -142,7 +142,7 @@ export const statsData: StatData[] = [
   {
     icon: <FaUsers />,
     title: "Unasigned Cases",
-    value: 45,
+    caseValue: 45,
     color: "blue",
     isGain: true,
     text: "Up this month",
@@ -151,7 +151,7 @@ export const statsData: StatData[] = [
   {
     icon: <IoTimerOutline />,
     title: "Alert Awaiting Review",
-    value: 500,
+    caseValue: 500,
     color: "red",
     isGain: true,
     text: "Up from yesterday",
@@ -160,7 +160,7 @@ export const statsData: StatData[] = [
   {
     icon: <LuBox />,
     title: "Cases Closed This Month",
-    value: 33,
+    caseValue: 33,
     color: "yellow",
     isGain: true,
     text: "Up from past month",
@@ -172,7 +172,7 @@ export const statsData2: StatData[] = [
   {
     icon: <FaChartLine />,
     title: "Total Users Created",
-    value: 89000,
+    caseValue: 89000,
     color: "green",
     isGain: false,
     text: "Down this year",
@@ -181,7 +181,7 @@ export const statsData2: StatData[] = [
   {
     icon: <FaUsers />,
     title: "New Users",
-    value: 45,
+    caseValue: 45,
     color: "blue",
     isGain: true,
     text: "Up this month",
@@ -190,7 +190,7 @@ export const statsData2: StatData[] = [
   {
     icon: <IoTimerOutline />,
     title: "Active Sessions",
-    value: 500,
+    caseValue: 500,
     color: "red",
     isGain: true,
     text: "Up from yesterday",
@@ -199,7 +199,7 @@ export const statsData2: StatData[] = [
   {
     icon: <LuBox />,
     title: "Total Integrations",
-    value: 33,
+    caseValue: 33,
     color: "yellow",
     isGain: true,
     text: "Up from past month",

@@ -1,6 +1,5 @@
 import URL from "../db/url";
 
-
 //*********** RULES Services **************/
 
 /**
@@ -63,7 +62,6 @@ export async function createRule(
   }
 }
 
-
 export async function editRule(
   tenantId: string,
   identity: string,
@@ -98,11 +96,11 @@ export async function deleteRule(
 
 export const getCases = async (
   tenantId: string,
-  page: number): Promise<CaseData> => {
-  
+  page: number
+): Promise<CaseData> => {
   try {
     const response = await URL.get(`/cases/tenants/${tenantId}`, {
-      params: { page},
+      params: { page },
     });
 
     return response.data;
@@ -112,13 +110,12 @@ export const getCases = async (
   }
 };
 
-export async function getCase(
-  tenantId: string,
-  identity: string,
-) {
+export async function getCase(tenantId: string, identity: string) {
   try {
-    const response = await URL.get(`/cases/tenants/${tenantId}/${identity}`, {
-    });
+    const response = await URL.get(
+      `/cases/tenants/${tenantId}/${identity}`,
+      {}
+    );
 
     return response.data;
   } catch (error) {
@@ -127,17 +124,18 @@ export async function getCase(
   }
 }
 
-
-
 export const assignCase = async (
   tenantId: string,
   identity: string,
   assigneeId: string
 ) => {
   try {
-    const response = await URL.post(`/cases/tenants/${tenantId}/${identity}/assign`, {
-      assigneeId,
-    });
+    const response = await URL.post(
+      `/cases/tenants/${tenantId}/${identity}/assign`,
+      {
+        assigneeId,
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error assigning case:", error);
@@ -147,11 +145,13 @@ export const assignCase = async (
 export const updateCase = async (
   tenantId: string,
   identity: string,
-  formData: UpdateProfileData,
+  formData: UpdateProfileData
 ) => {
   try {
-    
-    const response = await URL.patch(`/cases/tenants/${tenantId}/${identity}`, formData);
+    const response = await URL.patch(
+      `/cases/tenants/${tenantId}/${identity}`,
+      formData
+    );
     return response.data;
   } catch (error) {
     console.error("Error updating case:", error);
@@ -173,5 +173,56 @@ export const addComment = async (
   } catch (error) {
     console.error("Error adding comment:", error);
     throw new Error("Failed to add comment.");
+  }
+};
+
+export const createCase = async (
+  tenantId: string,
+  formData: { description: string; priority: string }
+) => {
+  try {
+    const response = await URL.post(`/cases/tenants/${tenantId}`, formData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating case:", error);
+    throw new Error("Failed to update case.");
+  }
+};
+
+
+export const fetchCaseStats = async (tenantId: string) => {
+  try {
+    const response = await URL.get(`/cases/tenants/${tenantId}`);
+    const cases = response.data.data;
+
+    if (!Array.isArray(cases)) {
+      throw new Error("Invalid case data");
+    }
+
+    const totalActive = cases.filter((c: any) => c.status === "Open").length;
+    const totalUnassigned = cases.filter((c: any) => !c.assignee.name).length;
+    const alertsAwaitingReview = cases.reduce(
+      (count: number, c: any) => count + (c.alerts?.length || 0),
+      0
+    );
+    const totalClosedThisMonth = cases.filter((c: any) => {
+      const updatedDate = new Date(c.updatedAt);
+      const now = new Date();
+      return (
+        c.status === "Closed" &&
+        updatedDate.getMonth() === now.getMonth() &&
+        updatedDate.getFullYear() === now.getFullYear()
+      );
+    }).length;
+
+    return {
+      totalActive,
+      totalUnassigned,
+      alertsAwaitingReview,
+      totalClosedThisMonth,
+    };
+  } catch (error) {
+    console.error("Error fetching cases:", error);
+    throw new Error("Failed to fetch case stats.");
   }
 };

@@ -10,7 +10,7 @@ const StatsDashboard2: FC = () => {
           key={index}
           icon={stat.icon}
           title={stat.title}
-          value={stat.value}
+          caseValue={stat.caseValue}
           color={stat.color}
           isGain={stat.isGain}
           text={stat.text}
