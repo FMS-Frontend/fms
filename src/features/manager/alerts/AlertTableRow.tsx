@@ -4,14 +4,14 @@ import ReopenAlert from "./modals/ReopenAlert";
 import AssignAlert from "./modals/AssignAlert";
 import ViewAlert from "./modals/ViewAlert";
 
-interface Alert {
-  id: string;
-  type: string;
-  status: string;
-  severity: string;
-  timestamp: string;
-  actions?: string;
-}
+// interface Alert {
+//   id: string;
+//   type: string;
+//   status: string;
+//   severity: string;
+//   timestamp: string;
+//   actions?: string;
+// }
 
 interface AlertTableRowProps extends Alert {
   index: number;

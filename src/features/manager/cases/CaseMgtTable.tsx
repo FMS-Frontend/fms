@@ -4,7 +4,7 @@ import CaseTableRow from "./CaseTableRow";
 import CaseMgtOperations from "./CaseMgtOperations";
 import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
-import { Case } from "../../../services/managerServices";
+import AddCase from "./modals/CreateCaseBtn";
 
 interface CaseMgtTableProps {
   headingData: string[];
@@ -72,6 +72,7 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+        <AddCase/>
       </div>
 
       <Table columns={`grid grid-cols-${headingData.length} gap-4`}>

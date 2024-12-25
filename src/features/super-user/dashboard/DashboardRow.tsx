@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { capitalizeWords, getStatusStyles } from "../../../db/helperFunctions";
-import { Organization } from "../../../db/types";
 
 interface DashboardRowProps {
   tenant: Organization;

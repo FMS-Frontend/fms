@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../../../ui/utils/Spinner";
 import { getCase } from "../../../../services/managerServices";
 import { useAppContext } from "../../../../context/AppContext";
+import UpdateCaseForm from "../forms/UpdateCaseForm";
 /**
  * TenantModal component for managing the multi-step process of setting up a new tenant.
  * It allows the user to go through a series of steps: creating tenant details, viewing tenant info, and configuring tenant options.
@@ -37,15 +38,15 @@ const ViewCaseModal: React.FC<ViewRuleModalProps> = ({ onClose, caseId }) => {
   
   const [step, setStep] = useState(1);
 
-  const { data: rule, isLoading, error } = useQuery({
-    queryKey: ["rule", tenant, caseId],
+  const { data: caseById, isLoading, error } = useQuery({
+    queryKey: ["caseById", tenant, caseId],
     queryFn: () => getCase(tenant, caseId),
     staleTime: 0,
     enabled: !!caseId, // Ensure the query only runs if ruleId exists
   });
 
   const nextStep = () => setStep((prev) => prev + 1);
-  // const previousStep = () => setStep((prev) => prev - 1);
+  const previousStep = () => setStep((prev) => prev - 1);
 
 
   if (isLoading) {
@@ -65,12 +66,13 @@ const ViewCaseModal: React.FC<ViewRuleModalProps> = ({ onClose, caseId }) => {
   }
 
   console.log(caseId);
-  console.log(rule?.data);
+  console.log(caseById?.data);
   
 
   return (
     <>
-      {step === 1 && <ViewCaseForm onNext={nextStep} onClose={onClose} data={rule?.data} />}
+      {step === 1 && <ViewCaseForm onNext={nextStep} onClose={onClose} data={caseById?.data} />}
+      {step === 2 && <UpdateCaseForm onPrevious={previousStep} onClose={onClose} caseId={caseId} tenantId={tenant} caseDetails={caseById?.data} />}
       {/* {step === 2 && <EditRuleForm onPrevious={previousStep} onClose={onClose} ruleId={ruleId} tenantId={tenant} rule={rule?.data}/>} */}
     </>
   );

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Audit } from "../../../db/types";
 import { formatDateTime } from "../../../db/helperFunctions";
 
 interface AuditRowProps {

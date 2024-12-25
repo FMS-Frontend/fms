@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { AdminAudit } from "./AuditTable";
 import { formatTime } from "../../../db/helperFunctions";
 
 interface AuditRowProps {

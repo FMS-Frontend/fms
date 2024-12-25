@@ -8,7 +8,6 @@ import { deleteAdmin } from "../../../services/apiSuperUser";
 import toast from "react-hot-toast";
 import EditAdminModal from "./EditAdminModal";
 import { getStatusStyles } from "../../../db/helperFunctions";
-import { Admin } from "../../../db/types";
 
 interface AuditRowProps {
   admin: Admin;

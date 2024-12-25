@@ -1,27 +1,4 @@
 import URL from "../db/url";
-import { Rule2 } from "../features/manager/rules/forms/ViewRuleForm";
-
-export interface Rule {
-  id: string;
-  rule_name: string;
-  status: "Active" | "Inactive";
-  assignedTo: {
-    image: string;
-    name: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface PaginatedResponse<T> {
-  data: T[];
-  pagination: {
-    totalItems: number;
-    pageSize: number;
-    currentPage: number;
-    totalPages: number;
-  };
-}
 
 //*********** RULES Services **************/
 
@@ -34,7 +11,7 @@ interface PaginatedResponse<T> {
 export async function getRules(
   tenantId: string,
   page: number
-): Promise<PaginatedResponse<Rule>> {
+): Promise<PaginatedResponse<Rule1>> {
   try {
     const response = await URL.get(`/rules/${tenantId}`, {
       params: { page },
@@ -85,34 +62,6 @@ export async function createRule(
   }
 }
 
-export interface RuleCreationRequest {
-  rule_name: string;
-  description: string;
-  conditions: Array<{
-    field: string;
-    operator: string;
-    value: string;
-  }>;
-  actions: Array<{
-    target: string;
-    property: string;
-    value: string;
-  }>;
-  flow_operators: {
-    salience: number;
-  };
-}
-
-export interface RuleUpdateData {
-  rule_name: string;
-  description: string;
-  conditions: Array<{ field: string; operator: string; value: string }>;
-  actions: Array<{ target: string; property: string; value: string }>;
-  flow_operators: { salience: number };
-}
-
-import { Rule3 } from "../features/manager/rules/forms/EditRuleForm";
-
 export async function editRule(
   tenantId: string,
   identity: string,
@@ -130,7 +79,7 @@ export async function editRule(
 /**
  * Delete a rule by its identity
  * @param tenantId ID of the tenant
- * @param identity Identity of the rule
+ * @param identity Identity (ID) of the rule
  * @returns Success response
  */
 export async function deleteRule(
@@ -145,86 +94,13 @@ export async function deleteRule(
   }
 }
 
-// ============ CASES =================
-// export async function getCases(tenantId: string, page: number, status: string): Promise<PaginatedResponse<Rule>> {
-//   try {
-//     const response = await URL.get(`/cases/tenants/${tenantId}`, {
-//       params: { page, status },
-//     });
-//     // console.log(response?.data);
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching cases:", error);
-//     throw new Error("Cases could not be fetched");
-//   }
-// }
-
-// export interface Assignee {
-//   id: string;
-//   name: string;
-// }
-
-// export interface Case {
-//   id: string;
-//   code: number;
-//   priority: string;
-//   status: string;
-//   description: string;
-//   assignedTo: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   assignee: Assignee;
-// }
-
-// export async function getCases(
-//   tenantId: string,
-//   page: number,
-//   stat: string
-// ): Promise<Case[]> {
-//   try {
-//     const response = await URL.get(`/cases/tenants/${tenantId}`, {
-//       params: { page, stat },
-//     });
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching cases:", error);
-//     throw new Error("Cases could not be fetched");
-//   }
-// }
-
-
-export interface Pagination {
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
-  currentPage: number;
-}
-
-export interface Case {
-  id: string;
-  priority: "Low" | "High" | "Medium";
-  status: "Open" | "Closed"| "All";
-  assignee: {
-    id: string;
-  name: string;
-  };
-  updatedAt: string;
-}
-
-export interface CaseData {
-  data: Case[];
-  pagination: Pagination;
-}
-
 export const getCases = async (
   tenantId: string,
-  page: number): Promise<CaseData> => {
-  
+  page: number
+)=> {
   try {
     const response = await URL.get(`/cases/tenants/${tenantId}`, {
-      params: { page},
+      params: { page },
     });
 
     return response.data;
@@ -234,13 +110,12 @@ export const getCases = async (
   }
 };
 
-export async function getCase(
-  tenantId: string,
-  identity: string,
-) {
+export async function getCase(tenantId: string, identity: string) {
   try {
-    const response = await URL.get(`/cases/tenants/${tenantId}/${identity}`, {
-    });
+    const response = await URL.get(
+      `/cases/tenants/${tenantId}/${identity}`,
+      {}
+    );
 
     return response.data;
   } catch (error) {
@@ -249,20 +124,105 @@ export async function getCase(
   }
 }
 
-
-
 export const assignCase = async (
   tenantId: string,
   identity: string,
   assigneeId: string
 ) => {
   try {
-    const response = await URL.post(`/cases/tenants/${tenantId}/${identity}/assign`, {
-      assigneeId,
-    });
+    const response = await URL.post(
+      `/cases/tenants/${tenantId}/${identity}/assign`,
+      {
+        assigneeId,
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error assigning case:", error);
     throw new Error("Failed to assign case.");
+  }
+};
+export const updateCase = async (
+  tenantId: string,
+  identity: string,
+  formData: UpdateProfileData
+) => {
+  try {
+    const response = await URL.patch(
+      `/cases/tenants/${tenantId}/${identity}`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating case:", error);
+    throw new Error("Failed to update case.");
+  }
+};
+
+export const addComment = async (
+  tenantId: string,
+  identity: string,
+  commentData: { comment: string }
+) => {
+  try {
+    const response = await URL.post(
+      `/cases/tenants/${tenantId}/${identity}/comment`,
+      commentData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    throw new Error("Failed to add comment.");
+  }
+};
+
+export const createCase = async (
+  tenantId: string,
+  formData: { description: string; priority: string }
+) => {
+  try {
+    const response = await URL.post(`/cases/tenants/${tenantId}`, formData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating case:", error);
+    throw new Error("Failed to update case.");
+  }
+};
+
+
+export const fetchCaseStats = async (tenantId: string) => {
+  try {
+    const response = await URL.get(`/cases/tenants/${tenantId}`);
+    const cases = response.data.data;
+
+    if (!Array.isArray(cases)) {
+      throw new Error("Invalid case data");
+    }
+
+    const totalActive = cases.filter((c: any) => c.status === "Open").length;
+    const totalUnassigned = cases.filter((c: any) => !c.assignee.name).length;
+    const alertsAwaitingReview = cases.reduce(
+      (count: number, c: any) => count + (c.alerts?.length || 0),
+      0
+    );
+    const totalClosedThisMonth = cases.filter((c: any) => {
+      const updatedDate = new Date(c.updatedAt);
+      const now = new Date();
+      return (
+        c.status === "Closed" &&
+        updatedDate.getMonth() === now.getMonth() &&
+        updatedDate.getFullYear() === now.getFullYear()
+      );
+    }).length;
+
+    return {
+      totalActive,
+      totalUnassigned,
+      alertsAwaitingReview,
+      totalClosedThisMonth,
+    };
+  } catch (error) {
+    console.error("Error fetching cases:", error);
+    throw new Error("Failed to fetch case stats.");
   }
 };

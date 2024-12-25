@@ -16,24 +16,7 @@ interface RecentProp {
 
 
 const RecentTableRow: FC<RecentProp> = ({ cases, user, date, index}) => {
-  // const formatTime = (timestamp: string) => {
-  //   const date = new Date(timestamp);
   
-  //   // Get abbreviated day of the week (e.g., "Mon", "Tue")
-  //   const day = date.toLocaleDateString('en-US', { weekday: 'short' });
-  
-  //   // Get the day of the month
-  //   const dayOfMonth = date.getDate();
-  
-  //   // Get time in "h:mm AM/PM" format
-  //   const time = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
-  
-  //   return `${day} ${dayOfMonth}/${time}`;
-  // };
-  
-
-  
-
   return (
     <div
       className={`grid grid-cols-3 text-base gap-4 p-4 border-b border-gray-200 ${

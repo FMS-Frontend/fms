@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getTenants } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/utils/Spinner";
 import TenantRow from "./TenantRow";
-import { Tenant } from "../../../db/types";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";

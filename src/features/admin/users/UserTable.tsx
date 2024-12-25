@@ -2,7 +2,6 @@ import { FC } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../../services/apiAdmin";
-import { User } from "../../../db/types";
 import UserRow from "./UserRow";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";

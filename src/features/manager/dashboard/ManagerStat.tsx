@@ -2,18 +2,9 @@ import { FC } from "react";
 import { PiTrendUp } from "react-icons/pi";
 import { PiTrendDownBold, } from "react-icons/pi";
 
-interface StatProps {
-  icon: React.ReactNode;
-  title: string;
-  value: string | number;
-  color: "red" | "green" | "blue" | "yellow";
-  isGain: boolean;
-  text: string;
-  percent: number,
-}
 
-const ManagerStat: FC<StatProps> = ({ icon, title, value, color, isGain, text, percent }) => {
-  console.log(color);
+const ManagerStat: FC<StatData> = ({ icon, title, caseValue, color, isGain, text, percent }) => {
+  // console.log(color);
 
   const bgColorClass = {
     red: "bg-red-100",
@@ -34,7 +25,7 @@ const ManagerStat: FC<StatProps> = ({ icon, title, value, color, isGain, text, p
       <div className="flex justify-between px-5 py-4">
         <div className="flex flex-col justify-between">
           <div className="text-xl text-gray-600">{title}</div>
-          <div className={`text-4xl font-bold text-gray-800 py-2`}>{value.toLocaleString()}</div>
+          <div className={`text-4xl font-bold text-gray-800 py-2`}>{caseValue}</div>
         </div>
         <div
           className={`${bgColorClass} ${textColorClass}

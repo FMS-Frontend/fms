@@ -125,26 +125,15 @@ export const general = [
 ];
 
 // statData
-import { ReactNode } from "react";
 import { FaChartLine, FaUsers } from "react-icons/fa";
 import { IoTimerOutline } from "react-icons/io5";
 import { LuBox } from "react-icons/lu";
-
-interface StatData {
-  icon: ReactNode;
-  title: string;
-  value: string | number;
-  color: "red" | "green" | "blue" | "yellow";
-  isGain: boolean;
-  text: string;
-  percent: number;
-}
 
 export const statsData: StatData[] = [
   {
     icon: <FaChartLine />,
     title: "Total Active Cases",
-    value: 89000,
+    caseValue: 89000,
     color: "green",
     isGain: false,
     text: "Down this year",
@@ -153,7 +142,7 @@ export const statsData: StatData[] = [
   {
     icon: <FaUsers />,
     title: "Unasigned Cases",
-    value: 45,
+    caseValue: 45,
     color: "blue",
     isGain: true,
     text: "Up this month",
@@ -162,7 +151,7 @@ export const statsData: StatData[] = [
   {
     icon: <IoTimerOutline />,
     title: "Alert Awaiting Review",
-    value: 500,
+    caseValue: 500,
     color: "red",
     isGain: true,
     text: "Up from yesterday",
@@ -171,7 +160,7 @@ export const statsData: StatData[] = [
   {
     icon: <LuBox />,
     title: "Cases Closed This Month",
-    value: 33,
+    caseValue: 33,
     color: "yellow",
     isGain: true,
     text: "Up from past month",
@@ -183,7 +172,7 @@ export const statsData2: StatData[] = [
   {
     icon: <FaChartLine />,
     title: "Total Users Created",
-    value: 89000,
+    caseValue: 89000,
     color: "green",
     isGain: false,
     text: "Down this year",
@@ -192,7 +181,7 @@ export const statsData2: StatData[] = [
   {
     icon: <FaUsers />,
     title: "New Users",
-    value: 45,
+    caseValue: 45,
     color: "blue",
     isGain: true,
     text: "Up this month",
@@ -201,7 +190,7 @@ export const statsData2: StatData[] = [
   {
     icon: <IoTimerOutline />,
     title: "Active Sessions",
-    value: 500,
+    caseValue: 500,
     color: "red",
     isGain: true,
     text: "Up from yesterday",
@@ -210,7 +199,7 @@ export const statsData2: StatData[] = [
   {
     icon: <LuBox />,
     title: "Total Integrations",
-    value: 33,
+    caseValue: 33,
     color: "yellow",
     isGain: true,
     text: "Up from past month",
@@ -219,14 +208,8 @@ export const statsData2: StatData[] = [
 ];
 
 //
-export interface Tenant {
-  id: number;
-  alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
-  timeStamp: string;
-  status: "Active" | "Unassigned" | "Deactivated";
-}
 
-export const priorityData: Tenant[] = [
+export const priorityData: priorityDataProps[] = [
   {
     id: 1,
     alertType: "Login",
@@ -264,16 +247,6 @@ export const priorityData: Tenant[] = [
     status: "Deactivated",
   },
 ];
-
-interface RecentProp {
-  id: number;
-  cases: string;
-  user: {
-    image: string;
-    name: string;
-  };
-  date: string;
-}
 
 export const recentData: RecentProp[] = [
   {
@@ -331,15 +304,6 @@ export const recentData: RecentProp[] = [
     date: "2024-11-08T13:10:00Z",
   },
 ];
-
-export interface Alert {
-  id: string;
-  type: string;
-  status: string;
-  severity: string;
-  timestamp: string;
-  actions: string;
-}
 
 export const alertsData: Alert[] = [
   {
@@ -424,7 +388,6 @@ export const alertsData: Alert[] = [
   },
 ];
 
-import { RuleTableRowProps } from "../features/manager/rules/RuleTableRow";
 export const rulesData: RuleTableRowProps[] = [
   {
     ruleId: "R001",
@@ -533,14 +496,3 @@ export const rulesData: RuleTableRowProps[] = [
     index: 9,
   },
 ];
-
-export interface CasesTableRowProps {
-  id: string;
-  priority: "Low" | "High" | "Medium";
-  status: "Open" | "Closed"| "All";
-  assignee: { id: string; name: string };
-  updatedAt: string;
-  index: number;
-}
-
-

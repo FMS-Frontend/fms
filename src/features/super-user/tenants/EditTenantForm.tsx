@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { capitalizeWords } from "../../../db/helperFunctions";
 import URL from "../../../db/url";
-import { Tenant } from "../../../db/types";
 
 /**
  * CreateTenantForm component for creating a new tenant.

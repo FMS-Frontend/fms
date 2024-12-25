@@ -2,7 +2,6 @@ import { FC } from "react";
 import ViewCase from "./modals/ViewCase";
 import ReopenCase from "./modals/ReopenCase";
 import AssignCase from "./modals/AssignCase";
-import { CasesTableRowProps } from "../../../db";
 
 const CaseTableRow: FC<CasesTableRowProps> = ({
   id,
@@ -33,7 +32,7 @@ const CaseTableRow: FC<CasesTableRowProps> = ({
 
       {/* lastModified should be in the format "December 6, 2024" */}
       <div>{updatedAt}</div>
-      <div className="flex justify-between lg:max-w-[70%]">
+      <div className="flex justify-between xl:max-w-[70%]">
         {status === "Closed" ? <ReopenCase caseId={id} /> : <AssignCase caseId={id}/>}
         <ViewCase caseId={id}/>
       </div>
