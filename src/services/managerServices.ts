@@ -79,7 +79,7 @@ export async function editRule(
 /**
  * Delete a rule by its identity
  * @param tenantId ID of the tenant
- * @param identity Identity of the rule
+ * @param identity Identity (ID) of the rule
  * @returns Success response
  */
 export async function deleteRule(
@@ -97,7 +97,7 @@ export async function deleteRule(
 export const getCases = async (
   tenantId: string,
   page: number
-): Promise<CaseData> => {
+)=> {
   try {
     const response = await URL.get(`/cases/tenants/${tenantId}`, {
       params: { page },

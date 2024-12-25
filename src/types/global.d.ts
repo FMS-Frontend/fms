@@ -200,7 +200,8 @@ interface  TenantData {
       value: string;
     }>;
     flow_operators: {
-      salience: number;
+      value: number | string;
+      target:string;
     };
   }
   interface RuleData {
@@ -260,7 +261,7 @@ interface  TenantData {
   }
 
   interface FlowOperators {
-    salience: number;
+    salience: string | number;
   }
 
   interface CreatedBy {
@@ -282,7 +283,10 @@ interface  TenantData {
     historyLogs: any[];
     createdBy: CreatedBy;
   }
-
+interface DeleteRuleProps {
+  ruleId: string;
+  tenantId: string;
+}
   // ========= CASES =================
   interface Case {
     id: string;
@@ -310,6 +314,30 @@ interface  TenantData {
     id: string;
     name: string;
   }
+  interface CaseWithActions {
+    id: string;
+    code: number;
+    priority: "Low" | "Medium" | "High";
+    status: "Open" | "Closed";
+    description: string;
+    assignedTo: string;
+    createdAt: string;
+    updatedAt: string;
+    assignee?: {
+      id: string;
+      name: string;
+    };
+    actions: Array<{
+      id: string;
+      description: string;
+      createdAt: string;
+      author: {
+        id: string;
+        name: string;
+      };
+    }>;
+  }
+  
 
   interface CaseMgtOperationsProps {
     assignedTo: string;
