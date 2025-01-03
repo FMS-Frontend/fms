@@ -107,7 +107,11 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Status
           </label>
-          <p className="text-gray-700 text-xl font-medium mb-1">{rule?.status}</p>
+          <p className={`px-3 text-lg py-1 rounded-full ${
+            rule?.status === "Active"
+              ? "bg-green-100 hover:bg-green-200 text-green-500"
+              : "bg-red-50 hover:bg-red-100 text-red-500"
+          }`}>{rule?.status}</p>
         </div>
 
         {/* Last Modified */}
