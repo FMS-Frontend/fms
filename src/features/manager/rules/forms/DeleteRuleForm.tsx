@@ -2,6 +2,8 @@ import { FC } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteRule } from "../../../../services/managerServices";
 import toast from "react-hot-toast";
+import { useAppContext } from "../../../../context/AppContext";
+import ConfirmDelete from "../../../../ui/utils/ConfirmDelete";
 
 interface DeleteRuleProps {
   ruleId?: string;
@@ -9,33 +11,33 @@ interface DeleteRuleProps {
   onClose?: () => void;
 }
 
-const DeleteRuleForm: FC<DeleteRuleProps> = ({ ruleId, tenantId }) => {
+const DeleteRuleForm: FC<DeleteRuleProps> = ({ ruleId, onClose }) => {
   const queryClient = useQueryClient();
+  const { tenant } = useAppContext();
 
   const mutation = useMutation({
-    mutationFn: () => deleteRule(tenantId as string, ruleId as string),
+    mutationFn: () => deleteRule(tenant, ruleId as string),
     onSuccess: () => {
       toast.success("Rule deleted successfully.");
-      queryClient.invalidateQueries({ queryKey: ["rules", tenantId] }); // Pass an object with queryKey
+      queryClient.invalidateQueries({ queryKey: ["rules", tenant] }); // Pass an object with queryKey
     },
     onError: (error: any) => {
-      toast.error(error?.message || "Failed to delete the rule. Please try again.");
+      toast.error(
+        error?.message || "Failed to delete the rule. Please try again."
+      );
     },
   });
-1
+
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this rule?")) {
-      mutation.mutate();
-    }
+    mutation.mutate();
   };
 
   return (
-    <button
-      onClick={handleDelete}
-      className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
-    >
-      Delete Rule
-    </button>
+    <ConfirmDelete
+      resourceName={`Rule-${ruleId?.slice(0,4)}`}
+      onCloseModal={onClose || (() => {})}
+      onConfirm={handleDelete}
+    />
   );
 };
 
