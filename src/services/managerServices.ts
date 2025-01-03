@@ -13,7 +13,7 @@ export async function getRules(
   page: number
 ): Promise<PaginatedResponse<Rule1>> {
   try {
-    const response = await URL.get(`/rules/${tenantId}`, {
+    const response = await URL.get(`/rules/${tenantId}?sortOrder=desc`, {
       params: { page },
     });
     // console.log(response?.data);
@@ -65,8 +65,8 @@ export async function createRule(
 export async function editRule(
   tenantId: string,
   identity: string,
-  rule: Rule3
-): Promise<Rule2> {
+  rule: EditRuleProp
+){
   try {
     const response = await URL.patch(`/rules/${tenantId}/${identity}`, rule);
     return response.data;
@@ -226,3 +226,17 @@ export const fetchCaseStats = async (tenantId: string) => {
     throw new Error("Failed to fetch case stats.");
   }
 };
+
+
+// /settings/tenants/:tenant/variables
+
+export async function getVariables(tenant: string) {
+  try {
+    const { data } = await URL.get(`/settings/tenants/${tenant}/variables`);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching reports");
+  }
+}

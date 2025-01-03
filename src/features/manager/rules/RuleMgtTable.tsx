@@ -35,7 +35,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
     const matchesSearch =
       searchQuery === "" ||
       rule.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rule.rule_name.toLowerCase().includes(searchQuery.toLowerCase());
+      rule.name.toLowerCase().includes(searchQuery.toLowerCase());
     const ruleDate = new Date(rule.updatedAt);
     const matchesDateRange =
       ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate;
@@ -109,7 +109,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
             <RuleTableRow
               key={rule.id}
               ruleId={rule.id}
-              ruleName={rule.rule_name}
+              ruleName={rule.name}
               status={rule.status}
               lastModified={formatRuleDate(rule.updatedAt)}
               index={index}
