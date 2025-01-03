@@ -22,7 +22,7 @@ const DeleteRuleForm: FC<DeleteRuleProps> = ({ ruleId, tenantId }) => {
       toast.error(error?.message || "Failed to delete the rule. Please try again.");
     },
   });
-
+1
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this rule?")) {
       mutation.mutate();

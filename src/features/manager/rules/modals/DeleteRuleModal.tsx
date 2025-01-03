@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Modal from "../../../../ui/utils/Modal.Rule";
+import Modal from "../../../../ui/utils/Modal";
 import DeleteRuleForm from "../forms/DeleteRuleForm";
 
 /**
@@ -16,7 +16,7 @@ import DeleteRuleForm from "../forms/DeleteRuleForm";
  * );
  */
 
-const DeleteRule: FC = () => {
+const DeleteRuleModal: FC = () => {
   return (
     <Modal>
       <Modal.Open opens="delete-rule-modal">
@@ -29,4 +29,4 @@ const DeleteRule: FC = () => {
   );
 };
 
-export default DeleteRule;
+export default DeleteRuleModal;

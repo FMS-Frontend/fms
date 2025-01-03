@@ -65,7 +65,7 @@ const StatsDashboard: FC = () => {
       updatedStats[3].caseValue = data?.totalClosedThisMonth; 
       setStatsData(updatedStats);
     }
-  }, [data, statsData]);
+  }, [data]);
 
   if (isLoading) {
     return (
