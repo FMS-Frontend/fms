@@ -6,6 +6,7 @@ import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
 import Spinner from "../../../ui/utils/Spinner";
 import AddRule2 from "./modals/AddRule2";
+import { useAppContext } from "../../../context/AppContext";
 
 interface RuleMgtTableProps {
   headingData: string[];
@@ -26,6 +27,8 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
     startDate: new Date(),
     endDate: new Date(),
   });
+  const { role } = useAppContext();
+
 
   // Filter data based on selected filters, search query, and date range
   const filteredData = data.filter((rule) => {
@@ -79,7 +82,9 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <AddRule2/>
+        
+        {role === "Admin" && <AddRule2/>}
+
       </div>
 
       {/* Table Display */}
