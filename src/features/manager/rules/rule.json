@@ -1,0 +1,34 @@
+{
+    "name": "Rule amount",
+    "description": "Rule amount ",
+    "conditions": {
+        "condition": "And",
+        "rules": [
+            {
+                "field": "Transaction.amount",
+                "operator": ">",
+                "value": "2000"
+            },
+            {
+                "condition": "And",
+                "rules": [
+                    {
+                        "field": "Transaction.date",
+                        "operator": "=",
+                        "value": "2025-01-04"
+                    }
+                ]
+            }
+        ]
+    },
+    "actions": [
+        {
+            "target": "Transaction",
+            "property": "Allow",
+            "value": "Print: Fraud detected"
+        }
+    ],
+    "properties": {
+        "salience": 100
+    }
+}

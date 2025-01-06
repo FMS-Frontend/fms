@@ -22,10 +22,11 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
   const [assignedTo, setAssignedTo] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
-
+  
+  const currentYear = new Date().getFullYear();
   const [dateRange, setDateRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date(currentYear, 0, 1), // January 1st
+    endDate: new Date(currentYear, 11, 31), // December 31st
   });
   const { role } = useAppContext();
 
@@ -40,8 +41,10 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
       rule.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       rule.name.toLowerCase().includes(searchQuery.toLowerCase());
     const ruleDate = new Date(rule.updatedAt);
-    const matchesDateRange =
-      ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate;
+      const matchesDateRange =
+      !dateRange.startDate || !dateRange.endDate || 
+      (ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate);
+
 
     return (
       (matchesStatus && matchesSearch) || matchesDateRange

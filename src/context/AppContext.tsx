@@ -80,7 +80,8 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
 
     setRole(normalizedRole);
     return normalizedRole;
-  };
+  }
+  
 
   const PrivateRoutes = ({ requiredRole }: { requiredRole: string }) => {
     const storedRole = localStorage.getItem("role");
