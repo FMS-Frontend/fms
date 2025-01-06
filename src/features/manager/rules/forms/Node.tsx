@@ -23,10 +23,9 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
   const { getNode, createRule, createRuleSet, updateNode, deleteNode } = useRule();
   const node = getNode(id);
 
-  // State to track the selected property's type for input rendering
   const [selectedType, setSelectedType] = useState<string>("text");
   // const [error, setError] = useState<any>(null);
-  // const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [variables, setVariables] = useState<Variable[]>([]);
     const { tenant } = useAppContext();
@@ -36,7 +35,7 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
       try {
         const result = await getVariables(tenant);        
         setVariables(result?.data); 
-        // setLoading(false);
+        setLoading(false);
       } catch (err) {
         console.error(err);
         // setError("Failed to load variables");
@@ -79,6 +78,7 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
   const mapSchemaTypeToInputType = (schemaType: string, fieldName: string): string => {
     switch (schemaType) {
       case "float":
+        return "number";
       case "double":
         return "number";
       case "date":
@@ -89,6 +89,8 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
         return "text";
     }
   };
+  
+  console.log(selectedType);
   
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -113,7 +115,7 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
           onChange={handleVariableChange}
           className="min-w-32 p-1 border rounded"
         >
-          <option value="">Select Field</option>
+          <option value="">{loading ? "Loading..." : "Select Field"}</option>
           {variableOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.value}

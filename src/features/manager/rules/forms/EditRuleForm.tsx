@@ -117,25 +117,6 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
   const [flowOperatorValue, setFlowOperatorValue] = useState<string | number>(
     100
   );
-  // useEffect(() => {
-  //   if (rule) {
-  //     reset({
-  //       name: rule.name,
-  //       description: rule.description,
-  //       conditions: rule.conditions || { condition: "And", rules: [] },
-  //       actions: rule.actions || [{ target: "", property: "", value: "" }],
-  //       properties: rule.properties || {},
-  //     });
-  //     const flowOperator = Object.keys(rule.properties).find((key) =>
-  //       ["salience", "activation-group", "agenda-group"].includes(key)
-  //     );
-  //     if (flowOperator) {
-  //       setSelectedFlowOperator(flowOperator);
-  //       setFlowOperatorValue(rule.properties[flowOperator]);
-  //     }
-  //     initialize(rule.conditions);
-  //   }
-  // }, [rule, reset, initialize]);
 
   useEffect(() => {
     if (rule) {

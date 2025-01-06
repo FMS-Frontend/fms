@@ -320,6 +320,7 @@ interface DeleteRuleProps {
       name: string;
     };
     updatedAt: string;
+    createdAt: string;
   }
   interface PaginationCase {
     pageSize: number;

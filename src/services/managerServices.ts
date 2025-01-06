@@ -230,6 +230,19 @@ export const fetchCaseStats = async (tenantId: string) => {
 
 // /settings/tenants/:tenant/variables
 
+export async function getCaseSummary(tenant: string, startDate: string = new Date().toISOString().split("T")[0]): Promise<any> {
+  try {
+    const { data } = await URL.get(`/analytics/trends/tenants/${tenant}/case`, {
+      params: { startDate },
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching case summary:", error);
+    throw new Error("Error fetching case summary");
+  }
+}
+
 export async function getVariables(tenant: string) {
   try {
     const { data } = await URL.get(`/settings/tenants/${tenant}/variables`);
@@ -240,3 +253,4 @@ export async function getVariables(tenant: string) {
     throw new Error("Error fetching reports");
   }
 }
+

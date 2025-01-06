@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState} from "react";
 import Table from "../../../ui/utils/Table";
 import CaseTableRow from "./CaseTableRow";
 import CaseMgtOperations from "./CaseMgtOperations";
@@ -12,17 +12,17 @@ interface CaseMgtTableProps {
 }
 
 const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
-  const [assignedTo, setAssignedTo] = useState<string>(""); // Default to "All"
+  const [assignedTo, setAssignedTo] = useState<string>(""); 
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // Initialize date range to the current year
+  const currentYear = new Date().getFullYear();
   const [dateRange, setDateRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date(currentYear, 0, 1), // January 1st
+    endDate: new Date(currentYear, 11, 31), // December 31st
   });
 
-  console.log(dateRange);
-  
   // Filter data based on selected filters, search query, and date range
   const filteredData = data.filter((caseItem) => {
     // Handle nullable assignee safely
@@ -41,20 +41,26 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
       caseItem.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       caseItem.priority.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Optional: Include date range filtering if necessary
-    return matchesAssignedTo && matchesStatus && matchesSearch;
+    const caseDate = new Date(caseItem.createdAt);
+    const matchesDateRange =
+      !dateRange.startDate || !dateRange.endDate || 
+      (caseDate >= dateRange.startDate && caseDate <= dateRange.endDate);
+
+      // console.log(matchesDateRange);
+          // return matchesAssignedTo && matchesStatus && matchesSearch;
+    return matchesAssignedTo && matchesStatus && matchesSearch && matchesDateRange;
   });
+  
 
   const handleAssignedToChange = (value: string) => setAssignedTo(value);
   const handleStatusChange = (value: string) => setSelectedStatus(value);
 
-  const handleDateChange = (newDateRange: {
-    startDate: Date;
-    endDate: Date;
-  }) => {
+  const handleDateChange = (newDateRange: { startDate: Date; endDate: Date }) => {
     setDateRange(newDateRange);
   };
 
+  // console.log(dateRange);
+  
   return (
     <div className="mt-8">
       {/* Filter Operations */}
@@ -72,7 +78,7 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <AddCase/>
+        <AddCase />
       </div>
 
       <Table columns={`grid grid-cols-${headingData.length} gap-4`}>

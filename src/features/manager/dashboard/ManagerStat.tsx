@@ -3,7 +3,18 @@ import { PiTrendUp } from "react-icons/pi";
 import { PiTrendDownBold, } from "react-icons/pi";
 
 
-const ManagerStat: FC<StatData> = ({ icon, title, caseValue, color, isGain, text, percent }) => {
+type StatData22 = {
+  icon: any;
+  title: string;
+  caseValue: number | string | JSX.Element; 
+  color: string; 
+  isGain: boolean; 
+  text: string; 
+  percent: number; 
+};
+
+
+const ManagerStat: FC<StatData22> = ({ icon, title, caseValue, color, isGain, text, percent }) => {
   // console.log(color);
 
   const bgColorClass = {
