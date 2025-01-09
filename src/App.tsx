@@ -2,11 +2,9 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import React, {  FC, ReactNode, Suspense } from "react";
+import React, { FC, ReactNode } from "react";
 import { useAppContext } from "./context/AppContext";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
-import Spinner from "./ui/utils/Spinner";
-
 // Dynamic imports
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const LoginPage = React.lazy(() => import("./pages/auth/LoginPage"));
@@ -49,7 +47,6 @@ const Index = React.lazy(() => import("./pages/Index"));
 const AuditorLayout = React.lazy(() => import("./ui/layouts/AuditorLayout"));
 const Settings = React.lazy(() => import("./pages/settings/Settings"));
 const AdminRule = React.lazy(() => import("./pages/AdminRule"));
-
 
 // ProtectedRoute Component
 interface ProtectedProps {
@@ -102,8 +99,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
 
-<Suspense fallback={<Spinner/>}>
-<Routes>
+      <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<LoginPage />} />
@@ -233,8 +229,6 @@ function App() {
         {/* Fallback Route */}
         <Route path="*" element={<Page404 />} />
       </Routes>
-</Suspense>
-      
 
       <Toaster
         position="top-center"
