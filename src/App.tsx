@@ -2,41 +2,54 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import Dashboard from "./pages/Dashboard";
-import LoginPage from "./pages/auth/LoginPage";
-import AppLayout from "./ui/layouts/AppLayout";
-import Tenant from "./pages/Tenant";
-import Administrator from "./pages/Administrator";
-import Audit from "./pages/Audit";
-import Page404 from "./pages/Page404";
-import ManagerLayout from "./ui/layouts/ManagerLayout";
-import ManagerDashboard from "./pages/manager/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import { FC, ReactNode } from "react";
-import Users from "./pages/Users";
+import React, {  FC, ReactNode, Suspense } from "react";
 import { useAppContext } from "./context/AppContext";
-import AdminLayout from "./ui/layouts/AdminLayout";
-import AdminReports from "./pages/AdminReports";
-import AdminAudit from "./pages/AdminAudit";
-import AdminIntegration from "./pages/AdminIntegration";
-import ChangePassword from "./pages/ChangePassword";
-import Reports from "./pages/Reports";
-import Analytics from "./pages/Analytics";
-import AdminAnalytics from "./pages/AdminAnalytics";
-import AnalystLayout from "./ui/layouts/AnalystLayout";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
-import RulesManagement from "./features/manager/rules/RulesManagement";
-import AlertsManagement from "./features/manager/alerts/AlertsManagement";
-import CasesManagement from "./features/manager/cases/CasesManagement";
-import AnalystManagement from "./features/manager/analyst/AnalystManagement";
-import ForgotPassword from "./pages/ForgotPassword";
-import UpdatePassword from "./pages/UpdatePassword";
-import PasswordConfirmation from "./pages/PasswordConfirmation";
-import Index from "./pages/Index";
-import TenantsLogin from "./pages/auth/TenantsLogin";
-import AuditorLayout from "./ui/layouts/AuditorLayout";
-import Settings from "./pages/settings/Settings";
-import AdminRule from "./pages/AdminRule";
+import Spinner from "./ui/utils/Spinner";
+
+// Dynamic imports
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const LoginPage = React.lazy(() => import("./pages/auth/LoginPage"));
+const AppLayout = React.lazy(() => import("./ui/layouts/AppLayout"));
+const Tenant = React.lazy(() => import("./pages/Tenant"));
+const Administrator = React.lazy(() => import("./pages/Administrator"));
+const Audit = React.lazy(() => import("./pages/Audit"));
+const Page404 = React.lazy(() => import("./pages/Page404"));
+const ManagerLayout = React.lazy(() => import("./ui/layouts/ManagerLayout"));
+const ManagerDashboard = React.lazy(() => import("./pages/manager/Dashboard"));
+const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
+const Users = React.lazy(() => import("./pages/Users"));
+const AdminLayout = React.lazy(() => import("./ui/layouts/AdminLayout"));
+const AdminReports = React.lazy(() => import("./pages/AdminReports"));
+const AdminAudit = React.lazy(() => import("./pages/AdminAudit"));
+const AdminIntegration = React.lazy(() => import("./pages/AdminIntegration"));
+const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
+const Reports = React.lazy(() => import("./pages/Reports"));
+const Analytics = React.lazy(() => import("./pages/Analytics"));
+const AdminAnalytics = React.lazy(() => import("./pages/AdminAnalytics"));
+const AnalystLayout = React.lazy(() => import("./ui/layouts/AnalystLayout"));
+const RulesManagement = React.lazy(
+  () => import("./features/manager/rules/RulesManagement")
+);
+const AlertsManagement = React.lazy(
+  () => import("./features/manager/alerts/AlertsManagement")
+);
+const CasesManagement = React.lazy(
+  () => import("./features/manager/cases/CasesManagement")
+);
+const AnalystManagement = React.lazy(
+  () => import("./features/manager/analyst/AnalystManagement")
+);
+const ForgotPassword = React.lazy(() => import("./pages/ForgotPassword"));
+const UpdatePassword = React.lazy(() => import("./pages/UpdatePassword"));
+const PasswordConfirmation = React.lazy(
+  () => import("./pages/PasswordConfirmation")
+);
+const Index = React.lazy(() => import("./pages/Index"));
+const AuditorLayout = React.lazy(() => import("./ui/layouts/AuditorLayout"));
+const Settings = React.lazy(() => import("./pages/settings/Settings"));
+const AdminRule = React.lazy(() => import("./pages/AdminRule"));
+
 
 // ProtectedRoute Component
 interface ProtectedProps {
@@ -89,11 +102,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
 
-      <Routes>
+<Suspense fallback={<Spinner/>}>
+<Routes>
         {/* Public Routes */}
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/:tenant/auth/login" element={<TenantsLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/update-password" element={<UpdatePassword />} />
         <Route
@@ -202,9 +215,9 @@ function App() {
         <Route
           path="/auditor"
           element={
-            // <ProtectedRoute userRole="Auditor">
-            <AuditorLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute userRole="Auditor">
+              <AuditorLayout />
+            </ProtectedRoute>
           }
         >
           <Route path="dashboard" element={<ManagerDashboard />} />
@@ -220,6 +233,8 @@ function App() {
         {/* Fallback Route */}
         <Route path="*" element={<Page404 />} />
       </Routes>
+</Suspense>
+      
 
       <Toaster
         position="top-center"

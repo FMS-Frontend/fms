@@ -1,34 +1,104 @@
 {
-    "name": "Rule amount",
-    "description": "Rule amount ",
-    "conditions": {
-        "condition": "And",
-        "rules": [
+    "status": 200,
+    "data": {
+        "id": "a8ac9682-06e2-4cde-afe2-656a23c33cd1",
+        "name": "Fraud Rule1",
+        "status": "Active",
+        "createdBy": "d91f5ed1-c6c4-4589-beb2-74baac055f52",
+        "description": "Description for fraud rule1",
+        "conditions": {
+            "condition": "And",
+            "rules": [
+                {
+                    "field": "Transaction.date",
+                    "operator": "=",
+                    "value": "2025-01-09"
+                },
+                {
+                    "condition": "And",
+                    "rules": [
+                        {
+                            "field": "Transaction.amount",
+                            "operator": ">",
+                            "value": "3000"
+                        },
+                        {
+                            "condition": "And",
+                            "rules": [
+                                {
+                                    "field": "Transaction.currency",
+                                    "operator": "=",
+                                    "value": "USD"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "field": "Transaction.amount",
+                    "operator": ">=",
+                    "value": "5000"
+                }
+            ]
+        },
+        "actions": [
             {
-                "field": "Transaction.amount",
-                "operator": ">",
-                "value": "2000"
+                "target": "Transaction",
+                "property": "Allow",
+                "value": "Print: Fraud detected"
             },
             {
-                "condition": "And",
-                "rules": [
-                    {
-                        "field": "Transaction.date",
-                        "operator": "=",
-                        "value": "2025-01-04"
-                    }
-                ]
+                "target": "User",
+                "property": "Allow",
+                "value": "Mr Bunmi"
             }
-        ]
+        ],
+        "properties": {
+            "activationGroup": "group2"
+        },
+        "compiledConditions": {
+            "logicalOperator": "And",
+            "conditions": [
+                {
+                    "field": "Transaction.date",
+                    "operator": "=",
+                    "value": "2025-01-09"
+                },
+                {
+                    "logicalOperator": "And",
+                    "conditions": [
+                        {
+                            "field": "Transaction.amount",
+                            "operator": ">",
+                            "value": "3000"
+                        },
+                        {
+                            "logicalOperator": "And",
+                            "conditions": [
+                                {
+                                    "field": "Transaction.currency",
+                                    "operator": "=",
+                                    "value": "USD"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "field": "Transaction.amount",
+                    "operator": ">=",
+                    "value": "5000"
+                }
+            ]
+        },
+        "compiledActions": null,
+        "createdAt": "2025-01-08T21:12:39.263Z",
+        "updatedAt": "2025-01-08T21:12:39.263Z",
+        "author": {
+            "id": "d91f5ed1-c6c4-4589-beb2-74baac055f52",
+            "name": "Blard"
+        },
+        "historyLogs": []
     },
-    "actions": [
-        {
-            "target": "Transaction",
-            "property": "Allow",
-            "value": "Print: Fraud detected"
-        }
-    ],
-    "properties": {
-        "salience": 100
-    }
+    "message": "Rule fetched"
 }
