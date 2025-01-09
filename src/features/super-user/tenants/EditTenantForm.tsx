@@ -43,7 +43,7 @@ const EditTenantForm: FC<EditTenantProps> = ({ tenantToEdit, onClose }) => {
         description: data.description,
       });
 
-      toast.success("Admin Edited Successfully");
+      toast.success(" Tenant Edited Successfully");
 
       if (onClose) {
         onClose();

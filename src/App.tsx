@@ -114,9 +114,10 @@ function App() {
         <Route
           path="/change-password"
           element={
-            <ProtectedRoute userRole="Super User">
-              <ChangePassword />
-            </ProtectedRoute>
+            <ChangePassword />
+            // <ProtectedRoute userRole="Super User">
+              
+            // </ProtectedRoute>
           }
         />
 

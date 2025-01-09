@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import CreateTenantForm from "./CreateTenantForm";
-import TenantInfo from "./TenantInfo";
-import TenantCheckboxes from "./TenantCheckboxes";
 import { TenantProvider } from "./TenantContext";
 
 /**
@@ -25,19 +23,12 @@ interface TenantModalProps {
 }
 
 const TenantModal: React.FC<TenantModalProps> = ({ onClose }) => {
-  const [step, setStep] = useState(1);
-
-  const nextStep = () => setStep((prev) => prev + 1);
-  const previousStep = () => setStep((prev) => prev - 1);
+  const [ step ] = useState(1);
 
   return (
     <>
       <TenantProvider>
-        {step === 1 && <CreateTenantForm onNext={nextStep} onClose={onClose} />}
-        {step === 2 && (
-          <TenantInfo onPrevious={previousStep} onNext={nextStep} />
-        )}
-        {step === 3 && <TenantCheckboxes onClose={onClose} />}
+        {step === 1 && <CreateTenantForm  onClose={onClose} />}
       </TenantProvider>
     </>
   );
