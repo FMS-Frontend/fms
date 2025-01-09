@@ -39,8 +39,8 @@ const loginUrl = "/auth/login";
 const LoginPage: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
-  const { setAccessToken, setRefreshToken, handleRoleChange } = useAppContext();
-  // const userRole = checkUserRole(role);
+  const { setAccessToken, setRefreshToken, handleRoleChange, setTenant } =
+    useAppContext();
 
   // Validation for input data
   const validate = Yup.object({
@@ -52,7 +52,6 @@ const LoginPage: FC = (): JSX.Element => {
       .required("Required"),
   });
 
-  // Form Submission
   const handleFormSubmit = async (
     values: FormValues,
     actions: FormikHelpers<FormValues>
@@ -62,28 +61,22 @@ const LoginPage: FC = (): JSX.Element => {
         email: values.email,
         password: values.password,
       });
-
-      // console.log(res);
-
-      //Set Auth Token
+  
+      // Extract tokens and set in context/local storage
       const accessToken = res.headers["x-access-token"];
-      // console.log("accessToken => ", accessToken);
-
+      const refreshToken = res.headers["x-refresh-token"];
+  
       if (accessToken) {
-        setAccessToken(accessToken); //Save to Context
+        setAccessToken(accessToken);
         localStorage.setItem("accessToken", accessToken);
       }
-
-      // Set Refresh Token
-      const refreshToken = res.headers["x-refresh-token"];
-      // console.log("refreshToken =>", refreshToken);
-
+  
       if (refreshToken) {
-        setRefreshToken(refreshToken); //Save to context
+        setRefreshToken(refreshToken);
         localStorage.setItem("refreshToken", refreshToken);
       }
-
-      // If it's a first time User Login
+  
+      // Handle first-time login requiring a password change
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
@@ -92,23 +85,33 @@ const LoginPage: FC = (): JSX.Element => {
         toast.success("Change your password before proceeding");
         return;
       }
-
+  
+      // Extract user details
+      const tenant = res.data.data?.tenantUsername || "";
       const userRole = res.data.data?.role;
-      handleRoleChange(userRole); //Save
-      // console.log(res);
-
-      //
-      if (userRole === "Super User") {
-        toast.success("Logged in Successfully");
-        navigate("/dashboard");
+  
+      setTenant(tenant);
+      handleRoleChange(userRole);
+  
+      // Determine role-based redirection
+      const redirectPath =
+        userRole === "Super User"
+          ? "/dashboard"
+          : `/${userRole.toLowerCase()}/dashboard`;
+  
+      // Navigate and display success toast
+      if (userRole) {
+        toast.success(`Welcome back ${userRole}`);
+        navigate(redirectPath);
       }
     } catch (err) {
-      toast.error("Wrong credentials, enter correct email and password");
-      console.log(err);
+      toast.error("Wrong credentials. Please check your email and password.");
+      console.error(err);
     } finally {
       actions.resetForm();
     }
   };
+  
 
   const {
     values,
@@ -142,7 +145,7 @@ const LoginPage: FC = (): JSX.Element => {
           </Link>
         </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
-          Super User Login
+          User Login
         </h2>
         <p className="text-gray-600 text-center text-xl mb-6">
           Please enter your email and password to continue

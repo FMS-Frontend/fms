@@ -6,6 +6,7 @@ import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
 import Spinner from "../../../ui/utils/Spinner";
 import AddRule2 from "./modals/AddRule2";
+import { useAppContext } from "../../../context/AppContext";
 
 interface RuleMgtTableProps {
   headingData: string[];
@@ -21,11 +22,14 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
   const [assignedTo, setAssignedTo] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
-
+  
+  const currentYear = new Date().getFullYear();
   const [dateRange, setDateRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date(currentYear, 0, 1), // January 1st
+    endDate: new Date(currentYear, 11, 31), // December 31st
   });
+  const { role } = useAppContext();
+
 
   // Filter data based on selected filters, search query, and date range
   const filteredData = data.filter((rule) => {
@@ -35,10 +39,12 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
     const matchesSearch =
       searchQuery === "" ||
       rule.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rule.rule_name.toLowerCase().includes(searchQuery.toLowerCase());
+      rule.name.toLowerCase().includes(searchQuery.toLowerCase());
     const ruleDate = new Date(rule.updatedAt);
-    const matchesDateRange =
-      ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate;
+      const matchesDateRange =
+      !dateRange.startDate || !dateRange.endDate || 
+      (ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate);
+
 
     return (
       (matchesStatus && matchesSearch) || matchesDateRange
@@ -79,7 +85,9 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <AddRule2/>
+        
+        {role === "Admin" && <AddRule2/>}
+
       </div>
 
       {/* Table Display */}
@@ -109,7 +117,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
             <RuleTableRow
               key={rule.id}
               ruleId={rule.id}
-              ruleName={rule.rule_name}
+              ruleName={rule.name}
               status={rule.status}
               lastModified={formatRuleDate(rule.updatedAt)}
               index={index}

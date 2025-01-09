@@ -1,5 +1,5 @@
-import { FC } from "react";
-import HomeNav from "../ui/navs/HomeNav";
+import React, { FC } from "react";
+const HomeNav = React.lazy(() => import("../ui/navs/HomeNav"));
 import bg from "../images/home-bg.png";
 import shapeBg from "../images/Shape.png";
 

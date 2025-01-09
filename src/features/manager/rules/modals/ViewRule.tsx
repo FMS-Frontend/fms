@@ -1,24 +1,24 @@
 
 import { FC } from "react";
-import Modal from "../../../../ui/utils/Modal";
+import Modal3 from "../../../../ui/utils/Modal.View";
 import ViewRuleModal from "./ViewRuleModal";
 
 interface ViewRuleProps {
-  ruleId: string; // Pass the rule ID to fetch specific rule details
+  ruleId: string; 
 }
 
 const ViewRule: FC<ViewRuleProps> = ({ ruleId }) => {
   return (
-    <Modal>
-      <Modal.Open opens={`view-rule-${ruleId}`}>
+    <Modal3>
+      <Modal3.Open opens={`view-rule-${ruleId}`}>
         <button className="px-2 py-1 rounded bg-primaryBlue text-white cursor-pointer hover:bg-primaryBlue/70">
           View
         </button>
-      </Modal.Open>
-      <Modal.Window name={`view-rule-${ruleId}`}>
+      </Modal3.Open>
+      <Modal3.Window name={`view-rule-${ruleId}`}>
         {({ onClose }) => <ViewRuleModal onClose={onClose} ruleId={ruleId} />}
-      </Modal.Window>
-    </Modal>
+      </Modal3.Window>
+    </Modal3>
   );
 };
 

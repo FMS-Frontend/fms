@@ -162,7 +162,7 @@ interface  TenantData {
   }
   interface Rule1 {
     id: string;
-    rule_name: string;
+    name: string;
     status: "Active" | "Inactive";
     assignedTo?: {
       image: string;
@@ -181,8 +181,8 @@ interface  TenantData {
       totalPages: number;
     };
   }
-  interface RuleCreationRequest {
-    rule_name: string;
+  interface RuleCreationRequest { 
+    name: string;
     description: string;
     conditions: Array<{
       field: string;
@@ -194,10 +194,11 @@ interface  TenantData {
       property: string;
       value: string;
     }>;
-    flow_operators: {
-      salience: number;
+    properties: {
+      [key: string]: string | number;
     };
   }
+  
   interface RuleData {
   rule_name: string;
   description: string;
@@ -213,6 +214,29 @@ interface  TenantData {
   }>;
   flow_operators: {
     salience: number;
+  };
+}
+interface EditRuleProp {
+  name: string;
+  description: string;
+  conditions: {
+    condition: "And" | "Or";
+    rules: Array<
+      | {
+          field: string;
+          operator: string;
+          value: string;
+        }
+      | EditRuleProp["conditions"]
+    >;
+  };
+  actions: Array<{
+    target: string;
+    property: string;
+    value: string;
+  }>;
+  properties: {
+    [key: string]: string | number;
   };
 }
 
@@ -236,7 +260,7 @@ interface  TenantData {
     index: number;
   }
   interface Rule3 {
-    rule_name: string;
+    name: string;
     description: string;
     conditions: Array<{ field: string; operator: string; value: string }>;
     actions: Array<{ target: string; property: string; value: string }>;
@@ -255,7 +279,7 @@ interface  TenantData {
   }
 
   interface FlowOperators {
-    salience: number;
+    salience: string | number;
   }
 
   interface CreatedBy {
@@ -266,7 +290,7 @@ interface  TenantData {
   interface Rule2 {
     id: string;
     rule_name: string;
-    last_modified_date: string;
+    last_modified_date?: string;
     status: string;
     description: string;
     conditions: Condition[];
@@ -277,6 +301,10 @@ interface  TenantData {
     historyLogs: any[];
     createdBy: CreatedBy;
   }
+interface DeleteRuleProps {
+  ruleId: string;
+  tenantId: string;
+}
 
   // ========= CASES =================
   interface Case {
@@ -288,6 +316,7 @@ interface  TenantData {
       name: string;
     };
     updatedAt: string;
+    createdAt: string;
   }
   interface PaginationCase {
     pageSize: number;
@@ -305,6 +334,30 @@ interface  TenantData {
     id: string;
     name: string;
   }
+  interface CaseWithActions {
+    id: string;
+    code: number;
+    priority: "Low" | "Medium" | "High";
+    status: "Open" | "Closed";
+    description: string;
+    assignedTo: string;
+    createdAt: string;
+    updatedAt: string;
+    assignee?: {
+      id: string;
+      name: string;
+    };
+    actions: Array<{
+      id: string;
+      description: string;
+      createdAt: string;
+      author: {
+        id: string;
+        name: string;
+      };
+    }>;
+  }
+  
 
   interface CaseMgtOperationsProps {
     assignedTo: string;

@@ -3,7 +3,8 @@ import PrimaryButton from "../../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
 // import CreateRuleForm from "../forms/CreateRuleForm";
 import Modal2 from "../../../../ui/utils/Modal.Rule";
-import AddRuleForm from "../forms/AddRuleForm";
+// import AddRuleForm from "../forms/AddRuleForm";
+import CreateRuleForm from "../forms/CreateRuleForm";
 
 /**
  * AddRule is a React functional component that renders a button to open
@@ -29,7 +30,7 @@ const AddRule2: FC = () => {
         </PrimaryButton>
       </Modal2.Open>
       <Modal2.Window name="create-rule2">
-        {({ onClose }) => <AddRuleForm onClose={onClose || (() => {})} />}
+        {({ onClose }) => <CreateRuleForm onClose={onClose || (() => {})} />}
       </Modal2.Window>
     </Modal2>
   );
