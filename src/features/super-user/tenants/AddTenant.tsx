@@ -1,8 +1,9 @@
 import { FC } from "react";
 import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-import Modal from "../../../ui/utils/Modal";
+// import Modal from "../../../ui/utils/Modal";
 import TenantModal from "./TenantModal";
+import ModalTenant from "../../../ui/utils/Modal.Tenants";
 
 /**
  * AddTenant is a React functional component that renders a button to open
@@ -20,17 +21,17 @@ import TenantModal from "./TenantModal";
 
 const AddTenant: FC = () => {
   return (
-    <Modal>
-      <Modal.Open opens="create-tenant">
+    <ModalTenant>
+      <ModalTenant.Open opens="create-tenant">
         <PrimaryButton>
           <FiPlus />
           Add New Organization
         </PrimaryButton>
-      </Modal.Open>
-      <Modal.Window name="create-tenant">
+      </ModalTenant.Open>
+      <ModalTenant.Window name="create-tenant">
         {({ onClose }) => <TenantModal onClose={onClose || (() => {})} />}
-      </Modal.Window>
-    </Modal>
+      </ModalTenant.Window>
+    </ModalTenant>
   );
 };
 

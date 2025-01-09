@@ -36,26 +36,19 @@ declare global {
     id: string;
     userName: string;
     name: string;
+    admin: {id: string; name: string};
     createdAt: string;
     address?: string;
     description?: string;
-    phonenumber?: string;
-    admin: {
-      name: string;
-    };
     status: "Active" | "Pending" | "Deactivated";
   }
 interface  TenantData {
     name: string;
     address: string;
-    adminId: string;
-    email: string;
     description: string;
-    phonenumber: string;
-    createSchema: boolean;
-    syncAdmin: boolean;
-    sendLoginMail: boolean;
-    createRuleFolder: boolean;
+    contactPersonEmail: string;
+    contactPersonName: string;
+    contactPersonMobile: string;
   }
 
   // DashboardTable Tenants (Organization)

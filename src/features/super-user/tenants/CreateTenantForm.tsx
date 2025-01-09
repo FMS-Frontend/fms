@@ -2,6 +2,9 @@ import { FC, ChangeEvent } from "react";
 import { useTenant } from "./TenantContext";
 import Spinner from "../../../ui/utils/Spinner";
 // import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTenant } from "../../../services/apiSuperUser";
+import toast from "react-hot-toast";
 
 /**
  * CreateTenantForm component for creating a new tenant.
@@ -20,18 +23,36 @@ import Spinner from "../../../ui/utils/Spinner";
  */
 
 interface StepProps {
-  onNext: () => void;
+  // onNext: () => void;
   onClose: () => void;
 }
 
-const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
-  const { isLoading, admins, tenantData, setTenantData } = useTenant();
+const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
+  const { isLoading, tenantData, setTenantData } = useTenant();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setTenantData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: createTenant,
+    onSuccess: () => {
+      toast.success("Tenant created successfuly!");
+      queryClient.invalidateQueries({
+        queryKey: ["tenants"],
+      });
+      if (onClose) {onClose()};
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  const submitData = () => {
+    mutate(tenantData);
   };
 
   return (
@@ -74,7 +95,7 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
             />
           </div>
 
-          {/* Role Dropdown */}
+          {/* Role Dropdown
           <div className="mb-4">
             <label className="block text-gray-700 text-xl font-medium mb-1">
               Admin
@@ -92,9 +113,9 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
-          {/* Email Input */}
+          {/* Email Input
           <div className="mb-4">
             <label className="block text-gray-700 text-xl font-medium mb-1">
               Email
@@ -107,7 +128,7 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
               placeholder="Enter email"
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
-          </div>
+          </div> */}
 
           {/* Description Input */}
           <div className="mb-6">
@@ -127,11 +148,39 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
           {/* Phone Number Input */}
           <div className="mb-6">
             <label className="block text-gray-700 text-xl font-medium mb-1">
-              Phone Number
+              Contact Person Email
             </label>
             <input
-              name="phonenumber"
-              value={tenantData.phonenumber}
+              name="contactPersonEmail"
+              value={tenantData.contactPersonEmail}
+              onChange={handleChange}
+              type="text"
+              placeholder=""
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Contact Person Name
+            </label>
+            <input
+              name="contactPersonName"
+              value={tenantData.contactPersonName}
+              onChange={handleChange}
+              type="text"
+              placeholder=""
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Contact Person Mobile
+            </label>
+            <input
+              name="contactPersonMobile"
+              value={tenantData.contactPersonMobile}
               onChange={handleChange}
               type="text"
               placeholder=""
@@ -150,10 +199,10 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
 
             <button
               type="button"
-              onClick={onNext}
+              onClick={submitData}
               className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
             >
-              Next
+              Create
             </button>
           </div>
         </form>
