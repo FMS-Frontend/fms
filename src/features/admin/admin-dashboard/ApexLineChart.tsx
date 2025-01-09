@@ -29,6 +29,9 @@ const ApexLineChart: React.FC = () => {
       return date.toLocaleString("default", { month: "long" }); // Format: "January"
     }) || [];
 
+    console.log(seriesData);
+    
+
   const options: ApexOptions = {
     series: [
       {

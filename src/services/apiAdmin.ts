@@ -20,7 +20,7 @@ export const getAdminSummary = async (): Promise<StatData[]> => {
 export async function getTenantChart(tenant: string | null) {
   try {
     const res = await URL.get(
-      `/analytics/trends/tenants/${tenant}/user?startDate=2024-01-01&endDate=2024-12-01&intervalUnit=month`
+      `/analytics/trends/tenants/${tenant}/user?startDate=2025-01-01&endDate=2025-12-12&intervalUnit=month`
     );
 
     return res.data;

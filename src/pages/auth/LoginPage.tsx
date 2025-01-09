@@ -61,48 +61,68 @@ const LoginPage: FC = (): JSX.Element => {
         email: values.email,
         password: values.password,
       });
-  
+
       // Extract tokens and set in context/local storage
       const accessToken = res.headers["x-access-token"];
       const refreshToken = res.headers["x-refresh-token"];
-  
+
       if (accessToken) {
         setAccessToken(accessToken);
         localStorage.setItem("accessToken", accessToken);
       }
-  
+
       if (refreshToken) {
         setRefreshToken(refreshToken);
         localStorage.setItem("refreshToken", refreshToken);
       }
-  
+
       // Handle first-time login requiring a password change
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
-  
         navigate("/change-password");
         toast.success("Change your password before proceeding");
         return;
       }
-  
+
       // Extract user details
       const tenant = res.data.data?.tenantUsername || "";
       const userRole = res.data.data?.role;
-  
+      const subRole = res.data.data.subRole?.name;
+      if (userRole === "User" && subRole) {
+        handleRoleChange(subRole);
+      } else {
+        handleRoleChange(userRole);
+      }
+
       setTenant(tenant);
-      handleRoleChange(userRole);
-  
-      // Determine role-based redirection
-      const redirectPath =
-        userRole === "Super User"
-          ? "/dashboard"
-          : `/${userRole.toLowerCase()}/dashboard`;
-  
-      // Navigate and display success toast
+
+      let redirectPath = "";
+      switch (userRole) {
+        case "Super User":
+          redirectPath = "/dashboard";
+          break;
+
+        case "User":
+          // If the role is "User" and subRole exists, redirect to subRole dashboard
+          if (subRole) {
+            redirectPath = `/${subRole.toLowerCase()}/dashboard`;
+          } else {
+            redirectPath = "/user/dashboard";
+          }
+          break;
+
+        default:
+          // For other roles, use the userRole as the path
+          redirectPath = `/${userRole.toLowerCase()}/dashboard`;
+          break;
+      }
+
       if (userRole) {
-        toast.success(`Welcome back ${userRole}`);
         navigate(redirectPath);
+        toast.success(
+          `Welcome back ${userRole === "User" && subRole ? subRole : userRole}`
+        );
       }
     } catch (err) {
       toast.error("Wrong credentials. Please check your email and password.");
@@ -111,7 +131,6 @@ const LoginPage: FC = (): JSX.Element => {
       actions.resetForm();
     }
   };
-  
 
   const {
     values,
