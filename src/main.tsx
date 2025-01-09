@@ -14,7 +14,6 @@ createRoot(document.getElementById("root")!).render(
         <AppProvider>
           <RuleProvider>
             <App />
-            <App />
           </RuleProvider>
         </AppProvider>
       </BrowserRouter>
