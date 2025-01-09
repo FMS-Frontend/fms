@@ -28,13 +28,10 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({
   const [tenantData, setTenantData] = useState<TenantData>({
     name: "",
     address: "",
-    adminId: "",
-    email: "",
     description: "",
-    createSchema: true,
-    syncAdmin: true,
-    sendLoginMail: false,
-    createRuleFolder: false,
+    contactPersonEmail: "",
+    contactPersonName: "",
+    contactPersonMobile: "",
   });
 
   const { isLoading, data: admins = [] } = useQuery({

@@ -80,6 +80,8 @@ const LoginPage: FC = (): JSX.Element => {
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
+
+        navigate(`/update-password?token=${resetToken}`);
         navigate("/change-password");
         toast.success("Change your password before proceeding");
         return;
