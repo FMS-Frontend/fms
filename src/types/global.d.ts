@@ -310,6 +310,7 @@ interface DeleteRuleProps {
   ruleId: string;
   tenantId: string;
 }
+
   // ========= CASES =================
   interface Case {
     id: string;

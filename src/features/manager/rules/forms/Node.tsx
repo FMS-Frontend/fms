@@ -35,6 +35,7 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
       try {
         const result = await getVariables(tenant);        
         setVariables(result?.data); 
+        console.log(result?.data);
         setLoading(false);
       } catch (err) {
         console.error(err);
