@@ -109,7 +109,7 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
             />
           </div>
 
-          {/* Phone Number Input */}
+          {/* Description Input */}
           <div className="mb-6">
             <label className="block text-gray-700 text-xl font-medium mb-1">
               Description
@@ -117,6 +117,21 @@ const CreateTenantForm: FC<StepProps> = ({ onNext, onClose }) => {
             <input
               name="description"
               value={tenantData.description}
+              onChange={handleChange}
+              type="text"
+              placeholder=""
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          {/* Phone Number Input */}
+          <div className="mb-6">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Phone Number
+            </label>
+            <input
+              name="phonenumber"
+              value={tenantData.phonenumber}
               onChange={handleChange}
               type="text"
               placeholder=""

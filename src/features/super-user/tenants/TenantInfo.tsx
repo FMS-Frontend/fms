@@ -83,6 +83,15 @@ const TenantInfo: FC<StepProps> = ({ onPrevious, onNext }) => {
           </p>
         </div>
 
+        <div className="mb-6">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Phone Number
+          </label>
+          <p className="w-full text-2xl font-medium rounded-md px-4 py-3">
+            {tenantData.phonenumber}
+          </p>
+        </div>
+
         <div className="flex justify-around mt-6">
           <button
             type="button"

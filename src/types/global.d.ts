@@ -39,6 +39,7 @@ declare global {
     createdAt: string;
     address?: string;
     description?: string;
+    phonenumber?: string;
     admin: {
       name: string;
     };
@@ -50,6 +51,7 @@ interface  TenantData {
     adminId: string;
     email: string;
     description: string;
+    phonenumber: string;
     createSchema: boolean;
     syncAdmin: boolean;
     sendLoginMail: boolean;

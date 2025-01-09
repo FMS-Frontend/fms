@@ -31,6 +31,7 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({
     adminId: "",
     email: "",
     description: "",
+    phonenumber: "",
     createSchema: true,
     syncAdmin: true,
     sendLoginMail: false,

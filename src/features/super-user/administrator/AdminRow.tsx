@@ -8,6 +8,8 @@ import { deleteAdmin } from "../../../services/apiSuperUser";
 import toast from "react-hot-toast";
 import EditAdminModal from "./EditAdminModal";
 import { getStatusStyles } from "../../../db/helperFunctions";
+import maskEmailDomain from "../../../ui/utils/MaskEmailDomain";
+import maskPhoneNumber from "../../../ui/utils/MaskPhoneNumber";
 
 interface AuditRowProps {
   admin: Admin;
@@ -40,8 +42,8 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
     >
       <span className="text-2xl">{name}</span>
       <span className="text-2xl">{tenant?.name || "-"}</span>
-      <span className="text-blue-700 text-2xl">{email}</span>
-      <span className="text-xl">{mobile}</span>
+      <span className="text-blue-700 text-2xl">{maskEmailDomain(email)}</span>
+      <span className="text-xl">{maskPhoneNumber(mobile)}</span>
       <div>
         <span
           className={`flex justify-center items-center px-4 py-1 rounded-full text-xl font-medium ${getStatusStyles(
