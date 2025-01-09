@@ -145,7 +145,7 @@ const LoginPage: FC = (): JSX.Element => {
           </Link>
         </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
-          Super User Login
+          User Login
         </h2>
         <p className="text-gray-600 text-center text-xl mb-6">
           Please enter your email and password to continue
