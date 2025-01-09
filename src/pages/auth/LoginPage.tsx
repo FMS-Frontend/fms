@@ -129,6 +129,7 @@ const LoginPage: FC = (): JSX.Element => {
     } catch (err) {
       toast.error("Wrong credentials. Please check your email and password.");
       console.error(err);
+      return;
     } finally {
       actions.resetForm();
     }
