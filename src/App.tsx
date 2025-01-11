@@ -64,7 +64,7 @@ const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
 
   // If it's a settings route, allow access based on the user having any valid role
   if (isSettingsRoute) {
-    const validRoles = ["Admin", "Manager", "Analyst", "Auditor", "Super User"];
+    const validRoles = ["Admin", "Manager", "Rule Analyst", "Fraud Analyst", "Auditor", "Super User"];
     const hasValidRole = validRoles.includes(role);
 
     if (!hasValidRole) {
@@ -111,15 +111,7 @@ function App() {
         />
 
         {/* Protected Routes */}
-        <Route
-          path="/change-password"
-          element={
-            <ChangePassword />
-            // <ProtectedRoute userRole="Super User">
-              
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="/change-password" element={<ChangePassword />} />
 
         {/* Super User Routes */}
         <Route
@@ -180,7 +172,7 @@ function App() {
         <Route
           path="/rule-analyst"
           element={
-            <ProtectedRoute userRole="Analyst">
+            <ProtectedRoute userRole="Rule Analyst">
               <AnalystLayout />
             </ProtectedRoute>
           }
@@ -194,9 +186,9 @@ function App() {
 
         {/*Fraud Analyst Routes */}
         <Route
-          path="/analyst"
+          path="/fraud-analyst"
           element={
-            <ProtectedRoute userRole="Analyst">
+            <ProtectedRoute userRole="Fraud Analyst">
               <AnalystLayout />
             </ProtectedRoute>
           }

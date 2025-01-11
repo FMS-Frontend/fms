@@ -73,16 +73,27 @@ export const managerNavData = [
   { path: "/manager/analytics", label: "Analytics", icon: BsGraphUpArrow },
 ];
 
-export const analystNavData = [
-  { path: "/analyst/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
-  { path: "/analyst/alerts", label: "Alerts", icon: IoAlertCircleOutline },
-  { path: "/analyst/rules", label: "Rules", icon: GoLaw },
+export const ruleAnalystNavData = [
+  { path: "/rule-analyst/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
+  { path: "/rule-analyst/alerts", label: "Alerts", icon: IoAlertCircleOutline },
+  { path: "/rule-analyst/rules", label: "Rules", icon: GoLaw },
   {
-    path: "/analyst/cases",
+    path: "/rule-analyst/cases",
     label: "Cases",
     icon: PiFolderSimpleUser,
   },
-  { path: "/analyst/analytics", label: "Analytics", icon: BsGraphUpArrow },
+  { path: "/rule-analyst/analytics", label: "Analytics", icon: BsGraphUpArrow },
+];
+export const fraudAnalystNavData = [
+  { path: "/fraud-analyst/dashboard", label: "Dashboard", icon: MdOutlineDashboard },
+  { path: "/fraud-analyst/alerts", label: "Alerts", icon: IoAlertCircleOutline },
+  { path: "/fraud-analyst/rules", label: "Rules", icon: GoLaw },
+  {
+    path: "/fraud-analyst/cases",
+    label: "Cases",
+    icon: PiFolderSimpleUser,
+  },
+  { path: "/fraud-analyst/analytics", label: "Analytics", icon: BsGraphUpArrow },
 ];
 export const auditorNavData = [
   { path: "/auditor/dashboard", label: "Dashboard", icon: MdOutlineDashboard },

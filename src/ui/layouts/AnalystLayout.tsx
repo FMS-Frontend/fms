@@ -3,8 +3,7 @@ import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../navs/Sidebar";
 import Header from "../navs/Header";
-import { analystNavData } from "../../db";
-
+import { ruleAnalystNavData } from "../../db";
 /**
  * Analyst Layout component that wraps the main content of the admin section.
  *
@@ -35,7 +34,7 @@ const AnalystLayout: FC = (): JSX.Element => {
         ></div>
       )}
       <Sidebar
-        navData={analystNavData}
+        navData={ruleAnalystNavData}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
