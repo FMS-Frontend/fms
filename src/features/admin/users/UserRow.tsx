@@ -9,6 +9,8 @@ import { deleteUser } from "../../../services/apiAdmin";
 import toast from "react-hot-toast";
 import EditUser from "./EditUserModal";
 import { useAppContext } from "../../../context/AppContext";
+import maskPhoneNumber from "../../../ui/utils/MaskPhoneNumber";
+import maskEmailDomain from "../../../ui/utils/MaskEmailDomain";
 
 interface UserRowProps {
   user: User;
@@ -42,8 +44,8 @@ const UserRow: FC<UserRowProps> = ({ user, index }) => {
     >
       <span className="text-2xl">{name}</span>
       <span className="text-2xl">{role}</span>
-      <span className="text-blue-700 text-2xl">{email}</span>
-      <span className="text-2xl">{mobile}</span>
+      <span className="text-blue-700 text-2xl">{maskEmailDomain(email)}</span>
+      <span className="text-2xl">{maskPhoneNumber(mobile)}</span>
       <div>
         <span
           className={`flex justify-center items-center px-4 py-1 rounded-full text-xl font-medium ${getStatusStyles(
