@@ -25,7 +25,8 @@ const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
 const Reports = React.lazy(() => import("./pages/Reports"));
 const Analytics = React.lazy(() => import("./pages/Analytics"));
 const AdminAnalytics = React.lazy(() => import("./pages/AdminAnalytics"));
-const AnalystLayout = React.lazy(() => import("./ui/layouts/AnalystLayout"));
+const RuleAnalystLayout = React.lazy(() => import("./ui/layouts/RuleAnalystLayout"));
+const FraudAnalystLayout = React.lazy(() => import("./ui/layouts/FraudAnalystLayout"));
 const RulesManagement = React.lazy(
   () => import("./features/manager/rules/RulesManagement")
 );
@@ -173,7 +174,7 @@ function App() {
           path="/rule-analyst"
           element={
             <ProtectedRoute userRole="Rule Analyst">
-              <AnalystLayout />
+              <RuleAnalystLayout/>
             </ProtectedRoute>
           }
         >
@@ -189,7 +190,7 @@ function App() {
           path="/fraud-analyst"
           element={
             <ProtectedRoute userRole="Fraud Analyst">
-              <AnalystLayout />
+              <FraudAnalystLayout/>
             </ProtectedRoute>
           }
         >

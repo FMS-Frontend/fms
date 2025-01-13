@@ -17,7 +17,7 @@ import { ruleAnalystNavData } from "../../db";
  * @returns {JSX.Element} The rendered layout with sidebar, header, and content.
  */
 
-const AnalystLayout: FC = (): JSX.Element => {
+const RuleAnalystLayout: FC = (): JSX.Element => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -48,4 +48,4 @@ const AnalystLayout: FC = (): JSX.Element => {
   );
 };
 
-export default AnalystLayout;
+export default RuleAnalystLayout;
