@@ -35,12 +35,20 @@ interface FormValues {
 }
 
 const loginUrl = "/auth/login";
+function formatRoute(str: string) {
+  return str.toLowerCase().replace(/ /g, "-");
+}
 
 const LoginPage: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
-  const { setAccessToken, setRefreshToken, handleRoleChange, setTenant } =
-    useAppContext();
+  const {
+    setAccessToken,
+    setRefreshToken,
+    handleRoleChange,
+    setTenant,
+    handleUserNameChange,
+  } = useAppContext();
 
   // Validation for input data
   const validate = Yup.object({
@@ -82,12 +90,14 @@ const LoginPage: FC = (): JSX.Element => {
         localStorage.setItem("resetToken", resetToken);
 
         navigate(`/update-password?token=${resetToken}`);
-        navigate("/change-password");
         toast.success("Change your password before proceeding");
         return;
       }
 
       // Extract user details
+      const tenantUser = res.data.data?.name || "";
+      localStorage.setItem("tenantUser", tenantUser);
+      handleUserNameChange(tenantUser);
       const tenant = res.data.data?.tenantUsername || "";
       const userRole = res.data.data?.role;
       const subRole = res.data.data.subRole?.name;
@@ -104,27 +114,27 @@ const LoginPage: FC = (): JSX.Element => {
         case "Super User":
           redirectPath = "/dashboard";
           break;
+        case "Admin":
+          redirectPath = "/admin/dashboard";
+          break;
 
         case "User":
           // If the role is "User" and subRole exists, redirect to subRole dashboard
           if (subRole) {
-            redirectPath = `/${subRole.toLowerCase()}/dashboard`;
+            redirectPath = `/${formatRoute(subRole)}/dashboard`;
           } else {
             redirectPath = "/user/dashboard";
           }
           break;
 
         default:
-          // For other roles, use the userRole as the path
-          redirectPath = `/${userRole.toLowerCase()}/dashboard`;
+          redirectPath = `/${formatRoute(subRole)}/dashboard`;
           break;
       }
 
       if (userRole) {
         navigate(redirectPath);
-        toast.success(
-          `Welcome back ${userRole === "User" && subRole ? subRole : userRole}`
-        );
+        toast.success(`Welcome back ${tenantUser || "Super User"}`);
       }
     } catch (err) {
       toast.error("Wrong credentials. Please check your email and password.");
