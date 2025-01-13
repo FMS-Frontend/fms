@@ -1,11 +1,11 @@
+// AppLayout.tsx
 import { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../navs/Header";
 import Sidebar from "../navs/Sidebar";
-import { adminNavData } from "../../db";
-
+import Header from "../navs/Header";
+import { ruleAnalystNavData } from "../../db";
 /**
- * Admin Layout component that wraps the main content of the admin section.
+ * Analyst Layout component that wraps the main content of the admin section.
  *
  * This component provides a responsive layout for the admin dashboard, including:
  * - A sidebar that can be toggled on and off for smaller screens.
@@ -17,7 +17,7 @@ import { adminNavData } from "../../db";
  * @returns {JSX.Element} The rendered layout with sidebar, header, and content.
  */
 
-const AdminLayout: FC = (): JSX.Element => {
+const FraudAnalystLayout: FC = (): JSX.Element => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // Toggle function for sidebar
@@ -34,7 +34,7 @@ const AdminLayout: FC = (): JSX.Element => {
         ></div>
       )}
       <Sidebar
-        navData={adminNavData}
+        navData={ruleAnalystNavData}
         className={`${
           isSidebarOpen ? "block" : "hidden"
         } lg:block absolute lg:relative z-20`}
@@ -48,4 +48,4 @@ const AdminLayout: FC = (): JSX.Element => {
   );
 };
 
-export default AdminLayout;
+export default FraudAnalystLayout;
