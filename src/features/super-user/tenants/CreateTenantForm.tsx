@@ -182,7 +182,7 @@ const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
                 name="contactPersonMobile"
                 value={tenantData.contactPersonMobile}
                 onChange={handleChange}
-                type="tel"
+                type="text"
                 placeholder="Enter contact person's phone number"
                 pattern="^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$"
                 required

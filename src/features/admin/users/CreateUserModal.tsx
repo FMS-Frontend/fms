@@ -124,7 +124,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
             Phone Number
           </label>
           <input
-            type="number"
+            type="text"
             placeholder="Enter phone number"
             {...register("mobile",
               {required: "Phone number is required", pattern: {
