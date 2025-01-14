@@ -84,6 +84,9 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
       case "Fraud Analyst":
         normalizedRole = "Fraud Analyst";
         break;
+      case "Auditor":
+        normalizedRole = "Auditor";
+        break;
       default:
         normalizedRole = "Unknown";
         break;
