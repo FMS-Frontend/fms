@@ -114,7 +114,7 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             Phone Number
           </label>
           <input
-            type="number"
+            type="text"
             placeholder="Enter Phone Number"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             {...register("mobile",
