@@ -25,7 +25,8 @@ const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
 const Reports = React.lazy(() => import("./pages/Reports"));
 const Analytics = React.lazy(() => import("./pages/Analytics"));
 const AdminAnalytics = React.lazy(() => import("./pages/AdminAnalytics"));
-const AnalystLayout = React.lazy(() => import("./ui/layouts/AnalystLayout"));
+const RuleAnalystLayout = React.lazy(() => import("./ui/layouts/RuleAnalystLayout"));
+const FraudAnalystLayout = React.lazy(() => import("./ui/layouts/FraudAnalystLayout"));
 const RulesManagement = React.lazy(
   () => import("./features/manager/rules/RulesManagement")
 );
@@ -64,7 +65,7 @@ const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
 
   // If it's a settings route, allow access based on the user having any valid role
   if (isSettingsRoute) {
-    const validRoles = ["Admin", "Manager", "Analyst", "Auditor", "Super User"];
+    const validRoles = ["Admin", "Manager", "Rule Analyst", "Fraud Analyst", "Auditor", "Super User"];
     const hasValidRole = validRoles.includes(role);
 
     if (!hasValidRole) {
@@ -111,15 +112,7 @@ function App() {
         />
 
         {/* Protected Routes */}
-        <Route
-          path="/change-password"
-          element={
-            <ChangePassword />
-            // <ProtectedRoute userRole="Super User">
-              
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="/change-password" element={<ChangePassword />} />
 
         {/* Super User Routes */}
         <Route
@@ -180,8 +173,8 @@ function App() {
         <Route
           path="/rule-analyst"
           element={
-            <ProtectedRoute userRole="Analyst">
-              <AnalystLayout />
+            <ProtectedRoute userRole="Rule Analyst">
+              <RuleAnalystLayout/>
             </ProtectedRoute>
           }
         >
@@ -194,10 +187,10 @@ function App() {
 
         {/*Fraud Analyst Routes */}
         <Route
-          path="/analyst"
+          path="/fraud-analyst"
           element={
-            <ProtectedRoute userRole="Analyst">
-              <AnalystLayout />
+            <ProtectedRoute userRole="Fraud Analyst">
+              <FraudAnalystLayout/>
             </ProtectedRoute>
           }
         >

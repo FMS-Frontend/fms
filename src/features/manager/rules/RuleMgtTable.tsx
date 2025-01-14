@@ -86,7 +86,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         
-        {role === "Admin" && <AddRule2/>}
+        {(role === "Admin" || role === "Rule Analyst") && <AddRule2/>}
 
       </div>
 

@@ -1,5 +1,6 @@
 // import React from "react";
 import avatar from "../../assets/default-avatar.jpg"
+import { useAppContext } from "../../context/AppContext";
 
 /**
  * UserAvatar component that displays a user's avatar image along with their name and role.
@@ -13,6 +14,7 @@ import avatar from "../../assets/default-avatar.jpg"
  */
 
 function UserAvatar() {
+  const { username, role } = useAppContext();
   return (
     <div className="flex gap-4 justify-center items-center">
       <img
@@ -22,8 +24,8 @@ function UserAvatar() {
       />
 
       <div className="flex flex-col">
-        <span className="text-lg font-bold">John Doe</span>
-        <span className="text-lg">Super User</span>
+        <span className="text-lg font-bold">{username || "John Doe"}</span>
+        <span className="text-sm text-slate-500">{role}</span>
       </div>
     </div>
   );
