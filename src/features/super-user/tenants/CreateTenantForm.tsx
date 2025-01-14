@@ -178,14 +178,16 @@ const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
             <label className="block text-gray-700 text-xl font-medium mb-1">
               Contact Person Mobile
             </label>
-            <input
-              name="contactPersonMobile"
-              value={tenantData.contactPersonMobile}
-              onChange={handleChange}
-              type="text"
-              placeholder=""
-              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            />
+              <input
+                name="contactPersonMobile"
+                value={tenantData.contactPersonMobile}
+                onChange={handleChange}
+                type="tel"
+                placeholder="Enter contact person's phone number"
+                pattern="^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$"
+                required
+                className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+              />
           </div>
 
           <div className="flex justify-around mt-6">

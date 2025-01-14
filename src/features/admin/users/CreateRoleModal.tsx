@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import URL from "../../../db/url";
 import toast from "react-hot-toast";
@@ -15,16 +15,32 @@ interface FormData {
   description: string;
 }
 
-// /tenants/:tenant/roles
-
 const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
   const { register, handleSubmit } = useForm<FormData>();
   const [permissions, setPermissions] = useState<string[]>([]);
+  const [availablePermissions, setAvailablePermissions] = useState<string[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
   const queryClient = useQueryClient();
-
   const { tenant } = useAppContext();
 
-  const handleCheckboxChange = (permission: string) => {
+  useEffect(() => {
+    const fetchPermissions = async () => {
+      try {
+        const response = await URL.get(`/users/account/me`);
+        if (response) {
+          const responsePermissions = response.data?.data?.permissions || [];
+          setAvailablePermissions(responsePermissions);
+        }
+      } catch (error) {
+        console.error("Error fetching permissions:", error);
+        toast.error("Failed to load permissions");
+      }
+    };
+
+    fetchPermissions();
+  }, []);
+
+  const handleSelectChange = (permission: string) => {
     setPermissions((prev) =>
       prev.includes(permission)
         ? prev.filter((item) => item !== permission)
@@ -47,7 +63,6 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
       queryClient.invalidateQueries({
         queryKey: ["roles"],
       });
-      // console.log(res);
     } catch (error) {
       console.log(error);
       toast.error("Error creating role, try again");
@@ -95,37 +110,37 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
             Permissions
           </label>
 
-          <div className="ml-6 space-y-4 mb-16">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="user:create"
-                onChange={() => handleCheckboxChange("user:create")}
-              />
-              <label
-                htmlFor="user:create"
-                className="text-gray-700 text-xl font-medium"
-              >
-                Create
-              </label>
-            </div>
-
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
-                id="user:modify"
-                onChange={() => handleCheckboxChange("user:modify")}
-              />
-              <label
-                htmlFor="user:modify"
-                className="text-gray-700 text-xl font-medium"
-              >
-                Modify
-              </label>
-            </div>
+          {/* Dropdown Toggle */}
+          <div
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="cursor-pointer text-xl border border-gray-300 rounded-md px-4 py-3 bg-gray-50"
+          >
+            Select Permissions
           </div>
+
+          {/* Permissions Dropdown */}
+          {showDropdown && (
+            <div className="mt-2 space-y-2 border p-4 max-h-60 overflow-y-auto">
+              {availablePermissions.length > 0 ? (
+                availablePermissions.map((permission) => (
+                  <div key={permission} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={permission}
+                      checked={permissions.includes(permission)}
+                      onChange={() => handleSelectChange(permission)}
+                      className="form-checkbox text-blue-600 w-6 h-6 rounded-md cursor-pointer mr-2"
+                    />
+                    <label htmlFor={permission} className="text-lg font-medium">
+                      {permission}
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500 text-lg">Loading permissions...</p>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Actions */}
@@ -140,7 +155,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
 
           <button
             type="submit"
-            className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            className="w-44 text-xl px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
           >
             Save Changes
           </button>
