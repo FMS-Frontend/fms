@@ -4,6 +4,7 @@ import { getCases} from "../../../services/managerServices";
 import { useAppContext } from "../../../context/AppContext";
 import Spinner from "../../../ui/utils/Spinner";
 import CaseMgtTable from "./CaseMgtTable";
+import toast from "react-hot-toast";
 
 
 const CaseManagement: FC = (): JSX.Element => {
@@ -43,11 +44,7 @@ const CaseManagement: FC = (): JSX.Element => {
   }
 
   if (error) {
-    return (
-      <div className="text-red-500 text-center">
-        Error fetching cases. Please try again later.
-      </div>
-    );
+    toast.error("Error fetching cases. Please try again later.")
   }
   return (
     <div className="flex flex-col gap-8">

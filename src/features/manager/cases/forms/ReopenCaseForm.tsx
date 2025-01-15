@@ -36,9 +36,8 @@ const ReopenCaseForm: FC<ReopenCaseFormProps> = ({
   caseDetails,
 }) => {
   const queryClient = useQueryClient();
-
-  
   const [comment, setComment] = useState<string>("");
+  const [reOpenReason, setReOpenReason] = useState<string>("");
   const [notifyAssignee, setNotifyAssignee] = useState<boolean>(false);
   const [notifyAssignee2, setNotifyAssignee2] = useState<boolean>(false);
 
@@ -49,7 +48,7 @@ const ReopenCaseForm: FC<ReopenCaseFormProps> = ({
 
     try {
       // Update the case status to "Open"
-      await updateCase(tenantId, caseId, { status: "Open" });
+      await updateCase(tenantId, caseId, { status: "Open", reOpenReason });
 
       
       // Add a comment if provided
@@ -132,6 +131,19 @@ const ReopenCaseForm: FC<ReopenCaseFormProps> = ({
           {caseDetails?.description.length > 100 ? caseDetails?.description.slice(0, 50) : caseDetails?.description }
           </div>
         </div>        
+      </div>
+
+      <div>
+        <label className="block text-gray-700 text-lg font-medium mb-2">
+          Reason for Reopening
+        </label>
+        <textarea
+          value={reOpenReason}
+          onChange={(e) => setReOpenReason(e.target.value)}
+          className="w-full px-4 py-2 text-lg border rounded-md focus:outline-none focus:border-blue-500"
+          placeholder="Provide a reason for reopening the case..."
+          required 
+        />
       </div>
 
       

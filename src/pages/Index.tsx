@@ -1,11 +1,11 @@
-import { FC } from "react";
-import HomeNav from "../ui/navs/HomeNav";
-import bg from "../images/home-bg.png";
+import React, { FC } from "react";
+const HomeNav = React.lazy(() => import("../ui/navs/HomeNav"));
+import bannerImage from "../images/home-bg.png";
 import shapeBg from "../images/Shape.png";
 
 const Index: FC = () => {
   return (
-    <div className="relative h-screen bg-blue-500 flex flex-col justify-between">
+    <div className="relative h-screen bg-blue-500 flex flex-col overflow-hidden">
       {/* Background Shape Layer */}
       <div
         className="absolute inset-0 bg-no-repeat bg-cover bg-center z-0"
@@ -18,9 +18,9 @@ const Index: FC = () => {
       </header>
 
       {/* Center Content */}
-      <div className="flex flex-col gap-20">
-        <main className="flex-1 flex items-center justify-center text-center z-40 ">
-          <div className="flex flex-col mt-[5%]  gap-6 w-2/3">
+      <div className="flex flex-col gap-20 flex-grow">
+        <main className="flex-1 flex items-center justify-center text-center z-40">
+          <div className="flex flex-col mt-[5%] gap-6 w-2/3">
             <h1 className="text-white text-[45px] text-h1 leading-tight tracking-wide font-extrabold mb-5">
               Protect your business <br /> from fraud, effortlessly
             </h1>
@@ -34,11 +34,11 @@ const Index: FC = () => {
       </div>
 
       {/* Bottom Background Image */}
-      <div className="relative items-center">
+      <div className="relative items-center md:mt-4 2xl:mt-16">
         <div
-          className={`z-20 h-[500px] mt-[3%]`}
+          className="z-20 h-[500px] w-full"
           style={{
-            backgroundImage: `url(${bg})`,
+            backgroundImage: `url(${bannerImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

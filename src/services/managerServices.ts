@@ -13,7 +13,7 @@ export async function getRules(
   page: number
 ): Promise<PaginatedResponse<Rule1>> {
   try {
-    const response = await URL.get(`/rules/${tenantId}`, {
+    const response = await URL.get(`/rules/${tenantId}?sortOrder=desc`, {
       params: { page },
     });
     // console.log(response?.data);
@@ -65,8 +65,8 @@ export async function createRule(
 export async function editRule(
   tenantId: string,
   identity: string,
-  rule: Rule3
-): Promise<Rule2> {
+  rule: EditRuleProp
+){
   try {
     const response = await URL.patch(`/rules/${tenantId}/${identity}`, rule);
     return response.data;
@@ -79,7 +79,7 @@ export async function editRule(
 /**
  * Delete a rule by its identity
  * @param tenantId ID of the tenant
- * @param identity Identity of the rule
+ * @param identity Identity (ID) of the rule
  * @returns Success response
  */
 export async function deleteRule(
@@ -97,7 +97,7 @@ export async function deleteRule(
 export const getCases = async (
   tenantId: string,
   page: number
-): Promise<CaseData> => {
+)=> {
   try {
     const response = await URL.get(`/cases/tenants/${tenantId}`, {
       params: { page },
@@ -226,3 +226,31 @@ export const fetchCaseStats = async (tenantId: string) => {
     throw new Error("Failed to fetch case stats.");
   }
 };
+
+
+// /settings/tenants/:tenant/variables
+
+export async function getCaseSummary(tenant: string, startDate: string = new Date().toISOString().split("T")[0]): Promise<any> {
+  try {
+    const { data } = await URL.get(`/analytics/trends/tenants/${tenant}/case`, {
+      params: { startDate },
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching case summary:", error);
+    throw new Error("Error fetching case summary");
+  }
+}
+
+export async function getVariables(tenant: string) {
+  try {
+    const { data } = await URL.get(`/settings/tenants/${tenant}/variables`);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching reports");
+  }
+}
+

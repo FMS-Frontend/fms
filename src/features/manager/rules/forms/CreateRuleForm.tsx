@@ -1,64 +1,105 @@
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { useAppContext } from "../../../../context/AppContext";
-import { createRule } from "../../../../services/managerServices";
-import { useQueryClient } from "@tanstack/react-query";
-
+import { createRule} from "../../../../services/managerServices";
+import { useQueryClient} from "@tanstack/react-query";
+import PrimaryButton from "../../../../ui/utils/PrimaryButton";
+import { FiMinus, FiPlus } from "react-icons/fi";
+import { useRule } from "../RuleContext";
+import Node from "./Node";
 
 interface CreateRuleFormProps {
   onClose?: () => void;
 }
 
+interface Action {
+  target: string;
+  property: string;
+  value: string;
+}
+
 const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
   const [ruleName, setRuleName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [conditions, setConditions] = useState<RuleCreationRequest["conditions"]>([
-    { field: "", operator: "", value: "" },
+  const [actions, setActions] = useState<Action[]>([
+    {
+      target: "Transaction",
+      property: "Allow",
+      value: "Print: Fraud detected",
+    },
   ]);
-  const [actions, setActions] = useState<RuleCreationRequest["actions"]>([
-    { target: "", property: "", value: "" },
-  ]);
-  const [salience, setSalience] = useState<number>(100);
+  const [flowOperatorType, setFlowOperatorType] = useState<string>("salience");
+  const [flowOperatorValue, setFlowOperatorValue] = useState<number | string>("");
+
   const { tenant } = useAppContext();
   const queryClient = useQueryClient();
+  const { root, getData, getNode } = useRule();
 
-  const handleConditionChange = (
-    index: number,
-    field: keyof RuleCreationRequest["conditions"][0],
-    value: string
-  ) => {
-    const updatedConditions = [...conditions];
-    updatedConditions[index][field] = value;
-    setConditions(updatedConditions);
+  
+  const handleFlowOperatorChange = (type: string) => {
+    setFlowOperatorType(type);
+    if (type === "salience") {
+      setFlowOperatorValue(100); 
+    } else {
+      setFlowOperatorValue(""); 
+    }
   };
 
-  const handleActionChange = (
-    index: number,
-    field: keyof RuleCreationRequest["actions"][0],
-    value: string
-  ) => {
+  const targetOptions = ["Print", "Transaction", "Application", "User"];
+
+  const addAction = () => {
+    setActions([
+      ...actions,
+      {
+        target: "Print",
+        property: "Allow",
+        value: "",
+      },
+    ]);
+  };
+
+  const removeAction = (index: number) => {
     const updatedActions = [...actions];
-    updatedActions[index][field] = value;
+    updatedActions.splice(index, 1);
     setActions(updatedActions);
   };
 
-  const addCondition = () => {
-    setConditions([...conditions, { field: "", operator: "", value: "" }]);
-  };
+  const buildConditionsTree = () => {
+    const data = getData();
+    const rootNode = getNode(root());
 
-  const addAction = () => {
-    setActions([...actions, { target: "", property: "", value: "" }]);
+    function process(node: any, result: any) {
+      if (node.isLeaf) {
+        result.field = node.left;
+        result.operator = node.operator;
+        result.value = node.right;
+      } else {
+        result.condition = node.condition;
+        result.rules = node.children.map((id: any) =>
+          process(data.get(id), {})
+        );
+      }
+      return result;
+    }
+
+    return process(rootNode, {});
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const newRule: RuleCreationRequest = {
-      rule_name: ruleName,
+    const properties = {
+      [flowOperatorType]: flowOperatorValue,
+    };
+
+    const conditions = buildConditionsTree();
+
+    const newRule = {
+      name: ruleName,
       description,
       conditions,
       actions,
-      flow_operators: { salience },
+      properties,
     };
 
     try {
@@ -75,137 +116,193 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <h2 className="text-3xl font-semibold mb-4">Add Rule</h2>
+
+      {/* Rule Name */}
       <div>
-        <label className="block text-lg font-medium">Rule Name</label>
+        <h3>Rule Name</h3>
         <input
           type="text"
           value={ruleName}
           onChange={(e) => setRuleName(e.target.value)}
+          placeholder="e.g. Frequent Transaction at odd hours"
           required
-          className="w-full px-4 py-2 border rounded"
+          className="w-full md:w-1/3 px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500"
         />
       </div>
 
+      {/* Description */}
       <div>
-        <label className="block text-lg font-medium">Description</label>
+        <h3>Description</h3>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder="Enter description"
           required
-          className="w-full px-4 py-2 border rounded"
+          className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
         />
       </div>
 
-      <div>
-        <div className="flex justify-between">
-        <label className="block text-lg font-medium">Conditions</label>
-        <button type="button" onClick={addCondition} className="text-blue-500">
-          + Add Condition
-        </button>
-        </div>
-        {conditions.map((condition, index) => (
-          <div key={index} className="grid grid-cols-3 gap-4">
-            <input
-              type="text"
-              placeholder="Field"
-              value={condition.field}
-              onChange={(e) =>
-                handleConditionChange(index, "field", e.target.value)
-              }
-              required
-              className="flex-1 px-4 py-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Operator"
-              value={condition.operator}
-              onChange={(e) =>
-                handleConditionChange(index, "operator", e.target.value)
-              }
-              required
-              className="flex-1 px-4 py-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Value"
-              value={condition.value}
-              onChange={(e) =>
-                handleConditionChange(index, "value", e.target.value)
-              }
-              required
-              className="flex-1 px-4 py-2 border rounded"
-            />
-          </div>
-        ))}
-        
-      </div>
+      {/* Conditions */}
+      <Node id={root()}/>
 
+      {/* Actions Section */}
       <div>
-        <div className="flex justify-between">
-        <label className="block text-lg font-medium">Actions</label>
-        <button type="button" onClick={addAction} className="text-blue-500">
-          + Add Action
-        </button>
+        <div className="flex justify-between items-center mb-2">
+          <h3>Actions</h3>
+          <PrimaryButton onClick={addAction}>
+            <FiPlus /> Action
+          </PrimaryButton>
         </div>
-        
         {actions.map((action, index) => (
-          <div key={index} className="grid grid-cols-3 gap-4">
-            <input
-              type="text"
-              placeholder="Target"
-              value={action.target}
-              onChange={(e) =>
-                handleActionChange(index, "target", e.target.value)
-              }
-              required
-              className="flex-1 px-4 py-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Property"
-              value={action.property}
-              onChange={(e) =>
-                handleActionChange(index, "property", e.target.value)
-              }
-              required
-              className="flex-1 px-4 py-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Value"
-              value={action.value}
-              onChange={(e) =>
-                handleActionChange(index, "value", e.target.value)
-              }
-              required
-              className="flex-1 px-4 py-2 border rounded"
-            />
+          <div
+            key={index}
+            className="md:w-2/3 p-4 border bg-gray-100 rounded-md mb-4"
+          >
+            <div className="grid md:grid-cols-2 gap-4">
+              <select
+                value={action.target}
+                onChange={(e) =>
+                  setActions(
+                    actions.map((act, i) =>
+                      i === index ? { ...act, target: e.target.value } : act
+                    )
+                  )
+                }
+                className="text-lg px-4 py-2 border rounded"
+              >
+                <option value="" disabled>Select Target</option>
+                {targetOptions.map((target) => (
+                  <option key={target} value={target}>
+                    {target}
+                  </option>
+                ))}
+              </select>
+              <div className="flex justify-between items-center">
+                <input
+                  type="text"
+                  placeholder="Value"
+                  value={action.value}
+                  onChange={(e) =>
+                    setActions(
+                      actions.map((act, i) =>
+                        i === index ? { ...act, value: e.target.value } : act
+                      )
+                    )
+                  }
+                  required
+                  className="px-4 py-2 border rounded"
+                />
+                <FiMinus
+                  className="cursor-pointer text-red-500"
+                  onClick={() => removeAction(index)}
+                />
+              </div>
+            </div>
           </div>
         ))}
-        
+
+        {/* Flow Operators */}
+        <div className="mt-4">
+          <h3>Flow Operator</h3>
+          <div className="grid md:grid-cols-3 gap-4">
+            <label className="border text-lg border-slate-300 p-2 rounded-lg">
+              <input
+                type="radio"
+                name="flowOperatorType"
+                value="salience"
+                checked={flowOperatorType === "salience"}
+                onChange={(e) => handleFlowOperatorChange(e.target.value)}
+                className="mr-4"
+              />
+              Salience
+            </label>
+            <label className="border text-lg border-slate-300 p-2 rounded-lg">
+              <input
+                type="radio"
+                name="flowOperatorType"
+                value="activationGroup"
+                checked={flowOperatorType === "activationGroup"}
+                onChange={(e) => handleFlowOperatorChange(e.target.value)}
+                className="mr-4"
+              />
+              Activation Group
+            </label>
+            <label className="border text-lg border-slate-300 p-2 rounded-lg">
+              <input
+                type="radio"
+                name="flowOperatorType"
+                value="agendaGroup"
+                checked={flowOperatorType === "agendaGroup"}
+                onChange={(e) => handleFlowOperatorChange(e.target.value)}
+                className="mr-4"
+              />
+              Agenda Group
+            </label>
+          </div>
+
+          {flowOperatorType === "salience" && (
+            <input
+              type="number"
+              value={flowOperatorValue}
+              min={100}
+              onChange={(e) => setFlowOperatorValue(Number(e.target.value))}
+              required
+              className="w-full md:w-1/3 px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500 mt-4"
+              placeholder="Enter Salience Value"
+            />
+          )}
+
+          {flowOperatorType === "activationGroup" && (
+            <select
+              value={flowOperatorValue as string}
+              onChange={(e) => setFlowOperatorValue(e.target.value)}
+              required
+              className="w-full md:w-1/3 px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500 mt-4"
+            >
+              <option value="" disabled>
+                Select Activation Group
+              </option>
+              <option value="group1">Group 1</option>
+              <option value="group2">Group 2</option>
+              <option value="group3">Group 3</option>
+            </select>
+          )}
+
+          {flowOperatorType === "agendaGroup" && (
+            <select
+              value={flowOperatorValue as string}
+              onChange={(e) => setFlowOperatorValue(e.target.value)}
+              required
+              className="w-full md:w-1/3 px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500 mt-4"
+            >
+              <option value="" disabled>
+                Select Agenda Group
+              </option>
+              <option value="agenda1">Agenda 1</option>
+              <option value="agenda2">Agenda 2</option>
+              <option value="agenda3">Agenda 3</option>
+            </select>
+          )}
+        </div>
       </div>
 
-      <div>
-        <label className="block text-lg font-medium">
-          Flow Operator - Salience
-        </label>
-        <input
-          type="number"
-          value={salience.toString()}
-          min="100"
-          onChange={(e) => setSalience(Number(e.target.value))}
-          required
-          className="w-full px-4 py-2 border rounded"
-        />
+      <div className="flex justify-end mt-6 gap-4">
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          Save Rule
+        </button>
       </div>
-
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        Create Rule
-      </button>
     </form>
   );
 };

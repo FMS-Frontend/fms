@@ -23,7 +23,7 @@ import "react-loading-skeleton/dist/skeleton.css";
  */
 
 export interface StatData {
-  value: number; // Adjust the type based on the actual structure of your API response
+  value: number ; // Adjust the type based on the actual structure of your API response
 }
 
 const Stats: FC = () => {

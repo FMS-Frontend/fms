@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { capitalizeWords, getStatusStyles } from "../../../db/helperFunctions";
+import maskPhoneNumber from "../../../ui/utils/MaskPhoneNumber";
+import maskEmailDomain from "../../../ui/utils/MaskEmailDomain";
 
 interface DashboardRowProps {
   tenant: Organization;
@@ -18,8 +20,8 @@ const DashboardRow: FC<DashboardRowProps> = ({ tenant, index }) => {
     >
       <span className="text-xl">{capitalizeWords(name)}</span>
       <span className="text-xl">{admin.name}</span>
-      <span className="text-xl text-blue-700 underline">{admin.email}</span>
-      <span className="text-xl">{admin.mobile}</span>
+      <span className="text-xl text-blue-700 underline">{ maskEmailDomain(admin.email) }</span>
+      <span className="text-xl">{ maskPhoneNumber(admin.mobile) }</span>
       <div>
         <span
           className={`flex justify-center items-center px-4 py-1 rounded-full text-xl font-medium ${getStatusStyles(

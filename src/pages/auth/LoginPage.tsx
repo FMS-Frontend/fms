@@ -35,12 +35,20 @@ interface FormValues {
 }
 
 const loginUrl = "/auth/login";
+function formatRoute(str: string) {
+  return str.toLowerCase().replace(/ /g, "-");
+}
 
 const LoginPage: FC = (): JSX.Element => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
-  const { setAccessToken, setRefreshToken, handleRoleChange } = useAppContext();
-  // const userRole = checkUserRole(role);
+  const {
+    setAccessToken,
+    setRefreshToken,
+    handleRoleChange,
+    setTenant,
+    handleUserNameChange,
+  } = useAppContext();
 
   // Validation for input data
   const validate = Yup.object({
@@ -52,7 +60,6 @@ const LoginPage: FC = (): JSX.Element => {
       .required("Required"),
   });
 
-  // Form Submission
   const handleFormSubmit = async (
     values: FormValues,
     actions: FormikHelpers<FormValues>
@@ -63,48 +70,76 @@ const LoginPage: FC = (): JSX.Element => {
         password: values.password,
       });
 
-      // console.log(res);
-
-      //Set Auth Token
+      // Extract tokens and set in context/local storage
       const accessToken = res.headers["x-access-token"];
-      // console.log("accessToken => ", accessToken);
+      const refreshToken = res.headers["x-refresh-token"];
 
       if (accessToken) {
-        setAccessToken(accessToken); //Save to Context
+        setAccessToken(accessToken);
         localStorage.setItem("accessToken", accessToken);
       }
 
-      // Set Refresh Token
-      const refreshToken = res.headers["x-refresh-token"];
-      // console.log("refreshToken =>", refreshToken);
-
       if (refreshToken) {
-        setRefreshToken(refreshToken); //Save to context
+        setRefreshToken(refreshToken);
         localStorage.setItem("refreshToken", refreshToken);
       }
 
-      // If it's a first time User Login
+      // Handle first-time login requiring a password change
       if (res.data.status === 202) {
         const resetToken = res.headers["x-reset-token"];
         localStorage.setItem("resetToken", resetToken);
 
-        navigate("/change-password");
+        navigate(`/update-password?token=${resetToken}`);
         toast.success("Change your password before proceeding");
         return;
       }
 
+      // Extract user details
+      const tenantUser = res.data.data?.name || "";
+      localStorage.setItem("tenantUser", tenantUser);
+      handleUserNameChange(tenantUser);
+      const tenant = res.data.data?.tenantUsername || "";
       const userRole = res.data.data?.role;
-      handleRoleChange(userRole); //Save
-      // console.log(res);
+      const subRole = res.data.data.subRole?.name;
+      if (userRole === "User" && subRole) {
+        handleRoleChange(subRole);
+      } else {
+        handleRoleChange(userRole);
+      }
 
-      //
-      if (userRole === "Super User") {
-        toast.success("Logged in Successfully");
-        navigate("/dashboard");
+      setTenant(tenant);
+
+      let redirectPath = "";
+      switch (userRole) {
+        case "Super User":
+          redirectPath = "/dashboard";
+          break;
+        case "Admin":
+          redirectPath = "/admin/dashboard";
+          break;
+
+        case "User":
+          // If the role is "User" and subRole exists, redirect to subRole dashboard
+          if (subRole) {
+            redirectPath = `/${formatRoute(subRole)}/dashboard`;
+          } else {
+            redirectPath = "/user/dashboard";
+          }
+          break;
+
+        default:
+          redirectPath = `/${formatRoute(subRole)}/dashboard`;
+          break;
+      }
+
+      if (userRole) {
+        navigate(redirectPath);
+        toast.success(`Welcome back ${tenantUser || "Super User"}`);
       }
     } catch (err) {
-      toast.error("Wrong credentials, enter correct email and password");
-      console.log(err);
+      toast.error("Wrong credentials. Please check your email and password.");
+      console.error(err);
+      return;
     } finally {
       actions.resetForm();
     }
@@ -142,7 +177,7 @@ const LoginPage: FC = (): JSX.Element => {
           </Link>
         </div>
         <h2 className="text-4xl text-gray-700 font-bold mb-2 text-center">
-          Super User Login
+          User Login
         </h2>
         <p className="text-gray-600 text-center text-xl mb-6">
           Please enter your email and password to continue

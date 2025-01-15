@@ -149,7 +149,7 @@ const ChangePassword: FC = (): JSX.Element => {
               onChange={handleChange}
               onBlur={handleBlur}
               className=" w-full px-4 py-3 text-2xl rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xl"
-              placeholder="Enter your email"
+              placeholder="Enter your password"
             />
             {errors.password && touched.password && (
               <span className="text-xl text-red-500">{errors.password}</span>

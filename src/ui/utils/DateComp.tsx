@@ -16,10 +16,12 @@ interface DateCompProps {
 
 const DateComp: FC<DateCompProps> = ({ onDateChange }) => {
   const [openDate, setOpenDate] = useState<boolean>(false);
-
+  const currentYear = new Date().getFullYear();
   const [selectionRange, setSelectionRange] = useState<SelectionRange>({
-    startDate: new Date(),
-    endDate: new Date(),
+    // startDate: new Date(),
+    // endDate: new Date(),
+    startDate: new Date(currentYear, 0, 1), 
+    endDate: new Date(currentYear, 11, 31),
     key: "selection",
   });
 

@@ -1,76 +1,55 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import Dashboard from "./pages/Dashboard";
-import LoginPage from "./pages/auth/LoginPage";
-import AppLayout from "./ui/layouts/AppLayout";
-import Tenant from "./pages/Tenant";
-import Administrator from "./pages/Administrator";
-import Audit from "./pages/Audit";
-import Page404 from "./pages/Page404";
-import ManagerLayout from "./ui/layouts/ManagerLayout";
-import ManagerDashboard from "./pages/manager/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import { FC, ReactNode } from "react";
-import Users from "./pages/Users";
-import { useAppContext } from "./context/AppContext";
-import AdminLayout from "./ui/layouts/AdminLayout";
-import AdminReports from "./pages/AdminReports";
-import AdminAudit from "./pages/AdminAudit";
-import AdminIntegration from "./pages/AdminIntegration";
-import ChangePassword from "./pages/ChangePassword";
-import Reports from "./pages/Reports";
-import Analytics from "./pages/Analytics";
-import AdminAnalytics from "./pages/AdminAnalytics";
-import AnalystLayout from "./ui/layouts/AnalystLayout";
+import React from "react";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
-import RulesManagement from "./features/manager/rules/RulesManagement";
-import AlertsManagement from "./features/manager/alerts/AlertsManagement";
-import CasesManagement from "./features/manager/cases/CasesManagement";
-import AnalystManagement from "./features/manager/analyst/AnalystManagement";
-import ForgotPassword from "./pages/ForgotPassword";
-import UpdatePassword from "./pages/UpdatePassword";
-import PasswordConfirmation from "./pages/PasswordConfirmation";
-import Index from "./pages/Index";
-import TenantsLogin from "./pages/auth/TenantsLogin";
-import AuditorLayout from "./ui/layouts/AuditorLayout";
-import Settings from "./pages/settings/Settings";
-import AdminRule from "./pages/AdminRule";
+// Dynamic imports
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const LoginPage = React.lazy(() => import("./pages/auth/LoginPage"));
+const AppLayout = React.lazy(() => import("./ui/layouts/AppLayout"));
+const Tenant = React.lazy(() => import("./pages/Tenant"));
+const Administrator = React.lazy(() => import("./pages/Administrator"));
+const Audit = React.lazy(() => import("./pages/Audit"));
+const Page404 = React.lazy(() => import("./pages/Page404"));
+const ManagerLayout = React.lazy(() => import("./ui/layouts/ManagerLayout"));
+const ManagerDashboard = React.lazy(() => import("./pages/manager/Dashboard"));
+const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
+const Users = React.lazy(() => import("./pages/Users"));
+const AdminLayout = React.lazy(() => import("./ui/layouts/AdminLayout"));
+const AdminReports = React.lazy(() => import("./pages/AdminReports"));
+const AdminAudit = React.lazy(() => import("./pages/AdminAudit"));
+const AdminIntegration = React.lazy(() => import("./pages/AdminIntegration"));
+const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
+const Reports = React.lazy(() => import("./pages/Reports"));
+const Analytics = React.lazy(() => import("./pages/Analytics"));
+const AdminAnalytics = React.lazy(() => import("./pages/AdminAnalytics"));
+const RuleAnalystLayout = React.lazy(() => import("./ui/layouts/RuleAnalystLayout"));
+const FraudAnalystLayout = React.lazy(() => import("./ui/layouts/FraudAnalystLayout"));
+const RulesManagement = React.lazy(
+  () => import("./features/manager/rules/RulesManagement")
+);
+const AlertsManagement = React.lazy(
+  () => import("./features/manager/alerts/AlertsManagement")
+);
+const CasesManagement = React.lazy(
+  () => import("./features/manager/cases/CasesManagement")
+);
+const AnalystManagement = React.lazy(
+  () => import("./features/manager/analyst/AnalystManagement")
+);
+const ForgotPassword = React.lazy(() => import("./pages/ForgotPassword"));
+const UpdatePassword = React.lazy(() => import("./pages/UpdatePassword"));
+const PasswordConfirmation = React.lazy(
+  () => import("./pages/PasswordConfirmation")
+);
+const Index = React.lazy(() => import("./pages/Index"));
+const AuditorLayout = React.lazy(() => import("./ui/layouts/AuditorLayout"));
+const Settings = React.lazy(() => import("./pages/settings/Settings"));
+const AdminRule = React.lazy(() => import("./pages/AdminRule"));
+import { ROLES } from "./types/roles";
+import ProtectedRoute from "./ui/layouts/PrivateRoute";
 
-// ProtectedRoute Component
-interface ProtectedProps {
-  userRole: string;
-  children: ReactNode;
-}
-
-const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
-  const { role } = useAppContext();
-
-  const location = useLocation();
-
-  // Function to check if current path is a settings route
-  const isSettingsRoute = location.pathname.includes("/settings");
-
-  // If it's a settings route, allow access based on the user having any valid role
-  if (isSettingsRoute) {
-    const validRoles = ["Admin", "Manager", "Analyst", "Auditor", "Super User"];
-    const hasValidRole = validRoles.includes(role);
-
-    if (!hasValidRole) {
-      return <Navigate to="/" replace state={{ from: location }} />;
-    }
-
-    return <>{children}</>;
-  }
-
-  // For non-settings routes, check if the user has the specific required role
-  if (role !== userRole) {
-    return <Navigate to="/" replace state={{ from: location }} />;
-  }
-
-  return <>{children}</>;
-};
 
 // QueryClient Configuration
 const queryClient = new QueryClient({
@@ -93,7 +72,6 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/:tenant/auth/login" element={<TenantsLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/update-password" element={<UpdatePassword />} />
         <Route
@@ -102,20 +80,13 @@ function App() {
         />
 
         {/* Protected Routes */}
-        <Route
-          path="/change-password"
-          element={
-            <ProtectedRoute userRole="Super User">
-              <ChangePassword />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/change-password" element={<ChangePassword />} />
 
         {/* Super User Routes */}
         <Route
           path="/"
           element={
-            <ProtectedRoute userRole="Super User">
+            <ProtectedRoute userRole={ROLES.SUPER_USER}>
               <AppLayout />
             </ProtectedRoute>
           }
@@ -133,7 +104,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute userRole="Admin">
+            <ProtectedRoute userRole={ROLES.ADMIN}>
               <AdminLayout />
             </ProtectedRoute>
           }
@@ -154,7 +125,7 @@ function App() {
         <Route
           path="/manager"
           element={
-            <ProtectedRoute userRole="Manager">
+            <ProtectedRoute userRole={ROLES.MANAGER}>
               <ManagerLayout />
             </ProtectedRoute>
           }
@@ -170,8 +141,8 @@ function App() {
         <Route
           path="/rule-analyst"
           element={
-            <ProtectedRoute userRole="Analyst">
-              <AnalystLayout />
+            <ProtectedRoute userRole={ROLES.RULE_ANALYST}>
+              <RuleAnalystLayout/>
             </ProtectedRoute>
           }
         >
@@ -184,10 +155,10 @@ function App() {
 
         {/*Fraud Analyst Routes */}
         <Route
-          path="/analyst"
+          path="/fraud-analyst"
           element={
-            <ProtectedRoute userRole="Analyst">
-              <AnalystLayout />
+            <ProtectedRoute userRole={ROLES.FRAUD_ANALYST}>
+              <FraudAnalystLayout/>
             </ProtectedRoute>
           }
         >
@@ -202,9 +173,9 @@ function App() {
         <Route
           path="/auditor"
           element={
-            // <ProtectedRoute userRole="Auditor">
-            <AuditorLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute userRole={ROLES.AUDITOR}>
+              <AuditorLayout />
+            </ProtectedRoute>
           }
         >
           <Route path="dashboard" element={<ManagerDashboard />} />

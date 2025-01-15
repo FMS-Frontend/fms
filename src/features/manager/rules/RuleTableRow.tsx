@@ -1,7 +1,8 @@
 import { FC } from "react";
 import EditRule from "./modals/EditRule";
 import ViewRule from "./modals/ViewRule";
-
+import DeleteRule from "./modals/DeleteRule";
+import { useAppContext } from "../../../context/AppContext";
 
 const RuleTableRow: FC<RuleTableRowProps> = ({
   ruleId,
@@ -10,6 +11,7 @@ const RuleTableRow: FC<RuleTableRowProps> = ({
   lastModified,
   index,
 }) => {
+  const { role } = useAppContext();
   return (
     <div
       className={`grid grid-cols-5 text-base gap-4 p-4 border-b border-gray-200 ${
@@ -33,6 +35,7 @@ const RuleTableRow: FC<RuleTableRowProps> = ({
       <div className="flex justify-between lg:max-w-[50%]">
         <EditRule ruleId={ruleId}/>
         <ViewRule ruleId={ruleId}/>
+        {(role === "Admin" || role === "Rule Analyst") && <DeleteRule ruleId={ruleId}/>}
       </div>
     </div>
   );

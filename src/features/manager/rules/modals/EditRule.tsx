@@ -1,6 +1,6 @@
 import { FC } from "react";
-import Modal from "../../../../ui/utils/Modal";
 import EditRuleModal from "./EditRuleModal";
+import Modal2 from "../../../../ui/utils/Modal.Rule";
 /**
  * AddRule is a React functional component that renders a button to open
  * a modal for adding a new rule. It uses a Modal component to handle the
@@ -21,16 +21,16 @@ interface EditRuleProps {
 
 const EditRule: FC<EditRuleProps> = ({ ruleId }) => {
   return (
-    <Modal>
-      <Modal.Open opens="edit-rule">
+    <Modal2>
+      <Modal2.Open opens="edit-rule">
         <button className="px-2 py-1 rounded bg-green-50 hover:bg-green-100 text-green-500">
           Edit
         </button>
-      </Modal.Open>
-      <Modal.Window name="edit-rule">
+      </Modal2.Open>
+      <Modal2.Window name="edit-rule">
         {({ onClose }) => <EditRuleModal ruleId={ruleId} onClose={onClose} />}
-      </Modal.Window>
-    </Modal>
+      </Modal2.Window>
+    </Modal2>
   );
 };
 
