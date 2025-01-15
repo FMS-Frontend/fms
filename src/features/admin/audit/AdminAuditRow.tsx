@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { formatTime } from "../../../db/helperFunctions";
 
+
 interface AuditRowProps {
   audit: AdminAudit;
   index: number;
@@ -9,6 +10,7 @@ interface AuditRowProps {
 const AdminAuditRow: FC<AuditRowProps> = ({ audit, index }) => {
   // console.log(audit);
   const { operation, updatedAt, ipAddress, author } = audit;
+console.log(author);
 
   return (
     <div
@@ -20,7 +22,7 @@ const AdminAuditRow: FC<AuditRowProps> = ({ audit, index }) => {
       <span className="text-xl">{formatTime(updatedAt)}</span>
       <span className="text-xl">{ipAddress}</span>
       <span className="text-xl">{author.name}</span>
-      <span className="text-xl">{author.role}</span>
+      <span className="text-xl">{author.subRole?.name || author.role}</span>
     </div>
   );
 };

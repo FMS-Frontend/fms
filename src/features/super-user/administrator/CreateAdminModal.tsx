@@ -99,7 +99,13 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="email"
             placeholder="Enter email"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            {...register("email")}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Enter a valid email address",
+              },
+            })}
           />
         </div>
 
@@ -108,10 +114,14 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             Phone Number
           </label>
           <input
-            type="number"
+            type="text"
             placeholder="Enter Phone Number"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            {...register("mobile")}
+            {...register("mobile",
+              {required: "Phone number is required", pattern: {
+              value: /^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$/,
+              message: "Please enter a valid phone number",
+            }, })}
           />
         </div>
 
