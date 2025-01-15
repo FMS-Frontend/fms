@@ -20,7 +20,7 @@ const UserRow: FC<UserRowProps> = ({ user, index }) => {
 
   const queryClient = useQueryClient();
   const { id: userId, name, role, subRole, email, mobile, status } = user;
-  console.log(user);
+  // console.log(user);
   
 
   const { mutate } = useMutation({

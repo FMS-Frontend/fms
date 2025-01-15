@@ -10,7 +10,7 @@ interface AuditRowProps {
 const AdminAuditRow: FC<AuditRowProps> = ({ audit, index }) => {
   // console.log(audit);
   const { operation, updatedAt, ipAddress, author } = audit;
-console.log(author);
+// console.log(author);
 
   return (
     <div
