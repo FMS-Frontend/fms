@@ -17,7 +17,7 @@ const AdminDashRow: FC<DashboardRowProps> = ({ user, index }) => {
       }`}
     >
       <span className="text-xl">{capitalizeWords(name)}</span>
-      <span className="text-xl">{subRole.name || role}</span>
+      <span className="text-xl">{subRole?.name || role}</span>
       <span className="text-xl text-blue-700 underline">{maskEmailDomain(email)}</span>
       <span className="text-xl">{maskNumber(mobile)}</span>
       <div>

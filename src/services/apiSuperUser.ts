@@ -5,7 +5,7 @@ import { StatProps } from "../features/super-user/dashboard/Stat";
 export async function getUserTrends() {
   try {
     const res = await URL.get(
-      "/analytics/trends/user?startDate=2024-01-01&endDate=2024-12-01&intervalUnit=month"
+      "/analytics/trends/user?startDate=2025-01-01&endDate=2025-12-01&intervalUnit=month"
     );
     // console.log(res.data);
     return res.data;
