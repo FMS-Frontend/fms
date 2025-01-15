@@ -1,6 +1,6 @@
 import URL from "../db/url";
 export interface StatData {
-  value: number; // Adjust the type based on the actual structure of your API response
+  value: number; 
 }
 
 // ****** DASHBOARD ******************
