@@ -1,9 +1,8 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import React, { FC, ReactNode } from "react";
-import { useAppContext } from "./context/AppContext";
+import React from "react";
 import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
 // Dynamic imports
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
@@ -48,40 +47,9 @@ const Index = React.lazy(() => import("./pages/Index"));
 const AuditorLayout = React.lazy(() => import("./ui/layouts/AuditorLayout"));
 const Settings = React.lazy(() => import("./pages/settings/Settings"));
 const AdminRule = React.lazy(() => import("./pages/AdminRule"));
+import { ROLES } from "./types/roles";
+import ProtectedRoute from "./ui/layouts/PrivateRoute";
 
-// ProtectedRoute Component
-interface ProtectedProps {
-  userRole: string;
-  children: ReactNode;
-}
-
-const ProtectedRoute: FC<ProtectedProps> = ({ userRole, children }) => {
-  const { role } = useAppContext();
-
-  const location = useLocation();
-
-  // Function to check if current path is a settings route
-  const isSettingsRoute = location.pathname.includes("/settings");
-
-  // If it's a settings route, allow access based on the user having any valid role
-  if (isSettingsRoute) {
-    const validRoles = ["Admin", "Manager", "Rule Analyst", "Fraud Analyst", "Auditor", "Super User"];
-    const hasValidRole = validRoles.includes(role);
-
-    if (!hasValidRole) {
-      return <Navigate to="/" replace state={{ from: location }} />;
-    }
-
-    return <>{children}</>;
-  }
-
-  // For non-settings routes, check if the user has the specific required role
-  if (role !== userRole) {
-    return <Navigate to="/" replace state={{ from: location }} />;
-  }
-
-  return <>{children}</>;
-};
 
 // QueryClient Configuration
 const queryClient = new QueryClient({
@@ -118,7 +86,7 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute userRole="Super User">
+            <ProtectedRoute userRole={ROLES.SUPER_USER}>
               <AppLayout />
             </ProtectedRoute>
           }
@@ -136,7 +104,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute userRole="Admin">
+            <ProtectedRoute userRole={ROLES.ADMIN}>
               <AdminLayout />
             </ProtectedRoute>
           }
@@ -157,7 +125,7 @@ function App() {
         <Route
           path="/manager"
           element={
-            <ProtectedRoute userRole="Manager">
+            <ProtectedRoute userRole={ROLES.MANAGER}>
               <ManagerLayout />
             </ProtectedRoute>
           }
@@ -173,7 +141,7 @@ function App() {
         <Route
           path="/rule-analyst"
           element={
-            <ProtectedRoute userRole="Rule Analyst">
+            <ProtectedRoute userRole={ROLES.RULE_ANALYST}>
               <RuleAnalystLayout/>
             </ProtectedRoute>
           }
@@ -189,7 +157,7 @@ function App() {
         <Route
           path="/fraud-analyst"
           element={
-            <ProtectedRoute userRole="Fraud Analyst">
+            <ProtectedRoute userRole={ROLES.FRAUD_ANALYST}>
               <FraudAnalystLayout/>
             </ProtectedRoute>
           }
@@ -205,7 +173,7 @@ function App() {
         <Route
           path="/auditor"
           element={
-            <ProtectedRoute userRole="Auditor">
+            <ProtectedRoute userRole={ROLES.AUDITOR}>
               <AuditorLayout />
             </ProtectedRoute>
           }

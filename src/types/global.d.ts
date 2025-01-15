@@ -88,6 +88,10 @@ interface  TenantData {
       id: string;
       name: string;
       role: string;
+      subRole: {
+        name: string;
+        id: string;
+      };
     };
   }
   
@@ -98,6 +102,10 @@ interface  TenantData {
     id: string;
     name: string;
     role: string;
+    subRole: {
+      name: string;
+      id: string;
+    };
     email: string;
     mobile: string;
     status: string;

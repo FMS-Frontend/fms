@@ -1,15 +1,13 @@
 import { FC } from "react";
 import { capitalizeWords, getStatusStyles } from "../../../db/helperFunctions";
-import maskPhoneNumber from "../../../ui/utils/MaskPhoneNumber";
-import maskEmailDomain from "../../../ui/utils/MaskEmailDomain";
-
+import { maskEmailDomain, maskNumber } from "../../../ui/utils/helpers";
 interface DashboardRowProps {
   user: User;
   index: number;
 }
 
 const AdminDashRow: FC<DashboardRowProps> = ({ user, index }) => {
-  const { name, role, email, mobile, status } = user;
+  const { name, role, subRole, email, mobile, status } = user;
   // console.log(user);
 
   return (
@@ -19,9 +17,9 @@ const AdminDashRow: FC<DashboardRowProps> = ({ user, index }) => {
       }`}
     >
       <span className="text-xl">{capitalizeWords(name)}</span>
-      <span className="text-xl">{role}</span>
+      <span className="text-xl">{subRole.name || role}</span>
       <span className="text-xl text-blue-700 underline">{maskEmailDomain(email)}</span>
-      <span className="text-xl">{maskPhoneNumber(mobile)}</span>
+      <span className="text-xl">{maskNumber(mobile)}</span>
       <div>
         <span
           className={`flex justify-center items-center px-4 py-1 rounded-full text-xl font-medium ${getStatusStyles(
