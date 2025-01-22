@@ -19,7 +19,7 @@ function AdminDashboardTable() {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr]">
+      <Table columns="grid gap-4 md:grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Name
