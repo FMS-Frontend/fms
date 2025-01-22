@@ -13,7 +13,7 @@ const DashboardRow: FC<DashboardRowProps> = ({ tenant, index }) => {
 
   return (
     <div
-      className={`grid grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
+      className={`grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr] gap-2 border-b py-2 ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
