@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import URL from "../../../db/url";
 import toast from "react-hot-toast";
 import { capitalizeWords } from "../../../db/helperFunctions";
 import { useAppContext } from "../../../context/AppContext";
+import { getRoles } from "../../../services/apiAdmin";
 /**
  * CreateUser component to handle the creation of a new user.
  * This component displays a form that allows users to input details for creating a new user.
@@ -25,12 +26,22 @@ interface EditUserProps {
   userToEdit?: User;
 }
 
+interface Role {
+  id: string;
+  name: string;
+}
+
 const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
+  const queryClient = useQueryClient();
+  
   const { id: userId, ...usertoEditValues } = userToEdit!;
 
   const { tenant } = useAppContext();
 
-  const queryClient = useQueryClient();
+  const { isLoading, data: { data: roles } = {} } = useQuery<{ data: Role[] }>({
+    queryFn: () => getRoles(tenant),
+    queryKey: ["roles"],
+  });
 
   const { register, handleSubmit } = useForm<CreateUserFormData>({
     defaultValues: usertoEditValues,
@@ -46,6 +57,7 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
         mobile: data.mobile,
         address: data.address,
         description: data.description,
+        roleId: data.roleId,
       });
 
       toast.success("User updated successfully");
@@ -117,6 +129,23 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
           />
         </div>
 
+        <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-medium mb-1">
+            Role
+          </label>
+          <select
+            {...register("roleId", { required: "Role is required" })}
+            className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
+          >
+            <option value="">-- Select a Role --</option>
+            {roles?.map((role) => (
+              <option key={role.id} value={role.id}>
+                {role.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
@@ -141,6 +170,7 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
           <button
             type="submit"
             className="w-44 text-xl px-4 py-3 bg-blue-600  text-white rounded-md hover:bg-blue-700"
+            disabled={isLoading}
           >
             Update User
           </button>
