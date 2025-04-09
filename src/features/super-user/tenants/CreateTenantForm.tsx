@@ -98,6 +98,8 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               name="name"
               value={tenantData.name}
               onChange={handleChange}
+              pattern="^(?!\d+$)(?!\d+$)[a-zA-Z0-9\s._-]+$"
+              required
               placeholder="Enter tenant name"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
@@ -116,7 +118,7 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               name="address"
               value={tenantData.address}
               onChange={handleChange}
-              placeholder="Enter address"
+              placeholder="Enter tenant address"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
             {errors.address && (
@@ -136,7 +138,7 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               required
               type="text"
               placeholder="Enter contact person's name"
-              pattern="^[a-zA-Z\s]+$"
+              pattern="^(?!\d+$)(?!\d+$)[a-zA-Z0-9\s._-]+$"
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
             {errors.contactPersonName && (
@@ -199,12 +201,22 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               name="description"
               value={tenantData.description}
               onChange={handleChange}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = "auto";
+                const maxHeight = 200;
+                const minHeight = 80;
+                target.style.height = `${Math.min(
+                  Math.max(target.scrollHeight, minHeight),
+                  maxHeight
+                )}px`;
+              }}
               required
-              maxLength={500}
-              minLength={10}
               rows={3}
+              maxLength={500}
+              minLength={20}
               placeholder="Describe the tenant (maximum 500 characters)"
-              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500 resize-none"
             />
             {errors.description && (
               <span className="text-red-500 text-lg">{errors.description}</span>
