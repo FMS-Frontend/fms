@@ -35,8 +35,31 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+
+    const namePattern = /^(?!\d+$)[a-zA-Z0-9\s._-]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobilePattern = /^\d+$/;
+
+    if (name === "name" && !namePattern.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Tenant name must not be numeric and can only contain letters, numbers, spaces, dots, underscores, and hyphens.",
+      }));
+    } else if (name === "contactPersonEmail" && !emailPattern.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Please enter a valid email address.",
+      }));
+    } else if (name === "contactPersonMobile" && !mobilePattern.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Mobile number must not contain letters and can only contain numbers.",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+
     setTenantData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error when user types
   };
 
   const queryClient = useQueryClient();
@@ -98,7 +121,6 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               name="name"
               value={tenantData.name}
               onChange={handleChange}
-              pattern="^(?!\d+$)(?!\d+$)[a-zA-Z0-9\s._-]+$"
               required
               placeholder="Enter tenant name"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
@@ -160,7 +182,6 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               type="text"
               placeholder="Enter contact person's email"
               required
-              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
             {errors.contactPersonEmail && (
@@ -181,7 +202,6 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               onChange={handleChange}
               type="text"
               placeholder="Enter contact person's phone number"
-              pattern="^\d{10}$"
               required
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
