@@ -34,7 +34,7 @@ interface FormData {
 const createUrl = "/users";
 
 const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const queryClient = useQueryClient();
 
   const onFormSubmit: SubmitHandler<FormData> = async (data) => {
@@ -75,8 +75,17 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="text"
             placeholder="Enter name"
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            {...register("name")}
+            {...register("name", {
+              required: "Contact Name is required",
+              pattern: {
+                value: /^[A-ZA-z\s]+$/,
+                message: "Contact name must only contain letters and spaces",
+              },
+            })}
           />
+          {errors.name && (
+            <span className="text-red-500 text-lg">{errors.name.message}</span>
+          )}
         </div>
 
         <div className="mb-4">
@@ -117,12 +126,17 @@ const CreateAdminModal: FC<AdminProps> = ({ onClose }) => {
             type="text"
             placeholder="Enter Phone Number"
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            {...register("mobile",
-              {required: "Phone number is required", pattern: {
-              value: /^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$/,
-              message: "Please enter a valid phone number",
-            }, })}
+            {...register("mobile", {
+              required: "Phone number is required",
+              pattern: {
+                value: /^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$/,
+                message: "Please enter a valid phone number",
+              },
+            })}
           />
+          {errors.mobile && (
+            <span className="text-red-500 text-lg">{errors.mobile.message}</span>
+          )}
         </div>
 
         <div className="flex justify-around mt-6">
