@@ -59,10 +59,14 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
     const newErrors: Record<string, string> = {};
     if (!tenantData.name) newErrors.name = "Tenant name is required";
     if (!tenantData.address) newErrors.address = "Address is required";
-    if (!tenantData.description) newErrors.description = "Description is required";
-    if (!tenantData.contactPersonEmail) newErrors.contactPersonEmail = "Contact person email is required";
-    if (!tenantData.contactPersonName) newErrors.contactPersonName = "Contact person name is required";
-    if (!tenantData.contactPersonMobile) newErrors.contactPersonMobile = "Contact person mobile is required";
+    if (!tenantData.description)
+      newErrors.description = "Description is required";
+    if (!tenantData.contactPersonEmail)
+      newErrors.contactPersonEmail = "Contact person email is required";
+    if (!tenantData.contactPersonName)
+      newErrors.contactPersonName = "Contact person name is required";
+    if (!tenantData.contactPersonMobile)
+      newErrors.contactPersonMobile = "Contact person mobile is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -97,7 +101,9 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               placeholder="Enter tenant name"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
-            {errors.name && <span className="text-red-500 text-lg">{errors.name}</span>}
+            {errors.name && (
+              <span className="text-red-500 text-lg">{errors.name}</span>
+            )}
           </div>
 
           {/* Address Input */}
@@ -113,26 +119,8 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               placeholder="Enter address"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
-            {errors.address && <span className="text-red-500 text-lg">{errors.address}</span>}
-          </div>
-
-          {/* Contact Person Email Input */}
-          <div className="mb-6">
-            <label className="block text-gray-700 text-xl font-medium mb-1">
-              Contact Person Email
-            </label>
-            <input
-              name="contactPersonEmail"
-              value={tenantData.contactPersonEmail}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter contact person's email"
-              required
-              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            />
-            {errors.contactPersonEmail && (
-              <span className="text-red-500 text-lg">{errors.contactPersonEmail}</span>
+            {errors.address && (
+              <span className="text-red-500 text-lg">{errors.address}</span>
             )}
           </div>
 
@@ -152,7 +140,31 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
             {errors.contactPersonName && (
-              <span className="text-red-500 text-lg">{errors.contactPersonName}</span>
+              <span className="text-red-500 text-lg">
+                {errors.contactPersonName}
+              </span>
+            )}
+          </div>
+
+          {/* Contact Person Email Input */}
+          <div className="mb-6">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Contact Person Email
+            </label>
+            <input
+              name="contactPersonEmail"
+              value={tenantData.contactPersonEmail}
+              onChange={handleChange}
+              type="text"
+              placeholder="Enter contact person's email"
+              required
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+            {errors.contactPersonEmail && (
+              <span className="text-red-500 text-lg">
+                {errors.contactPersonEmail}
+              </span>
             )}
           </div>
 
@@ -167,11 +179,14 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               onChange={handleChange}
               type="text"
               placeholder="Enter contact person's phone number"
-              pattern="^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$"
+              pattern="^\d{10}$"
+              required
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
             {errors.contactPersonMobile && (
-              <span className="text-red-500 text-lg">{errors.contactPersonMobile}</span>
+              <span className="text-red-500 text-lg">
+                {errors.contactPersonMobile}
+              </span>
             )}
           </div>
 
@@ -184,10 +199,16 @@ const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
               name="description"
               value={tenantData.description}
               onChange={handleChange}
-              placeholder="Describe the tenant"
+              required
+              maxLength={500}
+              minLength={10}
+              rows={3}
+              placeholder="Describe the tenant (maximum 500 characters)"
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
-            {errors.description && <span className="text-red-500 text-lg">{errors.description}</span>}
+            {errors.description && (
+              <span className="text-red-500 text-lg">{errors.description}</span>
+            )}
           </div>
 
           <div className="flex justify-around mt-6">
