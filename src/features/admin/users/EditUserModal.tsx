@@ -34,7 +34,7 @@ interface Role {
 const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
   const queryClient = useQueryClient();
   
-  const { id: userId, ...usertoEditValues } = userToEdit!;
+  const { id: userId, ...usertoEditValues } = userToEdit!;  
 
   const { tenant } = useAppContext();
 
@@ -67,8 +67,8 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
       });
     } catch (error: any) {
       console.log(error);
-      const errMsg = error?.message
-        toast.error(errMsg);
+      const errMsg = error?.response?.data
+        toast.error(errMsg.message);
     }
   };
 
@@ -138,7 +138,7 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
             {...register("roleId", { required: "Role is required" })}
             className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
           >
-            <option value="">-- Select a Role --</option>
+            <option value="">{userToEdit?.role}</option>
             {roles?.map((role) => (
               <option key={role.id} value={role.id}>
                 {role.name}

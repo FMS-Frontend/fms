@@ -43,6 +43,8 @@ interface FormData {
 
 const EditAdminModal: FC<EditAdminProps> = ({ onClose, adminToEdit = {} }) => {
   const { id: editId, ...editValues } = adminToEdit;
+  // console.log(adminToEdit);
+
 
   const { register, handleSubmit } = useForm<FormData>({
     defaultValues: editValues,
@@ -65,8 +67,11 @@ const EditAdminModal: FC<EditAdminProps> = ({ onClose, adminToEdit = {} }) => {
         queryKey: ["admins"],
       });
     } catch (error: any) {
+      // console.log(error);
+      // toast.error(error?.message || "Error Editing Admin, Try Again!");
       console.log(error);
-      toast.error(error?.message || "Error Editing Admin, Try Again!");
+      const errMsg = error?.response?.data
+      toast.error(errMsg.message || "Error Editing Admin, Try Again!");
     }
   };
 

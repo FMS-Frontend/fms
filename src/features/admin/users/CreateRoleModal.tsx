@@ -33,8 +33,8 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
         }
       } catch (error: any) {
         console.error("Error fetching permissions:", error);
-        const errMsg = error?.message
-        toast.error(errMsg);
+        const errMsg = error?.response?.data
+        toast.error(errMsg.message);
       }
     };
 
@@ -66,8 +66,8 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
       });
     } catch (error: any) {
       console.log(error);
-      const errMsg = error?.message
-        toast.error(errMsg);
+      const errMsg = error?.response?.data
+      toast.error(errMsg.message);
     }
   };
 

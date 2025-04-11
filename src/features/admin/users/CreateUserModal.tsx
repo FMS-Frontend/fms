@@ -63,8 +63,8 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
       });
     } catch (error: any) {
       console.log(error);
-      const errMsg = error?.message
-        toast.error(errMsg);
+      const errMsg = error?.response?.data
+        toast.error(errMsg.message);
     }
   };
 
