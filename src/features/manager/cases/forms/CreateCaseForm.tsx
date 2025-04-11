@@ -40,9 +40,9 @@ const CreateCaseForm: FC<CreateCaseFormProps> = ({ onClose }) => {
         queryKey: ["cases", tenant],
       });
       onClose?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to create case:", error);
-      toast.error("Failed to create case. Please try again.");
+      toast.error(error?.message || "Failed to create case. Please try again.");
     }
   };
 

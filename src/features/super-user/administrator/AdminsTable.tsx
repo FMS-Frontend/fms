@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdmins } from "../../../services/apiSuperUser";
@@ -7,6 +7,7 @@ import AdminRow from "./AdminRow";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 /**
  * AdminsTable component displays a table of administrator information,
@@ -37,11 +38,17 @@ const AdminsTable: FC = () => {
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
 
-  const { isLoading, data: { data: admins, pagination } = {} } = useQuery({
+  const { isLoading, data: { data: admins, pagination, error } = {} } = useQuery({
     queryFn: () => getAdmins(page),
     queryKey: ["admins", page],
     retry: true,
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   // console.log(admins);
 

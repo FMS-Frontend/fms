@@ -79,7 +79,7 @@ const UpdatePassword: FC = (): JSX.Element => {
     }
 
     try {
-      const res = await URL.post(
+      await URL.post(
         passwordChangeUrl,
         {
           password: values.password,
@@ -91,12 +91,13 @@ const UpdatePassword: FC = (): JSX.Element => {
         }
       );
 
-      console.log(res);
+      // console.log(res);
       toast.success("Password changed successfully!");
       navigate("/login");
-    } catch (err) {
-      toast.error("Error changing password, try again!");
-      console.log(err);
+    } catch (err: any) {
+      const errMsg = err?.response?.data
+      toast.error(errMsg.message || "Error changing password, try again!");
+      // console.log(err);
     } finally {
       actions.resetForm();
     }

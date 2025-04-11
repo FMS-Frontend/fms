@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { useQuery } from "@tanstack/react-query";
 import { getUserTrends } from "../../../services/apiSuperUser";
 import Spinner from "../../../ui/utils/Spinner";
+import toast from "react-hot-toast";
 
 /**
  * ApexLineChart component renders an area chart displaying user data over time.
@@ -24,12 +25,18 @@ import Spinner from "../../../ui/utils/Spinner";
  */
 
 const ApexLineChart: React.FC = () => {
-  const { isLoading, data: { data: chartData } = {} } = useQuery({
+  const { isLoading, data: { data: chartData } = {}, error } = useQuery({
     queryFn: getUserTrends,
     queryKey: ["charts"],
     refetchOnWindowFocus: true,
     retry: true,
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
   // console.log(chartData);
 
   // Map data for the Y-axis (users) and X-axis (months)

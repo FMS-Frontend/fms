@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import RuleMgtTable from "./RuleMgtTable";
 import Pagination from "./Pagination"; // Import Pagination
@@ -60,11 +60,12 @@ const RulesManagement: FC = (): JSX.Element => {
     );
   }
 
-  if (error) {
-    console.error(error);
-    toast.error("Failed to fetch rules. Please try again.");
-  }
-
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
+  
   return (
     <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Rule Management</h1>

@@ -28,8 +28,8 @@ const AdminRow: FC<AuditRowProps> = ({ admin, index }) => {
       });
       toast.success("Deleted successfully");
     },
-    onError: () => {
-      toast.error("Error deleting, try again");
+    onError: (error) => {
+      toast.error(error?.message || "Error deleting, try again");
     },
   });
 

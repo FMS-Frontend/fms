@@ -64,9 +64,9 @@ const EditAdminModal: FC<EditAdminProps> = ({ onClose, adminToEdit = {} }) => {
       queryClient.invalidateQueries({
         queryKey: ["admins"],
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error("Error Editing Admin, Try Again!");
+      toast.error(error?.message || "Error Editing Admin, Try Again!");
     }
   };
 

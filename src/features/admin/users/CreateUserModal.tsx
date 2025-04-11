@@ -61,9 +61,10 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error("Error creating user. Please try again!");
+      const errMsg = error?.message
+        toast.error(errMsg);
     }
   };
 

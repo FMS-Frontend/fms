@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Table from "../../../ui/utils/Table";
 import { getTenants } from "../../../services/apiSuperUser";
@@ -6,6 +7,7 @@ import Paginate from "../../../ui/utils/Paginate";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../../../ui/utils/Spinner";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
+import toast from "react-hot-toast";
 
 function DashboardTable() {
   const [searchParams] = useSearchParams();
@@ -17,6 +19,11 @@ function DashboardTable() {
     queryKey: ["tenants", page],
   });
 
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
   // Handle fetched dataa
   const tenants = data?.data || [];
   const pagination = data?.pagination || {};

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminReports } from "../../../services/apiAdmin";
@@ -10,15 +10,22 @@ import usePageParam from "../../../hooks/usePageParam";
 import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import OutlineButton from "../../../ui/utils/OutlineButton";
 import { useAppContext } from "../../../context/AppContext";
+import toast from "react-hot-toast";
 
 const FraudReportTable: FC = () => {
   const { tenant } = useAppContext();
   const { page } = usePageParam();
 
-  const { isLoading, data: { data: reports, pagination } = {} } = useQuery({
+  const { isLoading, data: { data: reports, pagination } = {}, error } = useQuery({
     queryFn: () => getAdminReports(tenant, page),
     queryKey: ["adminreports", page],
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
   // console.log(pagination);
 
   return (

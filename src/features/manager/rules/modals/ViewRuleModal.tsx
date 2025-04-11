@@ -1,10 +1,11 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../../../ui/utils/Spinner";
 import { getRuleById } from "../../../../services/managerServices";
 import ViewRuleForm from "../forms/ViewRuleForm";
 import EditRuleForm from "../forms/EditRuleForm";
 import { useAppContext } from "../../../../context/AppContext";
+import toast from "react-hot-toast";
 
 interface ViewRuleModalProps {
   onClose?: () => void;
@@ -23,6 +24,12 @@ const ViewRuleModal: React.FC<ViewRuleModalProps> = ({ onClose, ruleId }) => {
     staleTime: 0,
     enabled: !!ruleId, // Ensure the query only runs if ruleId exists
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   const nextStep = () => setStep((prev) => prev + 1);
   const previousStep = () => setStep((prev) => prev - 1);

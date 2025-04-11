@@ -1,4 +1,10 @@
 import { format } from "date-fns";
+import { AxiosError } from "axios";
+
+export const extractBackendError = (error: unknown, fallback: string): string => {
+  const err = error as AxiosError<any>;
+  return err?.response?.data?.message || err?.response?.data?.error || fallback;
+};
 
 // const userRole = 'superuser';
 export function checkUserRole(role: string) {

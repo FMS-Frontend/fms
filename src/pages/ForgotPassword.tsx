@@ -73,7 +73,7 @@ const ForgotPassword: FC = (): JSX.Element => {
     try {
       // const accessToken = localStorage.getItem("authToken")
 
-      const res = await URL.post(
+      await URL.post(
         forgotPasswordUrl,
         {
           email: values.email,
@@ -87,12 +87,13 @@ const ForgotPassword: FC = (): JSX.Element => {
         }
       );
 
-      console.log(res);
+      // console.log(res);
       toast.success("A reset link has been sent to your mail!");
       navigate("/password-confirmation");
-    } catch (err) {
-      toast.error("Error submitting link, try again!");
-      console.log(err);
+    } catch (err: any) {
+      const errMsg = err?.response?.data
+      toast.error(errMsg?.message || "Error submitting link, try again!");
+      // console.log(err);
     } finally {
       actions.resetForm();
     }

@@ -1,21 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { useQuery } from "@tanstack/react-query";
 import { getTenantChart } from "../../../services/apiAdmin";
 import Spinner from "../../../ui/utils/Spinner";
 import { useAppContext } from "../../../context/AppContext";
+import toast from "react-hot-toast";
 
 
 const ApexLineChart: React.FC = () => {
   const { tenant } = useAppContext();
 
-  const { isLoading, data: { data: chartData } = {} } = useQuery({
+  const { isLoading, data: { data: chartData } = {}, error } = useQuery({
     queryFn: () => getTenantChart(tenant),
     queryKey: ["chart"],
     retry: true,
   });
 
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
   // console.log(chartData);
 
   // Map data for the Y-axis (users) and X-axis (months)

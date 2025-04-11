@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FiPlus } from "react-icons/fi";
 import PrimaryButton from "../ui/utils/PrimaryButton";
-import OutlineButton from "../ui/utils/OutlineButton";
+// import OutlineButton from "../ui/utils/OutlineButton";
 import ReportTable from "../features/super-user/reports/ReportTable";
 import ReportOperations from "../features/super-user/reports/ReportOperations";
 
@@ -34,7 +34,7 @@ const Reports: FC = (): JSX.Element => {
       <div className="flex justify-between">
         <div className="flex gap-10">
           <PrimaryButton>Schedule Report</PrimaryButton>
-          <OutlineButton>Export As</OutlineButton>
+          {/* <OutlineButton>Export As</OutlineButton> */}
         </div>
 
         <PrimaryButton>

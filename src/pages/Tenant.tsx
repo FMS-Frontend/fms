@@ -1,5 +1,5 @@
 import { FC } from "react";
-import OutlineButton from "../ui/utils/OutlineButton";
+// import OutlineButton from "../ui/utils/OutlineButton";
 import SearchInput from "../ui/utils/SearchInput";
 import TenantTable from "../features/super-user/tenants/TenantTable";
 import AddTenant from "../features/super-user/tenants/AddTenant";
@@ -38,7 +38,7 @@ const Tenant: FC = (): JSX.Element => {
 
         <div className="flex gap-10">
           <AddTenant />
-          <OutlineButton>Export As</OutlineButton>
+          {/* <OutlineButton>Export As</OutlineButton> */}
         </div>
       </div>
 

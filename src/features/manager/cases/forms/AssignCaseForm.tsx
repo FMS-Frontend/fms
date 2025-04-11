@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import SelectDropdown from "../../../../ui/utils/SelectDropdown";
 import { useAppContext } from "../../../../context/AppContext";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -54,6 +54,12 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
     staleTime: 0,
   });
 
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
+
   // Add "All" option and map user data to dropdown options
   const userOptions = [
     ...(users?.data.map((user: Assignee) => ({
@@ -85,9 +91,9 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
       });
 
       onClose?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to assign case:", error);
-      toast.error("Failed to assign case. Please try again.");
+      toast.error(error?.message || "Failed to assign case. Please try again.");
     }
   };
 

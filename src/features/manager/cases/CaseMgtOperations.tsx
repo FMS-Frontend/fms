@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SelectDropdown from "../../../ui/utils/SelectDropdown";
 import PrimaryButton from "../../../ui/utils/PrimaryButton";
 import DateComp from "../../../ui/utils/DateComp";
 import { getUsers } from "../../../services/apiAdmin";
 import { useAppContext } from "../../../context/AppContext";
+import toast from "react-hot-toast";
 
 const CaseMgtOperations: FC<CaseMgtOperationsProps> = ({
   assignedTo,
@@ -19,6 +20,12 @@ const CaseMgtOperations: FC<CaseMgtOperationsProps> = ({
     queryFn: () => getUsers(tenant, 1), // Replace "tenant-id" with the actual tenant value
     staleTime: 0, // Cache data for 5 minutes
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
   // Add "All" option and map user data to dropdown options
   const userOptions = [
     { value: "", label: "All" }, // Default "All" option

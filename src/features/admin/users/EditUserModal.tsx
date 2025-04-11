@@ -65,9 +65,10 @@ const EditUser: FC<EditUserProps> = ({ userToEdit, onClose }) => {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error("Error updating user. Please try again!");
+      const errMsg = error?.message
+        toast.error(errMsg);
     }
   };
 
