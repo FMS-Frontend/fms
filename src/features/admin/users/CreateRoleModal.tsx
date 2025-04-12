@@ -101,7 +101,7 @@ const CreateRoleModal: FC<CreateRoleProps> = ({ onClose }) => {
           <textarea
             placeholder="Provide a brief description of this role"
             {...register("description", { required: true })}
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
             rows={3}
           ></textarea>
         </div>

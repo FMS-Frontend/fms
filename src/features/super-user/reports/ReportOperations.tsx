@@ -11,7 +11,7 @@ const ReportOperations: FC = () => {
   };
 
   return (
-    <div className="px-4 py-4 w-1/2 border rounded-sm shadow-sm flex items-center justify-around">
+    <div className="px-4 py-5 w-full md:w-11/12 xl:w-9/12 border rounded-lg shadow-sm flex flex-col md:flex-row md:items-center md:justify-around">
       <div>
         <DateComp />
       </div>
