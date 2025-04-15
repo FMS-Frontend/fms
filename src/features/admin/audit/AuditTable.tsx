@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminAudit } from "../../../services/apiAdmin";
@@ -9,16 +9,23 @@ import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import Paginate from "../../../ui/utils/Paginate";
 import Spinner from "../../../ui/utils/Spinner";
 import { useAppContext } from "../../../context/AppContext";
+import toast from "react-hot-toast";
 // import AuditRow from "./AdminAuditRow";
 
 const AdminAuditTable: FC = () => {
   const { tenant } = useAppContext();
   const { page } = usePageParam();
 
-  const { isLoading, data: { data: audit, pagination } = {} } = useQuery({
+  const { isLoading, data: { data: audit, pagination } = {}, error } = useQuery({
     queryFn: () => getAdminAudit(tenant, page),
     queryKey: ["adminaudit", page],
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
   // console.log(audit);
 
   return (

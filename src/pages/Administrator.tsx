@@ -1,8 +1,8 @@
 import { FC } from "react";
-import OutlineButton from "../ui/utils/OutlineButton";
+// import OutlineButton from "../ui/utils/OutlineButton";
 import SearchInput from "../ui/utils/SearchInput";
 import AdminsTable from "../features/super-user/administrator/AdminsTable";
-import AddAdmin from "../features/super-user/administrator/AddAdmin";
+// import AddAdmin from "../features/super-user/administrator/AddAdmin";
 
 /**
  * Administrator Component
@@ -37,8 +37,8 @@ const Administrator: FC = (): JSX.Element => {
         <SearchInput />
 
         <div className="flex gap-10">
-          <AddAdmin />
-          <OutlineButton>Export As</OutlineButton>
+          {/* <AddAdmin /> */}
+          {/* <OutlineButton>Export As</OutlineButton> */}
         </div>
       </div>
 

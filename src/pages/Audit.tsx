@@ -1,5 +1,5 @@
 import { FC } from "react";
-import OutlineButton from "../ui/utils/OutlineButton";
+// import OutlineButton from "../ui/utils/OutlineButton";
 import SearchInput from "../ui/utils/SearchInput";
 import AuditTable from "../features/super-user/audit/AuditTable";
 import DateComp from "../ui/utils/DateComp";
@@ -35,7 +35,7 @@ const Audit: FC = (): JSX.Element => {
 
       <div className="flex justify-between ">
         <SearchInput width="w-full" />
-        <OutlineButton>Export as</OutlineButton>
+        {/* <OutlineButton>Export as</OutlineButton> */}
       </div>
 
       <AuditTable />

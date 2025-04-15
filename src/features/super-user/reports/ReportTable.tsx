@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getReports } from "../../../services/apiSuperUser";
@@ -6,13 +6,21 @@ import ReportRow from "./ReportRow";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
+import toast from "react-hot-toast";
+toast
 
 
 const ReportTable: FC = () => {
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, error } = useQuery({
     queryKey: ["reports"],
     queryFn: getReports,
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   
   const reports = data?.reports;

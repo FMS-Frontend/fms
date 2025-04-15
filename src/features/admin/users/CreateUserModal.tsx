@@ -6,7 +6,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { getRoles } from "../../../services/apiAdmin";
 import { useAppContext } from "../../../context/AppContext";
 
-
 /**
  * CreateUser component to handle the creation of a new user.
  * This component displays a form that allows users to input details for creating a new user.
@@ -22,7 +21,6 @@ import { useAppContext } from "../../../context/AppContext";
  * @returns {JSX.Element} The rendered form for creating a new user.
  */
 
-
 interface CreateUserProps {
   onClose?: () => void;
 }
@@ -34,14 +32,17 @@ interface Role {
 
 const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit } = useForm<CreateUserFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateUserFormData>();
   const { tenant } = useAppContext();
 
   const { isLoading, data: { data: roles } = {} } = useQuery<{ data: Role[] }>({
     queryFn: () => getRoles(tenant),
     queryKey: ["roles"],
   });
-  // console.log(roles);
 
   const onFormSubmit: SubmitHandler<CreateUserFormData> = async (data) => {
     try {
@@ -61,9 +62,10 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error("Error creating user. Please try again!");
+      const errMsg = error?.response?.data
+        toast.error(errMsg.message);
     }
   };
 
@@ -77,6 +79,7 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
         onSubmit={handleSubmit(onFormSubmit)}
         className="flex flex-col gap-3"
       >
+        {/* Full Name Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Full Name
@@ -84,11 +87,22 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="text"
             placeholder="Enter full name"
-            {...register("name", { required: "Name is required" })}
+            {...register("name", {
+              required: "Name is required",
+              pattern: {
+                value: /^(?!\d+$)[a-zA-Z0-9\s._-]+$/,
+                message:
+                  "Name must not be numeric and can only contain letters, numbers, spaces, dots, underscores, and hyphens.",
+              },
+            })}
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
+          {errors.name && (
+            <span className="text-red-500 text-lg">{errors.name.message}</span>
+          )}
         </div>
 
+        {/* Address Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Address
@@ -99,8 +113,12 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
             {...register("address", { required: "Address is required" })}
             className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
+          {errors.address && (
+            <span className="text-red-500 text-lg">{errors.address.message}</span>
+          )}
         </div>
 
+        {/* Email Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Email
@@ -117,8 +135,12 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
             })}
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
+          {errors.email && (
+            <span className="text-red-500 text-lg">{errors.email.message}</span>
+          )}
         </div>
 
+        {/* Phone Number Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Phone Number
@@ -126,15 +148,21 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
           <input
             type="text"
             placeholder="Enter phone number"
-            {...register("mobile",
-              {required: "Phone number is required", pattern: {
-              value: /^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$/,
-              message: "Please enter a valid phone number",
-            }, })}
+            {...register("mobile", {
+              required: "Phone number is required",
+              pattern: {
+                value: /^\d+$/,
+                message: "Phone number must only contain numbers.",
+              },
+            })}
             className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
           />
+          {errors.mobile && (
+            <span className="text-red-500 text-lg">{errors.mobile.message}</span>
+          )}
         </div>
 
+        {/* Role Input */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Role
@@ -150,17 +178,22 @@ const CreateUser: FC<CreateUserProps> = ({ onClose }) => {
               </option>
             ))}
           </select>
+          {errors.roleId && (
+            <span className="text-red-500 text-lg">{errors.roleId.message}</span>
+          )}
         </div>
 
+        {/* Description Input */}
         <div className="mb-6">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Description
           </label>
-          <input
-            type="textarea"
+          <textarea
             placeholder="Enter description"
+            required
             {...register("description")}
-            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
+
           />
         </div>
 

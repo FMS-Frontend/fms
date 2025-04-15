@@ -1,6 +1,7 @@
 import { FC } from "react";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
-import { useFormik, FormikHelpers } from "formik";
+// import { useFormik, FormikHelpers } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import URL from "../../db/url";
 import { useNavigate } from "react-router-dom";
@@ -54,15 +55,15 @@ const LoginPage: FC = (): JSX.Element => {
   const validate = Yup.object({
     email: Yup.string()
       .email("Please enter a valid email")
-      .required("Required"),
+      .required("Email is Required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
-      .required("Required"),
+      .required("Password is Required"),
   });
 
   const handleFormSubmit = async (
     values: FormValues,
-    actions: FormikHelpers<FormValues>
+    // actions: FormikHelpers<FormValues>
   ) => {
     try {
       const res = await URL.post(loginUrl, {
@@ -136,12 +137,13 @@ const LoginPage: FC = (): JSX.Element => {
         navigate(redirectPath);
         toast.success(`Welcome back ${tenantUser || "Super User"}`);
       }
-    } catch (err) {
-      toast.error("Wrong credentials. Please check your email and password.");
-      console.error(err);
+    } catch (err: any) {
+      const errMsg = err?.response?.data
+      toast.error(errMsg.message || "Wrong credentials. Please check your email and password.");
+      console.error(errMsg.message);
       return;
     } finally {
-      actions.resetForm();
+      // actions.resetForm();
     }
   };
 

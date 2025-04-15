@@ -2,6 +2,7 @@ import { FC } from "react";
 import SearchInput from "../utils/SearchInput";
 import UserAvatar from "../utils/UserAvatar";
 import { CgMenuGridO } from "react-icons/cg";
+import { useLocation } from "react-router-dom";
 
 /**
  * Header component that displays the top navigation bar with a hamburger menu for mobile view,
@@ -24,6 +25,10 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
+  const location = useLocation();
+  const isDashboardOrAnalytics = location.pathname.includes("/dashboard") || location.pathname.includes("/analytics");
+
+
   return (
     <div className="px-16 py-6 bg-white border-b flex justify-between">
       {/* Hamburger menu icon for mobile */}
@@ -34,7 +39,9 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
           onClick={toggleSidebar}
         />
       </div>
-      <SearchInput />
+      {
+        isDashboardOrAnalytics ? <SearchInput /> : <div className="hidden lg:block w-1/2"></div>
+      }
       <UserAvatar />
     </div>
   );

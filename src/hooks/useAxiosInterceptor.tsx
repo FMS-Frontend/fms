@@ -52,10 +52,9 @@ export const useAxiosInterceptor = () => {
 
     const responseInterceptor = URL.interceptors.response.use(
       (response) => {
-        // Update tokens if they're in the response headers
         const newAccessToken = response.headers["x-access-token"];
         const newRefreshToken = response.headers["x-refresh-token"];
-
+    
         if (newAccessToken) {
           localStorage.setItem("accessToken", newAccessToken);
           setAccessToken(newAccessToken);
@@ -64,16 +63,22 @@ export const useAxiosInterceptor = () => {
           localStorage.setItem("refreshToken", newRefreshToken);
           setRefreshToken(newRefreshToken);
         }
-
+    
         return response;
       },
       async (error) => {
         const originalRequest = error.config;
-
-        // Handle 401 errors (unauthorized)
+    
+        // ✅ Skip refresh logic for login/refresh requests
+        if (
+          originalRequest?.url?.includes("/auth/login") ||
+          originalRequest?.url?.includes("/auth/refresh")
+        ) {
+          return Promise.reject(error); // just fail as-is
+        }
+    
         if (error.response?.status === 401 && !originalRequest._retry) {
           if (isRefreshing) {
-            // Queue the failed request
             return new Promise((resolve, reject) => {
               failedQueue.push({ resolve, reject });
             })
@@ -83,10 +88,10 @@ export const useAxiosInterceptor = () => {
               })
               .catch((err) => Promise.reject(err));
           }
-
+    
           originalRequest._retry = true;
           isRefreshing = true;
-
+    
           try {
             const refreshToken = localStorage.getItem("refreshToken");
             const response = await axios.post(
@@ -98,26 +103,25 @@ export const useAxiosInterceptor = () => {
                 },
               }
             );
-
+    
             const newAccessToken = response.headers["x-access-token"];
             const newRefreshToken = response.headers["x-refresh-token"];
-
+    
             if (newAccessToken) {
               localStorage.setItem("accessToken", newAccessToken);
               setAccessToken(newAccessToken);
               URL.defaults.headers.common["x-access-token"] = newAccessToken;
             }
-
+    
             if (newRefreshToken) {
               localStorage.setItem("refreshToken", newRefreshToken);
               setRefreshToken(newRefreshToken);
             }
-
+    
             processQueue(null, newAccessToken);
             return URL(originalRequest);
           } catch (refreshError) {
             processQueue(refreshError, null);
-            // Clear tokens and redirect to login
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("role");
@@ -129,12 +133,11 @@ export const useAxiosInterceptor = () => {
             isRefreshing = false;
           }
         }
-
+    
         return Promise.reject(error);
       }
     );
-
-    // Cleanup
+    
     return () => {
       URL.interceptors.request.eject(requestInterceptor);
       URL.interceptors.response.eject(responseInterceptor);

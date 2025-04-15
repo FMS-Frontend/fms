@@ -31,8 +31,9 @@ const UserRow: FC<UserRowProps> = ({ user, index }) => {
       });
       toast.success("Deleted successfully");
     },
-    onError: () => {
-      toast.error("Error deleting user, try again");
+    onError: (error) => {
+      const errMsg = error?.message
+        toast.error(errMsg);
     },
   });
 

@@ -50,9 +50,9 @@ const UpdateCaseForm: FC<UpdateCaseFormProps> = ({
         queryKey: ["cases", tenantId],
       });
       onClose?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to update case:", error);
-      toast.error("Failed to update case. Please try again.");
+      toast.error(error?.message || "Failed to update case. Please try again.");
     }
   };
 

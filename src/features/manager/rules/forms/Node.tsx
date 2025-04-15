@@ -91,7 +91,7 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
     }
   };
   
-  console.log(selectedType);
+  // console.log(selectedType);
   
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {

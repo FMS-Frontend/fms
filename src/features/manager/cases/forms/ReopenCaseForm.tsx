@@ -63,9 +63,9 @@ const ReopenCaseForm: FC<ReopenCaseFormProps> = ({
       queryClient.invalidateQueries({ queryKey: ["cases", tenantId] });
 
       onClose?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to reopen case:", error);
-      toast.error("Failed to reopen case. Please try again.");
+      toast.error(error?.message || "Failed to reopen case. Please try again.");
     }
   };
 

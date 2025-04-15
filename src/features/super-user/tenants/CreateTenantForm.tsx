@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { FC, ChangeEvent, useState } from "react";
 import { useTenant } from "./TenantContext";
 import Spinner from "../../../ui/utils/Spinner";
 // import { useQuery } from "@tanstack/react-query";
@@ -27,13 +27,38 @@ interface StepProps {
   onClose: () => void;
 }
 
-const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
+const CreateTenantForm: FC<StepProps> = ({ onClose }) => {
   const { isLoading, tenantData, setTenantData } = useTenant();
+  const [errors, setErrors] = useState<Record<string, string>>({}); // State to track errors
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+
+    const namePattern = /^(?!\d+$)[a-zA-Z0-9\s._-]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobilePattern = /^\d+$/;
+
+    if (name === "name" && !namePattern.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Tenant name must not be numeric and can only contain letters, numbers, spaces, dots, underscores, and hyphens.",
+      }));
+    } else if (name === "contactPersonEmail" && !emailPattern.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Please enter a valid email address.",
+      }));
+    } else if (name === "contactPersonMobile" && !mobilePattern.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Mobile number must not contain letters and can only contain numbers.",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+
     setTenantData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -42,17 +67,38 @@ const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
   const { mutate } = useMutation({
     mutationFn: createTenant,
     onSuccess: () => {
-      toast.success("Tenant created successfuly!");
+      toast.success("Tenant created successfully!");
       queryClient.invalidateQueries({
         queryKey: ["tenants"],
       });
-      if (onClose) {onClose()};
+      if (onClose) {
+        onClose();
+      }
     },
     onError: (err) => toast.error(err.message),
   });
 
+  const validateFields = () => {
+    const newErrors: Record<string, string> = {};
+    if (!tenantData.name) newErrors.name = "Tenant name is required";
+    if (!tenantData.address) newErrors.address = "Address is required";
+    if (!tenantData.description)
+      newErrors.description = "Description is required";
+    if (!tenantData.contactPersonEmail)
+      newErrors.contactPersonEmail = "Contact person email is required";
+    if (!tenantData.contactPersonName)
+      newErrors.contactPersonName = "Contact person name is required";
+    if (!tenantData.contactPersonMobile)
+      newErrors.contactPersonMobile = "Contact person mobile is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const submitData = () => {
-    mutate(tenantData);
+    if (validateFields()) {
+      mutate(tenantData);
+    }
   };
 
   return (
@@ -75,9 +121,13 @@ const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
               name="name"
               value={tenantData.name}
               onChange={handleChange}
+              required
               placeholder="Enter tenant name"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
+            {errors.name && (
+              <span className="text-red-500 text-lg">{errors.name}</span>
+            )}
           </div>
 
           {/* Address Input */}
@@ -90,62 +140,37 @@ const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
               name="address"
               value={tenantData.address}
               onChange={handleChange}
-              placeholder="Enter address"
+              placeholder="Enter tenant address"
               className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
+            {errors.address && (
+              <span className="text-red-500 text-lg">{errors.address}</span>
+            )}
           </div>
 
-          {/* Role Dropdown
-          <div className="mb-4">
-            <label className="block text-gray-700 text-xl font-medium mb-1">
-              Admin
-            </label>
-            <select
-              name="adminId"
-              value={tenantData.adminId}
-              onChange={handleChange}
-              className="w-full text-xl border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
-            >
-              <option value="">-- Select an Admin --</option>
-              {admins?.map((admin) => (
-                <option key={admin.id} value={admin.id}>
-                  {admin.name}
-                </option>
-              ))}
-            </select>
-          </div> */}
-
-          {/* Email Input
-          <div className="mb-4">
-            <label className="block text-gray-700 text-xl font-medium mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={tenantData.email}
-              onChange={handleChange}
-              placeholder="Enter email"
-              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            />
-          </div> */}
-
-          {/* Description Input */}
+          {/* Contact Person Name Input */}
           <div className="mb-6">
             <label className="block text-gray-700 text-xl font-medium mb-1">
-              Description
+              Contact Person Name
             </label>
             <input
-              name="description"
-              value={tenantData.description}
+              name="contactPersonName"
+              value={tenantData.contactPersonName}
               onChange={handleChange}
+              required
               type="text"
-              placeholder=""
+              placeholder="Enter contact person's name"
+              pattern="^(?!\d+$)(?!\d+$)[a-zA-Z0-9\s._-]+$"
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
+            {errors.contactPersonName && (
+              <span className="text-red-500 text-lg">
+                {errors.contactPersonName}
+              </span>
+            )}
           </div>
 
-          {/* Phone Number Input */}
+          {/* Contact Person Email Input */}
           <div className="mb-6">
             <label className="block text-gray-700 text-xl font-medium mb-1">
               Contact Person Email
@@ -155,39 +180,67 @@ const CreateTenantForm: FC<StepProps> = ({  onClose }) => {
               value={tenantData.contactPersonEmail}
               onChange={handleChange}
               type="text"
-              placeholder=""
+              placeholder="Enter contact person's email"
+              required
               className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
             />
+            {errors.contactPersonEmail && (
+              <span className="text-red-500 text-lg">
+                {errors.contactPersonEmail}
+              </span>
+            )}
           </div>
 
-          <div className="mb-6">
-            <label className="block text-gray-700 text-xl font-medium mb-1">
-              Contact Person Name
-            </label>
-            <input
-              name="contactPersonName"
-              value={tenantData.contactPersonName}
-              onChange={handleChange}
-              type="text"
-              placeholder=""
-              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
+          {/* Contact Person Mobile Input */}
           <div className="mb-6">
             <label className="block text-gray-700 text-xl font-medium mb-1">
               Contact Person Mobile
             </label>
-              <input
-                name="contactPersonMobile"
-                value={tenantData.contactPersonMobile}
-                onChange={handleChange}
-                type="text"
-                placeholder="Enter contact person's phone number"
-                pattern="^[+]?[0-9]{1,4}[-\s]?[0-9]{1,14}(?:x.+)?$"
-                required
-                className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
-              />
+            <input
+              name="contactPersonMobile"
+              value={tenantData.contactPersonMobile}
+              onChange={handleChange}
+              type="text"
+              placeholder="Enter contact person's phone number"
+              required
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500"
+            />
+            {errors.contactPersonMobile && (
+              <span className="text-red-500 text-lg">
+                {errors.contactPersonMobile}
+              </span>
+            )}
+          </div>
+
+          {/* Description Input */}
+          <div className="mb-6">
+            <label className="block text-gray-700 text-xl font-medium mb-1">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={tenantData.description}
+              onChange={handleChange}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = "auto";
+                const maxHeight = 200;
+                const minHeight = 80;
+                target.style.height = `${Math.min(
+                  Math.max(target.scrollHeight, minHeight),
+                  maxHeight
+                )}px`;
+              }}
+              required
+              rows={3}
+              maxLength={500}
+              minLength={20}
+              placeholder="Describe the tenant (maximum 500 characters)"
+              className="w-full text-2xl border bg-gray-50 border-gray-300 rounded-md px-4 py-3 placeholder:text-lg focus:outline-none focus:border-blue-500 resize-none"
+            />
+            {errors.description && (
+              <span className="text-red-500 text-lg">{errors.description}</span>
+            )}
           </div>
 
           <div className="flex justify-around mt-6">

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AssignCaseForm from "../forms/AssignCaseForm";
 import { useAppContext } from "../../../../context/AppContext";
 import { useQuery } from "@tanstack/react-query";
 import { getCase } from "../../../../services/managerServices";
 import SpinnerMini from "../../../../ui/utils/SpinnerMini";
+import toast from "react-hot-toast";
 
 
 // import CreateTenantForm from "./CreateTenantForm";
@@ -43,6 +44,12 @@ const AssignCaseModal: React.FC<TenantModalProps> = ({ onClose, caseId }) => {
     enabled: !!caseId,
   });
 
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -54,7 +61,7 @@ const AssignCaseModal: React.FC<TenantModalProps> = ({ onClose, caseId }) => {
   if (error) {
     return (
       <div className="text-red-500 text-center">
-        Failed to load rule details. Please try again later.
+        Failed to load case details. Please try again later.
       </div>
     );
   }

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect }  from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getRuleById } from "../../../../services/managerServices";
 import SpinnerMini from "../../../../ui/utils/SpinnerMini";
 import EditRuleForm from "../forms/EditRuleForm";
 import { useAppContext } from "../../../../context/AppContext";
+import toast from "react-hot-toast";
 
 
 // /**
@@ -41,6 +42,12 @@ const EditRuleModal: React.FC<EditRuleModalProps> = ({ ruleId, onClose }) => {
       queryFn: () => getRuleById(tenant, ruleId),
       enabled: !!ruleId, 
     });
+
+    useEffect(() => {
+      if (error) {
+        toast.error((error as Error).message);
+      }
+    }, [error]);
 
   if (isLoading) {
     return (

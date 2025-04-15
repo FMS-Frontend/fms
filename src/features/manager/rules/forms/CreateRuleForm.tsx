@@ -109,9 +109,10 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
         queryKey: ["rules", tenant],
       });
       onClose?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to create rule:", error);
-      toast.error("Failed to create rule. Please try again.");
+      const errMsg = error?.message
+      toast.error(errMsg);
     }
   };
 

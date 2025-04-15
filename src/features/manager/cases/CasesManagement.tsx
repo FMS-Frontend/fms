@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCases} from "../../../services/managerServices";
 import { useAppContext } from "../../../context/AppContext";
@@ -25,6 +25,11 @@ const CaseManagement: FC = (): JSX.Element => {
       },
     },
   });
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   const headings = [
     "Case ID",

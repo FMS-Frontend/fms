@@ -1,6 +1,7 @@
 import { FC, useState, FormEvent } from "react";
 import usePasswordToggle from "../../../hooks/usePasswordToggle";
 import PrimaryButton from "../../../ui/utils/PrimaryButton";
+import toast from "react-hot-toast";
 
 const Security: FC = () => {
   const [oldPasswordInput, oldPasswordIcon] = usePasswordToggle();
@@ -30,7 +31,7 @@ const Security: FC = () => {
 
     // Check if passwords match
     if (newPassword !== confirmPassword) {
-      alert("New password and confirm password must match.");
+      toast.error("New password and confirm password must match.");
       return;
     }
 
@@ -45,10 +46,10 @@ const Security: FC = () => {
     try {
       // Add API integration here
       console.log("Password update data:", data);
-      alert("Password changed successfully!");
-    } catch (error) {
-      alert("Failed to update password. Please try again.");
-      console.log(error);
+      toast.success("Password changed successfully!");
+    } catch (error: any) {
+      toast.error("Failed to update password. Please try again.");
+      // console.log(error);
     }
   };
 

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getAudit } from "../../../services/apiSuperUser";
@@ -7,6 +7,7 @@ import AuditRow from "./AuditRow";
 import Spinner from "../../../ui/utils/Spinner";
 import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
+import toast from "react-hot-toast";
 
 const AuditTable: FC = () => {
   const [searchParams] = useSearchParams();
@@ -14,10 +15,16 @@ const AuditTable: FC = () => {
     ? 1
     : Number(searchParams.get("page"));
 
-  const { isLoading, data: { data: audit, pagination } = {} } = useQuery({
+  const { isLoading, data: { data: audit, pagination } = {}, error } = useQuery({
     queryKey: ["audit", page],
     queryFn: () => getAudit(page),
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   // console.log(audit);
 

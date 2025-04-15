@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { BsBoxFill } from "react-icons/bs";
 import { IoPeople, IoCreate } from "react-icons/io5";
 import { RiLineChartLine } from "react-icons/ri";
@@ -7,17 +7,24 @@ import { useQuery } from "@tanstack/react-query";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getAdminSummary } from "../../../services/apiAdmin";
+import toast from "react-hot-toast";
 
 export interface StatData {
   value: number; // Adjust the type based on the actual structure of your API response
 }
 
 const AdminDashStats: FC = () => {
-  const { data: stats, isLoading } = useQuery<StatData[]>({
+  const { data: stats, isLoading, error } = useQuery<StatData[]>({
     queryFn: getAdminSummary,
     queryKey: ["stats"],
     retry: true,
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   return (
     <>

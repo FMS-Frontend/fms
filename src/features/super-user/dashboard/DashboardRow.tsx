@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { capitalizeWords, getStatusStyles } from "../../../db/helperFunctions";
-import maskPhoneNumber from "../../../ui/utils/MaskPhoneNumber";
-import maskEmailDomain from "../../../ui/utils/MaskEmailDomain";
+import { maskEmailDomain, maskNumber } from "../../../ui/utils/helpers";
 
 interface DashboardRowProps {
   tenant: Organization;
@@ -14,14 +13,14 @@ const DashboardRow: FC<DashboardRowProps> = ({ tenant, index }) => {
 
   return (
     <div
-      className={`grid grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr] py-2 px-2 gap-6 my-2 items-center ${
+      className={`grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr] gap-2 border-b py-2 ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
       <span className="text-xl">{capitalizeWords(name)}</span>
       <span className="text-xl">{admin.name}</span>
       <span className="text-xl text-blue-700 underline">{ maskEmailDomain(admin.email) }</span>
-      <span className="text-xl">{ maskPhoneNumber(admin.mobile) }</span>
+      <span className="text-xl">{maskNumber(admin.mobile) }</span>
       <div>
         <span
           className={`flex justify-center items-center px-4 py-1 rounded-full text-xl font-medium ${getStatusStyles(

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Stat, { StatProps } from "./Stat";
 import { BsBoxFill } from "react-icons/bs";
 import { IoPeople, IoCreate } from "react-icons/io5";
@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSummary } from "../../../services/apiSuperUser";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import toast from "react-hot-toast";
 
 /**
  * Stats is a React functional component that renders a series of statistical
@@ -27,13 +28,19 @@ export interface StatData {
 }
 
 const Stats: FC = () => {
-  const { data: stats, isLoading } = useQuery<StatProps[]>({
+  const { data: stats, isLoading, error } = useQuery<StatProps[]>({
     queryFn: getSummary,
     queryKey: ["stats"],
     refetchOnWindowFocus: true,
     retry: (failureCount) => failureCount < 6,
   });
-  // console.log(stats);
+  // console.log(stats)
+  
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);;
 
   return (
     <>

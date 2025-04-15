@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 /**
  * Custom hook to toggle the visibility of password input field.
@@ -9,7 +9,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
  *
  * @returns {Array} Returns an array with two elements:
  * - `InputType` (string): The type of the password input field (`"text"` or `"password"`).
- * - `Icon` (JSX.Element): The eye icon component (`<FaRegEye />` or `<FaRegEyeSlash />`), which allows the user to toggle the password visibility.
+ * - `Icon` (JSX.Element): The eye icon component (`<FaEye />` or `<FaEyeSlash />`), which allows the user to toggle the password visibility.
  *
  * @example
  * const [passwordInputType, passwordToggleIcon] = usePasswordToggle();
@@ -27,15 +27,16 @@ type UsePasswordToggleReturnType = [string, JSX.Element];
 const usePasswordToggle = (): UsePasswordToggleReturnType => {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const Icon = visible ? (
-    <FaRegEyeSlash onClick={() => setVisible((visible) => !visible)} />
-  ) : (
-    <FaRegEye onClick={() => setVisible((visible) => !visible)} />
+  const toggleVisibility = () => setVisible(!visible);
+
+  const PasswordInputType = visible ? "text" : "password";
+  const ToggleIcon = (
+    <span onClick={toggleVisibility}>
+      {visible ? <FaEyeSlash /> : <FaEye />}
+    </span>
   );
 
-  const InputType = visible ? "text" : "password";
-
-  return [InputType, Icon];
+  return [PasswordInputType, ToggleIcon];
 };
 
 export default usePasswordToggle;

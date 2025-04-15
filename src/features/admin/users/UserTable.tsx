@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Table from "../../../ui/utils/Table";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../../services/apiAdmin";
@@ -8,14 +8,22 @@ import Paginate from "../../../ui/utils/Paginate";
 import SpinnerMini from "../../../ui/utils/SpinnerMini";
 import usePageParam from "../../../hooks/usePageParam";
 import { useAppContext } from "../../../context/AppContext";
+import toast from "react-hot-toast";
 const UserTable: FC = () => {
   const { tenant } = useAppContext();
   const { page } = usePageParam();
 
-  const { isLoading, data: { data: users, pagination } = {} } = useQuery({
+  const { isLoading, data: { data: users, pagination, error } = {} } = useQuery({
     queryFn: () => getUsers(tenant, page),
     queryKey: ["users", page],
   });
+
+
+  useEffect(() => {
+    if (error) {
+      toast.error((error as Error).message);
+    }
+  }, [error]);
 
   return (
     <div className="mt-8">
