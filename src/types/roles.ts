@@ -1,9 +1,9 @@
 export const ROLES = {
     ADMIN: "Admin",
-    MANAGER: "Manager",
-    RULE_ANALYST: "Rule Analyst",
-    FRAUD_ANALYST: "Fraud Analyst",
-    AUDITOR: "Auditor",
+    MANAGER: "manager",
+    RULE_ANALYST: "rule analyst",
+    FRAUD_ANALYST: "fraud analyst",
+    AUDITOR: "auditor",
     SUPER_USER: "Super User",
   };
   

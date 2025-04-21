@@ -2,6 +2,7 @@ import { FC } from "react";
 import MainNav from "./MainNav";
 import { NavItem } from "./MainNav";
 import { useAppContext } from "../../context/AppContext";
+import { capitalizeWords } from "../../db/helperFunctions";
 
 type SidebarProps = {
   navData: NavItem[];
@@ -46,7 +47,7 @@ const Sidebar: FC<SidebarProps> = ({ navData, className }) => {
     >
       <div className="flex items-center justify-center">
         <h1 className="hidden lg:block text-white font-bold text-4xl">
-          {role === "Manager" ? `Fraud ${role}`  : role}
+          {role === "manager" ? `Fraud ${capitalizeWords(role)}`  : capitalizeWords(role)}
         </h1>
       </div>
       <MainNav data={navData} />

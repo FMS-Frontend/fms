@@ -1,10 +1,12 @@
-import { FC, useState} from "react";
+import { FC, useState } from "react";
 import Table from "../../../ui/utils/Table";
 import CaseTableRow from "./CaseTableRow";
 import CaseMgtOperations from "./CaseMgtOperations";
 import SearchInput from "../../../ui/utils/SearchInput";
 import { formatRuleDate } from "../../../ui/utils/helpers";
 import AddCase from "./modals/CreateCaseBtn";
+import { useAppContext } from "../../../context/AppContext";
+
 
 interface CaseMgtTableProps {
   headingData: string[];
@@ -12,9 +14,11 @@ interface CaseMgtTableProps {
 }
 
 const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
-  const [assignedTo, setAssignedTo] = useState<string>(""); 
+  const [assignedTo, setAssignedTo] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const { role } = useAppContext();
 
   // Initialize date range to the current year
   const currentYear = new Date().getFullYear();
@@ -43,14 +47,14 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
 
     const caseDate = new Date(caseItem.createdAt);
     const matchesDateRange =
-      !dateRange.startDate || !dateRange.endDate || 
+      !dateRange.startDate || !dateRange.endDate ||
       (caseDate >= dateRange.startDate && caseDate <= dateRange.endDate);
 
-      // console.log(matchesDateRange);
-          // return matchesAssignedTo && matchesStatus && matchesSearch;
+    // console.log(matchesDateRange);
+    // return matchesAssignedTo && matchesStatus && matchesSearch;
     return matchesAssignedTo && matchesStatus && matchesSearch && matchesDateRange;
   });
-  
+
 
   const handleAssignedToChange = (value: string) => setAssignedTo(value);
   const handleStatusChange = (value: string) => setSelectedStatus(value);
@@ -59,8 +63,8 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
     setDateRange(newDateRange);
   };
 
-  // console.log(dateRange);
-  
+  // console.log(role);
+
   return (
     <div className="mt-8">
       {/* Filter Operations */}
@@ -78,40 +82,47 @@ const CaseMgtTable: FC<CaseMgtTableProps> = ({ headingData, data }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <AddCase />
+        {/* <AddCase /> */}
+        {(role === "Admin" || role === "manager" || role === "fraud analyst") && <AddCase />}
       </div>
 
-      <Table columns={`grid grid-cols-${headingData.length} gap-4`}>
-        <Table.Header>
-          {headingData.map((heading, index) => (
-            <div
-              key={index}
-              className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
-            >
-              {heading}
-            </div>
-          ))}
-        </Table.Header>
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[600px]">
+          <Table columns={`grid grid-cols-${headingData.length} gap-4`}>
+            <Table.Header>
+              {headingData.map((heading, index) => (
+                <div
+                  key={index}
+                  className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
+                >
+                  {heading}
+                </div>
+              ))}
+            </Table.Header>
 
-        {filteredData.map((caseItem, index) => (
-          <CaseTableRow
-            key={caseItem.id}
-            id={caseItem.id}
-            priority={caseItem.priority}
-            status={caseItem.status}
-            assignee={caseItem.assignee}
-            updatedAt={caseItem.updatedAt ? formatRuleDate(caseItem.updatedAt) : "N/A"} 
-            index={index}
-          />
-        ))}
+            {filteredData.map((caseItem, index) => (
+              <CaseTableRow
+                key={caseItem.id}
+                id={caseItem.id}
+                priority={caseItem.priority}
+                status={caseItem.status}
+                assignee={caseItem.assignee}
+                updatedAt={caseItem.updatedAt ? formatRuleDate(caseItem.updatedAt) : "N/A"}
+                index={index}
+              />
+            ))}
 
-        {/* No Data Message */}
-        {filteredData.length === 0 && (
-          <div className="text-center text-gray-500 p-4">
-            No cases match the selected filters or search query.
-          </div>
-        )}
-      </Table>
+            {/* No Data Message */}
+            {filteredData.length === 0 && (
+              <div className="text-center text-gray-500 p-4">
+                No cases match the selected filters or search query.
+              </div>
+            )}
+          </Table>
+
+        </div>
+      </div>
+
     </div>
   );
 };

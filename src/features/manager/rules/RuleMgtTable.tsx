@@ -22,7 +22,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
   const [assignedTo, setAssignedTo] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  
+
   const currentYear = new Date().getFullYear();
   const [dateRange, setDateRange] = useState({
     startDate: new Date(currentYear, 0, 1), // January 1st
@@ -41,8 +41,8 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
       rule.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       rule.name.toLowerCase().includes(searchQuery.toLowerCase());
     const ruleDate = new Date(rule.updatedAt);
-      const matchesDateRange =
-      !dateRange.startDate || !dateRange.endDate || 
+    const matchesDateRange =
+      !dateRange.startDate || !dateRange.endDate ||
       (ruleDate >= dateRange.startDate && ruleDate <= dateRange.endDate);
 
 
@@ -59,7 +59,7 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
     endDate: Date;
   }) => {
     setDateRange(newDateRange);
-  };  
+  };
 
   return (
     <div className="mt-8 relative">
@@ -85,52 +85,56 @@ const RuleMgtTable: FC<RuleMgtTableProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        
-        {(role === "Admin" || role === "Rule Analyst") && <AddRule2/>}
+
+        {(role === "Admin" || role === "rule analyst") && <AddRule2 />}
 
       </div>
 
-      {/* Table Display */}
-      <Table columns={`grid grid-cols-${headingData.length} gap-4`}>
-        {/* Dynamic Header Rendering */}
-        <Table.Header>
-          {headingData.map((heading, index) => (
-            <div
-              key={index}
-              className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
-            >
-              {heading}
-            </div>
-          ))}
-        </Table.Header>
 
-        {/* Dynamic Row Rendering */}
-        {isLoading ? (
-          <div className="mt-8 relative">
-            {/* Spinner Overlay */}
-            <div className="absolute inset-0 bg-gray-50 bg-opacity-50 flex items-center justify-center z-10">
-              <Spinner />
-            </div>
-          </div>
-        ) : (
-          filteredData.map((rule, index) => (
-            <RuleTableRow
-              key={rule.id}
-              ruleId={rule.id}
-              ruleName={rule.name}
-              status={rule.status}
-              lastModified={formatRuleDate(rule.updatedAt)}
-              index={index}
-            />
-          ))
-        )}
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[600px]">
+          <Table columns={`grid grid-cols-${headingData.length} gap-4`}>
+            {/* Dynamic Header Rendering */}
+            <Table.Header>
+              {headingData.map((heading, index) => (
+                <div
+                  key={index}
+                  className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
+                >
+                  {heading}
+                </div>
+              ))}
+            </Table.Header>
 
-        {!isLoading && filteredData.length === 0 && (
-          <div className="text-center text-gray-500 p-4">
-            No rules match the selected filters or search query.
-          </div>
-        )}
-      </Table>
+            {/* Dynamic Row Rendering */}
+            {isLoading ? (
+              <div className="mt-8 relative">
+                <div className="absolute inset-0 bg-gray-50 bg-opacity-50 flex items-center justify-center z-10">
+                  <Spinner />
+                </div>
+              </div>
+            ) : (
+              filteredData.map((rule, index) => (
+                <RuleTableRow
+                  key={rule.id}
+                  ruleId={rule.id}
+                  ruleName={rule.name}
+                  status={rule.status}
+                  lastModified={formatRuleDate(rule.updatedAt)}
+                  index={index}
+                />
+              ))
+            )}
+
+            {!isLoading && filteredData.length === 0 && (
+              <div className="text-center text-gray-500 p-4">
+                No rules match the selected filters or search query.
+              </div>
+            )}
+          </Table>
+        </div>
+      </div>
+
     </div>
   );
 };

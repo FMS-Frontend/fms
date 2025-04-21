@@ -139,14 +139,32 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
       initialize(rule.conditions);
     }
   }, []);
+  useEffect(() => {
+    if (selectedFlowOperator) {
+      setValue("properties", {
+        [selectedFlowOperator]: flowOperatorValue,
+      });
+    }
+  }, [flowOperatorValue, selectedFlowOperator, setValue]);
   
+  
+  // const handleFlowOperatorChange = (type: string) => {
+  //   setSelectedFlowOperator(type);
+  //   setValue("properties", {
+  //     [type]: type === "salience" ? 100 : "",
+  //   });
+  //   setFlowOperatorValue(type === "salience" ? 100 : "");
+  // };
+
   const handleFlowOperatorChange = (type: string) => {
     setSelectedFlowOperator(type);
+    const defaultValue = type === "salience" ? 100 : "";
+    setFlowOperatorValue(defaultValue);
     setValue("properties", {
-      [type]: type === "salience" ? 100 : "",
+      [type]: defaultValue,
     });
-    setFlowOperatorValue(type === "salience" ? 100 : "");
   };
+  
 
   const transformConditions = (map: Map<number, NodeData>): EditRuleProp["conditions"] => {
     const buildTree = (id: number): any => {
