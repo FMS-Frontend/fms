@@ -397,7 +397,7 @@ interface DeleteRuleProps {
 
   interface RecentProp {
     id: number;
-    cases: string;
+    priority: string;
     user: {
       image: string;
       name: string;

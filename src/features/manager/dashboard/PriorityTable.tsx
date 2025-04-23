@@ -6,17 +6,19 @@ interface PriorityTableProps {
   headingData: string[];
   data: {
     id: number;
-    alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
-    timeStamp: string;
-    status: "Active" | "Unassigned" | "Deactivated";
+    severity: string;
+    timestamp: string;
+    status: string;
   }[];
 }
 
 const PriorityTable: FC<PriorityTableProps> = ({ headingData, data }) => {
+  // console.log(data);
+  
   return (
     <div className="mt-8">
-      <Table columns={`grid grid-cols-3 gap-4`}>
-        {/* Dynamic Header Rendering */}
+    <Table columns="grid grid-cols-3 gap-4">
+      {/* Dynamic Header Rendering */}
         <Table.Header bgColor="">
           {headingData.length > 0 && headingData.map((heading, index) => (
             <div
@@ -33,9 +35,9 @@ const PriorityTable: FC<PriorityTableProps> = ({ headingData, data }) => {
           <PriorityTableRow
             key={t.id}
             index={t.id}
-            alertType={t.alertType}
-            timeStamp={t.timeStamp}
             status={t.status}
+            timeStamp={t.timestamp}
+            severity={t.severity}
           />
         ))}
       </Table>

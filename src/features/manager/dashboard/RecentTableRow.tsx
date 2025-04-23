@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { FaCircleUser } from "react-icons/fa6";
-import { formatDateTime } from "../../../ui/utils/helpers";
+import { formatTime, formatRuleDate } from "../../../ui/utils/helpers";
 
 interface RecentProp {
-  cases: string
+  priority: string
   user: {
     image: string;  
     name: string;   
@@ -11,11 +11,23 @@ interface RecentProp {
   date: string;
   index: number;
 }
+// Get Tailwind CSS classes based on status
+const getStatusStyles = (status: string) => {
+  switch (status) {
+    case "High":
+      return "bg-red-100 text-red-600 p-1 rounded";
+    case "Medium":
+      return "bg-yellow-100 text-yellow-600 p-1 rounded";
+    case "Low":
+      return "bg-green-100 text-green-500 p-1 rounded";
+    default:
+      return "bg-gray-100 text-gray-600"; 
+  }
+};
 
 
 
-
-const RecentTableRow: FC<RecentProp> = ({ cases, user, date, index}) => {
+const RecentTableRow: FC<RecentProp> = ({ priority, user, date, index}) => {
   
   return (
     <div
@@ -23,7 +35,10 @@ const RecentTableRow: FC<RecentProp> = ({ cases, user, date, index}) => {
         index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
       }`}
     >
-      <div>{cases}</div>
+      <div className="">
+      <span className={getStatusStyles(priority)}>{priority}</span>
+      </div>
+      
       <div className="flex items-center">
         {/* <img src={user.image} alt={user.name} className="h-6 w-6 rounded-full" /> */}
         <div className="h-6 w-6 rounded-full flex justify-center items-center border bg-slate-200">
@@ -31,7 +46,7 @@ const RecentTableRow: FC<RecentProp> = ({ cases, user, date, index}) => {
         </div>
         <span className="px-2">{user.name}</span>
       </div>
-      <div className="text-slate-400">{formatDateTime(date)}</div>
+      <div className="text-slate-400">{formatRuleDate(date)}/{formatTime(date)}</div>
       
     </div>
   );

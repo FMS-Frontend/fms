@@ -6,7 +6,7 @@ interface RecentTableProps {
   headingData: string[];
   data: {
     id: number;
-    cases: string
+    priority: string
     user: {
       image: string;
       name: string;
@@ -37,7 +37,7 @@ const RecentTable: FC<RecentTableProps> = ({ headingData, data }) => {
           <RecentTableRow
             key={item.id}
             index={item.id}
-            cases={item.cases}
+            priority={item.priority}
             user={item.user}
             date={item.date}
           />
