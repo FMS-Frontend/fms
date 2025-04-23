@@ -5,6 +5,7 @@ import Spinner from "../../../../ui/utils/Spinner";
 import { getAlert } from "../../../../services/managerServices";
 import { useAppContext } from "../../../../context/AppContext";
 import toast from "react-hot-toast";
+import UpdateAlertForm from "../forms/UpdateAlertForm";
 
 
 /**
@@ -61,12 +62,16 @@ const ViewAlertModal: React.FC<TenantModalProps> = ({ onClose, alertId }) => {
   }
 
   const nextStep = () => setStep((prev) => prev + 1);
+  const previousStep = () => setStep((prev) => prev - 1);
 
+  // console.log(alertById);
+  
   return (
     <>
       {step === 1 && (
         <ViewAlertForm onNext={nextStep} onClose={onClose} data={alertById} />
       )}
+       {step === 2 && <UpdateAlertForm onPrevious={previousStep} onClose={onClose} alertId={alertId} tenantId={tenant} alertDetails={alertById} />}
     </>
   );
 };

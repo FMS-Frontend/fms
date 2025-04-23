@@ -60,7 +60,7 @@ const CreateCaseForm: FC<CreateCaseFormProps> = ({ onClose }) => {
           value={formData.description}
           onChange={handleInputChange}
           placeholder="Enter case description"
-          className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500"
+          className="w-full text-2xl border border-gray-300 bg-gray-50 rounded-md px-4 py-3 focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
           rows={4}
         />
       </div>

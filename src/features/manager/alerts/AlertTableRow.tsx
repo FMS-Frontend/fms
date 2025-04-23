@@ -1,8 +1,7 @@
-import ReopenAlert from "./modals/ReopenAlert";
-import AssignAlert from "./modals/AssignAlert";
 import ViewAlert from "./modals/ViewAlert";
 import { FC } from "react";
 import { formatTime, formatDate  } from "../../../db/helperFunctions";
+import UpdateAlert from "./modals/UpdateAlert";
 
 interface AlertTableRowProps {
   id: string;
@@ -24,7 +23,7 @@ const AlertTableRow: FC<AlertTableRowProps> = ({
   index,
 }) => {
   return (
-    <div className={`grid grid-cols-[0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_1fr] text-xs md:text-sm lg:text-lg gap-4 p-4 border-b border-gray-200 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
+    <div className={`grid grid-cols-[0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr] text-xs md:text-sm lg:text-lg gap-4 p-4 border-b border-gray-200 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}>
       {/* Date (from createdAt) */}
       <div className=" text-gray-700">
@@ -52,9 +51,9 @@ const AlertTableRow: FC<AlertTableRowProps> = ({
       <div className=" text-gray-600">
         {formatTime(timestamp)}
       </div>
-      <div className="flex justify-between max-w-[70%] gap-4">
-        {status === "Closed" ? <ReopenAlert /> : <AssignAlert />}
+      <div className="flex justify-between lg:max-w-[70%] gap-4">
         <ViewAlert alertId={id} />
+        <UpdateAlert alertId={id} />
       </div>
     </div>
   );

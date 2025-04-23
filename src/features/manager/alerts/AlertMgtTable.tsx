@@ -131,7 +131,7 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData }) => {
       ) : (
         <div className="w-full overflow-x-auto">
           <div className="min-w-[600px]">
-            <Table columns={`grid-cols-[0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_1fr]`}>
+            <Table columns={`grid-cols-[0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr]`}>
               <Table.Header>
                 {headingData.map((heading, index) => (
                   <div

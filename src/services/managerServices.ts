@@ -240,3 +240,40 @@ export async function getAlert(tenant: string, identity: string) {
     throw new Error(extractBackendError(error, "Alert could not be fetched."));
   }
 }
+
+export const updateAlert = async (
+  tenantId: string,
+  identity: string,
+  formData: {
+    description: string;
+    status: "Open" | "Closed";
+    severity: "Low" | "Medium" | "High";
+    reOpenReason?: string;
+  }
+) => {
+  try {
+    const response = await URL.patch(
+      `/tenants/${tenantId}/alerts/${identity}`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(extractBackendError(error, "Failed to update alert."));
+  }
+};
+
+export const logAlertAction = async (
+  tenantId: string,
+  alertId: string,
+  formData: { description: string }
+) => {
+  try {
+    const response = await URL.post(
+      `/tenants/${tenantId}/alerts/${alertId}/log_action`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(extractBackendError(error, "Failed to log action."));
+  }
+};

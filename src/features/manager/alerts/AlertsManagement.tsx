@@ -25,7 +25,7 @@ const AlertsManagement: FC = (): JSX.Element => {
   const headings = [
     "Date",
     "Alert ID",
-    "Type",
+    "Description",
     "Status",
     "Severity",
     "Timestamp",
