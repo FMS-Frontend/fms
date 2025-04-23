@@ -195,7 +195,9 @@ export const fetchCaseStats = async (tenantId: string) => {
 
 export async function getCaseSummary(
   tenant: string,
-  startDate: string = new Date().toISOString().split("T")[0]
+  startDate: string = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+    .toISOString()
+    .split("T")[0]
 ): Promise<any> {
   try {
     const { data } = await URL.get(`/analytics/trends/tenants/${tenant}/case`, {
@@ -203,10 +205,10 @@ export async function getCaseSummary(
     });
     return data;
   } catch (error) {
-    // console.error("Error fetching case summary:", error);
     throw new Error(extractBackendError(error, "Error fetching case summary"));
   }
 }
+
 
 export async function getVariables(tenant: string) {
   try {
