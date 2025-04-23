@@ -49,6 +49,7 @@ const Settings = React.lazy(() => import("./pages/settings/Settings"));
 const AdminRule = React.lazy(() => import("./pages/AdminRule"));
 import { ROLES } from "./types/roles";
 import ProtectedRoute from "./ui/layouts/PrivateRoute";
+import VariableSetting from "./pages/settings/admin-settings/VariableSetting";
 
 
 // QueryClient Configuration
@@ -190,6 +191,8 @@ function App() {
 
         {/* Fallback Route */}
         <Route path="*" element={<Page404 />} />
+        <Route path="/test" element={<VariableSetting/>} />
+
       </Routes>
 
       <Toaster

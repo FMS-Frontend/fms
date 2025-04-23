@@ -54,52 +54,57 @@ const AdminsTable: FC = () => {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
-        <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Contacts
-          </div>
 
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Organization
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Email
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Phone Number
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
-            Status
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  text-center">
-            Actions
-          </div>
-        </Table.Header>
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[600px]">
+          <Table columns="grid-cols-[1fr_1fr_1.5fr_1fr_0.5fr_0.5fr]">
+            <Table.Header>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
+                Contacts
+              </div>
 
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <Table.Body<Admin>
-            data={admins}
-            render={(admin, index) => (
-              <AdminRow admin={admin} key={admin.id} index={index} />
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
+                Organization
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
+                Email
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
+                Phone Number
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  ">
+                Status
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg  text-center">
+                Actions
+              </div>
+            </Table.Header>
+
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Table.Body<Admin>
+                data={admins}
+                render={(admin, index) => (
+                  <AdminRow admin={admin} key={admin.id} index={index} />
+                )}
+              />
             )}
-          />
-        )}
 
-        <Table.Footer>
-          {isLoading ? (
-            <SpinnerMini />
-          ) : (
-            <Paginate
-              pageSize={pagination?.pageSize}
-              totalItems={pagination?.totalItems}
-              totalPages={pagination?.totalPages}
-            />
-          )}
-        </Table.Footer>
-      </Table>
+            <Table.Footer>
+              {isLoading ? (
+                <SpinnerMini />
+              ) : (
+                <Paginate
+                  pageSize={pagination?.pageSize}
+                  totalItems={pagination?.totalItems}
+                  totalPages={pagination?.totalPages}
+                />
+              )}
+            </Table.Footer>
+          </Table>
+        </div>
+      </div>
     </div>
   );
 };

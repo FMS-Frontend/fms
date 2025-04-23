@@ -159,6 +159,19 @@ interface  TenantData {
     actions?: string;
   }
 
+  interface AlertDetails {
+    id: string;
+    code: number;
+    transactionId: string;
+    severity: string;
+    timestamp: string;
+    status: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+  
+
   // ========= RULES =================
   // Rule Table
   interface Rule {

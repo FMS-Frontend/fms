@@ -35,7 +35,10 @@ function DashboardTable() {
 
   return (
     <div className="mt-8">
-      <Table columns="grid gap-4 md:grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr]">
+
+<div className="w-full overflow-x-auto">
+        <div className="min-w-[600px]">
+        <Table columns="grid gap-4 md:grid-cols-[1fr_1.5fr_1.5fr_1fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
             Tenant
@@ -77,6 +80,8 @@ function DashboardTable() {
           )}
         </Table.Footer>
       </Table>
+        </div>
+        </div>
     </div>
   );
 }

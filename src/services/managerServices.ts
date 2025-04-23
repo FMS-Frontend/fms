@@ -217,3 +217,24 @@ export async function getVariables(tenant: string) {
     throw new Error(extractBackendError(error, "Error fetching variables"));
   }
 }
+
+
+// API function to fetch alerts
+export const getAlerts = async (tenant: string) => {
+  try {
+    const res = await URL.get(`/tenants/${tenant}/alerts`);
+  return res?.data;
+  } catch (error) {
+    throw new Error(extractBackendError(error, "Error fetching alerts"));
+  }
+};
+
+export async function getAlert(tenant: string, identity: string) {
+  try {
+    const response = await URL.get(`/tenants/${tenant}/alerts/${identity}`);
+    return response.data;
+  } catch (error) {
+    // console.error("Error fetching case:", error);
+    throw new Error(extractBackendError(error, "Alert could not be fetched."));
+  }
+}

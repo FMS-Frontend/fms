@@ -12,6 +12,9 @@ const RuleTable: FC = () => {
 
   return (
     <div className="mt-8">
+      
+      <div className="w-full overflow-x-auto">
+      <div className="min-w-[600px]">
       <Table columns="grid-cols-[0.5fr_1fr_0.5fr_1.5fr_1fr_1fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-xs mdtext-sm  lg:text-lg  text-center">
@@ -43,6 +46,9 @@ const RuleTable: FC = () => {
         <Pagination count={count} />
       </Table.Footer> */}
       </Table>
+        </div>
+        </div> 
+     
     </div>
   );
 };

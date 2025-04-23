@@ -1,6 +1,6 @@
 import { FC } from "react";
 import AlertMgtTable from "./AlertMgtTable";
-import { alertsData } from "../../../db";
+
 
 /**
  * Analyst Alert's Component
@@ -19,7 +19,9 @@ import { alertsData } from "../../../db";
  * - ReportTable: A component displaying the list of reports or report entries in a table format.
  */
 
+
 const AlertsManagement: FC = (): JSX.Element => {
+
   const headings = [
     "Date",
     "Alert ID",
@@ -29,10 +31,11 @@ const AlertsManagement: FC = (): JSX.Element => {
     "Timestamp",
     "Actions",
   ];
+
   return (
     <div className="flex flex-col gap-8">
       <h1 className="font-bold text-4xl">Alerts Management</h1>
-      <AlertMgtTable headingData={headings} data={alertsData}/>
+      <AlertMgtTable headingData={headings} />
     </div>
   );
 };

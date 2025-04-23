@@ -16,7 +16,7 @@ import ViewCaseModal from "./ViewCasesModal";
  */
 
 interface ViewCaseProps {
-  caseId: string; // Pass the rule ID to fetch specific rule details
+  caseId: string; 
 }
 const ViewCase: FC<ViewCaseProps> = ({caseId}) => {
   return (

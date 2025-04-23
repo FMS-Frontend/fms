@@ -32,7 +32,7 @@ const RuleTableRow: FC<RuleTableRowProps> = ({
         </span>
       </div>
       <div>{lastModified}</div>
-      <div className="flex justify-between lg:max-w-[50%]">
+      <div className="flex justify-between gap-8 lg:max-w-[50%]">
         <EditRule ruleId={ruleId}/>
         <ViewRule ruleId={ruleId}/>
         {(role === "Admin" || role === "rule analyst") && <DeleteRule ruleId={ruleId}/>}

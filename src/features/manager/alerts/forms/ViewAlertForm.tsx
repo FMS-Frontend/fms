@@ -16,16 +16,32 @@ import { FC } from "react";
  * @returns {JSX.Element} The rendered CreateTenantForm component.
  */
 
+interface AlertDetails {
+  id: string;
+  code: number;
+  transactionId: string;
+  severity: string;
+  timestamp: string;
+  status: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface StepProps {
   onNext?: () => void;
   onClose?: () => void;
+  data: AlertDetails;
 }
 
-const ViewAlertForm: FC<StepProps> = ({ onNext, onClose }) => {
+const ViewAlertForm: FC<StepProps> = ({ onNext, onClose, data }) => {
   return (
     <>
+
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Alert-A001</h2>
+        <h2 className="text-3xl font-semibold">
+          <strong>Alert</strong>-A{data?.id?.slice(0, 4)}
+        </h2>
       </div>
 
       <form className="flex flex-col gap-3">

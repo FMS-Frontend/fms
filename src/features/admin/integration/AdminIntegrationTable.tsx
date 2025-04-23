@@ -16,41 +16,46 @@ function AdminIntegrationTable() {
 
   // if (!bookings.length) return <Empty resourceName="bookings" />;
 
+
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1fr_0.5fr_1fr_1fr_0.5fr]">
-        <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Name
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Last Act
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Status
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Success Rate
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Uptime
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-lg text-center">
-            Actions
-          </div>
-        </Table.Header>
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[600px]">
+          <Table columns="grid-cols-[1fr_1fr_0.5fr_1fr_1fr_0.5fr]">
+            <Table.Header>
+              <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+                Name
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+                Last Act
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+                Status
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+                Success Rate
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+                Uptime
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-lg text-center">
+                Actions
+              </div>
+            </Table.Header>
 
-        {/* <Table.Body
+            {/* <Table.Body
           data={bookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
         /> */}
 
-        {/* <Table.Footer>
+            {/* <Table.Footer>
         <Pagination count={count} />
       </Table.Footer> */}
-      </Table>
+          </Table>
+        </div>
+      </div>
     </div>
   );
 }

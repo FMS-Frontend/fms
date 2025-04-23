@@ -14,17 +14,20 @@ import ViewAlertModal from "./ViewAlertModal";
  *   <AddRule />
  * );
  */
+interface ViewAlertProps {
+  alertId: string; 
+}
 
-const ViewAlert: FC = () => {
+const ViewAlert: FC<ViewAlertProps> = ({alertId}) => {
   return (
     <Modal>
-      <Modal.Open opens="view-case">
+      <Modal.Open opens={`view-case-${alertId}`}>
         <button className="px-2 py-1 rounded bg-primaryBlue text-white cursor-pointer hover:bg-primaryBlue/70">
           View
         </button>
       </Modal.Open>
-      <Modal.Window name="view-case">
-        {({ onClose }) => <ViewAlertModal onClose={onClose} />}
+      <Modal.Window name={`view-case-${alertId}`}>
+        {({ onClose }) => <ViewAlertModal onClose={onClose} alertId={alertId} />}
       </Modal.Window>
     </Modal>
   );

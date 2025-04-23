@@ -23,7 +23,7 @@ function UserAvatar() {
         className="w-16 object-cover object-center rounded-full border"
       />
 
-      <div className="flex flex-col">
+      <div className="hidden md:flex flex-col">
         <span className="text-lg font-bold">{username || "John Doe"}</span>
         <span className="text-sm text-slate-500">{role}</span>
       </div>

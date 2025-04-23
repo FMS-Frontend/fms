@@ -1,18 +1,18 @@
 import { FC, useState } from "react";
 import Profile from "./admin-settings/Profile";
 import RuleInfo from "./admin-settings/RuleInfo";
-import RuleParameters from "./admin-settings/RuleParameters";
 import Logging from "./admin-settings/Logging";
 import Security from "./admin-settings/Security";
+import VariableSetting from "./admin-settings/VariableSetting";
 
 const AdminSettingsPage: FC = () => {
   const [activeTab, setActiveTab] = useState("Profile");
   const tabs = [
     "Profile",
-    "Rule Info",
-    "Rule Parameters",
+    "Rule Settings",
     "Logging",
     "Security",
+    "Variables"
   ];
 
   return (
@@ -20,7 +20,7 @@ const AdminSettingsPage: FC = () => {
       <h1 className="font-bold text-4xl mb-16">Settings</h1>
 
       <div className="container">
-        <div className="flex gap-20 border-b">
+        <div className={`grid grid-cols-3 md:grid-cols-${tabs.length} text-base lg:text-[18px] gap-4 border-b`}>
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -42,12 +42,11 @@ const AdminSettingsPage: FC = () => {
         </div>
 
         <div className="mt-8">{activeTab === "Profile" && <Profile />}</div>
-        <div className="mt-8">{activeTab === "Rule Info" && <RuleInfo />}</div>
-        <div className="mt-8">
-          {activeTab === "Rule Parameters" && <RuleParameters />}
-        </div>
+        <div className="mt-8">{activeTab === "Rule Settings" && <RuleInfo />}</div>
+        
         <div className="mt-8">{activeTab === "Logging" && <Logging />}</div>
         <div className="mt-8">{activeTab === "Security" && <Security />}</div>
+        <div className="mt-8">{activeTab === "Variables" && <VariableSetting/>}</div>
       </div>
     </div>
   );
