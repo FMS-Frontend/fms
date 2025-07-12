@@ -71,6 +71,7 @@ interface EditRuleFormProps {
   ruleId: string;
   rule: EditRuleProp;
   onClose?: () => void;
+  onPrevious?: () => void;
 }
 
 const EditRuleForm: FC<EditRuleFormProps> = ({
@@ -176,10 +177,26 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
       <h2 className="text-3xl font-semibold mb-4">Edit Rule</h2>
 
       <label>Rule Name</label>
-      <input {...register("name")} className="input" />
+      <div className="">
+        <label className="block text-gray-700 text-xl font-medium mb-1">
+          Rule Name
+        </label>
+        <input
+          {...register("name")}
+          className="w-full md:w-1/3 px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500"
+        />
+      </div>
 
-      <label>Description</label>
-      <textarea {...register("description")} className="textarea" />
+      {/* Description */}
+      <div>
+        <label className="block text-gray-700 text-xl font-medium mb-1">
+          Description
+        </label>
+        <textarea
+          {...register("description")}
+          className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-md focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
+        />
+      </div>
 
       {/* Expression */}
       <div>

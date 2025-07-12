@@ -1,9 +1,7 @@
 import { FC } from "react";
 import PrimaryButton from "../../../../ui/utils/PrimaryButton";
 import { FiPlus } from "react-icons/fi";
-// import CreateRuleForm from "../forms/CreateRuleForm";
 import Modal2 from "../../../../ui/utils/Modal.Rule";
-// import AddRuleForm from "../forms/AddRuleForm";
 import CreateRuleForm from "../forms/CreateRuleForm";
 
 /**
