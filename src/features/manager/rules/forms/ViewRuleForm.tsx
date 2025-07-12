@@ -84,7 +84,7 @@ const renderConditions = (expr: ExtendedExpression): JSX.Element => {
       return <div className="ml-4 text-gray-500">Empty Expression</div>;
 
     default:
-      return <div className="ml-4 text-red-500">Unknown Expression</div>;
+      return <div className="ml-4 text-red-500">Invalid Expression Type</div>;
   }
 };
 
