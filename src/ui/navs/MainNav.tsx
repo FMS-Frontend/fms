@@ -37,7 +37,7 @@ function MainNav({ data }: MainNavProps) {
     if (role === "Super User") {
       return "/settings/super";
     } else if (role === "Admin") {
-      return "settings";
+      return "/admin/settings";
     } else return "";
   };
 
@@ -55,8 +55,8 @@ function MainNav({ data }: MainNavProps) {
       </NavList>
 
       <BottomNavList>
-        <li>
-          <StyledNavLink to={getSettingsRoute(role)}>
+      <li className={(role === "Admin" || role === "Super User") ? "block" : "hidden"}>
+      <StyledNavLink to={getSettingsRoute(role)}>
             <HiOutlineCog />
             <span>Settings</span>
           </StyledNavLink>

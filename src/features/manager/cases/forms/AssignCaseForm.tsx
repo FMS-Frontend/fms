@@ -151,7 +151,7 @@ const AssignCaseForm: FC<AssignCaseFormProps> = ({
           <textarea
             value={caseDetails?.description}
             readOnly
-            className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 focus:outline-none"
+            className="w-full text-2xl border border-gray-300 bg-gray-100 rounded-md px-4 py-3 focus:outline-none h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
           />
         </div>
 

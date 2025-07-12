@@ -40,48 +40,52 @@ const AssignReportTable: FC = () => {
       </div>
 
       <div className="mt-8">
-        <Table columns="grid-cols-[1fr_1fr_1fr_2fr_0.5fr]">
-          <Table.Header>
-            <div className="text-gray-600 font-semibold uppercase text-lg">
-              Date
-            </div>
-            <div className="text-gray-600 font-semibold uppercase text-lg">
-              Login Time
-            </div>
-            <div className="text-gray-600 font-semibold uppercase text-lg">
-              Users
-            </div>
-            <div className="text-gray-600 font-semibold uppercase text-lg">
-              Comments
-            </div>
-            <div className="text-gray-600 font-semibold uppercase text-lg">
-              Status
-            </div>
-          </Table.Header>
+        <div className="w-full overflow-x-auto">
+          <div className="min-w-[600px]">
+            <Table columns="grid-cols-[1fr_1fr_1fr_2fr_0.5fr]">
+              <Table.Header>
+                <div className="text-gray-600 font-semibold uppercase text-lg">
+                  Date
+                </div>
+                <div className="text-gray-600 font-semibold uppercase text-lg">
+                  Login Time
+                </div>
+                <div className="text-gray-600 font-semibold uppercase text-lg">
+                  Users
+                </div>
+                <div className="text-gray-600 font-semibold uppercase text-lg">
+                  Comments
+                </div>
+                <div className="text-gray-600 font-semibold uppercase text-lg">
+                  Status
+                </div>
+              </Table.Header>
 
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <Table.Body<AdminReport>
-              data={reports}
-              render={(report, index) => (
-                <ReportRow report={report} index={index} key={report.id} />
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Table.Body<AdminReport>
+                  data={reports}
+                  render={(report, index) => (
+                    <ReportRow report={report} index={index} key={report.id} />
+                  )}
+                />
               )}
-            />
-          )}
 
-          <Table.Footer>
-            {isLoading ? (
-              <SpinnerMini />
-            ) : (
-              <Paginate
-                pageSize={pagination?.pageSize}
-                totalItems={pagination?.totalItems}
-                totalPages={pagination?.totalPages}
-              />
-            )}
-          </Table.Footer>
-        </Table>
+              <Table.Footer>
+                {isLoading ? (
+                  <SpinnerMini />
+                ) : (
+                  <Paginate
+                    pageSize={pagination?.pageSize}
+                    totalItems={pagination?.totalItems}
+                    totalPages={pagination?.totalPages}
+                  />
+                )}
+              </Table.Footer>
+            </Table>
+          </div>
+        </div>
       </div>
     </>
   );

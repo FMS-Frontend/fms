@@ -30,48 +30,53 @@ const AuditTable: FC = () => {
 
   return (
     <div className="mt-8">
-      <Table columns="grid-cols-[1fr_1fr_1.5fr_1.5fr_1fr]">
-        <Table.Header>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Actions
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Login Time
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            IP Address
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Administrators
-          </div>
-          <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
-            Tenants
-          </div>
-        </Table.Header>
 
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <Table.Body<Audit>
-            data={audit}
-            render={(audit, index) => (
-              <AuditRow audit={audit} key={audit.id} index={index} />
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[600px]">
+          <Table columns="grid-cols-[1fr_1fr_1.5fr_1.5fr_1fr]">
+            <Table.Header>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+                Actions
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+                Login Time
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+                IP Address
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+                Administrators
+              </div>
+              <div className="text-gray-600 font-semibold uppercase text-xs md:text-sm  lg:text-lg">
+                Tenants
+              </div>
+            </Table.Header>
+
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Table.Body<Audit>
+                data={audit}
+                render={(audit, index) => (
+                  <AuditRow audit={audit} key={audit.id} index={index} />
+                )}
+              />
             )}
-          />
-        )}
 
-        <Table.Footer>
-          {isLoading ? (
-            <SpinnerMini />
-          ) : (
-            <Paginate
-              pageSize={pagination?.pageSize}
-              totalItems={pagination?.totalItems}
-              totalPages={pagination?.totalPages}
-            />
-          )}
-        </Table.Footer>
-      </Table>
+            <Table.Footer>
+              {isLoading ? (
+                <SpinnerMini />
+              ) : (
+                <Paginate
+                  pageSize={pagination?.pageSize}
+                  totalItems={pagination?.totalItems}
+                  totalPages={pagination?.totalPages}
+                />
+              )}
+            </Table.Footer>
+          </Table>
+        </div>
+      </div>
     </div>
   );
 };

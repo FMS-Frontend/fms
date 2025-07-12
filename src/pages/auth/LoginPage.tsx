@@ -95,48 +95,44 @@ const LoginPage: FC = (): JSX.Element => {
         return;
       }
 
-      // Extract user details
       const tenantUser = res.data.data?.name || "";
       localStorage.setItem("tenantUser", tenantUser);
       handleUserNameChange(tenantUser);
-      const tenant = res.data.data?.tenantUsername || "";
-      const userRole = res.data.data?.role;
-      const subRole = res.data.data.subRole?.name;
-      if (userRole === "User" && subRole) {
-        handleRoleChange(subRole);
-      } else {
-        handleRoleChange(userRole);
-      }
 
+      const tenant = res.data.data?.tenantUsername || "";
       setTenant(tenant);
 
+      const userRole = res.data.data?.role;
+      const permissions: string[] = res.data.data?.permissions || [];
+
+      let finalRole = userRole;
+
+      // If not Super User or Admin, extract role from permissions
+      if (userRole !== "Super User" && userRole !== "Admin") {
+        const rolePermission = permissions.find((perm) => perm.startsWith("role:"));
+        if (rolePermission) {
+          finalRole = rolePermission.split(":")[1].replace(/-/g, " "); // "fraud-analyst" → "fraud analyst"
+        }
+      }
+
+      handleRoleChange(finalRole);
+
+      // Determine redirect path
       let redirectPath = "";
-      switch (userRole) {
-        case "Super User":
-          redirectPath = "/dashboard";
-          break;
-        case "Admin":
-          redirectPath = "/admin/dashboard";
-          break;
-
-        case "User":
-          // If the role is "User" and subRole exists, redirect to subRole dashboard
-          if (subRole) {
-            redirectPath = `/${formatRoute(subRole)}/dashboard`;
-          } else {
-            redirectPath = "/user/dashboard";
-          }
-          break;
-
-        default:
-          redirectPath = `/${formatRoute(subRole)}/dashboard`;
-          break;
+      if (finalRole === "Super User") {
+        redirectPath = "/dashboard";
+      } else if (finalRole === "Admin") {
+        redirectPath = "/admin/dashboard";
+      } else {
+        redirectPath = `/${formatRoute(finalRole)}/dashboard`;
       }
 
-      if (userRole) {
-        navigate(redirectPath);
-        toast.success(`Welcome back ${tenantUser || "Super User"}`);
-      }
+      console.log(finalRole, redirectPath);
+      
+
+      navigate(redirectPath);
+      toast.success(`Welcome back ${tenantUser || "User"}`);
+
     } catch (err: any) {
       const errMsg = err?.response?.data
       toast.error(errMsg.message || "Wrong credentials. Please check your email and password.");
@@ -163,6 +159,7 @@ const LoginPage: FC = (): JSX.Element => {
     validationSchema: validate,
     onSubmit: handleFormSubmit,
   });
+  
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-blue-500">
@@ -200,9 +197,8 @@ const LoginPage: FC = (): JSX.Element => {
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`${
-                errors.email && touched.email ? " border-red-400" : ""
-              } w-full px-4 py-3 text-2xl rounded-lg bg-gray-50 focus:outline-none  placeholder:text-xl`}
+              className={`${errors.email && touched.email ? " border-red-400" : ""
+                } w-full px-4 py-3 text-2xl rounded-lg bg-gray-50 focus:outline-none  placeholder:text-xl`}
               placeholder="Enter your email"
             />
             {errors.email && touched.email && (
@@ -224,18 +220,16 @@ const LoginPage: FC = (): JSX.Element => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`${
-                errors.password && touched.password
+              className={`${errors.password && touched.password
                   ? "border-red-400 focus:ring-red-400"
                   : ""
-              } w-full px-4 py-3 text-2xl  rounded-lg bg-gray-50 focus:outline-none  placeholder:text-xl`}
+                } w-full px-4 py-3 text-2xl  rounded-lg bg-gray-50 focus:outline-none  placeholder:text-xl`}
               placeholder="Enter your password"
             />
 
             <span
-              className={`${
-                errors.password && touched.password ? "bottom-[5.4rem]" : ""
-              } absolute right-4 bottom-12 flex items-center cursor-pointer text-2xl`}
+              className={`${errors.password && touched.password ? "bottom-[5.4rem]" : ""
+                } absolute right-4 bottom-12 flex items-center cursor-pointer text-2xl`}
             >
               {ToggleIcon}
             </span>
@@ -259,9 +253,8 @@ const LoginPage: FC = (): JSX.Element => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`${
-                isSubmitting ? "opacity-70" : ""
-              } w-3/4 flex items-center justify-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300`}
+              className={`${isSubmitting ? "opacity-70" : ""
+                } w-3/4 flex items-center justify-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300`}
             >
               {isSubmitting ? <SpinnerMini /> : "Sign In"}
             </button>

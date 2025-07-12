@@ -140,7 +140,7 @@ const ReopenCaseForm: FC<ReopenCaseFormProps> = ({
         <textarea
           value={reOpenReason}
           onChange={(e) => setReOpenReason(e.target.value)}
-          className="w-full px-4 py-2 text-lg border rounded-md focus:outline-none focus:border-blue-500"
+          className="w-full px-4 py-2 text-lg border rounded-md focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
           placeholder="Provide a reason for reopening the case..."
           required 
         />
@@ -155,7 +155,7 @@ const ReopenCaseForm: FC<ReopenCaseFormProps> = ({
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="w-full px-4 py-2 text-lg border rounded-md focus:outline-none focus:border-blue-500"
+          className="w-full px-4 py-2 text-lg border rounded-md focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
           placeholder="Add a comment for the assignee..."
         />
       </div>

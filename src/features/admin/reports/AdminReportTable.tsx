@@ -28,6 +28,8 @@ const AdminReportTable: FC = () => {
 
   return (
     <div className="mt-8">
+      <div className="w-full overflow-x-auto">
+      <div className="min-w-[600px]">
       <Table columns="grid-cols-[1fr_1fr_1fr_2fr_0.5fr]">
         <Table.Header>
           <div className="text-gray-600 font-semibold uppercase text-lg">
@@ -70,6 +72,8 @@ const AdminReportTable: FC = () => {
           )}
         </Table.Footer>
       </Table>
+        </div>
+        </div>
     </div>
   );
 };

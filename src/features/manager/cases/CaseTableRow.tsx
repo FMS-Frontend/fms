@@ -13,7 +13,7 @@ const CaseTableRow: FC<CasesTableRowProps> = ({
 }) => {
   return (
     <div
-      className={`grid grid-cols-6 text-base gap-4 p-4 border-b border-gray-200 ${
+      className={`grid grid-cols-6 text-xs md:text-sm lg:text-lg gap-4 p-4 border-b border-gray-200 ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >

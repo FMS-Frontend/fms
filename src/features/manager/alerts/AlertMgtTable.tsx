@@ -1,55 +1,74 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Table from "../../../ui/utils/Table";
 import AlertTableRow from "./AlertTableRow";
 import AlertsMgtOperations from "./AlartsMgtOperations";
 import SearchInput from "../../../ui/utils/SearchInput";
-// import { Alert } from "../../../db";
+import toast from "react-hot-toast";
+import { useAppContext } from "../../../context/AppContext";
+import { useQuery } from "@tanstack/react-query";
+import { getAlerts } from "../../../services/managerServices";
 
 interface AlertTableProps {
   headingData: string[];
-  data: Alert[];
 }
 
-const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
+
+
+const AlertMgtTable: FC<AlertTableProps> = ({ headingData }) => {
   const [selectedSeverity, setSelectedSeverity] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const [dateRange, setDateRange] = useState({
+  const { tenant } = useAppContext();
+
+  const [, setDateRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
   });
 
-  // Filter data based on selected filters, search query, and date range
-  const filteredData = data.filter((alert) => {
+  type AlertDetails = {
+    id: string;
+    description: string;
+    status: string;
+    severity: string;
+    timestamp: string;
+    createdAt: string;
+  };
+  
+
+  const { data: alerts = [], isLoading, error } = useQuery<AlertDetails[]>({
+    queryKey: ["alerts", tenant],
+    queryFn: async () => {
+      const response = await getAlerts(tenant);
+      return response.data;
+    },
+    enabled: !!tenant,
+  });
+  
+  useEffect(() => {
+    if (error) toast.error((error as Error).message);
+  }, [error]);
+
+  // const filteredData = sampleAlerts.filter((alert) => {
+  const filteredData = alerts.filter((alert) => {
     const matchesSeverity =
       selectedSeverity === "" ||
-      alert.severity.toLowerCase() === selectedSeverity;
+      alert.severity.toLowerCase() === selectedSeverity.toLowerCase();
+
     const matchesStatus =
-      selectedStatus === "" || alert.status.toLowerCase() === selectedStatus;
+      selectedStatus === "" ||
+      alert.status.toLowerCase() === selectedStatus.toLowerCase();
+
     const matchesSearch =
       searchQuery === "" ||
       alert.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      alert.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // alert.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       alert.status.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return (
-      matchesSeverity && matchesStatus && matchesSearch 
-    );
+    return matchesSeverity && matchesStatus && matchesSearch;
   });
 
-  const handleSeverityChange = (value: string) => setSelectedSeverity(value);
-  const handleStatusChange = (value: string) => setSelectedStatus(value);
-
-  const handleDateChange = (newDateRange: {
-    startDate: Date;
-    endDate: Date;
-  }) => {
-    setDateRange(newDateRange);
-  };
-
-    console.log(dateRange);
-
+  // console.log(alerts);
   return (
     <div className="mt-8">
       {/* Filter Operations */}
@@ -57,54 +76,61 @@ const AlertMgtTable: FC<AlertTableProps> = ({ headingData, data }) => {
         <AlertsMgtOperations
           selectedSeverity={selectedSeverity}
           selectedStatus={selectedStatus}
-          onSeverityChange={handleSeverityChange}
-          onStatusChange={handleStatusChange}
-          onDateChange={handleDateChange} // Pass the date handler
+          onSeverityChange={setSelectedSeverity}
+          onStatusChange={setSelectedStatus}
+          onDateChange={setDateRange}
         />
         <SearchInput
           width="40%"
-          placeholder="Search by Alert id, type or status"
+          placeholder="Search by Alert ID, description or status"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      {/* Table Display */}
-      <Table columns={`grid grid-cols-${headingData.length} gap-4`}>
-        {/* Dynamic Header Rendering */}
-        <Table.Header>
-          {headingData.map((heading, index) => (
-            <div
-              key={index}
-              className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
-            >
-              {heading}
-            </div>
-          ))}
-        </Table.Header>
+      {isLoading ? (
+        <div className="text-center py-8 text-gray-500">Loading alerts...</div>
+      ) : (
+        <div className="w-full overflow-x-auto">
+          <div className="min-w-[600px]">
+            <Table columns={`grid-cols-[0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr_0.5fr]`}>
+              <Table.Header>
+                {headingData.map((heading, index) => (
+                  <div
+                    key={index}
+                    className="text-slate-400 font-semibold uppercase text-xs md:text-sm lg:text-lg text-start"
+                  >
+                    {heading}
+                  </div>
+                ))}
+              </Table.Header>
 
-        {/* Dynamic Row Rendering */}
-        {filteredData.map((alert, index) => (
-          <AlertTableRow
-            key={alert.id}
-            id={alert.id}
-            type={alert.type}
-            status={alert.status}
-            severity={alert.severity}
-            timestamp={alert.timestamp}
-            index={index}
-          />
-        ))}
+              {filteredData.map((alert, index) => (
+                <AlertTableRow
+                  key={alert.id}
+                  id={alert.id}
+                  description={alert.description}
+                  status={alert.status}
+                  severity={alert.severity}
+                  timestamp={alert.timestamp}
+                  createdAt={alert.createdAt}
+                  index={index}
+                />
+              ))}
 
-        {/* No Data Message */}
-        {filteredData.length === 0 && (
-          <div className="text-center text-gray-500 p-4">
-            No alerts match the selected filters or search query.
+              {!isLoading && filteredData.length === 0 && (
+                <div className="text-center text-gray-500 p-4 col-span-full">
+                  No fraud alerts for this organization.
+                </div>
+              )}
+            </Table>
           </div>
-        )}
-      </Table>
+        </div>
+
+      )}
     </div>
   );
 };
 
 export default AlertMgtTable;
+

@@ -2,13 +2,63 @@ import { ReactNode } from "react";
 export {};
 
 declare global {
+  // 🔹 Common Types
+  type Return = "string" | "number" | "boolean";
+
+  // 🔹 Expression Types
+  type Expression = Literal | Variable | FunctionCall | Operation | EmptyExpression;
+  type ExtendedExpression = Expression | EmptyExpression;
+
+  type Literal = {
+    type: "literal";
+    value: string | number | boolean;
+    return: Return;
+  };
+
+  type Variable = {
+    type: "variable";
+    name: string;
+    return: Return;
+  };
+
+  type FunctionCall = {
+    type: "function";
+    name: string;
+    args: Expression[];
+    return: Return;
+  };
+
+  type Operation = {
+    type: "operation";
+    operator: string;
+    operands: Expression[];
+    return?: Return;
+  };
+
+  type EmptyExpression = {
+    type: "empty";
+  };
+
+  type ExpressionNodeProp = {
+    exp: ExtendedExpression;
+    onUpdate?: (newExp: Expression) => void;
+    onDelete: () => void;
+    path?: number[];
+    editable?: boolean;
+  };
+
+  type EmptyExpressionNodeProp = {
+    onUpdate: (newExp: Expression) => void;
+  };
+
+  // 🔹 Dashboard/Stats Types
   interface StatProp {
     icon: ReactNode;
     title: string;
     value: string | number;
     color: "red" | "green" | "blue" | "yellow";
   }
-  
+
   interface StatData {
     icon: ReactNode;
     title: string;
@@ -19,7 +69,7 @@ declare global {
     percent: number;
   }
 
-  // Admin Table
+  // 🔹 Admin Tables
   interface Admin {
     id: string;
     name: string;
@@ -36,13 +86,14 @@ declare global {
     id: string;
     userName: string;
     name: string;
-    admin: {id: string; name: string};
+    admin: { id: string; name: string };
     createdAt: string;
     address?: string;
     description?: string;
     status: "Active" | "Pending" | "Deactivated";
   }
-interface  TenantData {
+
+  interface TenantData {
     name: string;
     address: string;
     description: string;
@@ -51,7 +102,6 @@ interface  TenantData {
     contactPersonMobile: string;
   }
 
-  // DashboardTable Tenants (Organization)
   interface Organization {
     id: string;
     name: string;
@@ -63,7 +113,7 @@ interface  TenantData {
     status: string;
   }
 
-  // AUDIT TABLE*********
+  // 🔹 Audits
   interface Author {
     id: string;
     name: string;
@@ -72,6 +122,7 @@ interface  TenantData {
       id: string;
     };
   }
+
   interface Audit {
     id: string;
     operation: string;
@@ -79,6 +130,7 @@ interface  TenantData {
     updatedAt: string;
     author: Author;
   }
+
   interface AdminAudit {
     id: string;
     operation: string;
@@ -94,10 +146,8 @@ interface  TenantData {
       };
     };
   }
-  
 
-  // ********** ADMIN (USER) *******************************************************
-  // User Table
+  // 🔹 Users
   interface User {
     id: string;
     name: string;
@@ -127,9 +177,7 @@ interface  TenantData {
     [key: string]: string;
   };
 
-  
-
-  // Reports Table
+  // 🔹 Reports
   interface AdminReport {
     id: string;
     updatedAt: string;
@@ -140,6 +188,7 @@ interface  TenantData {
       name: string;
     };
   }
+
   interface Reports {
     id: string;
     createdAt: string;
@@ -149,7 +198,7 @@ interface  TenantData {
     status: "Active" | "Pending" | "Deactivated";
   }
 
-  // ========= ALERTS =================
+  // 🔹 Alerts
   interface Alert {
     id: string;
     type: string;
@@ -159,8 +208,7 @@ interface  TenantData {
     actions?: string;
   }
 
-  // ========= RULES =================
-  // Rule Table
+  // 🔹 Rules
   interface Rule {
     id: string;
     rule_name: string;
@@ -168,6 +216,7 @@ interface  TenantData {
     createdAt: string;
     status: "Active" | "Pending" | "Deactivated";
   }
+
   interface Rule1 {
     id: string;
     name: string;
@@ -180,98 +229,26 @@ interface  TenantData {
     updatedAt: string;
   }
 
-  interface PaginatedResponse<T> {
-    data: T[];
-    pagination: {
-      totalItems: number;
-      pageSize: number;
-      currentPage: number;
-      totalPages: number;
-    };
-  }
-  interface RuleCreationRequest { 
-    name: string;
-    description: string;
-    conditions: Array<{
-      field: string;
-      operator: string;
-      value: string;
-    }>;
-    actions: Array<{
-      target: string;
-      property: string;
-      value: string;
-    }>;
-    properties: {
-      [key: string]: string | number;
-    };
-  }
-  
-  interface RuleData {
-  rule_name: string;
-  description: string;
-  conditions: Array<{
-    field: string;
-    operator: string;
-    value: string;
-  }>;
-  actions: Array<{
-    target: string;
-    property: string;
-    value: string;
-  }>;
-  flow_operators: {
-    salience: number;
-  };
-}
-interface EditRuleProp {
-  name: string;
-  description: string;
-  conditions: {
-    condition: "And" | "Or";
-    rules: Array<
-      | {
-          field: string;
-          operator: string;
-          value: string;
-        }
-      | EditRuleProp["conditions"]
-    >;
-  };
-  actions: Array<{
-    target: string;
-    property: string;
-    value: string;
-  }>;
-  properties: {
-    [key: string]: string | number;
-  };
-}
-
-  interface RuleUpdateData {
+  interface Rule2 {
+    id: string;
     rule_name: string;
+    last_modified_date?: string;
+    status: string;
     description: string;
-    conditions: Array<{ field: string; operator: string; value: string }>;
-    actions: Array<{ target: string; property: string; value: string }>;
-    flow_operators: { salience: number };
+    conditions: Condition[];
+    actions: Action[];
+    flow_operators: FlowOperators;
+    createdAt: string;
+    updatedAt: string;
+    historyLogs: any[];
+    createdBy: CreatedBy;
   }
 
-  interface RuleTableRowProps {
-    ruleId: string; // R001, R002, R003, etc.
-    ruleName: string; // login Check, Payment Cap, Ip Block, etc.
-    status: "Active" | "Inactive";
-    assignedTo?: {
-      image: string;
-      name: string;
-    };
-    lastModified: string; // 2024-06-07T11:30:00Z
-    index: number;
-  }
   interface Rule3 {
     name: string;
     description: string;
-    conditions: Array<{ field: string; operator: string; value: string }>;
-    actions: Array<{ target: string; property: string; value: string }>;
+    conditions: Condition[];
+    actions: Action[];
   }
 
   interface Condition {
@@ -295,26 +272,85 @@ interface EditRuleProp {
     name: string;
   }
 
-  interface Rule2 {
-    id: string;
+  interface RuleData {
     rule_name: string;
-    last_modified_date?: string;
-    status: string;
     description: string;
     conditions: Condition[];
     actions: Action[];
     flow_operators: FlowOperators;
+  }
+
+  interface RuleUpdateData extends RuleData {}
+
+  interface RuleAction extends Action {}
+
+  interface RuleProperties {
+    salience?: number;
+    activationGroup?: string;
+    agendaGroup?: string;
+  }
+
+  interface RuleCreationRequest {
+    name: string;
+    description: string;
+    conditions: ExtendedExpression;
+    actions: RuleAction[];
+  }
+
+  interface EditRuleProp {
+    name: string;
+    description: string;
+    actions: RuleAction[];
+    properties?: RuleProperties;
+    conditions: ExtendedExpression;
+  }
+
+  interface ViewRuleProp {
+    id: string;
+    name: string;
+    status: string;
+    description: string;
+    createdBy: string;
     createdAt: string;
     updatedAt: string;
+    author: {
+      id: string;
+      name: string;
+    };
+    conditions: ExtendedExpression;
+    actions: RuleAction[];
+    properties: Record<string, string | number>;
     historyLogs: any[];
-    createdBy: CreatedBy;
   }
-interface DeleteRuleProps {
-  ruleId: string;
-  tenantId: string;
-}
 
-  // ========= CASES =================
+  interface RuleTableRowProps {
+    ruleId: string;
+    ruleName: string;
+    status: "Active" | "Inactive";
+    assignedTo?: {
+      image: string;
+      name: string;
+    };
+    lastModified: string;
+    index: number;
+  }
+
+  interface DeleteRuleProps {
+    ruleId: string;
+    tenantId: string;
+  }
+
+  interface PaginatedResponse<T> {
+    data: T[];
+    pagination: {
+      totalItems: number;
+      pageSize: number;
+      currentPage: number;
+      totalPages: number;
+    };
+  }
+
+  // 🔹 Cases
   interface Case {
     id: string;
     priority: "Low" | "High" | "Medium";
@@ -326,6 +362,7 @@ interface DeleteRuleProps {
     updatedAt: string;
     createdAt: string;
   }
+
   interface PaginationCase {
     pageSize: number;
     totalItems: number;
@@ -338,95 +375,13 @@ interface DeleteRuleProps {
     pagination: PaginationCase;
   }
 
-  interface Assignee {
-    id: string;
-    name: string;
-  }
-  interface CaseWithActions {
-    id: string;
+  interface CaseDetails extends Case {
     code: number;
-    priority: "Low" | "Medium" | "High";
-    status: "Open" | "Closed";
     description: string;
     assignedTo: string;
-    createdAt: string;
-    updatedAt: string;
-    assignee?: {
-      id: string;
-      name: string;
-    };
-    actions: Array<{
-      id: string;
-      description: string;
-      createdAt: string;
-      author: {
-        id: string;
-        name: string;
-      };
-    }>;
-  }
-  
-
-  interface CaseMgtOperationsProps {
-    assignedTo: string;
-    selectedStatus: string;
-    onAssignedToChange: (value: string) => void;
-    onStatusChange: (value: string) => void;
-    onDateChange: (newDateRange: { startDate: Date; endDate: Date }) => void;
   }
 
-  interface priorityDataProps {
-    id: number;
-    alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
-    timeStamp: string;
-    status: "Active" | "Unassigned" | "Deactivated";
-  }
-
-  interface RecentProp {
-    id: number;
-    cases: string;
-    user: {
-      image: string;
-      name: string;
-    };
-    date: string;
-  }
-  interface CasesTableRowProps {
-    id: string;
-    priority: "Low" | "High" | "Medium";
-    status: "Open" | "Closed" | "All";
-    assignee: { id: string; name: string };
-    updatedAt: string;
-    index: number;
-  }
-  interface CaseDetails {
-    id: string;
-    code: number;
-    priority: "Low" | "Medium" | "High";
-    status: "Open" | "Closed";
-    description: string;
-    assignedTo: string;
-    createdAt: string;
-    updatedAt: string;
-    assignee?: {
-      id: string;
-      name: string;
-    };
-  }
-
-  interface CaseDetailsAll {
-    id: string;
-    code: number;
-    priority: "Low" | "Medium" | "High";
-    status: "Open" | "Closed";
-    description: string;
-    assignedTo: string;
-    createdAt: string;
-    updatedAt: string;
-    assignee?: {
-      id: string;
-      name: string;
-    };
+  interface CaseDetailsAll extends CaseDetails {
     comments: Array<{
       id: string;
       caseId: string;
@@ -462,5 +417,55 @@ interface DeleteRuleProps {
         name: string;
       };
     }>;
+  }
+
+  interface CaseMgtOperationsProps {
+    assignedTo: string;
+    selectedStatus: string;
+    onAssignedToChange: (value: string) => void;
+    onStatusChange: (value: string) => void;
+    onDateChange: (newDateRange: { startDate: Date; endDate: Date }) => void;
+  }
+
+  interface CasesTableRowProps {
+    id: string;
+    priority: "Low" | "High" | "Medium";
+    status: "Open" | "Closed" | "All";
+    assignee: { id: string; name: string };
+    updatedAt: string;
+    index: number;
+  }
+
+  interface CaseWithActions extends CaseDetails {
+    actions: Array<{
+      id: string;
+      description: string;
+      createdAt: string;
+      author: {
+        id: string;
+        name: string;
+      };
+    }>;
+  }
+  interface Assignee {
+    id: string;
+    name: string;
+  }
+
+  interface priorityDataProps {
+    id: number;
+    alertType: "Login" | "Logout" | "Edit" | "Update" | "Create" | "Delete";
+    timeStamp: string;
+    status: "Active" | "Unassigned" | "Deactivated";
+  }
+
+  interface RecentProp {
+    id: number;
+    cases: string;
+    user: {
+      image: string;
+      name: string;
+    };
+    date: string;
   }
 }

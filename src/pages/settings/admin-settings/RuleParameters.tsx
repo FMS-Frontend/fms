@@ -22,6 +22,7 @@ const RuleParameters: React.FC = () => {
 
   return (
     <div className="p-6 max-w-5xl">
+      <h2>Rule Parameters</h2>
       {/* File Location */}
       <div className="mb-4">
         <label className="block text-2xl text-gray-700 mb-1 font-medium">

@@ -104,7 +104,7 @@ const UpdateCaseForm: FC<UpdateCaseFormProps> = ({
         <textarea
           {...register("description", { required: true })}
           rows={4}
-          className="w-full px-4 py-2 text-lg border rounded-md bg-gray-50 focus:outline-none focus:border-blue-500"
+          className="w-full px-4 py-2 text-lg border rounded-md bg-gray-50 focus:outline-none focus:border-blue-500 h-[80px] min-h-[80px] max-h-[120px] overflow-y-auto"
         />
         {errors.description && (
           <p className="text-red-500 text-sm mt-1">Description is required.</p>

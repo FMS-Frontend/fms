@@ -32,7 +32,7 @@ const usePasswordToggle = (): UsePasswordToggleReturnType => {
   const PasswordInputType = visible ? "text" : "password";
   const ToggleIcon = (
     <span onClick={toggleVisibility}>
-      {visible ? <FaEyeSlash /> : <FaEye />}
+      {visible ?  <FaEye /> : <FaEyeSlash />}
     </span>
   );
 

@@ -64,7 +64,7 @@ const Profile: FC = () => {
       </div>
 
       {/* First Name */}
-      <div className="grid grid-cols-2 sm:gap-x-4 gap-x-5 gap-y-8 max-w-4xl">
+      <div className="grid md:grid-cols-2 sm:gap-x-4 gap-x-5 gap-y-8 max-w-4xl">
         <div>
           <label
             htmlFor="firstName"

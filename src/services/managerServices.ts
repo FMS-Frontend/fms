@@ -1,4 +1,3 @@
-// services/rulesCasesApi.ts
 import URL from "../db/url";
 import { extractBackendError } from "../ui/utils/helpers";
 
@@ -33,7 +32,7 @@ export async function createRule(
   newRule: RuleCreationRequest
 ): Promise<Rule2> {
   try {
-    const response = await URL.post(`/rules/${tenantId}`, newRule);
+    const response = await URL.post(`/rules/v2/${tenantId}`, newRule);
     return response.data;
   } catch (error) {
     // console.error("Error creating rule:", error);
@@ -47,7 +46,7 @@ export async function editRule(
   rule: EditRuleProp
 ) {
   try {
-    const response = await URL.patch(`/rules/${tenantId}/${identity}`, rule);
+    const response = await URL.patch(`/rules/v2/${tenantId}/${identity}`, rule);
     return response.data;
   } catch (error) {
     // console.error("Error updating rule:", error);
@@ -195,7 +194,9 @@ export const fetchCaseStats = async (tenantId: string) => {
 
 export async function getCaseSummary(
   tenant: string,
-  startDate: string = new Date().toISOString().split("T")[0]
+  startDate: string = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+    .toISOString()
+    .split("T")[0]
 ): Promise<any> {
   try {
     const { data } = await URL.get(`/analytics/trends/tenants/${tenant}/case`, {
@@ -203,10 +204,10 @@ export async function getCaseSummary(
     });
     return data;
   } catch (error) {
-    // console.error("Error fetching case summary:", error);
     throw new Error(extractBackendError(error, "Error fetching case summary"));
   }
 }
+
 
 export async function getVariables(tenant: string) {
   try {
@@ -217,3 +218,61 @@ export async function getVariables(tenant: string) {
     throw new Error(extractBackendError(error, "Error fetching variables"));
   }
 }
+
+
+// API function to fetch alerts
+export const getAlerts = async (tenant: string) => {
+  try {
+    const res = await URL.get(`/tenants/${tenant}/alerts`);
+  return res?.data;
+  } catch (error) {
+    throw new Error(extractBackendError(error, "Error fetching alerts"));
+  }
+};
+
+export async function getAlert(tenant: string, identity: string) {
+  try {
+    const response = await URL.get(`/tenants/${tenant}/alerts/${identity}`);
+    return response.data;
+  } catch (error) {
+    // console.error("Error fetching case:", error);
+    throw new Error(extractBackendError(error, "Alert could not be fetched."));
+  }
+}
+
+export const updateAlert = async (
+  tenantId: string,
+  identity: string,
+  formData: {
+    description: string;
+    status: "Open" | "Closed";
+    severity: "Low" | "Medium" | "High";
+    reOpenReason?: string;
+  }
+) => {
+  try {
+    const response = await URL.patch(
+      `/tenants/${tenantId}/alerts/${identity}`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(extractBackendError(error, "Failed to update alert."));
+  }
+};
+
+export const logAlertAction = async (
+  tenantId: string,
+  alertId: string,
+  formData: { description: string }
+) => {
+  try {
+    const response = await URL.post(
+      `/tenants/${tenantId}/alerts/${alertId}/log_action`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(extractBackendError(error, "Failed to log action."));
+  }
+};

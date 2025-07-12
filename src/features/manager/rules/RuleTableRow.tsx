@@ -14,7 +14,7 @@ const RuleTableRow: FC<RuleTableRowProps> = ({
   const { role } = useAppContext();
   return (
     <div
-      className={`grid grid-cols-5 text-base gap-4 p-4 border-b border-gray-200 ${
+      className={`grid grid-cols-5 text-xs md:text-sm lg:text-xl gap-4 p-4 border-b border-gray-200 ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
@@ -32,10 +32,10 @@ const RuleTableRow: FC<RuleTableRowProps> = ({
         </span>
       </div>
       <div>{lastModified}</div>
-      <div className="flex justify-between lg:max-w-[50%]">
+      <div className="flex justify-between gap-8 lg:max-w-[50%]">
         <EditRule ruleId={ruleId}/>
         <ViewRule ruleId={ruleId}/>
-        {(role === "Admin" || role === "Rule Analyst") && <DeleteRule ruleId={ruleId}/>}
+        {(role === "Admin" || role === "rule analyst") && <DeleteRule ruleId={ruleId}/>}
       </div>
     </div>
   );

@@ -1,12 +1,11 @@
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { useAppContext } from "../../../../context/AppContext";
-import { createRule} from "../../../../services/managerServices";
-import { useQueryClient} from "@tanstack/react-query";
+import { createRule } from "../../../../services/managerServices";
+import { useQueryClient } from "@tanstack/react-query";
 import PrimaryButton from "../../../../ui/utils/PrimaryButton";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { useRule } from "../RuleContext";
-import Node from "./Node";
+import { ExpressionBuilder } from "../expression-builder";
 
 interface CreateRuleFormProps {
   onClose?: () => void;
@@ -23,25 +22,24 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
   const [description, setDescription] = useState<string>("");
   const [actions, setActions] = useState<Action[]>([
     {
-      target: "Transaction",
-      property: "Allow",
-      value: "Print: Fraud detected",
+      target: "",
+      property: "",
+      value: "",
     },
   ]);
   const [flowOperatorType, setFlowOperatorType] = useState<string>("salience");
   const [flowOperatorValue, setFlowOperatorValue] = useState<number | string>("");
+  const [expression, setExpression] = useState<ExtendedExpression>({ type: "empty" });
 
   const { tenant } = useAppContext();
   const queryClient = useQueryClient();
-  const { root, getData, getNode } = useRule();
 
-  
   const handleFlowOperatorChange = (type: string) => {
     setFlowOperatorType(type);
     if (type === "salience") {
-      setFlowOperatorValue(100); 
+      setFlowOperatorValue(100);
     } else {
-      setFlowOperatorValue(""); 
+      setFlowOperatorValue("");
     }
   };
 
@@ -64,43 +62,23 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
     setActions(updatedActions);
   };
 
-  const buildConditionsTree = () => {
-    const data = getData();
-    const rootNode = getNode(root());
-
-    function process(node: any, result: any) {
-      if (node.isLeaf) {
-        result.field = node.left;
-        result.operator = node.operator;
-        result.value = node.right;
-      } else {
-        result.condition = node.condition;
-        result.rules = node.children.map((id: any) =>
-          process(data.get(id), {})
-        );
-      }
-      return result;
-    }
-
-    return process(rootNode, {});
-  };
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    
     const properties = {
       [flowOperatorType]: flowOperatorValue,
     };
 
-    const conditions = buildConditionsTree();
-
     const newRule = {
       name: ruleName,
       description,
-      conditions,
       actions,
       properties,
+      conditions: expression, 
     };
+
+    // console.log("Submitting rule:", newRule);
 
     try {
       await createRule(tenant, newRule);
@@ -111,10 +89,13 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
       onClose?.();
     } catch (error: any) {
       console.error("Failed to create rule:", error);
-      const errMsg = error?.message
+      const errMsg = error?.message;
       toast.error(errMsg);
     }
   };
+
+  // console.log(expression);
+  
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -145,8 +126,16 @@ const CreateRuleForm: FC<CreateRuleFormProps> = ({ onClose }) => {
         />
       </div>
 
-      {/* Conditions */}
-      <Node id={root()}/>
+      {/* Expression Builder Section */}
+      <div>
+        <h3 className="mb-2">Expression</h3>
+        <div className="border p-4 rounded bg-gray-50">
+          <ExpressionBuilder
+            rootExpression={expression}
+            onExpressionChange={setExpression}
+          />
+        </div>
+      </div>
 
       {/* Actions Section */}
       <div>
