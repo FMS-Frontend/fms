@@ -15,7 +15,6 @@ type StatData22 = {
 
 
 const ManagerStat: FC<StatData22> = ({ icon, title, caseValue, color, isGain, text, percent }) => {
-  // console.log(color);
 
   const bgColorClass = {
     red: "bg-red-100",

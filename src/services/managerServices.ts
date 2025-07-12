@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // services/rulesCasesApi.ts
+=======
+>>>>>>> 8b234eb0faad54ecdcba9978f0cd6b626db46914
 import URL from "../db/url";
 import { extractBackendError } from "../ui/utils/helpers";
 
@@ -33,7 +36,7 @@ export async function createRule(
   newRule: RuleCreationRequest
 ): Promise<Rule2> {
   try {
-    const response = await URL.post(`/rules/${tenantId}`, newRule);
+    const response = await URL.post(`/rules/v2/${tenantId}`, newRule);
     return response.data;
   } catch (error) {
     // console.error("Error creating rule:", error);
@@ -47,7 +50,7 @@ export async function editRule(
   rule: EditRuleProp
 ) {
   try {
-    const response = await URL.patch(`/rules/${tenantId}/${identity}`, rule);
+    const response = await URL.patch(`/rules/v2/${tenantId}/${identity}`, rule);
     return response.data;
   } catch (error) {
     // console.error("Error updating rule:", error);

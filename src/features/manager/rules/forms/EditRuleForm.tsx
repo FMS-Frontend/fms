@@ -7,9 +7,7 @@ import { useAppContext } from "../../../../context/AppContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import PrimaryButton from "../../../../ui/utils/PrimaryButton";
-import { useRule } from "../RuleContext";
-import Node from "./Node";
-import { NodeData } from "../RuleContext";
+import { ExpressionBuilder } from "../expression-builder";
 
 const renderFlowOperatorInput = (
   flowOperatorType: string,
@@ -66,6 +64,8 @@ const renderFlowOperatorInput = (
   }
 };
 
+
+
 interface EditRuleFormProps {
   tenantId: string;
   ruleId: string;
@@ -83,15 +83,13 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { role } = useAppContext();
-  const { root, initialize, getData } = useRule()
 
   const { control, register, handleSubmit, reset, setValue } =
     useForm<EditRuleProp>({
       defaultValues: {
         name: "",
         description: "",
-        conditions: { condition: "And", rules: [] },
-        actions: [{ target: "", property: "Allow", value: "" }],
+        actions: [{ target: "", property: "", value: "" }],
         properties: {},
       },
     });
@@ -105,18 +103,12 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
     name: "actions",
   });
 
-  const [targetOptions] = useState([
-    "Print",
-    "Transaction",
-    "User",
-    "Application",
-  ]);
+  const [expression, setExpression] = useState<ExtendedExpression>({
+    type: "empty",
+  });
 
-  const [selectedFlowOperator, setSelectedFlowOperator] =
-    useState<string>("salience");
-  const [flowOperatorValue, setFlowOperatorValue] = useState<string | number>(
-    100
-  );
+  const [selectedFlowOperator, setSelectedFlowOperator] = useState("salience");
+  const [flowOperatorValue, setFlowOperatorValue] = useState<string | number>(100);
 
   useEffect(() => {
     if (rule) {
@@ -126,35 +118,30 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
         actions: rule.actions || [{ target: "", property: "", value: "" }],
         properties: rule.properties || {},
       });
-  
-      const flowOperator = Object.keys(rule.properties).find((key) =>
-        ["salience", "activationGroup", "agendaGroup"].includes(key)
-      );
-  
-      if (flowOperator && flowOperator !== selectedFlowOperator) {
-        setSelectedFlowOperator(flowOperator);
-        setFlowOperatorValue(rule.properties[flowOperator]);
+
+      if (rule.properties) {
+        const flowKey = (Object.keys(rule.properties) as (keyof RuleProperties)[])
+          .find((k) => ["salience", "activationGroup", "agendaGroup"].includes(k));
+      
+        if (flowKey && rule.properties[flowKey] !== undefined) {
+          setSelectedFlowOperator(flowKey);
+          setFlowOperatorValue(rule.properties[flowKey]!);
+        }
+      }      
+      
+
+      if (rule.conditions) {
+        setExpression(rule.conditions as ExtendedExpression);
       }
-  
-      initialize(rule.conditions);
     }
-  }, []);
-  useEffect(() => {
-    if (selectedFlowOperator) {
-      setValue("properties", {
-        [selectedFlowOperator]: flowOperatorValue,
-      });
-    }
-  }, [flowOperatorValue, selectedFlowOperator, setValue]);
-  
-  
-  // const handleFlowOperatorChange = (type: string) => {
-  //   setSelectedFlowOperator(type);
-  //   setValue("properties", {
-  //     [type]: type === "salience" ? 100 : "",
-  //   });
-  //   setFlowOperatorValue(type === "salience" ? 100 : "");
-  // };
+  }, [rule, reset]);
+
+  const [targetOptions] = useState([
+    "Print",
+    "Transaction",
+    "User",
+    "Application",
+  ]);
 
   const handleFlowOperatorChange = (type: string) => {
     setSelectedFlowOperator(type);
@@ -166,33 +153,16 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
   };
   
 
-  const transformConditions = (map: Map<number, NodeData>): EditRuleProp["conditions"] => {
-    const buildTree = (id: number): any => {
-      const node = map.get(id);
-      if (!node) {
-        throw new Error(`Node with ID ${id} not found`);
-      }
-
-      if (node.isLeaf) {
-        return {
-          field: node.left,
-          operator: node.operator,
-          value: node.right,
-        };
-      }
-
-      return {
-        condition: node.condition,
-        rules: node.children.map(buildTree),
-      };
-    };
-
-    return buildTree(root());
-  };
   const onSubmit = async (formData: EditRuleProp) => {
     try {
-      const conditions = transformConditions(getData()); 
-      const updatedRule = { ...formData, conditions };
+      const updatedRule = {
+        ...formData,
+        properties: {
+          [selectedFlowOperator]: flowOperatorValue,
+        },
+        conditions: expression,
+      };
+
       await editRule(tenantId, ruleId, updatedRule);
       toast.success("Rule updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["rules", tenantId] });
@@ -206,10 +176,9 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-      {/* Rule Name */}
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold">Edit Rule</h2>
-      </div>
+      <h2 className="text-3xl font-semibold mb-4">Edit Rule</h2>
+
+      <label>Rule Name</label>
       <div className="">
         <label className="block text-gray-700 text-xl font-medium mb-1">
           Rule Name
@@ -231,10 +200,15 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
         />
       </div>
 
-      {/* Conditions Section */}
+      {/* Expression */}
       <div>
-        <h3 className="text-xl font-medium mb-4">Conditions</h3>
-        <Node id={root()} />
+        <h3 className="mb-2">Expression</h3>
+        <div className="border p-4 rounded bg-gray-50">
+          <ExpressionBuilder
+            rootExpression={expression}
+            onExpressionChange={setExpression}
+          />
+        </div>
       </div>
 
       {/* Actions Section */}
@@ -327,8 +301,8 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
         </div>
       </div>
 
-      {/* Buttons */}
-      <div className="flex justify-center md:justify-end mt-6 gap-4">
+     {/* Buttons */}
+     <div className="flex justify-center md:justify-end mt-6 gap-4">
         <button
           type="button"
           onClick={onClose}
@@ -348,3 +322,4 @@ const EditRuleForm: FC<EditRuleFormProps> = ({
 };
 
 export default EditRuleForm;
+
