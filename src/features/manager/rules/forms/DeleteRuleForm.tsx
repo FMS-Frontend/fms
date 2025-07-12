@@ -19,7 +19,7 @@ const DeleteRuleForm: FC<DeleteRuleProps> = ({ ruleId, onClose }) => {
     mutationFn: () => deleteRule(tenant, ruleId as string),
     onSuccess: () => {
       toast.success("Rule deleted successfully.");
-      queryClient.invalidateQueries({ queryKey: ["rules", tenant] }); // Pass an object with queryKey
+      queryClient.invalidateQueries({ queryKey: ["rules", tenant] });
     },
     onError: (error: any) => {
       toast.error(

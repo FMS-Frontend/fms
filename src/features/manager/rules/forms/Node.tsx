@@ -3,6 +3,8 @@ import { useRule } from "../RuleContext";
 import toast from "react-hot-toast";
 import { getVariables } from "../../../../services/managerServices";
 import { useAppContext } from "../../../../context/AppContext";
+import { ExpressionBuilder } from "../expression-builder";
+import { MdDeleteOutline } from "react-icons/md";
 
 type Variable = {
   name: string;
@@ -94,7 +96,7 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
   // console.log(selectedType);
   
 
-  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<SVGElement>) => {
     event.preventDefault();
     if (parentId !== undefined) {
       deleteNode(id, parentId);
@@ -109,9 +111,9 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
 
   if (node.isLeaf) {
     return (
-      <div className="flex gap-2 mb-2">
+      <div className="w-full flex gap-2 mb-2">
         {/* Variable Selection */}
-        <select
+       {/* <select
           value={node.left}
           onChange={handleVariableChange}
           className="min-w-32 p-1 border rounded"
@@ -122,10 +124,10 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
               {option.value}
             </option>
           ))}
-        </select>
+        </select> */}
 
         {/* Operator Selection */}
-        <select
+        {/* <select
           value={node.operator}
           onChange={(e) => updateNode(id, { operator: e.target.value })}
           className="min-w-12 p-1 border rounded"
@@ -139,25 +141,26 @@ const Node: React.FC<NodeProps> = ({ id, parentId}) => {
           <option value="!=">{"!="}</option>
           <option value="in">in</option>
           <option value="is null">is null</option>
-        </select>
+        </select> */}
 
         {/* Value Input */}
-        <input
+        {/* <input
           type={selectedType} // Dynamically set the input type
           value={node.right}
           onChange={(e) => updateNode(id, { right: e.target.value })}
           placeholder={`Enter ${selectedType} value`}
           className="p-1 border rounded"
-        />
+        /> */}
+
+        <div>
+        <ExpressionBuilder/>
+        </div>
 
         {/* Delete Button */}
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="p-1 text-red-500 border border-red-500 rounded hover:bg-red-500 hover:text-white"
-        >
-          Delete
-        </button>
+        <MdDeleteOutline 
+        onClick={handleDelete}
+          className="text-red-500"/>
+        
       </div>
     );
   } else {

@@ -1,74 +1,98 @@
 import { FC } from "react";
 import { formatRuleDate } from "../../../../ui/utils/helpers";
 
-interface ViewRuleProp {
-  id: string; 
-  name: string;
-  status: string;
-  description: string;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string; 
-  author: {
-    id: string;
-    name: string;
-  };
-  conditions: {
-    condition: "And" | "Or"; 
-    rules: Array<
-      | {
-          field: string; 
-          operator: string;
-          value: string;
-        }
-      | ViewRuleProp["conditions"] 
-    >;
-  };
-  actions: Array<{
-    target: string;
-    property: string; 
-    value: string; 
-  }>;
-  properties: {
-    [key: string]: string | number;
-  };
-  historyLogs: Array<any>; 
-}
-
-
 export interface ViewRuleFormProps {
   onPrevious?: () => void;
   onNext?: () => void;
   onClose?: () => void;
-  rule?: ViewRuleProp;
+  rule?: {
+    id: string;
+    name: string;
+    status: string;
+    description: string;
+    createdBy: string;
+    createdAt: string;
+    updatedAt: string;
+    author: {
+      id: string;
+      name: string;
+    };
+    conditions: ExtendedExpression;
+    actions: Array<{
+      target: string;
+      property: string;
+      value: string;
+    }>;
+    properties: {
+      [key: string]: string | number;
+    };
+    historyLogs: Array<any>;
+  };
 }
 
+const renderConditions = (expr: ExtendedExpression): JSX.Element => {
+  switch (expr.type) {
+    case "operation":
+      return (
+        <div className="mb-2 ml-4 border-l-4 border-blue-200 pl-4">
+          <p className="font-semibold text-blue-700">
+            Operation: <span className="text-gray-800">{expr.operator}</span>
+          </p>
+          <div className="ml-2 space-y-2">
+            {expr.operands.map((op, idx) => (
+              <div key={idx}>{renderConditions(op)}</div>
+            ))}
+          </div>
+        </div>
+      );
+
+    case "function":
+      return (
+        <div className="mb-2 ml-4 border-l-4 border-green-200 pl-4">
+          <p className="font-semibold text-green-700">
+            Function: <span className="text-gray-800">{expr.name}</span>
+          </p>
+          <p className="text-sm text-gray-600">Return Type: {expr.return}</p>
+          <div className="ml-2">
+            <p className="font-medium">Arguments:</p>
+            <ul className="list-disc list-inside">
+              {expr.args.map((arg, idx) => (
+                <li key={idx}>{renderConditions(arg)}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+
+    case "variable":
+      return (
+        <div className="ml-4 text-purple-700">
+          Variable: <strong>{expr.name}</strong>{" "}
+          <span className="text-sm text-gray-500">(type: {expr.return})</span>
+        </div>
+      );
+
+    case "literal":
+      return (
+        <div className="ml-4 text-orange-700">
+          Literal: <strong>{String(expr.value)}</strong>{" "}
+          <span className="text-sm text-gray-500">(type: {expr.return})</span>
+        </div>
+      );
+
+    case "empty":
+      return <div className="ml-4 text-gray-500">Empty Expression</div>;
+
+    default:
+      return <div className="ml-4 text-red-500">Unknown Expression</div>;
+  }
+};
+
+
 const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
- 
-  const renderNestedConditions = (conditions: ViewRuleProp["conditions"]) => (
-    <ul className="list-disc pl-6">
-      {conditions.rules.map((rule, index) => (
-        <li key={index} className="text-lg">
-          {"condition" in rule && "rules" in rule ? (
-            // Nested condition
-            <div>
-              <strong>Condition:</strong> {rule.condition}
-              {renderNestedConditions(rule)}
-            </div>
-          ) : (
-            // Leaf condition (field, operator, value)
-            <div>
-              <strong>Field:</strong> {rule.field}, 
-              <strong> Operator:</strong> {rule.operator}, 
-              <strong> Value:</strong> {rule.value}
-            </div>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
   
-  const renderProperties = (properties: ViewRuleProp["properties"]) => (
+
+  const renderProperties = (properties: { [key: string]: string | number }) => (
     <ul className="list-disc pl-6">
       {Object.entries(properties).map(([key, value]) => (
         <li key={key} className="text-lg">
@@ -86,7 +110,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
         </h2>
       </div>
       <form className="flex flex-col gap-6 overflow-auto">
-        {/* Rule ID */}
         <div className="flex justify-between">
           <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Rule ID
@@ -94,7 +117,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           <p className="text-gray-700 text-xl font-medium mb-1">R{rule?.id.slice(0, 4)}</p>
         </div>
 
-        {/* Rule Name */}
         <div className="flex justify-between">
           <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Rule Name
@@ -102,7 +124,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           <p className="text-gray-700 text-xl font-medium mb-1">{rule?.name}</p>
         </div>
 
-        {/* Status */}
         <div className="flex justify-between items-center">
           <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Status
@@ -114,7 +135,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           }`}>{rule?.status}</p>
         </div>
 
-        {/* Last Modified */}
         <div className="flex justify-between">
           <label className="block text-[#A6A6A6] text-xl font-medium mb-1">
             Last Modified
@@ -124,7 +144,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           </p>
         </div>
 
-        {/* Rule Details */}
         <h3 className="font-bold">Rule Details</h3>
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
@@ -135,15 +154,15 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           </p>
         </div>
 
-        {/* Conditions */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Conditions
           </label>
-          {rule?.conditions ? renderNestedConditions(rule.conditions) : <p>No conditions found.</p>}
+          <div className="bg-gray-100 p-4 rounded-md border">
+          {rule?.conditions ? renderConditions(rule.conditions) : <p>No conditions found.</p>}
+          </div>
         </div>
 
-        {/* Actions */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Actions
@@ -151,15 +170,14 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           <ul className="list-disc pl-6">
             {rule?.actions.map((action, index) => (
               <li key={index} className="text-lg">
-                <strong>Target:</strong> {action.target}, 
-                <strong> Property:</strong> {action.property}, 
+                <strong>Target:</strong> {action.target},
+                <strong> Property:</strong> {action.property},
                 <strong> Value:</strong> {action.value}
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Properties */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Properties
@@ -167,7 +185,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           {rule?.properties ? renderProperties(rule.properties) : <p>No properties found.</p>}
         </div>
 
-        {/* Created By */}
         <div className="mb-4">
           <label className="block text-gray-700 text-xl font-medium mb-1">
             Created By
@@ -177,7 +194,6 @@ const ViewRuleForm: FC<ViewRuleFormProps> = ({ onNext, onClose, rule }) => {
           </p>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex justify-center md:justify-end gap-4 mt-6">
           <button
             type="button"
