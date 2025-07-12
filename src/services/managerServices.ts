@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// services/rulesCasesApi.ts
-=======
->>>>>>> 8b234eb0faad54ecdcba9978f0cd6b626db46914
 import URL from "../db/url";
 import { extractBackendError } from "../ui/utils/helpers";
 
