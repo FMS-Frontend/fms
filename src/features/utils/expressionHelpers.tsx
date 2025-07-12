@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 export const operationOptions = [
     { label: "Equals", value: "==" },
     { label: "Greater Than", value: ">" },

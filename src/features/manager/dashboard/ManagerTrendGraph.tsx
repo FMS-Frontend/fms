@@ -8,21 +8,6 @@ import toast from "react-hot-toast";
 import { useAppContext } from "../../../context/AppContext";
 
 
-// const sampleData = [
-//   { date: "2025-01-01", count: 200 },
-//   { date: "2025-02-01", count: 900 },
-//   { date: "2025-03-01", count: 400 },
-//   { date: "2025-04-01", count: 700 },
-//   { date: "2025-05-01", count: 800 },
-//   { date: "2025-06-01", count: 200 },
-//   { date: "2025-07-01", count: 500 },
-//   { date: "2025-08-01", count: 160 },
-//   { date: "2025-09-01", count: 800 },
-//   { date: "2025-10-01", count: 220 },
-//   { date: "2025-11-01", count: 600 },
-//   { date: "2025-12-01", count: 300 },
-// ];
-
 const ManagerTrendGraph: React.FC = () => {
   const { tenant } = useAppContext();
 

@@ -4,7 +4,7 @@ import { formatDate } from "../../../../db/helperFunctions";
 interface ViewAlertFormProps {
   onClose?: () => void;
   onNext?: () => void;
-  data: any; // You can replace `any` with a proper Alert type if available
+  data: any; 
 }
 
 const ViewAlertForm: FC<ViewAlertFormProps> = ({ onClose, onNext, data }) => {
