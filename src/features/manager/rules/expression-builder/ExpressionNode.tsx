@@ -35,6 +35,8 @@ function ExpressionNode({
 		case "variable": {
 			return <VariableExpressionNode {...props} exp={exp} />
 		}
+		default:
+			return <div className="text-red-500">Unknown Expression Type</div>;
 	}
 }
 
